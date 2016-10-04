@@ -1,0 +1,4 @@
+# This constraint says that class <classWithCardinality> contains exactly 
+# <exactlyValue> number of instances.
+
+<classWithCardinality> owl:qualifiedCardinality "<exactlyValue>"^^xsd:nonNegativeInteger .

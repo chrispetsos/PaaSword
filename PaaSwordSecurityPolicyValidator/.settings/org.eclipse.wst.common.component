@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="PaaSwordSecurityPolicyValidator">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="PaaSwordSecurityPolicyEngine.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/PaaSwordSecurityPolicyEngine/PaaSwordSecurityPolicyEngine">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="SwaggerWebFragment.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/SwaggerWebFragment/SwaggerWebFragment">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/PaaSwordSecurityPolicyValidator/build/classes"/>
+        <property name="context-root" value="PaaSwordSecurityPolicyValidator"/>
+    </wb-module>
+</project-modules>

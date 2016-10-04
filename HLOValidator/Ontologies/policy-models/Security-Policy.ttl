@@ -1,0 +1,276 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
+@prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix usdl-core: <http://www.linked-usdl.org/ns/usdl-core#>.
+@prefix usdl-business-roles: <http://www.linked-usdl.org/ns/usdl-business-roles#>.
+@prefix usdl-sec: <http://www.linked-usdl.org/ns/usdl-sec#>.
+@prefix orgX: <http://www.paasword.eu/security-policy/orgX#>. 
+@prefix gr: <http://purl.org/goodrelations/v1#>. 
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+### Policy meta‐model #######################################################
+pwd:Policy a rdfs:Class.
+
+pwd:PolicySet a rdfs:Class.
+
+pwd:Rule a rdfs:Class.
+
+pwd:belongsToPolicySet a rdf:Property;
+	rdfs:domain pwd:Policy, pwd:PolicySet;
+	rdfs:range pwd:PolicySet.
+
+pwd:hasRule a rdf:Property;
+	rdfs:domain pwd:Policy;
+	rdfs:range pwd:Rule.
+#############################################################################
+
+### Customisation of Linked USDL Core #######################################
+pwd:PaaSwordSecurityModel rdfs:subClassOf usdl-core:ServiceModel.
+
+pwd:PaaSwordFramework a pwd:PaaSwordSecurityModel;
+	usdl-core:hasEntityInvolvement orgX:EntityOrganisationX;
+	usdl-sec:hasSecurityProfile pbe:PaaSwordBootstrappingCryptoProfile, pbdfd:PaaSwordBootstrappingDFDProfile, pac:PaaSwordAccessControlProfile.
+
+orgX:EntityOrganisationX a usdl-core:EntityInvolvement;
+	usdl-core:ofBusinessEntity orgX:OrganisationX;
+	usdl-core:withBusinessRole usdl-business-roles:provider.
+
+orgX:OrganisationX a gr:BusinessEntity.
+
+pbe:PaaSwordBootstrappingCryptoProfile a usdl-sec:SecurityProfile;
+	pbe:hasSecurityGoal pbe:CryptoGoal.
+
+pbdfd:PaaSwordBootstrappingDFDProfile a usdl-sec:SecurityProfile;
+	pbdfd:hasSecurityGoal pbdfd:DFDGoal.
+
+pac:PaaSwordAccessControlProfile a usdl-sec:SecurityProfile;
+	pac:hasSecurityGoal pac:AccessControlGoal.
+#############################################################################
+
+### USDL‐SEC customization for the PBE profile ##############################
+pbe:PaaSwordDataEncryption rdfs:subClassOf usdl-sec:SecurityTechnology.
+
+pbe:BootstrappingCryptoPolicySet rdfs:subClassOf pwd:PolicySet. 
+
+pbe:hasSecurityGoal rdfs:subPropertyOf usdl-sec:hasSecurityGoal.
+
+pbe:isImplementedBy rdfs:subPropertyOf usdl-sec:isImplementedBy.
+
+pbe:isRealizedByTechnology rdfs:subPropertyOf usdl-sec:isRealizedByTechnology.
+
+pbe:hasSecurityRealizationType rdfs:subPropertyOf usdl-sec:hasSecurityRealizationType.
+
+pbe:hasCryptoPolicySet a rdf:Property;
+	rdfs:domain pbe:PaaSwordDataEncryption;
+	rdfs:range pbe:BootstrappingCryptoPolicySet.
+
+pbe:CryptoGoal a usdl-sec:Confidentiality;
+	pbe:isImplementedBy pbe:CryptoMechanism.
+
+pbe:CryptoMechanism a usdl-sec:Cryptography;
+	pbe:hasSecurityRealizationType pbe:CryptoType;
+	pbe:isRealizedByTechnology pbe:CryptoTechnology.
+
+pbe:CryptoType a usdl-sec:InUsage.
+
+pbe:CryptoTechnology a pbe:PaaSwordDataEncryption.
+#############################################################################
+
+### Ontological representation of cryptographic template ####################
+pbe:BootstrappingCryptoRule rdfs:subClassOf pwd:Rule.
+
+pbe:BootstrappingCryptoPolicy rdfs:subClassOf pwd:Policy. 
+
+pbe:hasBootStrappingCryptoRule rdfs:subPropertyOf pwd:hasRule;
+	rdfs:domain pbe:BootstrappingCryptoPolicy;
+	rdfs:range pbe:BootstrappingCryptoRule.
+
+pbe:belongsToCryptoPolicySet rdfs:subPropertyOf pwd:belongsToPolicySet;
+	rdfs:domain pbe:BootstrappingCryptoPolicy, pbe:BootstrappingCryptoPolicySet;
+	rdfs:range pbe:BootstrappingCryptoPolicySet.
+
+pbe:hasControlledObject a rdf:Property;
+	rdfs:domain pbe:BootstrappingCryptoRule;
+	rdfs:range pcm:Object.
+
+pbe:hasCryptoElement a rdf:Property;
+	rdfs:domain pbe:BootstrappingCryptoRule;
+	rdfs:range pdm:CryptographicType.
+#############################################################################
+
+### USDL‐SEC customization for the PBDFD profile ############################
+pbdfd:DataFragmentationAndDistribution a rdfs:Class, skos:Concept;
+	skos:broader usdl-sec:SecurityMechanism.
+
+pbdfd:PaaSwordDataFragmentationAndDistribution rdfs:subClassOf usdl-sec:SecurityTechnology.
+
+pbdfd:BootstrappingDFDPolicySet rdfs:subClassOf pwd:PolicySet.
+
+pbdfd:hasSecurityGoal rdfs:subPropertyOf usdl-sec:hasSecurityGoal.
+
+pbdfd:isImplementedBy rdfs:subPropertyOf usdl-sec:isImplementedBy.
+
+pbdfd:hasSecurityRealizationType rdfs:subPropertyOf usdl-sec:hasSecurityRealizationType.
+
+pbdfd:isRealizedByTechnology rdfs:subPropertyOf usdl-sec:isRealizedByTechnology.
+
+pbdfd:hasDFDPolicySet a rdf:Property;
+	rdfs:domain pbdfd:PaaSwordDataFragmentationAndDistribution;
+	rdfs:range pbdfd:BootstrappingDFDPolicySet. 
+
+pbdfd:DFDGoal a usdl-sec:Privacy;
+	pbdfd:isImplementedBy pbdfd:DFDMechanism.
+
+pbdfd:DFDMechanism a pbdfd:DataFragmentationAndDistribution;
+	pbdfd:hasSecurityRealizationType pbdfd:DFDType;
+	pbdfd:isRealizedByTechnology pbdfd:DFDTechnology.
+
+pbdfd:DFDType a usdl-sec:InUsage.
+
+pbdfd:DFDTechnology a pbdfd:PaaSwordDataFragmentationAndDistribution.
+#############################################################################
+
+### Ontological representation of data fragmentation and distribution template ############################
+pbdfd:BootstrappingDFDRule rdfs:subClassOf pwd:Rule.
+
+pbdfd:BootstrappingDFDPolicy rdfs:subClassOf pwd:Policy.
+
+pbdfd:hasBootstrappingDFDRule rdfs:subPropertyOf pwd:hasRule;
+	rdfs:domain pbdfd:BootstrappingDFDPolicy;
+	rdfs:range pbdfd:BootstrappingDFDRule.
+
+pbdfd:belongsToDFDPolicySet rdfs:subPropertyOf pwd:belongsToPolicySet;
+	rdfs:domain pbdfd:BootstrappingDFDPolicy, pbdfd:BootstrappingDFDPolicySet;
+	rdfs:range pbdfd:BootstrappingDFDPolicySet.
+
+pbdfd:hasControlledObject a rdf:Property;
+	rdfs:domain pbdfd:BootstrappingDFDRule;
+	rdfs:range pcm:Object.
+
+pbdfd:hasDFDElement a rdf:Property;
+	rdfs:domain pbdfd:BootstrappingDFDRule;
+	rdfs:range pdm:DatabaseFragmentation.
+###########################################################################################################
+
+### USDL‐SEC customization for the PAC profile ##############################
+pac:PaaSwordABAC rdfs:subClassOf usdl-sec:SecurityTechnology.
+
+pac:ABACPolicySet rdfs:subClassOf pwd:PolicySet.
+
+pac:hasSecurityGoal rdfs:subPropertyOf usdl-sec:hasSecurityGoal.
+
+pac:isImplementedBy rdfs:subPropertyOf usdl-sec:isImplementedBy.
+
+pac:hasSecurityRealizationType rdfs:subPropertyOf usdl-sec:hasSecurityRealizationType.
+
+pac:isRealizedByTechnology rdfs:subPropertyOf usdl-sec:isRealizedByTechnology.
+
+pac:hasABACPolicySet a rdf:Property;
+	rdfs:domain pac:PaaSwordABAC;
+	rdfs:range pac:ABACPolicySet.
+
+pac:AccessControlGoal a usdl-sec:Authorization;
+	pac:isImplementedBy pac:AccessControlMechanism.
+
+pac:AccessControlMechanism a usdl-sec:Access_Control;
+	pac:hasSecurityRealizationType pac:AccessControlType;
+	pac:isRealizedByTechnology pac:AccessControlTechnology.
+
+pac:AccessControlType a usdl-sec:InUsage.
+
+pac:AccessControlTechnology a pac:PaaSwordABAC.
+#############################################################################
+
+### Ontological representation of ABAC template and combining algorithms ####
+pac:ABACRule rdfs:subClassOf pwd:Rule.
+
+pac:Authorisation a rdfs:Class.
+
+pac:ABACPolicy rdfs:subClassOf pwd:Policy.
+
+pac:CombiningAlgorithms a rdfs:Class.
+
+pac:PolicyCombiningAlgorithms rdfs:subClassOf pac:CombiningAlgorithms.
+
+pac:PolicySetCombiningAlgorithms rdfs:subClassOf pac:CombiningAlgorithms.
+
+pac:hasControlledObject a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pcm:Object.
+
+pac:hasAuthorisation a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pac:Authorisation.
+
+pac:hasAction a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range ppm:DataPermission.
+
+pac:hasActor a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pcm:Subject.
+
+pac:hasContextExpression a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pac:ContextExpression.
+
+pac:hasABACRule rdfs:subPropertyOf pwd:hasRule;
+	rdfs:domain pac:ABACPolicy;
+	rdfs:range pac:ABACRule.
+
+pac:hasPolicyContextExpression a rdf:Property;
+	rdfs:domain pac:ABACPolicy;
+	rdfs:range pac:ContextExpression.
+
+pac:hasPolicyCombiningAlgorithm a rdf:Property;
+	rdfs:domain pac:ABACPolicy;
+	rdfs:range pac:PolicyCombiningAlgorithms.
+
+pac:belongsToABACPolicySet rdfs:subPropertyOf pwd:belongsToPolicySet;
+	rdfs:domain pac:ABACPolicy, pac:ABACPolicySet;
+	rdfs:range pac:ABACPolicySet.
+	
+pac:hasPolicySetContextExpression a rdf:Property;
+	rdfs:domain pac:ABACPolicySet;
+	rdfs:range pac:ContextExpression.
+
+pac:hasPolicySetCombiningAlgorithm a rdf:Property;
+	rdfs:domain pac:ABACPolicySet;
+	rdfs:range pac:PolicySetCombiningAlgorithms.
+
+pac:positive a pac:Authorisation.
+
+pac:negative a pac:Authorisation.
+#############################################################################
+
+### Context expression template #############################################
+pac:ContextExpression a rdfs:Class.
+
+pac:ANDContextExpression rdfs:subClassOf pac:ContextExpression.
+
+pac:ORContextExpression rdfs:subClassOf pac:ContextExpression.
+
+pac:XORContextExpression rdfs:subClassOf pac:ContextExpression.
+
+pac:NOTContextExpression rdfs:subClassOf pac:ContextExpression.
+
+pac:hasPatternParameter a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range pcpm:ContextPattern, pac:ContextExpression.
+
+pac:hasParameter a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range pcm:SecurityContextElement, pac:ContextExpression.
+
+pac:hasEvaluationResult a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range xsd:boolean.
+#############################################################################

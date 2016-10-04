@@ -1,0 +1,7 @@
+# This constraint says that class <enumeratedClass> contains only 
+# <specificInctances>.
+
+<enumeratedClass> owl:equivalentClass [
+		rdf:type owl:Class;
+		owl:oneOf ( <specificInctances> )
+	] .

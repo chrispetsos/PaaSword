@@ -1,0 +1,166 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2015/11/30#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.paasword-project.eu/ontologies/dsm/2015/11/30>
+  a owl:Ontology ;
+  pdm:Comment "PaaSword Data Distribution and Encryption Model (version 2015-11-30)" .
+
+pdm:hasAsymmetricKeySize
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:Asymmetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:hasCurve
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:Asymmetric ;
+  rdfs:range xsd:string .
+
+pdm:hasFragColumn
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:MixedFragmentation, pdm:VerticalFragmentation ;
+  rdfs:range xsd:string .
+
+pdm:hasFragRow
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:HorizontalFragmentation, pdm:MixedFragmentation ;
+  rdfs:range xsd:nonNegativeInteger .
+
+pdm:hasPrivacyConstraint
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:RelationalDataFragmentation ;
+  rdfs:range xsd:string .
+
+pdm:hasSymmetricBlockSize
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:Symmetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:hasSymmetricKeySize
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:Symmetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:numberOfPhysicalLocations
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:DistributionMetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:numberOfServers
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:DistributionMetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:numberOfVMs
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:DistributionMetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:hasModeofOperation
+  a owl:DatatypeProperty ;
+  rdfs:domain pdm:CryptographicType ;
+  rdfs:range xsd:string .
+
+pdm:Asymmetric
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:CryptographicType ;
+  rdfs:comment "Refers to the details of algorithm for cryptography chosen that uses the different cryptographic keys for  encryption (public key) of plaintext and decryption of ciphertext (private key)." .
+
+pdm:CryptographicType
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DDEElement ;
+  rdfs:comment "This class reveals details of the level of security required for specific sensitive data artefacts." .
+
+pdm:DDEElement
+  a rdfs:Class ;
+  rdfs:comment "Parent class of all PaaSword Data Distribution and Encryption Model elements" .
+
+pdm:DataDistribution
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DDEElement ;
+  rdfs:comment "This class captures aspects of the data distribution  required for enhancing the security of sensitive information." .
+
+pdm:DatabaseFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DDEElement ;
+  rdfs:comment "This class refers to the details concerning the way that the data should be fragmented in order to be distributed for security purposes." .
+
+pdm:DistributionMetric
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class quantifies the data distribution required for enhancing the security of sensitive information." .
+
+pdm:ExcludedLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class denotes the physical locations that should be avoided when distributing sensitive data." .
+
+pdm:ExcludedProvider
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class denotes certain untrusted IaaS providers that should be avoided when distributing sensitive data." .
+
+pdm:HorizontalFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:RelationalDataFragmentation ;
+  rdfs:comment "This class refers to the fragmentation of a relational database across its rows." .
+
+pdm:Hybrid
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:Asymmetric, pdm:Symmetric .
+
+pdm:MasterSlaveReplication
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:Replication ;
+  rdfs:comment "Master-slave replication refers into the details of making one node the authoritative copy that handles writes while slaves synchronizing with the master and handling reads." .
+
+pdm:MixedFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:RelationalDataFragmentation ;
+  rdfs:comment "This class refers to a two step  fragmentation process of a relational database that may use both horizontal and vertical fragmentation based on certain conditions." .
+
+pdm:NonRelationalDataFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DatabaseFragmentation ;
+  rdfs:comment "This Class refers to different types of possible fragmentation of a non- relational database." .
+
+pdm:PeerToPeerReplication
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:Replication ;
+  rdfs:comment "Peer-to-peer refers to the details of replication that allows writes to several nodes and synchronization between them." .
+
+pdm:PreferredLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class denotes the physical locations that should be considered when distributing sensitive data." .
+
+pdm:PreferredProvider
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class denotes certain trusted IaaS providers that should be considered when distributing sensitive data." .
+
+pdm:RelationalDataFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DatabaseFragmentation ;
+  rdfs:comment "This Class refers to different types of possible fragmentation of a relational database." .
+
+pdm:Replication
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:NonRelationalDataFragmentation ;
+  rdfs:comment "Replication class refers to the details of copying data/aggregates across multiple servers, so each bit of data can be found in multiple places." .
+
+pdm:Sharding
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:NonRelationalDataFragmentation ;
+  rdfs:comment "Sharding class refers to the details of  different data distribution across multiple servers, so each server acts as the single source for a subset of data/aggregates." .
+
+pdm:Symmetric
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:CryptographicType ;
+  rdfs:comment "Refers to the details of algorithm for cryptography chosen that uses the same cryptographic keys for both encryption of plaintext and decryption of ciphertext." .
+
+pdm:VerticalFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:RelationalDataFragmentation ;
+  rdfs:comment "This class refers to the fragmentation of a relational database across its columns." .

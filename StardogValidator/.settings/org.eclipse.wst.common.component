@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="StardogValidator">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="SwaggerWebFragment.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/SwaggerWebFragment/SwaggerWebFragment">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="StardogValidationEngine.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/StardogValidationEngine/StardogValidationEngine">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="api.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/api/api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="PaaSwordSecurityPolicyEngine.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/PaaSwordSecurityPolicyEngine/PaaSwordSecurityPolicyEngine">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="StardogValidator"/>
+        <property name="java-output-path" value="/StardogValidator/build/classes"/>
+    </wb-module>
+</project-modules>

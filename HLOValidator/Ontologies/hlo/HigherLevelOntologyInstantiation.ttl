@@ -1,0 +1,32 @@
+@prefix hlo: <http://www.seerc.org/policy-validation/hlo#>.
+@prefix xsd:<http://www.w3.org/2001/XMLSchema#> .
+@prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+
+# This is an instantiation ontology which abides to HigherLevelOntology.ttl.
+# Does not follow the owl semantics, but declares all data needed as input
+# in the contraint templates.
+
+# All ABACRule instances should be connected with exactly one instance of
+# Relational via the hasControlledObject property.
+pwd:ABACRuleControlledObjectConstraint a hlo:ExactlyPropertyConstraint;
+	hlo:constrainedClass pac:ABACRule;
+	hlo:onProperty pac:hasControlledObject;
+	hlo:qualifiedCardinality "1"^^xsd:integer;
+	hlo:onClass pcm:Relational.
+
+# ABACPolicySet should have only one instance.
+pwd:ABACPolicySetInstanceConstraint a hlo:ExactlyInstancesConstraint;
+	hlo:constrainedClass pac:ABACPolicySet;
+	hlo:qualifiedCardinality "1"^^xsd:integer.
+
+# Authorisation class consists of only two instances; positive and negative.
+pwd:AuthorisationEnumeratedClassConstraint a hlo:EnumeratedClassConstraint;
+	hlo:constrainedClass pac:Authorisation;
+	hlo:oneOf (pac:positive pac:negative).
+
+pac:positive a pac:Authorisation.
+pac:negative a pac:Authorisation.
+	
+	

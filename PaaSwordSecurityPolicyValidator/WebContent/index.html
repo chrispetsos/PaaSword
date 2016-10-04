@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PaaSword Security Policy Validator</title>
+<style>
+.CodeMirror {
+    border: 1px solid black;
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+	overflow:hidden;
+	margin: 10px;
+}
+</style>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery.min.js"></script>
+<script src="codemirror-5.15.2/lib/codemirror.js"></script>
+<link rel="stylesheet" href="codemirror-5.15.2/lib/codemirror.css">
+<script src="codemirror-5.15.2/mode/turtle/turtle.js"></script>	
+<script src="codemirror-5.15.2/mode/javascript/javascript.js"></script>	
+<script>
+	function validatePolicy()
+	{
+		$.ajax({
+			type : "POST",
+			url : "rest/validateSecurityPolicy",
+			contentType: "text/plain",
+			data : codeMirrorPolicyEditor.getValue(),
+			success : function(responseData, status, xhr) {
+				codeMirrorReport.setValue(responseData);
+				//$("#report").val(responseData);
+			},
+			error : function(request, status, error) {
+				codeMirrorReport.setValue(error);
+				//$("#report").val(error);
+			}
+		});
+	}
+</script>
+
+</head>
+<body>
+<textarea id="policy">
+Paste security Policy here...  
+</textarea>
+<div style="width: 100%;text-align: center;padding: 5px;">
+	<input type="button"
+		style="text-align: center;"
+		value="Validate" onclick="validatePolicy()" />
+</div>
+<textarea id="report">
+Validation report will be printed here... 
+</textarea>
+</body>
+<script>
+var codeMirrorPolicyEditor = CodeMirror.fromTextArea(document.getElementById("policy"), {mode:  "turtle", lineNumbers: true});
+codeMirrorPolicyEditor.setSize("97%", "45%");
+var codeMirrorReport = CodeMirror.fromTextArea(document.getElementById("report"), {mode:  "javascript"});
+codeMirrorReport.setSize("97%", "45%");
+</script>
+</html>
