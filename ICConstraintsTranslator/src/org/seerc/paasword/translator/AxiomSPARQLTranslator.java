@@ -13,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
 
@@ -40,20 +41,37 @@ public class AxiomSPARQLTranslator {
 
             @Override
             public void visit(OWLObjectSomeValuesFrom ce) {
-                // Print out the restriction
-                // System.out.println(desc);
-                // Print out the axiom where the restriction is used
-                // System.out.println(" " + getCurrentAxiom());
-                // We don't need to return anything here.
-                //return "";
-            	
         		System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
+        		OWLSubClassOfAxiom axiom = null;
+        		try
+        		{
+        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
+        		}
+        		catch(Exception e)
+        		{
+            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
+        			return;
+        		}
+        		
+        		String restrictedClass = axiom.getSubClass().toString();
+        		String onProperty = ce.getProperty().toString();
+        		String filler = ce.getFiller().toString();
+        		System.out.println("Restricted class: " + restrictedClass);
+        		System.out.println("On property: " + onProperty);
+        		System.out.println("Filler class: " + filler);
+        		
             	queries.add(null);
             }
             
             @Override
         	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
         		System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
+        		
+        		String property = axiom.getProperty().toString();
+        		String domain = axiom.getDomain().toString();
+        		System.out.println("Property: " + property);
+        		System.out.println("Domain: " + domain);
+        		
             	queries.add(null);
         	}
             
