@@ -44,6 +44,24 @@ public class AxiomSPARQLTranslatorTest {
 	}
 
 	@Test
+	public void testSubclassOf() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/subclassConstraint.owl"));
+		List<String> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(""
+				, queries.get(0));
+	}
+
+	@Test
+	public void testSubpropertyOf() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/subpropertyConstraint.owl"));
+		List<String> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(""
+				, queries.get(0));
+	}
+
+	@Test
 	public void testRestriction() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/restrictionConstraint.owl"));
 		List<String> queries = ast.convertToSPARQLDCQnot();

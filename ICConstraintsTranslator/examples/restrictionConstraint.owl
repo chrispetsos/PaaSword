@@ -9,5 +9,73 @@
                 owl:someValuesFrom :Employee
               ] .
               
-#:supervises a owl:DatatypeProperty .
-#:Employee a owl:Class .
+:Project rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty :number ;
+                owl:someValuesFrom
+                        [ a rdfs:Datatype ;
+                          owl:onDatatype xsd:integer ;
+                          owl:withRestrictions ([xsd:minInclusive 0] [ xsd:maxExclusive 5000])
+                        ]
+              ] .
+
+:Employee rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty :works_on;
+                owl:maxQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
+                owl:onClass :Project
+              ] .
+              
+:Department rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty [owl:inverseOf :works_in] ;
+                owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                owl:onClass :Employee
+              ] .
+              
+:Manager rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty :manages ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass :Department
+              ] .
+              
+:Employee rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty :works_on ;
+                owl:someValuesFrom
+                        [ owl:unionOf (:Project
+                                      [ a owl:Restriction ;
+                                        owl:onProperty :supervises ;
+                                        owl:someValuesFrom
+                                              [ owl:intersectionOf (:Employee
+                                                                    [ a owl:Restriction ;
+                                                                      owl:onProperty :works_on ;
+                                                                      owl:someValuesFrom :Project
+                                                                    ])
+                                              ]
+                                      ]
+                                      [ a owl:Restriction ;
+                                        owl:onProperty :manages ;
+                                        owl:someValuesFrom :Department
+                                      ])
+                        ]
+              ] .
+              
+:name a owl:FunctionalProperty .
+
+[ owl:intersectionOf (:Project
+                       [ a owl:Restriction ;
+                         owl:onProperty :receives_funds_from ;
+                         owl:someValuesFrom :US_Government_Agency
+                       ]) 
+] rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty [owl:inverseOf :works_on] ;
+                owl:allValuesFrom [ owl:intersectionOf (:Employee
+                                                        [ a owl:Restriction ;
+                                                          owl:hasValue "US" ;
+                                                          owl:onProperty :nationality
+                                                        ])
+                                  ]
+              ] .

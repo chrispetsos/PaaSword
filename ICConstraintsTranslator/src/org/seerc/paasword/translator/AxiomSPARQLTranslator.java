@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.aksw.owl2sparql.OWLAxiomToSPARQLConverter;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StreamDocumentSource;
+import org.semanticweb.owlapi.model.ClassExpressionType;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -17,7 +21,7 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
 
-public class AxiomSPARQLTranslator {
+public class AxiomSPARQLTranslator extends OWLAxiomToSPARQLConverter {
 
 	OWLOntologyManager manager;
 	OWLOntology ontology;
@@ -36,55 +40,35 @@ public class AxiomSPARQLTranslator {
 	{
 		List<String> queries = new ArrayList<String>();
 
-		OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
-		OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
-
-            @Override
-            public void visit(OWLObjectSomeValuesFrom ce) {
-        		System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
-        		OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
-        		String restrictedClass = axiom.getSubClass().toString();
-        		String onProperty = ce.getProperty().toString();
-        		String filler = ce.getFiller().toString();
-        		System.out.println("Restricted class: " + restrictedClass);
-        		System.out.println("On property: " + onProperty);
-        		System.out.println("Filler class: " + filler);
-        		
-            	queries.add(null);
-            }
-            
-            @Override
-        	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
-        		System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
-        		
-        		String property = axiom.getProperty().toString();
-        		String domain = axiom.getDomain().toString();
-        		System.out.println("Property: " + property);
-        		System.out.println("Domain: " + domain);
-        		
-            	queries.add(null);
-        	}
-            
-            @Override
-            protected void handleDefault(OWLObject axiom) {
-        		System.out.println(axiom + ", " + axiom.getClass().getSimpleName() + ", NOT SUPPORTED");
-        	}
-        };
-        // Now ask the walker to walk over the ontology structure using our
-        // visitor instance.
-        walker.walkStructure(visitor);
-        
+		for(OWLAxiom axiom:ontology.getAxioms())
+		{
+			String query = this.convert(axiom);
+			System.out.println(axiom.toString());
+			System.out.println(query);
+			System.out.println();
+			queries.add(query);
+		}
 		return queries;
+	}
+	
+	@Override
+	public void visit(OWLSubClassOfAxiom axiom) {
+		// process subclass
+		OWLClassExpression subClass = axiom.getSubClass();
+		if(!subClass.isOWLThing()){// we do not need to convert owl:Thing
+			String subClassPattern = expressionConverter.asGroupGraphPattern(subClass, subjectVar);
+			sparql += subClassPattern;
+		}
+
+		// process superclass
+		OWLClassExpression superClass = axiom.getSuperClass();
+		boolean needsOuterTriplePattern = subClass.isOWLThing() &&
+				(superClass.getClassExpressionType() == ClassExpressionType.OBJECT_COMPLEMENT_OF ||
+				superClass.getClassExpressionType() == ClassExpressionType.DATA_ALL_VALUES_FROM ||
+				superClass.getClassExpressionType() == ClassExpressionType.OBJECT_ALL_VALUES_FROM);
+		String superClassPattern = expressionConverter.asGroupGraphPattern(superClass, subjectVar,
+																		   needsOuterTriplePattern);
+		sparql += this.notExists(superClassPattern);
 	}
 
 }

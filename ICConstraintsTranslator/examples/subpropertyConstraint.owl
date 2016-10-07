@@ -3,10 +3,6 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-:is_responsible_for rdfs:domain :Project_Leader ;
-                    rdfs:range :Project .
+:manages rdfs:subPropertyOf :works_in .
 
-
-:ssn rdfs:domain :Employee .
-
-:dob rdfs:range xsd:date .
+:is_supervisor_of owl:propertyChainAxiom (:manages [owl:inverseOf :works_in]) .
