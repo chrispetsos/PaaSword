@@ -10,6 +10,7 @@ import org.aksw.owl2sparql.OWLObjectPropertyExpressionConverter;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -52,6 +53,8 @@ public class AxiomSPARQLTranslator {
 		OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
 		OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
 
+			List<OWLAxiom> visitedAxioms = new ArrayList<OWLAxiom>();
+			
             @Override
             public void visit(OWLObjectSomeValuesFrom ce) {
         		System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
@@ -59,6 +62,14 @@ public class AxiomSPARQLTranslator {
         		try
         		{
         			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
+        			// if current axiom has been visited
+        			if(visitedAxioms.contains(axiom))
+        			{	// this means that we are visiting an "internal" restriction of an outer "complex" restriction
+        				// which has been already converted.
+        				return;
+        			}
+        			// new axiom, add it to visitedAxioms and continue
+        			visitedAxioms.add(axiom);
         		}
         		catch(Exception e)
         		{

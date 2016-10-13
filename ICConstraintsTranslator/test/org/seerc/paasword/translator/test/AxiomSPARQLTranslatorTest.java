@@ -52,6 +52,15 @@ public class AxiomSPARQLTranslatorTest {
 				, queries.get(0));
 	}
 
+	@Test
+	public void testComplexRestriction() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/complexRestrictionConstraint.owl"));
+		List<String> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(""
+				, queries.get(0));
+	}
+
 	public FileInputStream createFileInputStream(String filePath) {
 		try {
 			return new FileInputStream(new File(filePath));
