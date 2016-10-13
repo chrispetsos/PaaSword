@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.aksw.owl2sparql.OWLClassExpressionToSPARQLConverter;
+import org.aksw.owl2sparql.OWLObjectPropertyExpressionConverter;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
@@ -21,6 +23,15 @@ public class AxiomSPARQLTranslator {
 
 	OWLOntologyManager manager;
 	OWLOntology ontology;
+	OWLClassExpressionToSPARQLConverter ceConverter;
+	OWLObjectPropertyExpressionConverter opConverter;
+	
+	private String groupGraphPatternTag = "<groupGraphPattern>";
+	private String queryTemplate = 
+			  "SELECT DISTINCT *\n"
+			+ "WHERE {\n"
+			+ groupGraphPatternTag + "\n"
+			+ "}";
 	
 	public AxiomSPARQLTranslator(InputStream axioms)
 	{
@@ -30,6 +41,8 @@ public class AxiomSPARQLTranslator {
 		} catch (OWLOntologyCreationException e) {
 			e.printStackTrace();
 		}
+		ceConverter = new OWLClassExpressionToSPARQLConverter();
+		opConverter = new OWLObjectPropertyExpressionConverter();
 	}
 	
 	public List<String> convertToSPARQLDCQnot()
@@ -53,12 +66,12 @@ public class AxiomSPARQLTranslator {
         			return;
         		}
         		
-        		String restrictedClass = axiom.getSubClass().toString();
-        		String onProperty = ce.getProperty().toString();
-        		String filler = ce.getFiller().toString();
-        		System.out.println("Restricted class: " + restrictedClass);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), "?s1");
+        		String onProperty = opConverter.visit(ce.getProperty().asOWLObjectProperty());
+        		String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), "?s2");
+        		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
         		System.out.println("On property: " + onProperty);
-        		System.out.println("Filler class: " + filler);
+        		System.out.println("Filler class graph pattern: " + fillerGraphPattern);
         		
             	queries.add(null);
             }
