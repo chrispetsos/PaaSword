@@ -66,14 +66,24 @@ public class AxiomSPARQLTranslator {
         			return;
         		}
         		
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), "?s1");
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), "?x");
         		String onProperty = opConverter.visit(ce.getProperty().asOWLObjectProperty());
-        		String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), "?s2");
+        		String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), "?y");
         		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
         		System.out.println("On property: " + onProperty);
         		System.out.println("Filler class graph pattern: " + fillerGraphPattern);
         		
-            	queries.add(null);
+        		String groupGraphPattern = 
+        				restrictedClassGraphPattern +
+        				  "FILTER NOT EXISTS {\n"
+        				+ "?x " + onProperty + " ?y .\n"
+						+ fillerGraphPattern
+						+"}";
+        		
+        		String query = queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern);
+        		System.out.println(query);
+        		
+            	queries.add(query);
             }
             
             @Override
