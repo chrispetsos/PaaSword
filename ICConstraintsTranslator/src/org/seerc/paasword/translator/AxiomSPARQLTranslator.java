@@ -78,7 +78,7 @@ public class AxiomSPARQLTranslator {
         		}
         		
         		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), "?x");
-        		String onProperty = opConverter.visit(ce.getProperty().asOWLObjectProperty());
+        		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
         		String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), "?y");
         		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
         		System.out.println("On property: " + onProperty);
