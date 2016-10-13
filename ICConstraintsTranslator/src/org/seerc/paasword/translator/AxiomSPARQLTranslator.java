@@ -66,6 +66,7 @@ public class AxiomSPARQLTranslator {
         			if(visitedAxioms.contains(axiom))
         			{	// this means that we are visiting an "internal" restriction of an outer "complex" restriction
         				// which has been already converted.
+                		System.out.println("The current axiom is considered as an \"internal\" restriction of an outer \"complex\" restriction, ignoring...");
         				return;
         			}
         			// new axiom, add it to visitedAxioms and continue
@@ -111,7 +112,7 @@ public class AxiomSPARQLTranslator {
             
             @Override
             protected void handleDefault(OWLObject axiom) {
-        		System.out.println(axiom + ", " + axiom.getClass().getSimpleName() + ", NOT SUPPORTED");
+        		System.out.println("NOT SUPPORTED: " + axiom + ", " + axiom.getClass().getSimpleName());
         	}
         };
         // Now ask the walker to walk over the ontology structure using our
