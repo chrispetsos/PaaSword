@@ -50,10 +50,10 @@ public class AxiomSPARQLTranslatorTest {
 		assertEquals(1, queries.size());
 		assertEquals("SELECT DISTINCT *\n" + 
 				"WHERE {\n" + 
-				"?x a <http://www.seerc.org/test/pellet-icv#Supervisor> .\n" + 
+				"?x0 a <http://www.seerc.org/test/pellet-icv#Supervisor> .\n" + 
 				"FILTER NOT EXISTS {\n" + 
-				"?x <http://www.seerc.org/test/pellet-icv#supervises> ?y .\n" + 
-				"?y a <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
+				"?x0 <http://www.seerc.org/test/pellet-icv#supervises> ?x1 .\n" + 
+				"?x1 a <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
 				"}\n" + 
 				"}"
 				, queries.get(0));
@@ -66,13 +66,13 @@ public class AxiomSPARQLTranslatorTest {
 		assertEquals(1, queries.size());
 		assertEquals("SELECT DISTINCT *\n" + 
 				"WHERE {\n" + 
-				"?x a <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
+				"?x0 a <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
 				"FILTER NOT EXISTS {\n" + 
-				"?x <http://www.seerc.org/test/pellet-icv#works_on> ?y .\n" + 
-				"{?y a <http://www.seerc.org/test/pellet-icv#Project> .\n" + 
-				"} UNION {?y <http://www.seerc.org/test/pellet-icv#manages> ?s0 .\n" + 
+				"?x0 <http://www.seerc.org/test/pellet-icv#works_on> ?x1 .\n" + 
+				"{?x1 a <http://www.seerc.org/test/pellet-icv#Project> .\n" + 
+				"} UNION {?x1 <http://www.seerc.org/test/pellet-icv#manages> ?s0 .\n" + 
 				"?s0 a <http://www.seerc.org/test/pellet-icv#Department> .\n" + 
-				"} UNION {?y <http://www.seerc.org/test/pellet-icv#supervises> ?s1 .\n" + 
+				"} UNION {?x1 <http://www.seerc.org/test/pellet-icv#supervises> ?s1 .\n" + 
 				"?s1 a <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
 				"?s1 <http://www.seerc.org/test/pellet-icv#works_on> ?s2 .\n" + 
 				"?s2 a <http://www.seerc.org/test/pellet-icv#Project> .\n" + 

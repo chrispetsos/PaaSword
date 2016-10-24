@@ -7,10 +7,13 @@ import java.util.List;
 
 import org.aksw.owl2sparql.OWLClassExpressionToSPARQLConverter;
 import org.aksw.owl2sparql.OWLObjectPropertyExpressionConverter;
+import org.aksw.owl2sparql.util.VarGenerator;
+import org.aksw.owl2sparql.util.VariablesMapping;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -26,6 +29,7 @@ public class AxiomSPARQLTranslator {
 	OWLOntology ontology;
 	OWLClassExpressionToSPARQLConverter ceConverter;
 	OWLObjectPropertyExpressionConverter opConverter;
+	VarGenerator classVarGenerator;
 	
 	private String groupGraphPatternTag = "<groupGraphPattern>";
 	private String queryTemplate = 
@@ -42,6 +46,7 @@ public class AxiomSPARQLTranslator {
 		} catch (OWLOntologyCreationException e) {
 			e.printStackTrace();
 		}
+		classVarGenerator = new VarGenerator("x");
 		ceConverter = new OWLClassExpressionToSPARQLConverter();
 		opConverter = new OWLObjectPropertyExpressionConverter();
 	}
@@ -78,9 +83,14 @@ public class AxiomSPARQLTranslator {
         			return;
         		}
         		
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), "?x");
+        		// create unique names for all used variables
+        		String subclassVar = classVarGenerator.newVar();
+        		String fillerVar = classVarGenerator.newVar();
+
+        		// create the query's graph pattern
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
-        		String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), "?y");
+				String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
         		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
         		System.out.println("On property: " + onProperty);
         		System.out.println("Filler class graph pattern: " + fillerGraphPattern);
@@ -88,7 +98,7 @@ public class AxiomSPARQLTranslator {
         		String groupGraphPattern = 
         				restrictedClassGraphPattern +
         				  "FILTER NOT EXISTS {\n"
-        				+ "?x " + onProperty + " ?y .\n"
+        				+ subclassVar + " " + onProperty + " " + fillerVar + " .\n"
 						+ fillerGraphPattern
 						+"}";
         		
