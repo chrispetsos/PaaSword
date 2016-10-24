@@ -48,14 +48,14 @@ public class AxiomSPARQLTranslatorTest {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/restrictionConstraint.owl"));
 		List<String> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
-		assertEquals("SELECT DISTINCT *\n" + 
-				"WHERE {\n" + 
-				"?x0 a <http://www.seerc.org/test/pellet-icv#Supervisor> .\n" + 
-				"FILTER NOT EXISTS {\n" + 
-				"?x0 <http://www.seerc.org/test/pellet-icv#supervises> ?x1 .\n" + 
-				"?x1 a <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
-				"}\n" + 
-				"}"
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Supervisor>\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#supervises> ?x1 .\n" + 
+						"      ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee>\n" + 
+						"    }\n" + 
+						"  }\n" + 
+						""
 				, queries.get(0));
 	}
 
@@ -64,20 +64,24 @@ public class AxiomSPARQLTranslatorTest {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/complexRestrictionConstraint.owl"));
 		List<String> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
-		assertEquals("SELECT DISTINCT *\n" + 
-				"WHERE {\n" + 
-				"?x0 a <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
-				"FILTER NOT EXISTS {\n" + 
-				"?x0 <http://www.seerc.org/test/pellet-icv#works_on> ?x1 .\n" + 
-				"{?x1 a <http://www.seerc.org/test/pellet-icv#Project> .\n" + 
-				"} UNION {?x1 <http://www.seerc.org/test/pellet-icv#manages> ?s0 .\n" + 
-				"?s0 a <http://www.seerc.org/test/pellet-icv#Department> .\n" + 
-				"} UNION {?x1 <http://www.seerc.org/test/pellet-icv#supervises> ?s1 .\n" + 
-				"?s1 a <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
-				"?s1 <http://www.seerc.org/test/pellet-icv#works_on> ?s2 .\n" + 
-				"?s2 a <http://www.seerc.org/test/pellet-icv#Project> .\n" + 
-				"}}\n" + 
-				"}"
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee>\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#works_on> ?x1\n" + 
+						"        { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project> }\n" + 
+						"      UNION\n" + 
+						"        { ?x1 <http://www.seerc.org/test/pellet-icv#manages> ?s0 .\n" + 
+						"          ?s0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Department>\n" + 
+						"        }\n" + 
+						"      UNION\n" + 
+						"        { ?x1 <http://www.seerc.org/test/pellet-icv#supervises> ?s1 .\n" + 
+						"          ?s1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
+						"          ?s1 <http://www.seerc.org/test/pellet-icv#works_on> ?s2 .\n" + 
+						"          ?s2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project>\n" + 
+						"        }\n" + 
+						"    }\n" + 
+						"  }\n" + 
+						""
 				, queries.get(0));
 	}
 

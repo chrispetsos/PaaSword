@@ -23,6 +23,9 @@ import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
 
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryFactory;
+
 public class AxiomSPARQLTranslator {
 
 	OWLOntologyManager manager;
@@ -102,7 +105,7 @@ public class AxiomSPARQLTranslator {
 						+ fillerGraphPattern
 						+"}";
         		
-        		String query = queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern);
+        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
         		
             	queries.add(query);
@@ -130,6 +133,13 @@ public class AxiomSPARQLTranslator {
         walker.walkStructure(visitor);
         
 		return queries;
+	}
+
+	protected String prettyPrint(String query)
+	{
+		// build an Apache Jena Query from the String which is already pretty printed.
+		Query sparqlQuery = QueryFactory.create(query);
+		return sparqlQuery.toString();
 	}
 
 }
