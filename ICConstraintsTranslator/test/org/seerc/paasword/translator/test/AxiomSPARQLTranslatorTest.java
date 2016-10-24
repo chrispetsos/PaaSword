@@ -85,6 +85,23 @@ public class AxiomSPARQLTranslatorTest {
 				, queries.get(0));
 	}
 
+	@Test
+	public void testMinCardinality() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/minCardinalityConstraint.owl"));
+		List<String> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Supervisor>\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#supervises> ?x1 .\n" + 
+						"      ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee>\n" + 
+						"    }\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0));
+	}
+
+
 	public FileInputStream createFileInputStream(String filePath) {
 		try {
 			return new FileInputStream(new File(filePath));

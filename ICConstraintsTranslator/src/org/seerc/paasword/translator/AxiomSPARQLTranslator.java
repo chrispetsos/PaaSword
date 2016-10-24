@@ -15,6 +15,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -111,6 +112,10 @@ public class AxiomSPARQLTranslator {
             	queries.add(query);
             }
             
+        	public void visit(OWLObjectMinCardinality ce) {
+        		System.out.println(ce);
+        	}
+
             @Override
         	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
         		System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
