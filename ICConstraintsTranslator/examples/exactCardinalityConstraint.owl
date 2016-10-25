@@ -9,3 +9,5 @@
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass :Department
               ] .
+              
+:manages a owl:ObjectProperty .

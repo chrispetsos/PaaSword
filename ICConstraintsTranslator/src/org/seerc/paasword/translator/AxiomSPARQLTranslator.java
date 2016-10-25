@@ -15,6 +15,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
+import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
 import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -159,6 +160,11 @@ public class AxiomSPARQLTranslator {
         		System.out.println(query);
         		
             	queries.add(query);
+        	}
+
+            @Override
+        	public void visit(OWLObjectExactCardinality ce) {
+        		System.out.println(ce);
         	}
 
             @Override
