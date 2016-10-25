@@ -66,20 +66,13 @@ public class AxiomSPARQLTranslator {
 			
             @Override
             public void visit(OWLObjectSomeValuesFrom ce) {
-        		System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
+    			if(this.axiomAlreadyVisited()) return;
+
+    			System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
         		OWLSubClassOfAxiom axiom = null;
         		try
         		{
         			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        			// if current axiom has been visited
-        			if(visitedAxioms.contains(axiom))
-        			{	// this means that we are visiting an "internal" restriction of an outer "complex" restriction
-        				// which has been already converted.
-                		System.out.println("The current axiom is considered as an \"internal\" restriction of an outer \"complex\" restriction, ignoring...");
-        				return;
-        			}
-        			// new axiom, add it to visitedAxioms and continue
-        			visitedAxioms.add(axiom);
         		}
         		catch(Exception e)
         		{
@@ -111,14 +104,18 @@ public class AxiomSPARQLTranslator {
         		
             	queries.add(query);
             }
-            
+
         	public void visit(OWLObjectMinCardinality ce) {
-        		System.out.println(ce);
+    			if(this.axiomAlreadyVisited()) return;
+
+    			System.out.println(ce);
         	}
 
             @Override
         	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
-        		System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
+    			if(this.axiomAlreadyVisited()) return;
+
+    			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
         		
         		String property = axiom.getProperty().toString();
         		String domain = axiom.getDomain().toString();
@@ -132,6 +129,20 @@ public class AxiomSPARQLTranslator {
             protected void handleDefault(OWLObject axiom) {
         		System.out.println("NOT SUPPORTED: " + axiom + ", " + axiom.getClass().getSimpleName());
         	}
+
+            public boolean axiomAlreadyVisited() {
+				// if current axiom has been visited
+				if(visitedAxioms.contains(this.getCurrentAxiom()))
+				{	// this means that we are visiting an "internal" restriction of an outer "complex" restriction
+					// which has been already converted.
+					System.out.println("The current axiom is considered as an \"internal\" expression of an outer \"complex\" expression, ignoring...");
+					return true;
+				}
+				// new axiom, add it to visitedAxioms and continue
+				visitedAxioms.add(this.getCurrentAxiom());
+				return false;
+			}
+            
         };
         // Now ask the walker to walk over the ontology structure using our
         // visitor instance.
