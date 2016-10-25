@@ -44,8 +44,8 @@ public class AxiomSPARQLTranslatorTest {
 	}
 
 	@Test
-	public void testRestriction() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/restrictionConstraint.owl"));
+	public void testSomeValuesFromRestriction() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/someValuesFromConstraint.owl"));
 		List<String> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
