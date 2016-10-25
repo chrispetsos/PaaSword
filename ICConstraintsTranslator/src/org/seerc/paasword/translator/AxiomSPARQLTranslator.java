@@ -123,12 +123,10 @@ public class AxiomSPARQLTranslator {
         		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
-        		//String fillerVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
         		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
-				//String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
         		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
         		List<String> freshVars = new ArrayList<String>();
         		for(int i=0;i<ce.getCardinality();i++)
@@ -165,7 +163,57 @@ public class AxiomSPARQLTranslator {
 
         	@Override
         	public void visit(OWLObjectMaxCardinality ce) {
-        		System.out.println(ce);
+        		if(this.axiomAlreadyVisited()) return;
+
+    			OWLSubClassOfAxiom axiom = null;
+        		try
+        		{
+        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
+        		}
+        		catch(Exception e)
+        		{
+            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
+        			return;
+        		}
+        		
+        		// create unique names for all used variables
+        		String subclassVar = classVarGenerator.newVar();
+
+        		// create the query's graph pattern
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
+        		String filterNotExistsGraphPattern = "";
+        		List<String> freshVars = new ArrayList<String>();
+        		for(int i=0;i<ce.getCardinality()+1;i++)
+        		{
+        			String freshVar = classVarGenerator.newVar();
+        			freshVars.add(freshVar);
+        			filterNotExistsGraphPattern += 
+        					subclassVar + " " + onProperty + " " + freshVar + " .\n" +
+        					ceConverter.asGroupGraphPattern(ce.getFiller(), freshVar);
+        		}
+
+        		for(int j=0;j<freshVars.size();j++)
+        		{
+        			for(int i=0;i<j;i++)
+        			{
+	        			filterNotExistsGraphPattern += 
+	        					"FILTER (" +
+    							freshVars.get(i) + " != " + freshVars.get(j) + 
+    							")";
+        			}
+        		}
+        		
+        		filterNotExistsGraphPattern += "\n";
+        		
+        		String groupGraphPattern = 
+        				restrictedClassGraphPattern +
+        				filterNotExistsGraphPattern;
+        		
+        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
+        		System.out.println(query);
+        		
+            	queries.add(query);
         	}
 
         	@Override
