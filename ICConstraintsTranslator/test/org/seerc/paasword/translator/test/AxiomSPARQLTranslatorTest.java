@@ -108,7 +108,29 @@ public class AxiomSPARQLTranslatorTest {
 				, queries.get(0));
 	}
 
-
+	@Test
+	public void testExactCardinality() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/exactCardinalityConstraint.owl"));
+		List<String> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee>\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#works_on> ?x1 .\n" + 
+						"      ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project> .\n" + 
+						"      ?x0 <http://www.seerc.org/test/pellet-icv#works_on> ?x2 .\n" + 
+						"      ?x2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project> .\n" + 
+						"      ?x0 <http://www.seerc.org/test/pellet-icv#works_on> ?x3 .\n" + 
+						"      ?x3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project>\n" + 
+						"      FILTER ( ?x1 != ?x2 )\n" + 
+						"      FILTER ( ?x1 != ?x3 )\n" + 
+						"      FILTER ( ?x2 != ?x3 )\n" + 
+						"    }\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0));
+	}
+	
 	public FileInputStream createFileInputStream(String filePath) {
 		try {
 			return new FileInputStream(new File(filePath));
