@@ -182,9 +182,88 @@ public class AxiomSPARQLTranslator {
         		// create the query's graph pattern
         		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
-        		String filterNotExistsGraphPattern = "";
+        		String restOfGraphPattern = "";
         		List<String> freshVars = new ArrayList<String>();
         		for(int i=0;i<ce.getCardinality()+1;i++)
+        		{
+        			String freshVar = classVarGenerator.newVar();
+        			freshVars.add(freshVar);
+        			restOfGraphPattern += 
+        					subclassVar + " " + onProperty + " " + freshVar + " .\n" +
+        					ceConverter.asGroupGraphPattern(ce.getFiller(), freshVar);
+        		}
+
+        		for(int j=0;j<freshVars.size();j++)
+        		{
+        			for(int i=0;i<j;i++)
+        			{
+	        			restOfGraphPattern += 
+	        					"FILTER (" +
+    							freshVars.get(i) + " != " + freshVars.get(j) + 
+    							")";
+        			}
+        		}
+        		
+        		restOfGraphPattern += "\n";
+        		
+        		String groupGraphPattern = 
+        				restrictedClassGraphPattern +
+        				restOfGraphPattern;
+        		
+        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
+        		System.out.println(query);
+        		
+            	queries.add(query);
+        	}
+
+        	@Override
+        	public void visit(OWLObjectExactCardinality ce) {
+        		if(this.axiomAlreadyVisited()) return;
+
+    			OWLSubClassOfAxiom axiom = null;
+        		try
+        		{
+        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
+        		}
+        		catch(Exception e)
+        		{
+            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
+        			return;
+        		}
+        		
+        		// create unique names for all used variables
+        		String subclassVar = classVarGenerator.newVar();
+
+        		// create the query's graph pattern
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
+        		String firstUnionMemberGraphPattern = "{\n";
+        		List<String> freshVars = new ArrayList<String>();
+        		for(int i=0;i<ce.getCardinality()+1;i++)
+        		{
+        			String freshVar = classVarGenerator.newVar();
+        			freshVars.add(freshVar);
+        			firstUnionMemberGraphPattern += 
+        					subclassVar + " " + onProperty + " " + freshVar + " .\n" +
+        					ceConverter.asGroupGraphPattern(ce.getFiller(), freshVar);
+        		}
+
+        		for(int j=0;j<freshVars.size();j++)
+        		{
+        			for(int i=0;i<j;i++)
+        			{
+	        			firstUnionMemberGraphPattern += 
+	        					"FILTER (" +
+    							freshVars.get(i) + " != " + freshVars.get(j) + 
+    							")";
+        			}
+        		}
+        		
+        		firstUnionMemberGraphPattern += "\n}";
+        		
+        		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
+        		freshVars = new ArrayList<String>();
+        		for(int i=0;i<ce.getCardinality();i++)
         		{
         			String freshVar = classVarGenerator.newVar();
         			freshVars.add(freshVar);
@@ -204,21 +283,20 @@ public class AxiomSPARQLTranslator {
         			}
         		}
         		
-        		filterNotExistsGraphPattern += "\n";
+        		filterNotExistsGraphPattern += "\n}";
         		
         		String groupGraphPattern = 
         				restrictedClassGraphPattern +
-        				filterNotExistsGraphPattern;
+        				firstUnionMemberGraphPattern + "\n" +
+        				"UNION\n" +
+        				"{\n" +
+        				filterNotExistsGraphPattern +
+        				"}";
         		
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
         		
             	queries.add(query);
-        	}
-
-        	@Override
-        	public void visit(OWLObjectExactCardinality ce) {
-        		System.out.println(ce);
         	}
 
             @Override
