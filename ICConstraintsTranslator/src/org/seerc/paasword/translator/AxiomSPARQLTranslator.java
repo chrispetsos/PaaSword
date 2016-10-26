@@ -332,7 +332,33 @@ public class AxiomSPARQLTranslator {
         	}
             
         	public void visit(OWLObjectPropertyRangeAxiom axiom) {
-            	System.out.println(axiom);
+        		if(this.axiomAlreadyVisited()) return;
+
+    			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
+        		
+        		String property = axiom.getProperty().toString();
+        		String range = axiom.getRange().toString();
+        		System.out.println("Property: " + property);
+        		System.out.println("Range: " + range);
+        		
+        		// create unique names for all used variables
+        		String rangeVar = classVarGenerator.newVar();
+        		String freshVar = classVarGenerator.newVar();
+        		
+        		// create the query's graph pattern
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getRange(), rangeVar);
+        		String onProperty = "<" + opConverter.visit(axiom.getProperty().asOWLObjectProperty()) + ">";
+
+        		String groupGraphPattern = 
+        				freshVar + " " + onProperty + " " + rangeVar + " .\n" +
+        				"FILTER NOT EXISTS {\n" + 
+        				restrictedClassGraphPattern + 
+        				"}";
+        		
+        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
+        		System.out.println(query);
+        		
+            	queries.add(query);
         	}
 
             @Override
