@@ -310,7 +310,23 @@ public class AxiomSPARQLTranslator {
         		System.out.println("Property: " + property);
         		System.out.println("Domain: " + domain);
         		
-            	queries.add(null);
+        		// create unique names for all used variables
+        		String domainVar = classVarGenerator.newVar();
+        		String freshVar = classVarGenerator.newVar();
+        		
+        		// create the query's graph pattern
+        		String onProperty = "<" + opConverter.visit(axiom.getProperty()) + ">";
+
+        		String groupGraphPattern = 
+        				domainVar + " " + onProperty + " " + freshVar + " .\n" +
+        				"FILTER NOT EXISTS {\n" + 
+        				domainVar + " a <" + domain + "> .\n" + 
+        				"}\n";
+        		
+        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
+        		System.out.println(query);
+        		
+            	queries.add(query);
         	}
             
             @Override
