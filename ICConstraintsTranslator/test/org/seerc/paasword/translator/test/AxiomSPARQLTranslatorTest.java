@@ -49,6 +49,20 @@ public class AxiomSPARQLTranslatorTest {
 	}
 
 	@Test
+	public void testRange() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/rangeConstraint.owl"));
+		List<String> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.seerc.org/test/pellet-icv#is_responsible_for> ?x1\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project_Leader> }\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0));
+	}
+
+	@Test
 	public void testSomeValuesFromRestriction() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/someValuesFromConstraint.owl"));
 		List<String> queries = ast.convertToSPARQLDCQnot();

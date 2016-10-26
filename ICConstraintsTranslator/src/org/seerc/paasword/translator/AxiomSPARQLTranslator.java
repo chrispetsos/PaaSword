@@ -12,12 +12,14 @@ import org.aksw.owl2sparql.util.VariablesMapping;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality;
 import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
+import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -329,6 +331,10 @@ public class AxiomSPARQLTranslator {
             	queries.add(query);
         	}
             
+        	public void visit(OWLObjectPropertyRangeAxiom axiom) {
+            	System.out.println(axiom);
+        	}
+
             @Override
             protected void handleDefault(OWLObject axiom) {
         		System.out.println("NOT SUPPORTED: " + axiom + ", " + axiom.getClass().getSimpleName());
