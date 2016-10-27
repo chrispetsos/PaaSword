@@ -10,4 +10,4 @@
                 owl:onClass :Department
               ] .
               
-:manages a owl:ObjectProperty .
+#:manages a owl:ObjectProperty .
