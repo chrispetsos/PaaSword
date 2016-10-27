@@ -8,6 +8,3 @@
                 owl:onProperty :supervises ;
                 owl:someValuesFrom :Employee
               ] .
-              
-#:supervises a owl:DatatypeProperty .
-#:Employee a owl:Class .

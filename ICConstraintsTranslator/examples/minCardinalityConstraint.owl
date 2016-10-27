@@ -9,6 +9,3 @@
                 owl:minQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
                 owl:onClass :Project
               ] .
-              
-#:Project a owl:Class .
-:works_on a owl:ObjectProperty .

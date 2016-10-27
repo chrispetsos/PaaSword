@@ -9,5 +9,3 @@
                 owl:maxQualifiedCardinality "3"^^xsd:nonNegativeInteger ;
                 owl:onClass :Project
               ] .
-              
-:works_on a owl:ObjectProperty .
