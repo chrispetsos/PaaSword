@@ -3,6 +3,10 @@
 	<name>ICConstraintsTranslator</name>
 	<comment></comment>
 	<projects>
+		<project>owl2sparql-core</project>
+		<project>owlapi-apibinding</project>
+		<project>owlapi-parsers</project>
+		<project>owlapi-api</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
