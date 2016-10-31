@@ -1,0 +1,102 @@
+@prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
+@prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+### Instantiated cryptographic policy set ###################################
+ex1:BootstrappingCryptoPolicySet_1 a pbe:BootstrappingCryptoPolicySet.
+
+ex1:BootstrappingCryptoPolicy_1 a pbe:BootstrappingCryptoPolicy;
+	pbe:belongsToCryptoPolicySet ex1:BootstrappingCryptoPolicySet_1;
+	pbe:hasBootStrappingCryptoRule ex1:BootstrappingCryptoRule_1.
+
+ex1:BootstrappingCryptoRule_1 a pbe:BootstrappingCryptoRule;
+	pbe:hasControlledObject ex1:PaymentCreditCardNo;
+	pbe:hasCryptoElement ex1:AES256.
+
+ex1:PaymentCreditCardNo a pcm:Relational.
+
+ex1:AES256 a pdm:Symmetric.
+#############################################################################
+
+### Instantiated data fragmentation and distribution policy set #############
+ex1:BootstrappingDFDPolicySet_1 a pbdfd:BootstrappingDFDPolicySet.
+
+ex1:BootstrappingDFDPolicy_1 a pbdfd:BootstrappingDFDPolicy;
+	pbdfd:belongsToDFDPolicySet ex1:BootstrappingDFDPolicySet_1; 
+	pbdfd:hasBootstrappingDFDRule ex1:BootstrappingDFDRule_1.
+
+ex1:BootstrappingDFDRule_1 a pbdfd:BootstrappingDFDRule;
+	pbdfd:hasControlledObject ex1:PaymentsTable;
+	pbdfd:hasDFDElement ex1:VerticalFragmentation_1.
+
+ex1:PaymentsTable a pcm:Relational.
+
+ex1:VerticalFragmentation_1 a pdm:VerticalFragmentation.
+#############################################################################
+
+### Instantiated ABAC rule template ‐ part 1 ################################
+ex1:ABACRule_1 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr.
+
+ex1:Read a ppm:DatastorePermission.
+
+ex1:ParkingEmployee a pcm:Person.
+
+ex1:ABACRule_2 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Write;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr.
+
+ex1:Write a ppm:DatastorePermission.
+#############################################################################
+
+### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
+ex1:expr a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+#	pac:hasEvaluationResult xsd:boolean.
+
+ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
+
+ex1:expr1 a pac:ORContextExpression;
+	pac:hasParameter ex1:Parking1, ex1:Parking2.
+
+ex1:Parking1 a pcm:Point.
+
+ex1:Parking2 a pcm:Point.
+#############################################################################
+
+### Instantiated ABAC rule template – part 2 ################################
+ex1:ABACRule_3 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentCreditCardNo;
+	pac:hasAuthorisation pac:negative;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee.
+
+ex1:ABACRule_4 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentCreditCardNo;
+	pac:hasAuthorisation pac:negative;
+	pac:hasAction ex1:Write;
+	pac:hasActor ex1:ParkingEmployee.
+#############################################################################
+
+### Instantiated ABAC policy ################################################
+ex1:ABACPolicySet_1 a pac:ABACPolicySet.
+
+ex1:ABACPolicy_1 a pac:ABACPolicy;
+	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
+	pac:hasPolicyCombiningAlgorithm ex1:denyUnlessPermit;
+	pac:hasABACRule ex1:ABACRule_1, ex1:ABACRule_2, ex1:ABACRule_3, ex1:ABACRule_4.
+
+ex1:denyUnlessPermit a pac:PolicyCombiningAlgorithms.
+#############################################################################

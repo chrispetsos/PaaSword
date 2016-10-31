@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ICQueryValidatorREST">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="SwaggerWebFragment.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/SwaggerWebFragment/SwaggerWebFragment">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ICQueryValidator.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ICQueryValidator/ICQueryValidator">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="PaaSwordSecurityPolicyEngine.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/PaaSwordSecurityPolicyEngine/PaaSwordSecurityPolicyEngine">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ICConstraintsTranslator.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ICConstraintsTranslator/ICConstraintsTranslator">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="owl2sparql-core.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/owl2sparql-core/owl2sparql-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="owlapi-apibinding.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/owlapi-apibinding/owlapi-apibinding">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="owlapi-parsers.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/owlapi-parsers/owlapi-parsers">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="owlapi-api.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/owlapi-api/owlapi-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="owlapi-impl.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/owlapi-impl/owlapi-impl">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/ICQueryValidatorREST/build/classes"/>
+        <property name="context-root" value="ICQueryValidatorREST"/>
+    </wb-module>
+</project-modules>
