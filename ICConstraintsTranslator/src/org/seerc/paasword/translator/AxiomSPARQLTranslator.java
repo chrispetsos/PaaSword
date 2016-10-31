@@ -59,9 +59,9 @@ public class AxiomSPARQLTranslator {
 		opConverter = new OWLObjectPropertyExpressionConverter();
 	}
 	
-	public List<String> convertToSPARQLDCQnot()
+	public List<QueryConstraint> convertToSPARQLDCQnot()
 	{
-		List<String> queries = new ArrayList<String>();
+		List<QueryConstraint> queries = new ArrayList<QueryConstraint>();
 
 		OWLOntologyWalker walker = new OWLOntologyWalker(Collections.singleton(ontology));
 		OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
@@ -106,7 +106,7 @@ public class AxiomSPARQLTranslator {
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
         		
-            	queries.add(query);
+            	queries.add(new QueryConstraint(ce.toString(), query));
             }
 
         	public void visit(OWLObjectMinCardinality ce) {
@@ -160,7 +160,7 @@ public class AxiomSPARQLTranslator {
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
         		
-            	queries.add(query);
+            	queries.add(new QueryConstraint(ce.toString(), query));
         	}
 
         	@Override
@@ -215,7 +215,7 @@ public class AxiomSPARQLTranslator {
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
         		
-            	queries.add(query);
+            	queries.add(new QueryConstraint(ce.toString(), query));
         	}
 
         	@Override
@@ -298,7 +298,7 @@ public class AxiomSPARQLTranslator {
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
         		
-            	queries.add(query);
+            	queries.add(new QueryConstraint(ce.toString(), query));
         	}
 
             @Override
@@ -328,7 +328,7 @@ public class AxiomSPARQLTranslator {
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
         		
-            	queries.add(query);
+            	queries.add(new QueryConstraint(axiom.toString(), query));
         	}
             
         	public void visit(OWLObjectPropertyRangeAxiom axiom) {
@@ -358,7 +358,7 @@ public class AxiomSPARQLTranslator {
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
         		
-            	queries.add(query);
+            	queries.add(new QueryConstraint(axiom.toString(), query));
         	}
 
             @Override

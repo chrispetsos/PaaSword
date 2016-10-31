@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.seerc.paasword.translator.AxiomSPARQLTranslator;
+import org.seerc.paasword.translator.QueryConstraint;
 
 public class AxiomSPARQLTranslatorTest {
 
@@ -37,7 +38,7 @@ public class AxiomSPARQLTranslatorTest {
 	@Test
 	public void testDomain() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/domainConstraint.owl"));
-		List<String> queries = ast.convertToSPARQLDCQnot();
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
@@ -45,13 +46,13 @@ public class AxiomSPARQLTranslatorTest {
 						"    FILTER NOT EXISTS {?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project_Leader> }\n" + 
 						"  }\n" + 
 						""
-				, queries.get(0));
+				, queries.get(0).getQuery());
 	}
 
 	@Test
 	public void testRange() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/rangeConstraint.owl"));
-		List<String> queries = ast.convertToSPARQLDCQnot();
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
@@ -59,13 +60,13 @@ public class AxiomSPARQLTranslatorTest {
 						"    FILTER NOT EXISTS {?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project> }\n" + 
 						"  }\n" + 
 						""
-				, queries.get(0));
+				, queries.get(0).getQuery());
 	}
 
 	@Test
 	public void testSomeValuesFromRestriction() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/someValuesFromConstraint.owl"));
-		List<String> queries = ast.convertToSPARQLDCQnot();
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
@@ -75,13 +76,13 @@ public class AxiomSPARQLTranslatorTest {
 						"    }\n" + 
 						"  }\n" + 
 						""
-				, queries.get(0));
+				, queries.get(0).getQuery());
 	}
 
 	@Test
 	public void testComplexRestriction() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/complexRestrictionConstraint.owl"));
-		List<String> queries = ast.convertToSPARQLDCQnot();
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
@@ -101,13 +102,13 @@ public class AxiomSPARQLTranslatorTest {
 						"    }\n" + 
 						"  }\n" + 
 						""
-				, queries.get(0));
+				, queries.get(0).getQuery());
 	}
 
 	@Test
 	public void testMinCardinality() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/minCardinalityConstraint.owl"));
-		List<String> queries = ast.convertToSPARQLDCQnot();
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
@@ -124,13 +125,13 @@ public class AxiomSPARQLTranslatorTest {
 						"    }\n" + 
 						"  }\n" + 
 						""
-				, queries.get(0));
+				, queries.get(0).getQuery());
 	}
 
 	@Test
 	public void testMaxCardinality() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/maxCardinalityConstraint.owl"));
-		List<String> queries = ast.convertToSPARQLDCQnot();
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
@@ -151,13 +152,13 @@ public class AxiomSPARQLTranslatorTest {
 						"    FILTER ( ?x3 != ?x4 )\n" + 
 						"  }\n" + 
 						""
-				, queries.get(0));
+				, queries.get(0).getQuery());
 	}
 	
 	@Test
 	public void testExactCardinality() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/exactCardinalityConstraint.owl"));
-		List<String> queries = ast.convertToSPARQLDCQnot();
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
@@ -175,7 +176,7 @@ public class AxiomSPARQLTranslatorTest {
 						"      }\n" + 
 						"  }\n" + 
 						""
-				, queries.get(0));
+				, queries.get(0).getQuery());
 	}
 	
 	public FileInputStream createFileInputStream(String filePath) {
