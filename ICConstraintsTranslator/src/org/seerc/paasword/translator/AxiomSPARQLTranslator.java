@@ -71,6 +71,9 @@ public class AxiomSPARQLTranslator {
             @Override
             public void visit(OWLObjectSomeValuesFrom ce) {
     			if(this.axiomAlreadyVisited()) return;
+    			
+    			// re-init var generator
+    			classVarGenerator = new VarGenerator("x");
 
     			System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
         		OWLSubClassOfAxiom axiom = null;
@@ -111,6 +114,9 @@ public class AxiomSPARQLTranslator {
 
         	public void visit(OWLObjectMinCardinality ce) {
     			if(this.axiomAlreadyVisited()) return;
+
+    			// re-init var generator
+    			classVarGenerator = new VarGenerator("x");
 
     			OWLSubClassOfAxiom axiom = null;
         		try
@@ -167,6 +173,9 @@ public class AxiomSPARQLTranslator {
         	public void visit(OWLObjectMaxCardinality ce) {
         		if(this.axiomAlreadyVisited()) return;
 
+    			// re-init var generator
+    			classVarGenerator = new VarGenerator("x");
+
     			OWLSubClassOfAxiom axiom = null;
         		try
         		{
@@ -221,6 +230,9 @@ public class AxiomSPARQLTranslator {
         	@Override
         	public void visit(OWLObjectExactCardinality ce) {
         		if(this.axiomAlreadyVisited()) return;
+
+    			// re-init var generator
+    			classVarGenerator = new VarGenerator("x");
 
     			OWLSubClassOfAxiom axiom = null;
         		try
@@ -305,6 +317,9 @@ public class AxiomSPARQLTranslator {
         	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
     			if(this.axiomAlreadyVisited()) return;
 
+    			// re-init var generator
+    			classVarGenerator = new VarGenerator("x");
+
     			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
         		
         		String property = axiom.getProperty().toString();
@@ -333,6 +348,9 @@ public class AxiomSPARQLTranslator {
             
         	public void visit(OWLObjectPropertyRangeAxiom axiom) {
         		if(this.axiomAlreadyVisited()) return;
+
+    			// re-init var generator
+    			classVarGenerator = new VarGenerator("x");
 
     			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
         		
