@@ -42,10 +42,12 @@ public class QueryValidatorREST {
 	
 	private String generateReport(List<QueryValidatorErrors> errors)
 	{
-		String report = "";
+		String report = errors.size() + " validation errors.\n\n";
+		int errorCounter = 0;
 		
 		for(QueryValidatorErrors error:errors)
 		{
+			errorCounter++;
 			// separator
 			if(error.getProblematicResources().isEmpty())
 			{
@@ -53,7 +55,7 @@ public class QueryValidatorREST {
 			}
 			else
 			{
-				report += "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
+				report += "XXX Error " + errorCounter + " XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 			}
 			
 			report += "The constraint comprised of the following statements:\n";
@@ -67,7 +69,7 @@ public class QueryValidatorREST {
 			else
 			{
 				report += "has been violated by statements related to the following resources.\n";				
-				report += error.getProblematicResources().toString() + "\n";
+				report += error.getProblematicResources().toString().replaceAll(",", ",\n") + "\n";
 			}
 			
 			// separator
