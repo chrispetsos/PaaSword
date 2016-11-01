@@ -799,4 +799,13 @@ public class QueryValidatorTest {
 		assertEquals(0, qv.validate().size());
 	}
 
+	@Test
+	public void testAbacRulesViolating1() throws Exception {
+		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/rulesConstraints1.ttl"));
+		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/abacRulesViolating1.ttl"));
+		
+		qv = new QueryValidator(constraints, policy);
+		
+		assertEquals(2, qv.validate().size());
+	}	
 }

@@ -1,0 +1,115 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix gr: <http://purl.org/goodrelations/v1#> .
+@prefix schema: <http://schema.org/> .
+
+### This is a portion of the Car Park security use case we present
+### in D2.2
+### Instantiated ABAC rule template ################################
+ex1:ABACRule_1 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr, ex1:expr2. # This should have cardinality of 1
+
+ex1:PaymentsTable a pcm:Relationa.	# This typo causes a validation error
+
+ex1:Read a ppm:DatastorePermission.
+
+ex1:ParkingEmployee a pcm:Person.
+#############################################################################
+
+### Context expression for  ex1:ABACRule_1 #############
+ex1:expr a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+
+ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
+
+ex1:expr1 a pac:ORContextExpression;
+	pac:hasParameter ex1:Parking1, ex1:Parking2.
+
+ex1:Parking1 a pcm:Point.
+
+ex1:Parking2 a pcm:Point.
+
+ex1:expr2 a pac:ContextExpression.
+#############################################################################
+
+#############################################################################
+# The actual policy ends here. Ontologies from here and on will be imported
+# externally.
+#############################################################################
+
+### Context expression template #############################################
+pac:ContextExpression a rdfs:Class.
+
+pac:ANDContextExpression rdfs:subClassOf pac:ContextExpression.
+
+pac:ORContextExpression rdfs:subClassOf pac:ContextExpression.
+
+pac:XORContextExpression rdfs:subClassOf pac:ContextExpression.
+
+pac:NOTContextExpression rdfs:subClassOf pac:ContextExpression.
+#############################################################################
+
+### Authorisation class and instances #######################################
+pac:Authorisation a rdfs:Class.
+
+pac:positive a pac:Authorisation.
+
+pac:negative a pac:Authorisation.
+#############################################################################
+
+### PCM needed classes ######################################################
+pcm:Person
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Subject, foaf:Person .
+
+pcm:Relational
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DataArtefact ;
+  rdfs:comment "This class refers to accessible data entities that exist in relational databases, i.e. structured to recognize relations between stored items of information." .
+
+pcm:DataArtefact
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Object ;
+  rdfs:comment "This class refers to any sensitive data entitites stored in schema-based or schema-less databases that should be protected from unauthorized access." .
+
+pcm:DateTimeInterval
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DateTime ;
+  rdfs:comment "A period described by a start instance and end instance or a duration." .
+
+pcm:DateTime
+  rdfs:comment "This class describes the specific chronological point expressed either as instant or interval that characterizes an access request." ;
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:SecurityContextElement, <http://www.w3.org/2006/time#TemporalEntity> .
+
+pcm:Point
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:PhysicalLocation ;
+  rdfs:comment "A specific spot where data are stored or from which a particular entity is requesting to access data." .
+
+pcm:PhysicalLocation
+  a rdfs:Class ;
+  rdfs:subClassOf gr:Location, schema:Place, pcm:Location ;
+  rdfs:comment "A physical location is a point or area of interest where data are stored or from which a particular entity is requesting to access data. Physical locations are characterized by an address and/or geographical position or area and/or abstract location and/or a Point of Interest." .
+
+pcm:Location
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:SecurityContextElement ;
+  rdfs:comment "This class describes a physical and/or a network location where data are stored or from which a particular entity is requesting to access data." .
+
+#############################################################################
+
+### PPM needed classes ######################################################
+ppm:DatastorePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a data entity in a datastore." .
+#############################################################################

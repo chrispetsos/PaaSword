@@ -1,0 +1,52 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+
+### This is a portion of the Policy Mode we present in D2.2.
+### It is interpreted as a set of constraints.
+pac:hasControlledObject a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pcm:Object.
+
+pac:hasAuthorisation a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pac:Authorisation.
+
+pac:hasAction a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range ppm:DataPermission.
+
+pac:hasActor a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pcm:Subject.
+
+pac:hasContextExpression a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pac:ContextExpression.
+
+pac:hasPatternParameter a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range [owl:unionOf (pcpm:ContextPattern pac:ContextExpression)].
+
+pac:hasParameter a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)].
+
+pac:hasEvaluationResult a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range xsd:boolean.
+#############################################################################
+
+### We can now add additional constraints
+pac:ABACRule rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:hasContextExpression ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:ContextExpression
+              ] .
