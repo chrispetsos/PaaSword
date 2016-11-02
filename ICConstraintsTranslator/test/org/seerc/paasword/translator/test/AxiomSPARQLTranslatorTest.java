@@ -203,7 +203,7 @@ public class AxiomSPARQLTranslatorTest {
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
 						"  { ?x0 <http://www.seerc.org/test/pellet-icv#dob> ?d0\n" + 
-						"    FILTER ( datatype(?d0) != <http://www.w3.org/2001/XMLSchema#date> )\n" + 
+						"    FILTER ( ! ( datatype(?d0) = <http://www.w3.org/2001/XMLSchema#date> ) )\n" + 
 						"  }\n" + 
 						""
 				, queries.get(0).getQuery());

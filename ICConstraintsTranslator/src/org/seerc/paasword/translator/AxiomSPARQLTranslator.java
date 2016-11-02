@@ -451,14 +451,13 @@ public class AxiomSPARQLTranslator {
         		String freshVar = classVarGenerator.newVar();
         		
         		// create the query's graph pattern
-        		// TODO: We do not support yet complex data ranges.
-        		//String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getRange(), rangeVar);
+        		String restrictedDataRangeGraphPattern = ceConverter.asGroupGraphPattern(axiom.getRange(), rangeVar);
         		String onProperty = "<" + opConverter.visit(axiom.getProperty().asOWLDataProperty()) + ">";
 
         		String groupGraphPattern = 
         				freshVar + " " + onProperty + " " + rangeVar + " .\n" +
         				"FILTER (\n" + 
-        				"datatype(" + rangeVar + ") != <" + axiom.getRange().asOWLDatatype().toStringID() + ">\n" + 
+        				"!(" + restrictedDataRangeGraphPattern + ")\n" + 
         				")";
         		
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
