@@ -179,6 +179,21 @@ public class AxiomSPARQLTranslatorTest {
 				, queries.get(0).getQuery());
 	}
 	
+	@Test
+	public void testRangeDatatype() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/rangeDatatypeConstraint.owl"));
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x1 <http://www.seerc.org/test/pellet-icv#is_responsible_for> ?x0\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project> }\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0).getQuery());
+	}
+
+
 	public FileInputStream createFileInputStream(String filePath) {
 		try {
 			return new FileInputStream(new File(filePath));
