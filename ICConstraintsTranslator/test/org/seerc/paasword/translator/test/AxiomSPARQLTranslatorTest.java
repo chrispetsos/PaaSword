@@ -86,9 +86,9 @@ public class AxiomSPARQLTranslatorTest {
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
-						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Supervisor>\n" + 
-						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#supervises> ?x1 .\n" + 
-						"      ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee>\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project>\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#number> ?d0\n" + 
+						"      FILTER ( ( ( ?d0 >= 0 ) && ( ?d0 < 5000 ) ) && ( datatype(?d0) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
 						"    }\n" + 
 						"  }\n" + 
 						""

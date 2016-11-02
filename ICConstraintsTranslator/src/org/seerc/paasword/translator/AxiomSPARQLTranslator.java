@@ -15,6 +15,8 @@ import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
@@ -39,7 +41,8 @@ public class AxiomSPARQLTranslator {
 	OWLClassExpressionToSPARQLConverter ceConverter;
 	OWLObjectPropertyExpressionConverter opConverter;
 	VarGenerator classVarGenerator;
-	
+	VarGenerator datatypeVarGenerator;
+
 	private String groupGraphPatternTag = "<groupGraphPattern>";
 	private String queryTemplate = 
 			  "SELECT DISTINCT *\n"
@@ -56,6 +59,7 @@ public class AxiomSPARQLTranslator {
 			e.printStackTrace();
 		}
 		classVarGenerator = new VarGenerator("x");
+		datatypeVarGenerator = new VarGenerator("d");
 		ceConverter = new OWLClassExpressionToSPARQLConverter();
 		opConverter = new OWLObjectPropertyExpressionConverter();
 	}
@@ -105,6 +109,53 @@ public class AxiomSPARQLTranslator {
         				  "FILTER NOT EXISTS {\n"
         				+ subclassVar + " " + onProperty + " " + fillerVar + " .\n"
 						+ fillerGraphPattern
+						+"}";
+        		
+        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
+        		System.out.println(query);
+        		
+            	queries.add(new QueryConstraint(ce.toString(), query));
+            }
+
+            @Override
+            public void visit(OWLDataSomeValuesFrom ce) {
+            	if(this.axiomAlreadyVisited()) return;
+    			
+    			// re-init var generators
+    			classVarGenerator = new VarGenerator("x");
+    			datatypeVarGenerator = new VarGenerator("d");
+    			
+    			System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
+        		OWLSubClassOfAxiom axiom = null;
+        		try
+        		{
+        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
+        		}
+        		catch(Exception e)
+        		{
+            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
+        			return;
+        		}
+        		
+        		// create unique names for all used variables
+        		String subclassVar = classVarGenerator.newVar();
+        		String fillerVar = datatypeVarGenerator.newVar();
+
+        		// create the query's graph pattern
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
+				String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
+        		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
+        		System.out.println("On property: " + onProperty);
+        		System.out.println("Filler data range graph pattern: " + fillerGraphPattern);
+        		
+        		String groupGraphPattern = 
+        				restrictedClassGraphPattern +
+        				  "FILTER NOT EXISTS {\n"
+        				+ subclassVar + " " + onProperty + " " + fillerVar + " .\n"
+        				+ "FILTER ((\n"
+						+ fillerGraphPattern + "\n"
+						+ "))\n"
 						+"}";
         		
         		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
@@ -384,10 +435,9 @@ public class AxiomSPARQLTranslator {
             public void visit(OWLDataPropertyRangeAxiom axiom) {
             	if(this.axiomAlreadyVisited()) return;
 
-    			// re-init var generator
+    			// re-init var generators
     			classVarGenerator = new VarGenerator("x");
-    			
-    			VarGenerator datatypeVarGenerator = new VarGenerator("d");
+    			datatypeVarGenerator = new VarGenerator("d");
 
     			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
         		
