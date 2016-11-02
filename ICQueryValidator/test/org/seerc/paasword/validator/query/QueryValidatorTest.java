@@ -828,4 +828,14 @@ public class QueryValidatorTest {
 		
 		assertEquals(0, qv.validate().size());
 	}	
+
+	@Test
+	public void testAbacRulesSimpleFailing() throws Exception {
+		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/abacRulesConstraints.ttl"));
+		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl"));
+		
+		qv = new QueryValidator(constraints, policy);
+		
+		assertEquals(8, qv.validate().size());
+	}	
 }
