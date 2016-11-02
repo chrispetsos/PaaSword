@@ -14,6 +14,7 @@ import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
@@ -378,6 +379,43 @@ public class AxiomSPARQLTranslator {
         		
             	queries.add(new QueryConstraint(axiom.toString(), query));
         	}
+
+            @Override
+            public void visit(OWLDataPropertyRangeAxiom axiom) {
+            	if(this.axiomAlreadyVisited()) return;
+
+    			// re-init var generator
+    			classVarGenerator = new VarGenerator("x");
+    			
+    			VarGenerator datatypeVarGenerator = new VarGenerator("d");
+
+    			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
+        		
+        		String property = axiom.getProperty().toString();
+        		String range = axiom.getRange().toString();
+        		System.out.println("Property: " + property);
+        		System.out.println("Range: " + range);
+        		
+        		// create unique names for all used variables
+        		String rangeVar = datatypeVarGenerator.newVar();
+        		String freshVar = classVarGenerator.newVar();
+        		
+        		// create the query's graph pattern
+        		//String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getRange(), rangeVar);
+        		String onProperty = "<" + opConverter.visit(axiom.getProperty().asOWLDataProperty()) + ">";
+
+        		String groupGraphPattern = 
+        				freshVar + " " + onProperty + " " + rangeVar + " .\n" +
+        				"FILTER (\n" + 
+        				"datatype(" + rangeVar + ") != <" + axiom.getRange().asOWLDatatype().toStringID() + ">\n" + 
+        				")";
+        		
+        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
+        		System.out.println(query);
+        		
+            	queries.add(new QueryConstraint(axiom.toString(), query));
+            }
+
 
             @Override
             protected void handleDefault(OWLObject axiom) {
