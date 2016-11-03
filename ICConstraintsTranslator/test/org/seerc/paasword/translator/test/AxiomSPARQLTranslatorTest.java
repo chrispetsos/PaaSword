@@ -246,6 +246,30 @@ public class AxiomSPARQLTranslatorTest {
 	}
 	
 	@Test
+	public void testExactDatatypeCardinality() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/exactCardinalityDatatypeConstraint.owl"));
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Manager>\n" + 
+						"      { ?x0 <http://www.seerc.org/test/pellet-icv#manages> ?x1 .\n" + 
+						"        ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Department> .\n" + 
+						"        ?x0 <http://www.seerc.org/test/pellet-icv#manages> ?x2 .\n" + 
+						"        ?x2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Department>\n" + 
+						"        FILTER ( ?x1 != ?x2 )\n" + 
+						"      }\n" + 
+						"    UNION\n" + 
+						"      { FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#manages> ?x3 .\n" + 
+						"          ?x3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Department>\n" + 
+						"        }\n" + 
+						"      }\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0).getQuery());
+	}
+	
+	@Test
 	public void testRangeDatatype() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/rangeDatatypeConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
