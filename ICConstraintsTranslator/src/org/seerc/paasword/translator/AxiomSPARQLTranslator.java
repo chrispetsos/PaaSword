@@ -14,6 +14,7 @@ import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDataMinCardinality;
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLDatatype;
@@ -220,6 +221,67 @@ public class AxiomSPARQLTranslator {
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
         	}
+
+            @Override
+            public void visit(OWLDataMinCardinality ce) {
+            	if(this.axiomAlreadyVisited()) return;
+
+    			// re-init var generator
+    			classVarGenerator = new VarGenerator("x");
+    			datatypeVarGenerator = new VarGenerator("d");
+
+    			OWLSubClassOfAxiom axiom = null;
+        		try
+        		{
+        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
+        		}
+        		catch(Exception e)
+        		{
+            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
+        			return;
+        		}
+        		
+        		// create unique names for all used variables
+        		String subclassVar = classVarGenerator.newVar();
+
+        		// create the query's graph pattern
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
+        		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
+        		List<String> freshVars = new ArrayList<String>();
+        		for(int i=0;i<ce.getCardinality();i++)
+        		{
+        			String freshVar = datatypeVarGenerator.newVar();
+        			freshVars.add(freshVar);
+        			filterNotExistsGraphPattern += 
+        					subclassVar + " " + onProperty + " " + freshVar + " .\n" +
+        					"FILTER (" + 
+        					ceConverter.asGroupGraphPattern(ce.getFiller(), freshVar) + "\n" + 
+        					")";
+        		}
+
+        		for(int j=0;j<freshVars.size();j++)
+        		{
+        			for(int i=0;i<j;i++)
+        			{
+	        			filterNotExistsGraphPattern += 
+	        					"FILTER (" +
+    							freshVars.get(i) + " != " + freshVars.get(j) + 
+    							")";
+        			}
+        		}
+        		
+        		filterNotExistsGraphPattern += "\n}";
+        		
+        		String groupGraphPattern = 
+        				restrictedClassGraphPattern +
+        				filterNotExistsGraphPattern;
+        		
+        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
+        		System.out.println(query);
+        		
+            	queries.add(new QueryConstraint(ce.toString(), query));
+            }
 
         	@Override
         	public void visit(OWLObjectMaxCardinality ce) {
