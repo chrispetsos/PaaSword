@@ -111,8 +111,7 @@ public class QueryValidatorTest {
 				);
 
 		// A date of birth must be a date.
-		// TODO: We do not support yet Datatype ranges.
-		/*assertNotValid(
+		assertNotValid(
 				":dob rdfs:range xsd:date ."
 				,
 				":Bob :dob \"1970-01-01\" ."
@@ -122,8 +121,7 @@ public class QueryValidatorTest {
 				":dob rdfs:range xsd:date ."
 				,
 				":Bob :dob \"1970-01-01\"^^xsd:date ."
-				);*/
-		
+				);
 	}
 	
 	@Test
@@ -173,9 +171,8 @@ public class QueryValidatorTest {
 				":Bob a :Employee ."
 				);
 		
-		// TODO: Datatype restrictions are not supported yet.
 		// Each project must have a valid project number.
-		/*assertValid(
+		assertValid(
 				":Project rdfs:subClassOf\n" + 
 				"              [ a owl:Restriction ;\n" + 
 				"                owl:onProperty :number ;\n" + 
@@ -246,8 +243,7 @@ public class QueryValidatorTest {
 				,
 				":MyProject a :Project ;\n" + 
 				"	:number \"23\"^^xsd:integer ."
-				);*/
-
+				);
 	}
 	
 	@Test
@@ -421,7 +417,7 @@ public class QueryValidatorTest {
 		
 	}
 
-	// TODO: We do not support yet property constraints.
+	// TODO: We do not support yet subproperty constraints.
 	/*@Test
 	public void testPropertyConstraints() {
 		// The manager of a department must work in that department.
@@ -642,7 +638,7 @@ public class QueryValidatorTest {
 				":NASA a :US_Government_Agency ."
 				);
 		
-		// TODO: This complex constraint is not supported yet.
+		// TODO: This complex constraint is not supported yet. We need support for owl:allValuesFrom and owl:hasValue.
 		/*assertNotValid(
 				"[ owl:intersectionOf (:Project\n" + 
 				"                       [ a owl:Restriction ;\n" + 
