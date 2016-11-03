@@ -14,6 +14,7 @@ import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
 import org.semanticweb.owlapi.model.OWLDataMinCardinality;
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
@@ -340,6 +341,11 @@ public class AxiomSPARQLTranslator {
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
         	}
+
+            @Override
+            public void visit(OWLDataMaxCardinality ce) {
+                System.out.println(ce);
+            }
 
         	@Override
         	public void visit(OWLObjectExactCardinality ce) {

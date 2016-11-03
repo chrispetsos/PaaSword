@@ -195,6 +195,29 @@ public class AxiomSPARQLTranslatorTest {
 	}
 	
 	@Test
+	public void testMaxDatatypeCardinality() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/maxCardinalityDatatypeConstraint.owl"));
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee>\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d0\n" + 
+						"      FILTER ( ( ( ?d0 >= 0 ) && ( ?d0 < 5000 ) ) && ( datatype(?d0) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
+						"      ?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d1\n" + 
+						"      FILTER ( ( ( ?d1 >= 0 ) && ( ?d1 < 5000 ) ) && ( datatype(?d1) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
+						"      ?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d2\n" + 
+						"      FILTER ( ( ( ?d2 >= 0 ) && ( ?d2 < 5000 ) ) && ( datatype(?d2) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
+						"      FILTER ( ?d0 != ?d1 )\n" + 
+						"      FILTER ( ?d0 != ?d2 )\n" + 
+						"      FILTER ( ?d1 != ?d2 )\n" + 
+						"    }\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0).getQuery());
+	}
+	
+	@Test
 	public void testExactCardinality() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/exactCardinalityConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
