@@ -201,17 +201,21 @@ public class AxiomSPARQLTranslatorTest {
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
-						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee>\n" + 
-						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d0\n" + 
-						"      FILTER ( ( ( ?d0 >= 0 ) && ( ?d0 < 5000 ) ) && ( datatype(?d0) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
-						"      ?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d1\n" + 
-						"      FILTER ( ( ( ?d1 >= 0 ) && ( ?d1 < 5000 ) ) && ( datatype(?d1) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
-						"      ?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d2\n" + 
-						"      FILTER ( ( ( ?d2 >= 0 ) && ( ?d2 < 5000 ) ) && ( datatype(?d2) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
-						"      FILTER ( ?d0 != ?d1 )\n" + 
-						"      FILTER ( ?d0 != ?d2 )\n" + 
-						"      FILTER ( ?d1 != ?d2 )\n" + 
-						"    }\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee> .\n" + 
+						"    ?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d0\n" + 
+						"    FILTER ( ( ( ?d0 >= 0 ) && ( ?d0 < 5000 ) ) && ( datatype(?d0) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
+						"    ?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d1\n" + 
+						"    FILTER ( ( ( ?d1 >= 0 ) && ( ?d1 < 5000 ) ) && ( datatype(?d1) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
+						"    ?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d2\n" + 
+						"    FILTER ( ( ( ?d2 >= 0 ) && ( ?d2 < 5000 ) ) && ( datatype(?d2) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
+						"    ?x0 <http://www.seerc.org/test/pellet-icv#works_on_Project_ID> ?d3\n" + 
+						"    FILTER ( ( ( ?d3 >= 0 ) && ( ?d3 < 5000 ) ) && ( datatype(?d3) = <http://www.w3.org/2001/XMLSchema#integer> ) )\n" + 
+						"    FILTER ( ?d0 != ?d1 )\n" + 
+						"    FILTER ( ?d0 != ?d2 )\n" + 
+						"    FILTER ( ?d1 != ?d2 )\n" + 
+						"    FILTER ( ?d0 != ?d3 )\n" + 
+						"    FILTER ( ?d1 != ?d3 )\n" + 
+						"    FILTER ( ?d2 != ?d3 )\n" + 
 						"  }\n" + 
 						""
 				, queries.get(0).getQuery());
