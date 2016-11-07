@@ -87,13 +87,11 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		
         		String groupGraphPattern = 
-        				restrictedClassGraphPattern +
-        				  "FILTER NOT EXISTS {\n"
-        				+ createFNEPropertyAndTypeGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller(), new ArrayList<String>())
-						+"}";
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ openFNEBlock()
+	      				+ createFNEPropertyAndTypeGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller(), new ArrayList<String>())
+	      				+ closeBlock();
         		
         		String query = createPrettyQuery(groupGraphPattern);
         		
@@ -110,20 +108,18 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		
         		String groupGraphPattern = 
-        				restrictedClassGraphPattern +
-        				  "FILTER NOT EXISTS {\n"
+        				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+        				+ openFNEBlock()
         				+ createFNEPropertyAndTypeGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller(), new ArrayList<String>())
-						+"}";
+        				+ closeBlock();
         		
         		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
             }
 
-        	public void visit(OWLObjectMinCardinality ce) {
+			public void visit(OWLObjectMinCardinality ce) {
     			if(!checkPreconditions()) return;
 
     			reset();
@@ -132,16 +128,13 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
         		List<String> freshVars = new ArrayList<String>();
-        		filterNotExistsGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
-        		filterNotExistsGraphPattern += createNotEqualVarPairs(freshVars);
-        		filterNotExistsGraphPattern += "\n}";
-        		
         		String groupGraphPattern = 
-        				restrictedClassGraphPattern +
-        				filterNotExistsGraphPattern;
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ openFNEBlock()
+	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
+	      				+ createNotEqualVarPairs(freshVars)
+	      				+ closeBlock();
         		
         		String query = createPrettyQuery(groupGraphPattern);
         		
@@ -158,17 +151,13 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
         		List<String> freshVars = new ArrayList<String>();
-        		filterNotExistsGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
-        		filterNotExistsGraphPattern += createNotEqualVarPairs(freshVars);
-        		
-        		filterNotExistsGraphPattern += "\n}";
-        		
         		String groupGraphPattern = 
-        				restrictedClassGraphPattern +
-        				filterNotExistsGraphPattern;
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ openFNEBlock()
+	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
+	      				+ createNotEqualVarPairs(freshVars)
+	      				+ closeBlock();
         		
         		String query = createPrettyQuery(groupGraphPattern);
         		
@@ -185,17 +174,11 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String restOfGraphPattern = "";
         		List<String> freshVars = new ArrayList<String>();
-        		restOfGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
-        		restOfGraphPattern += createNotEqualVarPairs(freshVars);
-        		
-        		restOfGraphPattern += "\n";
-        		
         		String groupGraphPattern = 
-        				restrictedClassGraphPattern +
-        				restOfGraphPattern;
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
+	      				+ createNotEqualVarPairs(freshVars);
         		
         		String query = createPrettyQuery(groupGraphPattern);
         		
@@ -212,16 +195,11 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String restOfGraphPattern = "";
         		List<String> freshVars = new ArrayList<String>();
-        		restOfGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
-        		restOfGraphPattern += createNotEqualVarPairs(freshVars);
-        		restOfGraphPattern += "\n";
-        		
         		String groupGraphPattern = 
-        				restrictedClassGraphPattern +
-        				restOfGraphPattern;
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
+	      				+ createNotEqualVarPairs(freshVars);
         		
         		String query = createPrettyQuery(groupGraphPattern);
         		
@@ -238,26 +216,21 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String firstUnionMemberGraphPattern = "{\n";
         		List<String> freshVars = new ArrayList<String>();
-        		firstUnionMemberGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
-        		firstUnionMemberGraphPattern += createNotEqualVarPairs(freshVars);
-        		firstUnionMemberGraphPattern += "\n}";
-        		
-        		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
-        		freshVars = new ArrayList<String>();
-        		filterNotExistsGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
-        		filterNotExistsGraphPattern += createNotEqualVarPairs(freshVars);
-        		filterNotExistsGraphPattern += "\n}";
-        		
         		String groupGraphPattern = 
-        				restrictedClassGraphPattern +
-        				firstUnionMemberGraphPattern + "\n" +
-        				"UNION\n" +
-        				"{\n" +
-        				filterNotExistsGraphPattern +
-        				"}";
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ openBlock()
+	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
+	      				+ createNotEqualVarPairs(freshVars)
+	      				+ closeBlock(); 
+        		freshVars = new ArrayList<String>();
+        		groupGraphPattern +=	      				
+	      				  openUnionBlock()
+	      				+ openFNEBlock()
+	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
+	      				+ createNotEqualVarPairs(freshVars)
+	      				+ closeBlock()
+	      				+ closeBlock();
         		
         		String query = createPrettyQuery(groupGraphPattern);
         		
@@ -274,26 +247,21 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String firstUnionMemberGraphPattern = "{\n";
         		List<String> freshVars = new ArrayList<String>();
-        		firstUnionMemberGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
-        		firstUnionMemberGraphPattern += createNotEqualVarPairs(freshVars);
-        		firstUnionMemberGraphPattern += "\n}";
-        		
-        		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
-        		freshVars = new ArrayList<String>();
-        		filterNotExistsGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
-        		filterNotExistsGraphPattern += createNotEqualVarPairs(freshVars);
-        		filterNotExistsGraphPattern += "\n}";
-        		
         		String groupGraphPattern = 
-        				restrictedClassGraphPattern +
-        				firstUnionMemberGraphPattern + "\n" +
-        				"UNION\n" +
-        				"{\n" +
-        				filterNotExistsGraphPattern +
-        				"}";
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ openBlock()
+	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
+	      				+ createNotEqualVarPairs(freshVars)
+	      				+ closeBlock(); 
+        		freshVars = new ArrayList<String>();
+        		groupGraphPattern +=	      				
+	      				  openUnionBlock()
+	      				+ openFNEBlock()
+	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
+	      				+ createNotEqualVarPairs(freshVars)
+	      				+ closeBlock()
+	      				+ closeBlock();
         		
         		String query = createPrettyQuery(groupGraphPattern);
         		
@@ -417,6 +385,28 @@ public class AxiomSPARQLTranslator {
         			}
         		}
 				return result;
+			}
+			
+			private String openUnionBlock()
+        	{
+				return "UNION {\n";
+			}
+
+        	private String openBlock() {
+				return "{";
+			}
+
+        	private String closeBlock() {
+				return "}";
+			}
+
+			private String openFNEBlock()
+        	{
+				return "FILTER NOT EXISTS {\n";
+			}
+
+			private String createClassExpressionGraphPattern(OWLClassExpression classExpression, String projectionVariable) {
+				return ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), projectionVariable);
 			}
 			
 			public String createPrettyQuery(String groupGraphPattern) {
