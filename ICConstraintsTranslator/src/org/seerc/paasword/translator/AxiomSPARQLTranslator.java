@@ -80,8 +80,7 @@ public class AxiomSPARQLTranslator {
             public void visit(OWLObjectSomeValuesFrom ce) {
     			if(!checkPreconditions()) return;
     			
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
+    			reset();
 
     			System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
         		OWLSubClassOfAxiom axiom = null;
@@ -124,9 +123,7 @@ public class AxiomSPARQLTranslator {
             public void visit(OWLDataSomeValuesFrom ce) {
     			if(!checkPreconditions()) return;
     			
-    			// re-init var generators
-    			classVarGenerator = new VarGenerator("x");
-    			datatypeVarGenerator = new VarGenerator("d");
+    			reset();
     			
     			System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
         		OWLSubClassOfAxiom axiom = null;
@@ -170,8 +167,7 @@ public class AxiomSPARQLTranslator {
         	public void visit(OWLObjectMinCardinality ce) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
+    			reset();
 
     			OWLSubClassOfAxiom axiom = null;
         		try
@@ -228,9 +224,7 @@ public class AxiomSPARQLTranslator {
             public void visit(OWLDataMinCardinality ce) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
-    			datatypeVarGenerator = new VarGenerator("d");
+    			reset();
 
     			OWLSubClassOfAxiom axiom = null;
         		try
@@ -289,8 +283,7 @@ public class AxiomSPARQLTranslator {
         	public void visit(OWLObjectMaxCardinality ce) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
+    			reset();
 
     			OWLSubClassOfAxiom axiom = null;
         		try
@@ -347,9 +340,7 @@ public class AxiomSPARQLTranslator {
             public void visit(OWLDataMaxCardinality ce) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
-    			datatypeVarGenerator = new VarGenerator("d");
+    			reset();
 
     			OWLSubClassOfAxiom axiom = null;
         		try
@@ -408,8 +399,7 @@ public class AxiomSPARQLTranslator {
         	public void visit(OWLObjectExactCardinality ce) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
+    			reset();
 
     			OWLSubClassOfAxiom axiom = null;
         		try
@@ -494,9 +484,7 @@ public class AxiomSPARQLTranslator {
             public void visit(OWLDataExactCardinality ce) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
-    			datatypeVarGenerator = new VarGenerator("d");
+    			reset();
 
     			OWLSubClassOfAxiom axiom = null;
         		try
@@ -585,8 +573,7 @@ public class AxiomSPARQLTranslator {
         	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
+    			reset();
 
     			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
         		
@@ -617,8 +604,7 @@ public class AxiomSPARQLTranslator {
         	public void visit(OWLObjectPropertyRangeAxiom axiom) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generator
-    			classVarGenerator = new VarGenerator("x");
+    			reset();
 
     			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
         		
@@ -651,9 +637,7 @@ public class AxiomSPARQLTranslator {
             public void visit(OWLDataPropertyRangeAxiom axiom) {
     			if(!checkPreconditions()) return;
 
-    			// re-init var generators
-    			classVarGenerator = new VarGenerator("x");
-    			datatypeVarGenerator = new VarGenerator("d");
+    			reset();
 
     			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
         		
@@ -681,6 +665,12 @@ public class AxiomSPARQLTranslator {
         		
             	queries.add(new QueryConstraint(axiom.toString(), query));
             }
+
+			public void reset() {
+				// re-init var generators
+    			classVarGenerator = new VarGenerator("x");
+    			datatypeVarGenerator = new VarGenerator("d");
+			}
 
 			public boolean checkPreconditions() {
 				return !this.axiomAlreadyVisited();
