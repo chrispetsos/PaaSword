@@ -28,6 +28,7 @@ import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLProperty;
 import org.semanticweb.owlapi.model.OWLPropertyExpression;
 import org.semanticweb.owlapi.model.OWLQuantifiedRestriction;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
@@ -116,14 +117,11 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		String freshVar = classVarGenerator.newVar();
 		
 		// create the query's graph pattern
-		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(ce, domainVar);
-		String onProperty = "<" + opConverter.visit(axiom.getProperty()) + ">";
-
 		String groupGraphPattern = 
-				domainVar + " " + onProperty + " " + freshVar + " .\n" +
-				"FILTER NOT EXISTS {\n" + 
-				restrictedClassGraphPattern + 
-				"}\n";
+				createPropertyExpressionGraphPattern(domainVar, axiom.getProperty(), freshVar) +
+				openFNEBlock() + 
+				createClassExpressionGraphPattern(ce, domainVar) + 
+				closeBlock();
 		
 		postProcess(axiom, groupGraphPattern);
 	}
@@ -136,14 +134,11 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		String freshVar = classVarGenerator.newVar();
 		
 		// create the query's graph pattern
-		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getRange(), rangeVar);
-		String onProperty = "<" + opConverter.visit(axiom.getProperty().asOWLObjectProperty()) + ">";
-
 		String groupGraphPattern = 
-				freshVar + " " + onProperty + " " + rangeVar + " .\n" +
-				"FILTER NOT EXISTS {\n" + 
-				restrictedClassGraphPattern + 
-				"}";
+				createPropertyExpressionGraphPattern(freshVar, axiom.getProperty().asOWLObjectProperty(), rangeVar) +
+				openFNEBlock() + 
+				createClassExpressionGraphPattern(axiom.getRange(), rangeVar) + 
+				closeBlock();
 		
 		postProcess(axiom, groupGraphPattern);
 	}
@@ -157,14 +152,11 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		String freshVar = classVarGenerator.newVar();
 		
 		// create the query's graph pattern
-		String restrictedDataRangeGraphPattern = ceConverter.asGroupGraphPattern(axiom.getRange(), rangeVar);
-		String onProperty = "<" + opConverter.visit(axiom.getProperty().asOWLDataProperty()) + ">";
-
 		String groupGraphPattern = 
-				freshVar + " " + onProperty + " " + rangeVar + " .\n" +
-				"FILTER (\n" + 
-				"!(" + restrictedDataRangeGraphPattern + ")\n" + 
-				")";
+				createPropertyExpressionGraphPattern(freshVar, axiom.getProperty().asOWLDataProperty(), rangeVar) +
+				openFilterBlock() + 
+				"!(" + createDataRangeGraphPattern(axiom.getRange(), rangeVar) + ")" + 
+				closeParentheses();
 		
 		postProcess(axiom, groupGraphPattern);
     }
@@ -299,13 +291,30 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		return "}";
 	}
 
+	private String closeParentheses() {
+		return ")";
+	}
+
 	private String openFNEBlock()
 	{
 		return "FILTER NOT EXISTS {\n";
 	}
 
+	private String openFilterBlock()
+	{
+		return "FILTER (\n";
+	}
+
 	private String createClassExpressionGraphPattern(OWLClassExpression classExpression, String projectionVariable) {
-		return ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), projectionVariable);
+		return ceConverter.asGroupGraphPattern(classExpression, projectionVariable);
+	}
+	
+	private String createDataRangeGraphPattern(OWLDataRange dataRange, String projectionVariable) {
+		return ceConverter.asGroupGraphPattern(dataRange, projectionVariable);
+	}
+	
+	private String createPropertyExpressionGraphPattern(String domain, OWLProperty property, String range) {
+		return domain + " <" + property.toStringID() + "> " + range + "\n";
 	}
 	
 	private String createPrettyQuery(String groupGraphPattern) {
