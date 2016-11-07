@@ -193,7 +193,7 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(axiom.toString(), query));
             }
 
-            public <T extends OWLCardinalityRestriction, OWLRestriction, OWLQuantifiedRestriction> void processExactCardinalityRestriction(T ce) {
+            public <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processExactCardinalityRestriction(T ce) {
 				if(!checkPreconditions()) return;
 
     			reset();
@@ -218,7 +218,7 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(ce.toString(), query));
 			}
             
-            public <T extends OWLCardinalityRestriction, OWLRestriction, OWLQuantifiedRestriction> void processMaxCardinalityRestriction(T ce) {
+            public <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMaxCardinalityRestriction(T ce) {
 				if(!checkPreconditions()) return;
 
     			reset();
@@ -236,7 +236,7 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(ce.toString(), query));
 			}
             
-            public <T extends OWLCardinalityRestriction, OWLRestriction, OWLQuantifiedRestriction> void processMinCardinalityRestriction(T ce) {
+            public <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMinCardinalityRestriction(T ce) {
 				if(!checkPreconditions()) return;
 
     			reset();
