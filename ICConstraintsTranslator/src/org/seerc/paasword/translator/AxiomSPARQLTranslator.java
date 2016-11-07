@@ -78,7 +78,7 @@ public class AxiomSPARQLTranslator {
 			
             @Override
             public void visit(OWLObjectSomeValuesFrom ce) {
-    			if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
     			
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -122,7 +122,7 @@ public class AxiomSPARQLTranslator {
 
             @Override
             public void visit(OWLDataSomeValuesFrom ce) {
-            	if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
     			
     			// re-init var generators
     			classVarGenerator = new VarGenerator("x");
@@ -168,7 +168,7 @@ public class AxiomSPARQLTranslator {
             }
 
         	public void visit(OWLObjectMinCardinality ce) {
-    			if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -226,7 +226,7 @@ public class AxiomSPARQLTranslator {
 
             @Override
             public void visit(OWLDataMinCardinality ce) {
-            	if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -287,7 +287,7 @@ public class AxiomSPARQLTranslator {
 
         	@Override
         	public void visit(OWLObjectMaxCardinality ce) {
-        		if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -345,7 +345,7 @@ public class AxiomSPARQLTranslator {
 
             @Override
             public void visit(OWLDataMaxCardinality ce) {
-            	if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -406,7 +406,7 @@ public class AxiomSPARQLTranslator {
 
         	@Override
         	public void visit(OWLObjectExactCardinality ce) {
-        		if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -492,7 +492,7 @@ public class AxiomSPARQLTranslator {
 
             @Override
             public void visit(OWLDataExactCardinality ce) {
-            	if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -583,7 +583,7 @@ public class AxiomSPARQLTranslator {
 
             @Override
         	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
-    			if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -615,7 +615,7 @@ public class AxiomSPARQLTranslator {
         	}
             
         	public void visit(OWLObjectPropertyRangeAxiom axiom) {
-        		if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generator
     			classVarGenerator = new VarGenerator("x");
@@ -649,7 +649,7 @@ public class AxiomSPARQLTranslator {
 
             @Override
             public void visit(OWLDataPropertyRangeAxiom axiom) {
-            	if(this.axiomAlreadyVisited()) return;
+    			if(!checkPreconditions()) return;
 
     			// re-init var generators
     			classVarGenerator = new VarGenerator("x");
@@ -682,6 +682,9 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(axiom.toString(), query));
             }
 
+			public boolean checkPreconditions() {
+				return !this.axiomAlreadyVisited();
+			}
 
             @Override
             protected void handleDefault(OWLObject axiom) {
