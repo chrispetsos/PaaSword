@@ -94,8 +94,7 @@ public class AxiomSPARQLTranslator {
 						+ fillerGraphPattern
 						+"}";
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
             }
@@ -124,8 +123,7 @@ public class AxiomSPARQLTranslator {
 						+ "))\n"
 						+"}";
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
             }
@@ -169,8 +167,7 @@ public class AxiomSPARQLTranslator {
         				restrictedClassGraphPattern +
         				filterNotExistsGraphPattern;
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
         	}
@@ -217,8 +214,7 @@ public class AxiomSPARQLTranslator {
         				restrictedClassGraphPattern +
         				filterNotExistsGraphPattern;
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
             }
@@ -263,8 +259,7 @@ public class AxiomSPARQLTranslator {
         				restrictedClassGraphPattern +
         				restOfGraphPattern;
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
         	}
@@ -311,8 +306,7 @@ public class AxiomSPARQLTranslator {
         				restrictedClassGraphPattern +
         				restOfGraphPattern;
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
             }
@@ -385,8 +379,7 @@ public class AxiomSPARQLTranslator {
         				filterNotExistsGraphPattern +
         				"}";
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
         	}
@@ -463,8 +456,7 @@ public class AxiomSPARQLTranslator {
         				filterNotExistsGraphPattern +
         				"}";
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(ce.toString(), query));
         	}
@@ -490,8 +482,7 @@ public class AxiomSPARQLTranslator {
         				domainVar + " a <" + domain + "> .\n" + 
         				"}\n";
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(axiom.toString(), query));
         	}
@@ -515,8 +506,7 @@ public class AxiomSPARQLTranslator {
         				restrictedClassGraphPattern + 
         				"}";
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(axiom.toString(), query));
         	}
@@ -541,11 +531,16 @@ public class AxiomSPARQLTranslator {
         				"!(" + restrictedDataRangeGraphPattern + ")\n" + 
         				")";
         		
-        		String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
-        		System.out.println(query);
+        		String query = createPrettyQuery(groupGraphPattern);
         		
             	queries.add(new QueryConstraint(axiom.toString(), query));
             }
+
+			public String createPrettyQuery(String groupGraphPattern) {
+				String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
+        		System.out.println(query);
+				return query;
+			}
 
 			public void reset() {
 				// re-init var generators
