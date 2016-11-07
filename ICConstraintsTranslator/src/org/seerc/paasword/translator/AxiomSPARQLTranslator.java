@@ -81,12 +81,12 @@ public class AxiomSPARQLTranslator {
 
 			@Override
             public void visit(OWLObjectSomeValuesFrom ce) {
-    			processQuantifiedRestriction(ce);
+    			processQuantifiedRestriction(ce, 1);
             }
 
             @Override
             public void visit(OWLDataSomeValuesFrom ce) {
-            	processQuantifiedRestriction(ce);
+            	processQuantifiedRestriction(ce, 1);
             }
 
 			public void visit(OWLObjectMinCardinality ce) {
@@ -237,26 +237,10 @@ public class AxiomSPARQLTranslator {
 			}
             
             public <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMinCardinalityRestriction(T ce) {
-				if(!checkPreconditions()) return;
-
-    			reset();
-
-        		// create unique names for all used variables
-        		String subclassVar = classVarGenerator.newVar();
-
-        		// create the query's graph pattern
-        		String groupGraphPattern = 
-	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
-	      				+ openFNEBlock()
-	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller())
-	      				+ closeBlock();
-        		
-        		String query = createPrettyQuery(groupGraphPattern);
-        		
-            	queries.add(new QueryConstraint(ce.toString(), query));
+				this.processQuantifiedRestriction(ce, ce.getCardinality());
 			}
             
-            public void processQuantifiedRestriction(OWLQuantifiedRestriction ce) {
+            public void processQuantifiedRestriction(OWLQuantifiedRestriction ce, int cardinality) {
 				if(!checkPreconditions()) return;
     			
     			reset();
@@ -268,7 +252,7 @@ public class AxiomSPARQLTranslator {
         		String groupGraphPattern = 
 	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
 	      				+ openFNEBlock()
-	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller())
+	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(cardinality, subclassVar, ce.getProperty(), ce.getFiller())
 	      				+ closeBlock();
         		
         		String query = createPrettyQuery(groupGraphPattern);
