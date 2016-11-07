@@ -85,18 +85,14 @@ public class AxiomSPARQLTranslator {
 
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
-        		String fillerVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
         		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
-				String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
         		
         		String groupGraphPattern = 
         				restrictedClassGraphPattern +
         				  "FILTER NOT EXISTS {\n"
-        				+ subclassVar + " " + onProperty + " " + fillerVar + " .\n"
-						+ fillerGraphPattern
+        				+ createFNEPropertyAndTypeGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller(), new ArrayList<String>())
 						+"}";
         		
         		String query = createPrettyQuery(groupGraphPattern);
@@ -112,20 +108,14 @@ public class AxiomSPARQLTranslator {
     			
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
-        		String fillerVar = datatypeVarGenerator.newVar();
 
         		// create the query's graph pattern
         		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
-				String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
         		
         		String groupGraphPattern = 
         				restrictedClassGraphPattern +
         				  "FILTER NOT EXISTS {\n"
-        				+ subclassVar + " " + onProperty + " " + fillerVar + " .\n"
-        				+ "FILTER ((\n"
-						+ fillerGraphPattern + "\n"
-						+ "))\n"
+        				+ createFNEPropertyAndTypeGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller(), new ArrayList<String>())
 						+"}";
         		
         		String query = createPrettyQuery(groupGraphPattern);
@@ -285,7 +275,6 @@ public class AxiomSPARQLTranslator {
 
         		// create the query's graph pattern
         		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
-        		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
         		String firstUnionMemberGraphPattern = "{\n";
         		List<String> freshVars = new ArrayList<String>();
         		firstUnionMemberGraphPattern += createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars);
