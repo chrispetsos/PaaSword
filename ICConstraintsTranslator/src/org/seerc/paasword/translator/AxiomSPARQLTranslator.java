@@ -12,6 +12,7 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLCardinalityRestriction;
 import org.semanticweb.owlapi.model.OWLDataExactCardinality;
 import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
 import org.semanticweb.owlapi.model.OWLDataMinCardinality;
@@ -29,6 +30,7 @@ import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLQuantifiedRestriction;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
@@ -76,134 +78,34 @@ public class AxiomSPARQLTranslator {
 		OWLOntologyWalkerVisitor visitor = new OWLOntologyWalkerVisitor(walker) {
 
 			List<OWLAxiom> visitedAxioms = new ArrayList<OWLAxiom>();
-			
-            @Override
+
+			@Override
             public void visit(OWLObjectSomeValuesFrom ce) {
-    			if(!checkPreconditions()) return;
-    			
-    			reset();
-
-        		// create unique names for all used variables
-        		String subclassVar = classVarGenerator.newVar();
-
-        		// create the query's graph pattern
-        		String groupGraphPattern = 
-	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
-	      				+ openFNEBlock()
-	      				+ createFNEPropertyAndTypeGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller(), new ArrayList<String>())
-	      				+ closeBlock();
-        		
-        		String query = createPrettyQuery(groupGraphPattern);
-        		
-            	queries.add(new QueryConstraint(ce.toString(), query));
+    			processQuantifiedRestriction(ce);
             }
 
             @Override
             public void visit(OWLDataSomeValuesFrom ce) {
-    			if(!checkPreconditions()) return;
-    			
-    			reset();
-    			
-        		// create unique names for all used variables
-        		String subclassVar = classVarGenerator.newVar();
-
-        		// create the query's graph pattern
-        		String groupGraphPattern = 
-        				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
-        				+ openFNEBlock()
-        				+ createFNEPropertyAndTypeGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller(), new ArrayList<String>())
-        				+ closeBlock();
-        		
-        		String query = createPrettyQuery(groupGraphPattern);
-        		
-            	queries.add(new QueryConstraint(ce.toString(), query));
+            	processQuantifiedRestriction(ce);
             }
 
 			public void visit(OWLObjectMinCardinality ce) {
-    			if(!checkPreconditions()) return;
-
-    			reset();
-
-        		// create unique names for all used variables
-        		String subclassVar = classVarGenerator.newVar();
-
-        		// create the query's graph pattern
-        		List<String> freshVars = new ArrayList<String>();
-        		String groupGraphPattern = 
-	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
-	      				+ openFNEBlock()
-	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
-	      				+ createNotEqualVarPairs(freshVars)
-	      				+ closeBlock();
-        		
-        		String query = createPrettyQuery(groupGraphPattern);
-        		
-            	queries.add(new QueryConstraint(ce.toString(), query));
+    			processMinCardinalityRestriction(ce);
         	}
 
             @Override
             public void visit(OWLDataMinCardinality ce) {
-    			if(!checkPreconditions()) return;
-
-    			reset();
-
-        		// create unique names for all used variables
-        		String subclassVar = classVarGenerator.newVar();
-
-        		// create the query's graph pattern
-        		List<String> freshVars = new ArrayList<String>();
-        		String groupGraphPattern = 
-	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
-	      				+ openFNEBlock()
-	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
-	      				+ createNotEqualVarPairs(freshVars)
-	      				+ closeBlock();
-        		
-        		String query = createPrettyQuery(groupGraphPattern);
-        		
-            	queries.add(new QueryConstraint(ce.toString(), query));
+    			processMinCardinalityRestriction(ce);
             }
 
         	@Override
         	public void visit(OWLObjectMaxCardinality ce) {
-    			if(!checkPreconditions()) return;
-
-    			reset();
-
-        		// create unique names for all used variables
-        		String subclassVar = classVarGenerator.newVar();
-
-        		// create the query's graph pattern
-        		List<String> freshVars = new ArrayList<String>();
-        		String groupGraphPattern = 
-	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
-	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
-	      				+ createNotEqualVarPairs(freshVars);
-        		
-        		String query = createPrettyQuery(groupGraphPattern);
-        		
-            	queries.add(new QueryConstraint(ce.toString(), query));
+    			processMaxCardinalityRestriction(ce);
         	}
 
             @Override
             public void visit(OWLDataMaxCardinality ce) {
-    			if(!checkPreconditions()) return;
-
-    			reset();
-
-        		// create unique names for all used variables
-        		String subclassVar = classVarGenerator.newVar();
-
-        		// create the query's graph pattern
-        		List<String> freshVars = new ArrayList<String>();
-        		String groupGraphPattern = 
-	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
-	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
-	      				+ createNotEqualVarPairs(freshVars);
-        		
-        		String query = createPrettyQuery(groupGraphPattern);
-        		
-            	queries.add(new QueryConstraint(ce.toString(), query));
+    			processMaxCardinalityRestriction(ce);
             }
 
         	@Override
@@ -216,19 +118,14 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		List<String> freshVars = new ArrayList<String>();
         		String groupGraphPattern = 
 	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
 	      				+ openBlock()
-	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
-	      				+ createNotEqualVarPairs(freshVars)
-	      				+ closeBlock(); 
-        		freshVars = new ArrayList<String>();
-        		groupGraphPattern +=	      				
-	      				  openUnionBlock()
+	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller())
+	      				+ closeBlock() 
+	      				+ openUnionBlock()
 	      				+ openFNEBlock()
-	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
-	      				+ createNotEqualVarPairs(freshVars)
+	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller())
 	      				+ closeBlock()
 	      				+ closeBlock();
         		
@@ -247,19 +144,14 @@ public class AxiomSPARQLTranslator {
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		List<String> freshVars = new ArrayList<String>();
         		String groupGraphPattern = 
 	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
 	      				+ openBlock()
-	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
-	      				+ createNotEqualVarPairs(freshVars)
-	      				+ closeBlock(); 
-        		freshVars = new ArrayList<String>();
-        		groupGraphPattern +=	      				
-	      				  openUnionBlock()
+	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller())
+	      				+ closeBlock() 
+	      				+ openUnionBlock()
 	      				+ openFNEBlock()
-	      				+ createFNEPropertyAndTypeGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller(), freshVars)
-	      				+ createNotEqualVarPairs(freshVars)
+	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller())
 	      				+ closeBlock()
 	      				+ closeBlock();
         		
@@ -343,6 +235,72 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(axiom.toString(), query));
             }
 
+            public <T extends OWLCardinalityRestriction, OWLRestriction, OWLQuantifiedRestriction> void processMaxCardinalityRestriction(T ce) {
+				if(!checkPreconditions()) return;
+
+    			reset();
+
+        		// create unique names for all used variables
+        		String subclassVar = classVarGenerator.newVar();
+
+        		// create the query's graph pattern
+        		String groupGraphPattern = 
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller());
+        		
+        		String query = createPrettyQuery(groupGraphPattern);
+        		
+            	queries.add(new QueryConstraint(ce.toString(), query));
+			}
+            
+            public <T extends OWLCardinalityRestriction, OWLRestriction, OWLQuantifiedRestriction> void processMinCardinalityRestriction(T ce) {
+				if(!checkPreconditions()) return;
+
+    			reset();
+
+        		// create unique names for all used variables
+        		String subclassVar = classVarGenerator.newVar();
+
+        		// create the query's graph pattern
+        		String groupGraphPattern = 
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ openFNEBlock()
+	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(ce.getCardinality(), subclassVar, ce.getProperty(), ce.getFiller())
+	      				+ closeBlock();
+        		
+        		String query = createPrettyQuery(groupGraphPattern);
+        		
+            	queries.add(new QueryConstraint(ce.toString(), query));
+			}
+            
+            public void processQuantifiedRestriction(OWLQuantifiedRestriction ce) {
+				if(!checkPreconditions()) return;
+    			
+    			reset();
+
+        		// create unique names for all used variables
+        		String subclassVar = classVarGenerator.newVar();
+
+        		// create the query's graph pattern
+        		String groupGraphPattern = 
+	      				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
+	      				+ openFNEBlock()
+	      				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(1, subclassVar, ce.getProperty(), ce.getFiller())
+	      				+ closeBlock();
+        		
+        		String query = createPrettyQuery(groupGraphPattern);
+        		
+            	queries.add(new QueryConstraint(ce.toString(), query));
+			}
+            
+            private String createPropertyTypeAndNotEqualVarPairsGraphPattern(int numOfLoops, String subclassVar, OWLPropertyExpression property, OWLObject filler)
+			{
+        		List<String> freshVars = new ArrayList<String>();
+				String result = 	createPropertyAndTypeGraphPattern(numOfLoops, subclassVar, property, filler, freshVars)
+	      							+ createNotEqualVarPairs(freshVars);
+				return result;
+			}
+            
             public String createNotEqualVarPairs(List<String> freshVars) {
 				String result = "";
 				for(int j=0;j<freshVars.size();j++)
@@ -358,9 +316,7 @@ public class AxiomSPARQLTranslator {
 				return result;
 			}
 
-			public String createFNEPropertyAndTypeGraphPattern(
-					int numOfLoops, String subclassVar,
-					OWLPropertyExpression property, OWLObject filler, List<String> freshVars) {
+			public String createPropertyAndTypeGraphPattern(int numOfLoops, String subclassVar, OWLPropertyExpression property, OWLObject filler, List<String> freshVars) {
 				String result = "";
 				for(int i=0;i<numOfLoops;i++)
         		{
