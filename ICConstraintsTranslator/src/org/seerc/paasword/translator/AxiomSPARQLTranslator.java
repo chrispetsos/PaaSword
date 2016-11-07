@@ -475,7 +475,6 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-        		String property = axiom.getProperty().toString();
         		String domain = axiom.getDomain().toString();
         		
         		// create unique names for all used variables
@@ -502,9 +501,6 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-        		String property = axiom.getProperty().toString();
-        		String range = axiom.getRange().toString();
-        		
         		// create unique names for all used variables
         		String rangeVar = classVarGenerator.newVar();
         		String freshVar = classVarGenerator.newVar();
@@ -531,9 +527,6 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-        		String property = axiom.getProperty().toString();
-        		String range = axiom.getRange().toString();
-        		
         		// create unique names for all used variables
         		String rangeVar = datatypeVarGenerator.newVar();
         		String freshVar = classVarGenerator.newVar();
