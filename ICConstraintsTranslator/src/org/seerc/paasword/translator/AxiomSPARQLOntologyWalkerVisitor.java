@@ -2,15 +2,18 @@ package org.seerc.paasword.translator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.aksw.owl2sparql.OWLClassExpressionToSPARQLConverter;
 import org.aksw.owl2sparql.OWLObjectPropertyExpressionConverter;
 import org.aksw.owl2sparql.util.VarGenerator;
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLCardinalityRestriction;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataExactCardinality;
+import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
 import org.semanticweb.owlapi.model.OWLDataMinCardinality;
 import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
@@ -24,6 +27,7 @@ import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLPropertyExpression;
 import org.semanticweb.owlapi.model.OWLQuantifiedRestriction;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
@@ -40,6 +44,8 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	VarGenerator datatypeVarGenerator;
 	OWLClassExpressionToSPARQLConverter ceConverter;
 	OWLObjectPropertyExpressionConverter opConverter;
+	
+    OWLDataFactory factory;
 
 	List<QueryConstraint> queries = new ArrayList<QueryConstraint>();
 
@@ -55,6 +61,9 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		super(walker);
 		ceConverter = new OWLClassExpressionToSPARQLConverter();
 		opConverter = new OWLObjectPropertyExpressionConverter();
+
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+	    factory = manager.getOWLDataFactory();
 	}
 
 	@Override
@@ -100,19 +109,20 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
 		if(!preprocess()) return;
 
-		String domain = axiom.getDomain().toString();
-		
+		OWLClassExpression ce = factory.getOWLClass(axiom.getDomain());
+
 		// create unique names for all used variables
 		String domainVar = classVarGenerator.newVar();
 		String freshVar = classVarGenerator.newVar();
 		
 		// create the query's graph pattern
+		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(ce, domainVar);
 		String onProperty = "<" + opConverter.visit(axiom.getProperty()) + ">";
 
 		String groupGraphPattern = 
 				domainVar + " " + onProperty + " " + freshVar + " .\n" +
 				"FILTER NOT EXISTS {\n" + 
-				domainVar + " a <" + domain + "> .\n" + 
+				restrictedClassGraphPattern + 
 				"}\n";
 		
 		postProcess(axiom, groupGraphPattern);
