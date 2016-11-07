@@ -193,7 +193,7 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(axiom.toString(), query));
             }
 
-            public <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processExactCardinalityRestriction(T ce) {
+            private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processExactCardinalityRestriction(T ce) {
 				if(!checkPreconditions()) return;
 
     			reset();
@@ -218,7 +218,7 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(ce.toString(), query));
 			}
             
-            public <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMaxCardinalityRestriction(T ce) {
+            private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMaxCardinalityRestriction(T ce) {
 				if(!checkPreconditions()) return;
 
     			reset();
@@ -236,11 +236,11 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(ce.toString(), query));
 			}
             
-            public <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMinCardinalityRestriction(T ce) {
+            private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMinCardinalityRestriction(T ce) {
 				this.processQuantifiedRestriction(ce, ce.getCardinality());
 			}
             
-            public void processQuantifiedRestriction(OWLQuantifiedRestriction ce, int cardinality) {
+            private void processQuantifiedRestriction(OWLQuantifiedRestriction ce, int cardinality) {
 				if(!checkPreconditions()) return;
     			
     			reset();
@@ -268,7 +268,7 @@ public class AxiomSPARQLTranslator {
 				return result;
 			}
             
-            public String createNotEqualVarPairs(List<String> freshVars) {
+            private String createNotEqualVarPairs(List<String> freshVars) {
 				String result = "";
 				for(int j=0;j<freshVars.size();j++)
         		{
@@ -283,7 +283,7 @@ public class AxiomSPARQLTranslator {
 				return result;
 			}
 
-			public String createPropertyAndTypeGraphPattern(int numOfLoops, String subclassVar, OWLPropertyExpression property, OWLObject filler, List<String> freshVars) {
+            private String createPropertyAndTypeGraphPattern(int numOfLoops, String subclassVar, OWLPropertyExpression property, OWLObject filler, List<String> freshVars) {
 				String result = "";
 				for(int i=0;i<numOfLoops;i++)
         		{
@@ -332,19 +332,19 @@ public class AxiomSPARQLTranslator {
 				return ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), projectionVariable);
 			}
 			
-			public String createPrettyQuery(String groupGraphPattern) {
+			private String createPrettyQuery(String groupGraphPattern) {
 				String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
 				return query;
 			}
 
-			public void reset() {
+			private void reset() {
 				// re-init var generators
     			classVarGenerator = new VarGenerator("x");
     			datatypeVarGenerator = new VarGenerator("d");
 			}
 
-			public boolean checkPreconditions() {
+			private boolean checkPreconditions() {
 				return !this.axiomAlreadyVisited();
 			}
 
@@ -353,7 +353,7 @@ public class AxiomSPARQLTranslator {
         		System.out.println("NOT SUPPORTED: " + axiom + ", " + axiom.getClass().getSimpleName());
         	}
 
-            public boolean axiomAlreadyVisited() {
+            private boolean axiomAlreadyVisited() {
 				// if current axiom has been visited
 				if(visitedAxioms.contains(this.getCurrentAxiom()))
 				{	// this means that we are visiting an "internal" restriction of an outer "complex" restriction
