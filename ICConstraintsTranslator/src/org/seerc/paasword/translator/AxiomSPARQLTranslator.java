@@ -86,9 +86,6 @@ public class AxiomSPARQLTranslator {
         		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
 				String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
-        		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
-        		System.out.println("On property: " + onProperty);
-        		System.out.println("Filler class graph pattern: " + fillerGraphPattern);
         		
         		String groupGraphPattern = 
         				restrictedClassGraphPattern +
@@ -117,9 +114,6 @@ public class AxiomSPARQLTranslator {
         		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
 				String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
-        		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
-        		System.out.println("On property: " + onProperty);
-        		System.out.println("Filler data range graph pattern: " + fillerGraphPattern);
         		
         		String groupGraphPattern = 
         				restrictedClassGraphPattern +
@@ -481,12 +475,8 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
-        		
         		String property = axiom.getProperty().toString();
         		String domain = axiom.getDomain().toString();
-        		System.out.println("Property: " + property);
-        		System.out.println("Domain: " + domain);
         		
         		// create unique names for all used variables
         		String domainVar = classVarGenerator.newVar();
@@ -512,12 +502,8 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
-        		
         		String property = axiom.getProperty().toString();
         		String range = axiom.getRange().toString();
-        		System.out.println("Property: " + property);
-        		System.out.println("Range: " + range);
         		
         		// create unique names for all used variables
         		String rangeVar = classVarGenerator.newVar();
@@ -545,12 +531,8 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			System.out.println("Got a " + axiom + ", " + axiom.getClass().getSimpleName() + " !!!");
-        		
         		String property = axiom.getProperty().toString();
         		String range = axiom.getRange().toString();
-        		System.out.println("Property: " + property);
-        		System.out.println("Range: " + range);
         		
         		// create unique names for all used variables
         		String rangeVar = datatypeVarGenerator.newVar();
