@@ -243,9 +243,9 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 			for(int i=0;i<j;i++)
 			{
 				result += 
-    					"FILTER (" +
+    					openFilterBlock() +
 						freshVars.get(i) + " != " + freshVars.get(j) + 
-						")";
+						closeParentheses();
 			}
 		}
 		return result;
@@ -255,24 +255,21 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		String result = "";
 		for(int i=0;i<numOfLoops;i++)
 		{
-			String onProperty = "";
 			if(property.isObjectPropertyExpression())
 			{
     			String freshVar = classVarGenerator.newVar();
     			freshVars.add(freshVar);
-				onProperty = "<" + opConverter.visit(((OWLObjectPropertyExpression) property).asOWLObjectProperty()) + ">";
-    			result += subclassVar + " " + onProperty + " " + freshVar + " .\n";
-    			result += ceConverter.asGroupGraphPattern((OWLClassExpression) filler, freshVar);
+				result += 	  createPropertyExpressionGraphPattern(subclassVar, ((OWLObjectPropertyExpression) property).asOWLObjectProperty(), freshVar)
+							+ createClassExpressionGraphPattern((OWLClassExpression) filler, freshVar);
 			}
 			else
 			{	// Datatype property
     			String freshVar = datatypeVarGenerator.newVar();
     			freshVars.add(freshVar);
-				onProperty = "<" + opConverter.visit(((OWLDataPropertyExpression) property).asOWLDataProperty()) + ">";
-    			result += subclassVar + " " + onProperty + " " + freshVar + " .\n";
-    			result += 	"FILTER (" + 
-	    					ceConverter.asGroupGraphPattern((OWLDataRange)filler, freshVar) + "\n" + 
-	    					")";
+				result += 	  createPropertyExpressionGraphPattern(subclassVar, ((OWLDataPropertyExpression) property).asOWLDataProperty(), freshVar)
+							+ openFilterBlock()
+							+ createDataRangeGraphPattern((OWLDataRange)filler, freshVar)
+							+ closeParentheses();
 			}
 		}
 		return result;
@@ -314,7 +311,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	}
 	
 	private String createPropertyExpressionGraphPattern(String domain, OWLProperty property, String range) {
-		return domain + " <" + property.toStringID() + "> " + range + "\n";
+		return domain + " <" + property.toStringID() + "> " + range + " .\n";
 	}
 	
 	private String createPrettyQuery(String groupGraphPattern) {
