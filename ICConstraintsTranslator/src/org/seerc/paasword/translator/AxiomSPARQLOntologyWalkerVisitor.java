@@ -98,9 +98,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 
     @Override
 	public void visit(OWLAnnotationPropertyDomainAxiom axiom) {
-		if(!checkPreconditions()) return;
-
-		reset();
+		if(!preprocess()) return;
 
 		String domain = axiom.getDomain().toString();
 		
@@ -117,15 +115,11 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				domainVar + " a <" + domain + "> .\n" + 
 				"}\n";
 		
-		String query = createPrettyQuery(groupGraphPattern);
-		
-    	queries.add(new QueryConstraint(axiom.toString(), query));
+		postProcess(axiom, groupGraphPattern);
 	}
-    
-	public void visit(OWLObjectPropertyRangeAxiom axiom) {
-		if(!checkPreconditions()) return;
 
-		reset();
+	public void visit(OWLObjectPropertyRangeAxiom axiom) {
+		if(!preprocess()) return;
 
 		// create unique names for all used variables
 		String rangeVar = classVarGenerator.newVar();
@@ -141,16 +135,12 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				restrictedClassGraphPattern + 
 				"}";
 		
-		String query = createPrettyQuery(groupGraphPattern);
-		
-    	queries.add(new QueryConstraint(axiom.toString(), query));
+		postProcess(axiom, groupGraphPattern);
 	}
 
     @Override
     public void visit(OWLDataPropertyRangeAxiom axiom) {
-		if(!checkPreconditions()) return;
-
-		reset();
+		if(!preprocess()) return;
 
 		// create unique names for all used variables
 		String rangeVar = datatypeVarGenerator.newVar();
@@ -166,15 +156,11 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				"!(" + restrictedDataRangeGraphPattern + ")\n" + 
 				")";
 		
-		String query = createPrettyQuery(groupGraphPattern);
-		
-    	queries.add(new QueryConstraint(axiom.toString(), query));
+		postProcess(axiom, groupGraphPattern);
     }
 
     private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processExactCardinalityRestriction(T ce) {
-		if(!checkPreconditions()) return;
-
-		reset();
+		if(!preprocess()) return;
 
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
@@ -191,15 +177,11 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
   				+ closeBlock()
   				+ closeBlock();
 		
-		String query = createPrettyQuery(groupGraphPattern);
-		
-    	queries.add(new QueryConstraint(ce.toString(), query));
+		postProcess(ce, groupGraphPattern);
 	}
     
     private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMaxCardinalityRestriction(T ce) {
-		if(!checkPreconditions()) return;
-
-		reset();
+		if(!preprocess()) return;
 
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
@@ -209,9 +191,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
   				  createClassExpressionGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar)
   				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(ce.getCardinality()+1, subclassVar, ce.getProperty(), ce.getFiller());
 		
-		String query = createPrettyQuery(groupGraphPattern);
-		
-    	queries.add(new QueryConstraint(ce.toString(), query));
+		postProcess(ce, groupGraphPattern);
 	}
     
     private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMinCardinalityRestriction(T ce) {
@@ -219,9 +199,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	}
     
     private void processQuantifiedRestriction(OWLQuantifiedRestriction ce, int cardinality) {
-		if(!checkPreconditions()) return;
-		
-		reset();
+		if(!preprocess()) return;
 
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
@@ -233,9 +211,19 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
   				+ createPropertyTypeAndNotEqualVarPairsGraphPattern(cardinality, subclassVar, ce.getProperty(), ce.getFiller())
   				+ closeBlock();
 		
+		postProcess(ce, groupGraphPattern);
+	}
+    
+	private void postProcess(Object axiom, String groupGraphPattern)
+	{
 		String query = createPrettyQuery(groupGraphPattern);
-		
-    	queries.add(new QueryConstraint(ce.toString(), query));
+    	queries.add(new QueryConstraint(axiom.toString(), query));
+	}
+
+	private boolean preprocess()
+	{
+		reset();
+		return checkPreconditions();
 	}
     
     private String createPropertyTypeAndNotEqualVarPairsGraphPattern(int numOfLoops, String subclassVar, OWLPropertyExpression property, OWLObject filler)
