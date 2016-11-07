@@ -158,50 +158,6 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(ce.toString(), query));
         	}
 
-			public String createNotEqualVarPairs(List<String> freshVars) {
-				String result = "";
-				for(int j=0;j<freshVars.size();j++)
-        		{
-        			for(int i=0;i<j;i++)
-        			{
-        				result += 
-	        					"FILTER (" +
-    							freshVars.get(i) + " != " + freshVars.get(j) + 
-    							")";
-        			}
-        		}
-				return result;
-			}
-
-			public String createFNEPropertyAndTypeGraphPattern(
-					int numOfLoops, String subclassVar,
-					OWLPropertyExpression property, OWLObject filler, List<String> freshVars) {
-				String result = "";
-				for(int i=0;i<numOfLoops;i++)
-        		{
-        			String onProperty = "";
-        			if(property.isObjectPropertyExpression())
-        			{
-            			String freshVar = classVarGenerator.newVar();
-            			freshVars.add(freshVar);
-        				onProperty = "<" + opConverter.visit(((OWLObjectPropertyExpression) property).asOWLObjectProperty()) + ">";
-            			result += subclassVar + " " + onProperty + " " + freshVar + " .\n";
-            			result += ceConverter.asGroupGraphPattern((OWLClassExpression) filler, freshVar);
-        			}
-        			else
-        			{	// Datatype property
-            			String freshVar = datatypeVarGenerator.newVar();
-            			freshVars.add(freshVar);
-        				onProperty = "<" + opConverter.visit(((OWLDataPropertyExpression) property).asOWLDataProperty()) + ">";
-            			result += subclassVar + " " + onProperty + " " + freshVar + " .\n";
-            			result += 	"FILTER (" + 
-			    					ceConverter.asGroupGraphPattern((OWLDataRange)filler, freshVar) + "\n" + 
-			    					")";
-        			}
-        		}
-				return result;
-			}
-
             @Override
             public void visit(OWLDataMinCardinality ce) {
     			if(!checkPreconditions()) return;
@@ -430,6 +386,50 @@ public class AxiomSPARQLTranslator {
             	queries.add(new QueryConstraint(axiom.toString(), query));
             }
 
+            public String createNotEqualVarPairs(List<String> freshVars) {
+				String result = "";
+				for(int j=0;j<freshVars.size();j++)
+        		{
+        			for(int i=0;i<j;i++)
+        			{
+        				result += 
+	        					"FILTER (" +
+    							freshVars.get(i) + " != " + freshVars.get(j) + 
+    							")";
+        			}
+        		}
+				return result;
+			}
+
+			public String createFNEPropertyAndTypeGraphPattern(
+					int numOfLoops, String subclassVar,
+					OWLPropertyExpression property, OWLObject filler, List<String> freshVars) {
+				String result = "";
+				for(int i=0;i<numOfLoops;i++)
+        		{
+        			String onProperty = "";
+        			if(property.isObjectPropertyExpression())
+        			{
+            			String freshVar = classVarGenerator.newVar();
+            			freshVars.add(freshVar);
+        				onProperty = "<" + opConverter.visit(((OWLObjectPropertyExpression) property).asOWLObjectProperty()) + ">";
+            			result += subclassVar + " " + onProperty + " " + freshVar + " .\n";
+            			result += ceConverter.asGroupGraphPattern((OWLClassExpression) filler, freshVar);
+        			}
+        			else
+        			{	// Datatype property
+            			String freshVar = datatypeVarGenerator.newVar();
+            			freshVars.add(freshVar);
+        				onProperty = "<" + opConverter.visit(((OWLDataPropertyExpression) property).asOWLDataProperty()) + ">";
+            			result += subclassVar + " " + onProperty + " " + freshVar + " .\n";
+            			result += 	"FILTER (" + 
+			    					ceConverter.asGroupGraphPattern((OWLDataRange)filler, freshVar) + "\n" + 
+			    					")";
+        			}
+        		}
+				return result;
+			}
+			
 			public String createPrettyQuery(String groupGraphPattern) {
 				String query = AxiomSPARQLTranslator.this.prettyPrint(queryTemplate.replace(AxiomSPARQLTranslator.this.groupGraphPatternTag, groupGraphPattern));
         		System.out.println(query);
