@@ -8,19 +8,15 @@ import java.util.List;
 import org.aksw.owl2sparql.OWLClassExpressionToSPARQLConverter;
 import org.aksw.owl2sparql.OWLObjectPropertyExpressionConverter;
 import org.aksw.owl2sparql.util.VarGenerator;
-import org.aksw.owl2sparql.util.VariablesMapping;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StreamDocumentSource;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
-import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataExactCardinality;
 import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
 import org.semanticweb.owlapi.model.OWLDataMinCardinality;
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
-import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality;
@@ -82,24 +78,12 @@ public class AxiomSPARQLTranslator {
     			
     			reset();
 
-    			System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
-        		OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
         		String fillerVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
 				String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
         		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
@@ -125,24 +109,12 @@ public class AxiomSPARQLTranslator {
     			
     			reset();
     			
-    			System.out.println("Got a " + ce + ", " + ce.getClass().getSimpleName() + " !!!");
-        		OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
         		String fillerVar = datatypeVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
 				String fillerGraphPattern = ceConverter.asGroupGraphPattern(ce.getFiller(), fillerVar);
         		System.out.println("Restricted class graph pattern: " + restrictedClassGraphPattern);
@@ -169,22 +141,11 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
         		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
         		List<String> freshVars = new ArrayList<String>();
@@ -226,22 +187,11 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
         		String filterNotExistsGraphPattern = "FILTER NOT EXISTS {\n";
         		List<String> freshVars = new ArrayList<String>();
@@ -285,22 +235,11 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
         		String restOfGraphPattern = "";
         		List<String> freshVars = new ArrayList<String>();
@@ -342,22 +281,11 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
         		String restOfGraphPattern = "";
         		List<String> freshVars = new ArrayList<String>();
@@ -401,22 +329,11 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLObjectProperty()) + ">";
         		String firstUnionMemberGraphPattern = "{\n";
         		List<String> freshVars = new ArrayList<String>();
@@ -486,22 +403,11 @@ public class AxiomSPARQLTranslator {
 
     			reset();
 
-    			OWLSubClassOfAxiom axiom = null;
-        		try
-        		{
-        			axiom = (OWLSubClassOfAxiom) this.getCurrentAxiom();
-        		}
-        		catch(Exception e)
-        		{
-            		System.out.println(ce + " is not correctly used as a restriction in a " + OWLSubClassOfAxiom.class.getSimpleName() + " axiom !!!");
-        			return;
-        		}
-        		
         		// create unique names for all used variables
         		String subclassVar = classVarGenerator.newVar();
 
         		// create the query's graph pattern
-        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(axiom.getSubClass(), subclassVar);
+        		String restrictedClassGraphPattern = ceConverter.asGroupGraphPattern(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSubClass(), subclassVar);
         		String onProperty = "<" + opConverter.visit(ce.getProperty().asOWLDataProperty()) + ">";
         		String firstUnionMemberGraphPattern = "{\n";
         		List<String> freshVars = new ArrayList<String>();
