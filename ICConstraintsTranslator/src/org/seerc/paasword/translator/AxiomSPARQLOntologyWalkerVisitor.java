@@ -161,6 +161,11 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		postProcess(axiom, groupGraphPattern);
     }
 
+    @Override
+    protected void handleDefault(OWLObject axiom) {
+		System.out.println("NOT SUPPORTED: " + axiom + ", " + axiom.getClass().getSimpleName());
+	}
+
     private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processExactCardinalityRestriction(T ce) {
 		if(!preprocess()) return;
 
@@ -216,18 +221,6 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		postProcess(ce, groupGraphPattern);
 	}
     
-	private void postProcess(Object axiom, String groupGraphPattern)
-	{
-		String query = createPrettyQuery(groupGraphPattern);
-    	queries.add(new QueryConstraint(axiom.toString(), query));
-	}
-
-	private boolean preprocess()
-	{
-		reset();
-		return checkPreconditions();
-	}
-    
     private String createPropertyTypeAndNotEqualVarPairsGraphPattern(int numOfLoops, String subclassVar, OWLPropertyExpression property, OWLObject filler)
 	{
 		List<String> freshVars = new ArrayList<String>();
@@ -236,21 +229,6 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		return result;
 	}
     
-    private String createNotEqualVarPairs(List<String> freshVars) {
-		String result = "";
-		for(int j=0;j<freshVars.size();j++)
-		{
-			for(int i=0;i<j;i++)
-			{
-				result += 
-    					openFilterBlock() +
-						freshVars.get(i) + " != " + freshVars.get(j) + 
-						closeParentheses();
-			}
-		}
-		return result;
-	}
-
     private String createPropertyAndTypeGraphPattern(int numOfLoops, String subclassVar, OWLPropertyExpression property, OWLObject filler, List<String> freshVars) {
 		String result = "";
 		for(int i=0;i<numOfLoops;i++)
@@ -275,9 +253,19 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		return result;
 	}
 	
-	private String openUnionBlock()
-	{
-		return "UNION {\n";
+    private String createNotEqualVarPairs(List<String> freshVars) {
+		String result = "";
+		for(int j=0;j<freshVars.size();j++)
+		{
+			for(int i=0;i<j;i++)
+			{
+				result += 
+    					openFilterBlock() +
+						freshVars.get(i) + " != " + freshVars.get(j) + 
+						closeParentheses();
+			}
+		}
+		return result;
 	}
 
 	private String openBlock() {
@@ -288,18 +276,23 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		return "}";
 	}
 
-	private String closeParentheses() {
-		return ")";
-	}
-
 	private String openFNEBlock()
 	{
 		return "FILTER NOT EXISTS {\n";
 	}
 
+	private String openUnionBlock()
+	{
+		return "UNION {\n";
+	}
+
 	private String openFilterBlock()
 	{
 		return "FILTER (\n";
+	}
+
+	private String closeParentheses() {
+		return ")";
 	}
 
 	private String createClassExpressionGraphPattern(OWLClassExpression classExpression, String projectionVariable) {
@@ -314,10 +307,10 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		return domain + " <" + property.toStringID() + "> " + range + " .\n";
 	}
 	
-	private String createPrettyQuery(String groupGraphPattern) {
-		String query = prettyPrint(queryTemplate.replace(this.groupGraphPatternTag, groupGraphPattern));
-		System.out.println(query);
-		return query;
+	private boolean preprocess()
+	{
+		reset();
+		return checkPreconditions();
 	}
 
 	private void reset() {
@@ -328,11 +321,6 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 
 	private boolean checkPreconditions() {
 		return !this.axiomAlreadyVisited();
-	}
-
-    @Override
-    protected void handleDefault(OWLObject axiom) {
-		System.out.println("NOT SUPPORTED: " + axiom + ", " + axiom.getClass().getSimpleName());
 	}
 
     private boolean axiomAlreadyVisited() {
@@ -348,6 +336,18 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		return false;
 	}
     
+    private void postProcess(Object axiom, String groupGraphPattern)
+	{
+		String query = createPrettyQuery(groupGraphPattern);
+    	queries.add(new QueryConstraint(axiom.toString(), query));
+	}
+    
+    private String createPrettyQuery(String groupGraphPattern) {
+		String query = prettyPrint(queryTemplate.replace(this.groupGraphPatternTag, groupGraphPattern));
+		System.out.println(query);
+		return query;
+	}
+
 	protected String prettyPrint(String query)
 	{
 		// build an Apache Jena Query from the String which is already pretty printed.
