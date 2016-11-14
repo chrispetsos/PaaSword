@@ -26,6 +26,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.InfModel;
 import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.NsIterator;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -51,6 +52,11 @@ public class JenaDataSource {
 		this.model = model;
 	}
 
+	public Model getModel()
+	{
+		return this.model;
+	}
+	
 	public JenaDataSource(String filePath)
 	{
 		OntModel model = null;
