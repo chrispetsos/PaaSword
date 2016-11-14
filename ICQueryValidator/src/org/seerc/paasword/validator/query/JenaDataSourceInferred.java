@@ -21,7 +21,7 @@ public class JenaDataSourceInferred extends JenaDataSource {
 	}
 
 	@Override
-	public void setModel(InfModel model) {
+	public void setModel(OntModel model) {
 		super.setModel(ModelFactory.createOntologyModel(PelletReasonerFactory.THE_SPEC, model));
 	}
 

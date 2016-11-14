@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.util.Arrays;
@@ -21,7 +22,7 @@ public class JenaDataSourceInferredTest {
 
 	JenaDataSourceInferred jdsi;
 	JenaDataSource jds;
-	JenaDataSourceInferred jdsiWithCM;
+	SequenceInputStream sis;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -33,17 +34,22 @@ public class JenaDataSourceInferredTest {
 
 	@Before
 	public void setUp() throws Exception {
+		resetStream();
 		// a Jena data source with inferences
-		jdsi = new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/subsumptive/ContextExpression1.ttl")));
+		jdsi = new JenaDataSourceInferred(sis);
+		
+		resetStream();
 		// a Jena data source with no inferences
-		jds = new JenaDataSource(new FileInputStream(new File("Ontologies/subsumptive/ContextExpression1.ttl")));
-		// a Jena data source with inferences and the Context Model inside
+		jds = new JenaDataSource(sis);
+	}
+
+	private void resetStream() throws FileNotFoundException {
 		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(
 				new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl")), 
+				new FileInputStream(new File("Ontologies/policy-models/Security-Policy.ttl")), 
 				new FileInputStream(new File("Ontologies/subsumptive/ContextExpression1.ttl"))
 				));
-		SequenceInputStream sis = new SequenceInputStream(enumOnto);
-		jdsiWithCM = new JenaDataSourceInferred(sis);
+		sis = new SequenceInputStream(enumOnto);
 	}
 	
 	@After
@@ -57,12 +63,14 @@ public class JenaDataSourceInferredTest {
 
 	@Test
 	public void testInferredSizes() {
-		// those without the CM should have equal size models
-		assertEquals(9, jdsi.getModel().size());
+		assertEquals(548, jdsi.getModel().size());
 		assertEquals(jdsi.getModel().size(), jds.getModel().size());
 		
-		// the one with the CM should be bigger
-		assertTrue(jdsiWithCM.getModel().size() > jdsi.getModel().size());
-		assertEquals(386, jdsiWithCM.getModel().size());
+		System.out.println("----------- Original model --------------");
+		jds.printModel(System.out);
+		System.out.println("-----------------------------------------------\n\n");
+		System.out.println("----------- Original model with inferences --------------");
+		jdsi.printModel(System.out);
+		System.out.println("-----------------------------------------------\n\n");
 	}
 }
