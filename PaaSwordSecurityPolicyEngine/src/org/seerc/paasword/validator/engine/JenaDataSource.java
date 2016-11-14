@@ -219,4 +219,9 @@ public class JenaDataSource {
 	{
 		model.write(os, "TTL") ;
 	}
+	
+	public int getModelSize()
+	{
+		return this.model.listStatements().toList().size();
+	}
 }
