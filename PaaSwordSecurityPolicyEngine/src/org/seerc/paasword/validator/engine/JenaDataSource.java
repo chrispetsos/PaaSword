@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,42 +14,34 @@ import java.util.Map;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 
-import com.hp.hpl.jena.ontology.Individual;
-import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
-import com.hp.hpl.jena.ontology.impl.OntClassImpl;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.InfModel;
-import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.NsIterator;
-import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 public class JenaDataSource {
 	private static String[] neededPrefixesForQueries; 
 			
-	InfModel model;
+	OntModel model;
 
-	public JenaDataSource(InfModel model)
+	public JenaDataSource(OntModel model)
 	{
 		this.populatePrefixMappings(model);
 		setModel(model);
 	}
 
-	public void setModel(InfModel model) {
+	public void setModel(OntModel model) {
 		this.model = model;
 	}
 
@@ -84,7 +77,7 @@ public class JenaDataSource {
 		setModel(model);
 	}
 
-	private void populatePrefixMappings(InfModel model) {
+	private void populatePrefixMappings(OntModel model) {
 		Map<String, String> pm = model.getNsPrefixMap();
 		neededPrefixesForQueries = new String[pm.keySet().size()];
 		int i=0;
@@ -220,5 +213,10 @@ public class JenaDataSource {
 		}
 
 		return classUri;
+	}
+	
+	public void printModel(OutputStream os)
+	{
+		model.write(os, "TTL") ;
 	}
 }
