@@ -62,9 +62,18 @@ public class JenaDataSourceInferredTest {
 	}
 
 	@Test
+	public void testSimpleInferences() throws FileNotFoundException {
+		JenaDataSource simpleSource = new JenaDataSource(new FileInputStream(new File("Ontologies/subsumptive/SimpleForInferences.ttl")));
+		JenaDataSourceInferred inferredSource = new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/subsumptive/SimpleForInferences.ttl")));
+		assertNotEquals(simpleSource.getModelSize(), inferredSource.getModelSize());
+		int i=0;
+	}
+	
+	@Test
 	public void testInferredSizes() {
-		assertEquals(548, jdsi.getModel().size());
-		assertEquals(jdsi.getModel().size(), jds.getModel().size());
+		assertEquals(3639, jdsi.getModelSize());
+		assertTrue(jdsi.getModelSize() > jds.getModelSize());
+		assertEquals(548, jds.getModelSize());
 		
 		System.out.println("----------- Original model --------------");
 		jds.printModel(System.out);

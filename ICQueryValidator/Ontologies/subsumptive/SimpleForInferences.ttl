@@ -1,0 +1,14 @@
+@prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
+@prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+ex1:Human a rdfs:Class .
+ex1:Man rdfs:subClassOf ex1:Human .
+
+ex1:Joe a ex1:Man . # Should infer that Joe is a Human also.
