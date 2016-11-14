@@ -13,6 +13,8 @@ import java.util.Map;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -217,7 +219,7 @@ public class JenaDataSource {
 	
 	public void printModel(OutputStream os)
 	{
-		model.write(os, "TTL") ;
+		RDFDataMgr.write(os, model, Lang.TURTLE) ;
 	}
 	
 	public int getModelSize()
