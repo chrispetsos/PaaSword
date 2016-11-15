@@ -7,9 +7,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,7 +24,6 @@ public class JenaDataSourceInferredTest {
 
 	JenaDataSourceInferred jdsi;
 	JenaDataSource jds;
-	SequenceInputStream sis;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -34,31 +35,25 @@ public class JenaDataSourceInferredTest {
 
 	@Before
 	public void setUp() throws Exception {
-		resetStream();
-		// a Jena data source with inferences
-		jdsi = new JenaDataSourceInferred(sis);
-		
-		resetStream();
-		// a Jena data source with no inferences
-		jds = new JenaDataSource(sis);
 	}
 
-	private void resetStream() throws FileNotFoundException {
-		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(
-				new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl")), 
-				new FileInputStream(new File("Ontologies/policy-models/Security-Policy.ttl")), 
-				new FileInputStream(new File("Ontologies/subsumptive/ContextExpression1.ttl"))
-				));
-		sis = new SequenceInputStream(enumOnto);
+	private InputStream createStream(String... paths) {
+		List<InputStream> enumOnto = new ArrayList<InputStream>();
+		try {
+			for(String path:paths)
+			{
+				enumOnto.add(new FileInputStream(new File(path)));
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		SequenceInputStream sis = new SequenceInputStream(Collections.enumeration(enumOnto));
+		
+		return sis;
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testCreate() {
-		assertNotNull(jdsi);
 	}
 
 	@Test
@@ -71,6 +66,17 @@ public class JenaDataSourceInferredTest {
 	
 	@Test
 	public void testInferredSizes() {
+		String[] ontoPaths = {
+				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
+				"Ontologies/policy-models/Security-Policy.ttl",
+				"Ontologies/subsumptive/ContextExpression1.ttl"
+				};
+		// a Jena data source with inferences
+		jdsi = new JenaDataSourceInferred(createStream(ontoPaths));
+		
+		// a Jena data source with no inferences
+		jds = new JenaDataSource(createStream(ontoPaths));
+		
 		assertEquals(3639, jdsi.getModelSize());
 		assertTrue(jdsi.getModelSize() > jds.getModelSize());
 		assertEquals(548, jds.getModelSize());
