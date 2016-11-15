@@ -72,6 +72,16 @@ public class JenaDataSourceInferredTest {
 				);
 	}
 
+	@Test
+	public void testCitySubsumption() {
+		performInferredTest(547, 3652, 
+				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
+				"Ontologies/policy-models/Security-Policy.ttl",
+				"Ontologies/subsumptive/CitySubsumption.ttl"
+				);
+		int i=0;
+	}
+
 	private void performInferredTest(int originalSize, int inferredSize, String... ontoPaths) {
 		// a Jena data source with inferences
 		jdsi = new JenaDataSourceInferred(createStream(ontoPaths));
