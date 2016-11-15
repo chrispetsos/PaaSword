@@ -61,25 +61,27 @@ public class JenaDataSourceInferredTest {
 		JenaDataSource simpleSource = new JenaDataSource(new FileInputStream(new File("Ontologies/subsumptive/SimpleForInferences.ttl")));
 		JenaDataSourceInferred inferredSource = new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/subsumptive/SimpleForInferences.ttl")));
 		assertNotEquals(simpleSource.getModelSize(), inferredSource.getModelSize());
-		int i=0;
 	}
 	
 	@Test
 	public void testInferredSizes() {
-		String[] ontoPaths = {
+		performInferredTest(548, 3639, 
 				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
 				"Ontologies/policy-models/Security-Policy.ttl",
 				"Ontologies/subsumptive/ContextExpression1.ttl"
-				};
+				);
+	}
+
+	private void performInferredTest(int originalSize, int inferredSize, String... ontoPaths) {
 		// a Jena data source with inferences
 		jdsi = new JenaDataSourceInferred(createStream(ontoPaths));
 		
 		// a Jena data source with no inferences
 		jds = new JenaDataSource(createStream(ontoPaths));
 		
-		assertEquals(3639, jdsi.getModelSize());
+		assertEquals(inferredSize, jdsi.getModelSize());
 		assertTrue(jdsi.getModelSize() > jds.getModelSize());
-		assertEquals(548, jds.getModelSize());
+		assertEquals(originalSize, jds.getModelSize());
 		
 		System.out.println("----------- Original model --------------");
 		jds.printModel(System.out);
