@@ -79,7 +79,15 @@ public class JenaDataSourceInferredTest {
 				"Ontologies/policy-models/Security-Policy.ttl",
 				"Ontologies/subsumptive/CitySubsumption.ttl"
 				);
-		int i=0;
+	}
+
+	@Test
+	public void testComplexContextExpression() {
+		performInferredTest(-1, -1, 
+				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
+				"Ontologies/policy-models/Security-Policy.ttl",
+				"Ontologies/subsumptive/ComplexContextExpression.ttl"
+				);
 	}
 
 	private void performInferredTest(int originalSize, int inferredSize, String... ontoPaths) {
@@ -89,9 +97,12 @@ public class JenaDataSourceInferredTest {
 		// a Jena data source with no inferences
 		jds = new JenaDataSource(createStream(ontoPaths));
 		
-		assertEquals(inferredSize, jdsi.getModelSize());
-		assertTrue(jdsi.getModelSize() > jds.getModelSize());
-		assertEquals(originalSize, jds.getModelSize());
+		if(originalSize != -1 && inferredSize != -1)
+		{
+			assertEquals(inferredSize, jdsi.getModelSize());
+			assertTrue(jdsi.getModelSize() > jds.getModelSize());
+			assertEquals(originalSize, jds.getModelSize());
+		}
 		
 		System.out.println("----------- Original model --------------");
 		jds.printModel(System.out);
