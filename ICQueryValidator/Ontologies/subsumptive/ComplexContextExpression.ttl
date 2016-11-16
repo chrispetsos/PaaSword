@@ -8,30 +8,37 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-pac:ContextExpression owl:hasKey ( pac:hasParameter ) .
+#pac:ContextExpression owl:hasKey ( pac:hasParameter ) .
 
-ex1:expr1 a pac:ContextExpression;
-	owl:intersectionOf (
-		[owl:oneOf (
-			[a pac:ContextExpression;
-			pac:hasParameter ex1:EmployeeWorkingHours]
-		)]
-		[owl:unionOf (
-			[owl:oneOf (
-				[a pac:ContextExpression;
-				pac:hasParameter ex1:Parking1]
-			)]
-			[owl:oneOf (
-				[a pac:ContextExpression;
-				pac:hasParameter ex1:Parking2]
-			)]
-		)]
-	) .
+ex1:expr a pac:ContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:InSEERCPremises .
+	
+#[owl:oneOf (ex1:param)] rdfs:subClassOf [owl:oneOf (ex1:EmployeeWorkingHours ex1:InSEERCPremises)].
+
+#ex1:expr1 a pac:ContextExpression;
+#	owl:intersectionOf (
+#		[owl:oneOf (
+#			[a pac:ContextExpression;
+#			pac:hasParameter ex1:EmployeeWorkingHours]
+#		)]
+#		[owl:unionOf (
+#			[owl:oneOf (
+#				[a pac:ContextExpression;
+#				pac:hasParameter ex1:Parking1]
+#			)]
+#			[owl:oneOf (
+#				[a pac:ContextExpression;
+#				pac:hasParameter ex1:Parking2]
+#			)]
+#		)]
+#	) .
 
 ex1:expr2 a pac:ContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours.
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:EmployeeWorkingHours2.
 
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval .
+ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval .
+ex1:InSEERCPremises a pcm:SecurityContextElement.
 
 ex1:Parking1 a pcm:Point.
 
