@@ -90,6 +90,15 @@ public class JenaDataSourceInferredTest {
 				);
 	}
 
+	@Test
+	public void testDateTimeSubsumption() {
+		performInferredTest(-1, -1, 
+				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
+				"Ontologies/policy-models/Security-Policy.ttl",
+				"Ontologies/subsumptive/DateTimeSubsumption.ttl"
+				);
+	}
+
 	private void performInferredTest(int originalSize, int inferredSize, String... ontoPaths) {
 		// a Jena data source with inferences
 		jdsi = new JenaDataSourceInferred(createStream(ontoPaths));
