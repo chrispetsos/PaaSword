@@ -93,6 +93,20 @@ pac:ContextExpression rdfs:subClassOf
                 owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
               ] .
 
+# More specifically, when the context expression hasParameter Location or
+# Connectivity, it should referTo exactly one Subject or Object
+[ owl:intersectionOf (pac:ContextExpression
+                       [ a owl:Restriction ;
+                         owl:onProperty pac:hasParameter ;
+                         owl:someValuesFrom [owl:unionOf (pcm:Location pcm:Connectivity)]
+                       ])
+] rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:refersTo ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
+              ] .
+
 ### This is a portion of the Policy meta-model we present in D2.2.
 ### Specifically all domain/range statements have been tranferred here
 ### in order to ensure type-safety. Same for other ontologies below.
