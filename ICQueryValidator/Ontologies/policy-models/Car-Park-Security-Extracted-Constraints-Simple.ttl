@@ -46,6 +46,7 @@ pac:positive a pac:Authorisation.
 ex1:PaymentsTable a pcm:Relational.
 
 ex1:expr a pac:ContextExpression;
+	pac:refersTo ex1:ParkingEmployee;
 	pac:hasParameter ex1:EmployeeWorkingHours.
 
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.

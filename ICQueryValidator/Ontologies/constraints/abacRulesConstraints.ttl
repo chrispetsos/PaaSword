@@ -85,6 +85,14 @@ pac:ContextExpression rdfs:subClassOf
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] .
 
+# Context expression should also referTo at most one Subject or Object
+pac:ContextExpression rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:refersTo ;
+                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
+              ] .
+
 ### This is a portion of the Policy meta-model we present in D2.2.
 ### Specifically all domain/range statements have been tranferred here
 ### in order to ensure type-safety. Same for other ontologies below.
@@ -190,6 +198,10 @@ pac:hasParameter a rdf:Property;
 pac:hasEvaluationResult a rdf:Property;
 	rdfs:domain pac:ContextExpression;
 	rdfs:range xsd:boolean.
+
+pac:refersTo a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range [owl:unionOf (pcm:Subject pcm:Object)].
 
 
 

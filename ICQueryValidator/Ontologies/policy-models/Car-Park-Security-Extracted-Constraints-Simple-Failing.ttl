@@ -50,6 +50,7 @@ ex1:PaymentsTable a pcm:Relational.
 ex1:CloudStorage a pcm:InfrastructureArtefact.
 
 ex1:expr a pac:ContextExpression;
+	pac:refersTo ex1:ParkingEmployee;
 	pac:hasParameter ex1:EmployeeWorkingHours. # Violation: Context Expression should have at least one parameter of type pcm:SecurityContextElement OR pac:ContextExpression.
 
 ex1:EmployeeWorkingHours a pcm:DateTimeIntervl. # This typo made ex1:EmployeeWorkingHours not being a pcm:SecurityContextElement.

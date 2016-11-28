@@ -76,6 +76,7 @@ ex1:Write a ppm:DatastorePermission.
 
 ### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
 ex1:expr a pac:ANDContextExpression;
+	pac:refersTo ex1:ParkingEmployee;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 #	pac:hasEvaluationResult xsd:boolean.
 
