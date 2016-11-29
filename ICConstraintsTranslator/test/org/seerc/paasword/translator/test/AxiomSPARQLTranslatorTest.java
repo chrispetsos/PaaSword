@@ -299,6 +299,40 @@ public class AxiomSPARQLTranslatorTest {
 				, queries.get(0).getQuery());
 	}
 
+	@Test
+	public void testComplexLeftOfRestriction() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/complexLeftOfRestrictionConstraint.owl"));
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#ContextExpression> .\n" + 
+						"    ?x0 <http://www.seerc.org/test/pellet-icv#hasParameter> ?s0\n" + 
+						"      { ?s0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Connectivity> }\n" + 
+						"    UNION\n" + 
+						"      { ?s0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Location> }\n" + 
+						"      { ?x0 <http://www.seerc.org/test/pellet-icv#refersTo> ?x1\n" + 
+						"          { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object> }\n" + 
+						"        UNION\n" + 
+						"          { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject> }\n" + 
+						"        ?x0 <http://www.seerc.org/test/pellet-icv#refersTo> ?x2\n" + 
+						"          { ?x2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object> }\n" + 
+						"        UNION\n" + 
+						"          { ?x2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject> }\n" + 
+						"        FILTER ( ?x1 != ?x2 )\n" + 
+						"      }\n" + 
+						"    UNION\n" + 
+						"      { FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#refersTo> ?x3\n" + 
+						"            { ?x3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object> }\n" + 
+						"          UNION\n" + 
+						"            { ?x3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject> }\n" + 
+						"        }\n" + 
+						"      }\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0).getQuery());
+	}
+
 
 	public FileInputStream createFileInputStream(String filePath) {
 		try {

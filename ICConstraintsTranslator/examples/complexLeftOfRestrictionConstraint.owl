@@ -1,0 +1,16 @@
+@prefix : <http://www.seerc.org/test/pellet-icv#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+[ owl:intersectionOf (:ContextExpression
+                       [ a owl:Restriction ;
+                         owl:onProperty :hasParameter ;
+                         owl:someValuesFrom [owl:unionOf (:Location :Connectivity)]
+                       ])
+] rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty :refersTo ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass [owl:unionOf (:Subject :Object)]
+              ] .
