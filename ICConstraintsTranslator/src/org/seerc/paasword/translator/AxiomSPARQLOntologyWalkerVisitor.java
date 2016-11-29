@@ -169,7 +169,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
     private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processExactCardinalityRestriction(T ce) {
 		if(!preprocess()) return;
 
-		if(this.isNestedExpression(ce)) return;
+		if(this.isNestedExpressionInRestriction(ce)) return;
 		
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
@@ -192,7 +192,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
     private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMaxCardinalityRestriction(T ce) {
 		if(!preprocess()) return;
 
-		if(this.isNestedExpression(ce)) return;
+		if(this.isNestedExpressionInRestriction(ce)) return;
 		
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
@@ -212,7 +212,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
     private void processQuantifiedRestriction(OWLQuantifiedRestriction ce, int cardinality) {
 		if(!preprocess()) return;
 
-		if(this.isNestedExpression(ce)) return;
+		if(this.isNestedExpressionInRestriction(ce)) return;
 		
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
@@ -227,7 +227,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		postProcess(ce, groupGraphPattern);
 	}
 
-	private boolean isNestedExpression(OWLObject ce) {
+	private boolean isNestedExpressionInRestriction(OWLObject ce) {
 		// If the current axiom's super-class is not equal to the current class expression then this is a nested expression.
 		if(!ce.equals(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSuperClass()))
 		{
