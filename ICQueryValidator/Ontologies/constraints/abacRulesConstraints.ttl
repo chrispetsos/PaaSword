@@ -85,16 +85,8 @@ pac:ContextExpression rdfs:subClassOf
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] .
 
-# Context expression should also referTo at most one Subject or Object
-pac:ContextExpression rdfs:subClassOf
-              [ a owl:Restriction ;
-                owl:onProperty pac:refersTo ;
-                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
-              ] .
-
-# More specifically, when the context expression hasParameter Location or
-# Connectivity, it should referTo exactly one Subject or Object
+# When the context expression hasParameter Location or
+# Connectivity, it should referTo at least one Subject or Object
 [ owl:intersectionOf (pac:ContextExpression
                        [ a owl:Restriction ;
                          owl:onProperty pac:hasParameter ;
@@ -103,7 +95,7 @@ pac:ContextExpression rdfs:subClassOf
 ] rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:refersTo ;
-                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
               ] .
 
