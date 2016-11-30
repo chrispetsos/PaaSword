@@ -48,11 +48,13 @@ ex1:Write a ppm:DatastorePermission.
 #############################################################################
 
 ### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
+# These expressions have one out of two parameters equal. They should not be 
+# subsumptive.
 ex1:expr a pac:ANDContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours .
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:PaymentsTable .
 
 ex1:expr2 a pac:ANDContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours .
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
 

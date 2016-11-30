@@ -113,7 +113,7 @@ public class JenaDataSourceInferredTest {
 		jdsi = new JenaDataSourceInferred(createStream(ontoPaths));
 		
 		// a Jena data source with no inferences
-		jds = new JenaDataSource(createStream(ontoPaths));
+		//jds = new JenaDataSource(createStream(ontoPaths));
 		
 		if(originalSize != -1 && inferredSize != -1)
 		{
@@ -122,9 +122,9 @@ public class JenaDataSourceInferredTest {
 			assertEquals(originalSize, jds.getModelSize());
 		}
 		
-		System.out.println("----------- Original model --------------");
+		/*System.out.println("----------- Original model --------------");
 		jds.printModel(System.out);
-		System.out.println("-----------------------------------------------\n\n");
+		System.out.println("-----------------------------------------------\n\n");*/
 		System.out.println("----------- Original model with inferences --------------");
 		jdsi.printModel(System.out);
 		System.out.println("-----------------------------------------------\n\n");
