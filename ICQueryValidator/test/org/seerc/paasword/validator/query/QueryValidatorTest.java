@@ -834,4 +834,14 @@ public class QueryValidatorTest {
 		
 		assertEquals(8, qv.validate().size());
 	}	
+
+	@Test
+	public void testSubclassSubsumption() throws Exception {
+		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/subclassSubsumptionConstraints.ttl"));
+		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		
+		qv = new QueryValidator(constraints, policy);
+		
+		assertEquals(1, qv.validate().size());
+	}	
 }
