@@ -41,13 +41,16 @@ ex1:ABACRule_2 a pac:ABACRule;
 	pac:hasAuthorisation pac:positive;
 	pac:hasAction ex1:Read;
 	pac:hasActor ex1:ParkingEmployee;
-	pac:hasContextExpression ex1:expr.
+	pac:hasContextExpression ex1:expr2.
 
 ex1:Write a ppm:DatastorePermission.
 #############################################################################
 
 ### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
 ex1:expr a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+
+ex1:expr2 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
