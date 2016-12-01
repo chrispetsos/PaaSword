@@ -85,6 +85,44 @@ pac:ContextExpression rdfs:subClassOf
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] .
 
+# We could have constraints in the form of SPARQL queries.
+# The idea is the same like with OWL axioms' transformation.
+# Write a query such that if it returns any result, we have a validation problem.
+# E.g. The following query does not allow two context expressions to be subsumed.
+# That is to have the same hasParameter attributes, or the one to have a subset
+# of the hasParameter of the other.
+#
+#SELECT DISTINCT  *
+#WHERE
+#  { 
+##  ?expr1 pac:hasParameter [] .
+#  ?expr2 pac:hasParameter [] .
+#  FILTER (?expr1 != ?expr2)
+#  FILTER NOT EXISTS {
+#    ?expr2 pac:hasParameter ?p
+#    FILTER NOT EXISTS {
+#      ?expr1 pac:hasParameter ?p
+#    }
+#  }
+#}
+#
+# And can be tested on the following:
+#
+#ex1:expr1 a pac:ANDContextExpression;
+#	pac:hasParameter ex1:EmployeeWorkingHours, ex1:PaymentsTable .
+#
+#ex1:expr2 a pac:ANDContextExpression;
+#	pac:hasParameter ex1:EmployeeWorkingHours, ex1:PaymentsTable .
+#
+#ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
+#ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval.
+#ex1:EmployeeWorkingHours3 a pcm:DateTimeInterval.
+#
+#
+#ex1:expr3 a pac:ANDContextExpression;
+#	pac:hasParameter ex1:EmployeeWorkingHours .
+
+
 ### This is a portion of the Policy meta-model we present in D2.2.
 ### Specifically all domain/range statements have been tranferred here
 ### in order to ensure type-safety. Same for other ontologies below.
