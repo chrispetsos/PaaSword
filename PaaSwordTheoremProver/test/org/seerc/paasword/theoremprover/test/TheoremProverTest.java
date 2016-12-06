@@ -11,6 +11,8 @@ import org.seerc.paasword.theoremprover.TheoremProver;
 
 public class TheoremProverTest {
 
+	TheoremProver tp;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -21,6 +23,7 @@ public class TheoremProverTest {
 
 	@Before
 	public void setUp() throws Exception {
+		tp = new TheoremProver();
 	}
 
 	@After
@@ -28,8 +31,16 @@ public class TheoremProverTest {
 	}
 
 	@Test
-	public void testCreate() {
-		TheoremProver tp = new TheoremProver();
+	public void testCreate() 
+	{
+		assertNotNull(tp);
+	}
+
+	@Test
+	public void testContextExpressionSubsumption() 
+	{
+		boolean exprSubsumesExpr2 = tp.contextExpressionSubsumes("http://www.paasword.eu/security-policy/use-cases/car-park#expr", "http://www.paasword.eu/security-policy/use-cases/car-park#expr2");
+		assertTrue(exprSubsumesExpr2);
 	}
 
 }
