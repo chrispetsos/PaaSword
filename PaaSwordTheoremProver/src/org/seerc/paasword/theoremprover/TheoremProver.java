@@ -6,6 +6,7 @@ import java.util.List;
 import org.seerc.paasword.validator.query.JenaDataSourceInferred;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
 
 public class TheoremProver {
 
@@ -18,8 +19,11 @@ public class TheoremProver {
 	
 	public boolean contextExpressionSubsumes(String ce1, String ce2)
 	{
-		List<RDFNode> ce1Params = jdsi.executeQuery("{<" + ce1 + "> pac:hasParameter ?var}");
-		List<RDFNode> ce2Params = jdsi.executeQuery("{<" + ce2 + "> pac:hasParameter ?var}");
+		Resource ce1Resource = jdsi.createResourceFromUri(ce1);
+		Resource ce2Resource = jdsi.createResourceFromUri(ce2);
+		
+		List<RDFNode> ce1Params = jdsi.executeQuery("{<" + ce1Resource.getURI() + "> pac:hasParameter ?var}");
+		List<RDFNode> ce2Params = jdsi.executeQuery("{<" + ce2Resource.getURI() + "> pac:hasParameter ?var}");
 		
 		for(RDFNode ce1Param:ce1Params)
 		{

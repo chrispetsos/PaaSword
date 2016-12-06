@@ -53,4 +53,11 @@ public class TheoremProverTest {
 		assertFalse(expr3NotSubsumesExpr4);
 	}
 
+	@Test
+	public void testContextExpressionSubsumptionWithNamespace() 
+	{
+		boolean exprSubsumesExpr2 = tp.contextExpressionSubsumes("ex1:expr", "ex1:expr2");
+		assertTrue(exprSubsumesExpr2);
+	}
+
 }
