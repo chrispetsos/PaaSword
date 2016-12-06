@@ -2,6 +2,9 @@ package org.seerc.paasword.theoremprover.test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,7 +26,7 @@ public class TheoremProverTest {
 
 	@Before
 	public void setUp() throws Exception {
-		tp = new TheoremProver();
+		tp = new TheoremProver(new FileInputStream(new File("Ontologies/SubclassSubsumption.ttl")));
 	}
 
 	@After
@@ -37,10 +40,17 @@ public class TheoremProverTest {
 	}
 
 	@Test
-	public void testContextExpressionSubsumption() 
+	public void testContextExpressionEqualSubsumption() 
 	{
 		boolean exprSubsumesExpr2 = tp.contextExpressionSubsumes("http://www.paasword.eu/security-policy/use-cases/car-park#expr", "http://www.paasword.eu/security-policy/use-cases/car-park#expr2");
 		assertTrue(exprSubsumesExpr2);
+	}
+
+	@Test
+	public void testContextExpressionNotEqualSubsumption() 
+	{
+		boolean expr3NotSubsumesExpr4 = tp.contextExpressionSubsumes("http://www.paasword.eu/security-policy/use-cases/car-park#expr3", "http://www.paasword.eu/security-policy/use-cases/car-park#expr4");
+		assertFalse(expr3NotSubsumesExpr4);
 	}
 
 }
