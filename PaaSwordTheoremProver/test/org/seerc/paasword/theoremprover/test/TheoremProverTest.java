@@ -60,4 +60,11 @@ public class TheoremProverTest {
 		assertTrue(exprSubsumesExpr2);
 	}
 
+	@Test
+	public void testContextExpressionSubsumptionWithLessParams() 
+	{
+		boolean exprSubsumesExpr2 = tp.contextExpressionSubsumes("ex1:expr5", "ex1:expr6");
+		assertTrue(exprSubsumesExpr2);
+	}
+
 }

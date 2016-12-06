@@ -25,11 +25,11 @@ public class TheoremProver {
 		List<RDFNode> ce1Params = jdsi.executeQuery("{<" + ce1Resource.getURI() + "> pac:hasParameter ?var}");
 		List<RDFNode> ce2Params = jdsi.executeQuery("{<" + ce2Resource.getURI() + "> pac:hasParameter ?var}");
 		
-		for(RDFNode ce1Param:ce1Params)
+		for(RDFNode ce2Param:ce2Params)
 		{
 			boolean paramFound = false;
 			
-			for(RDFNode ce2Param:ce2Params)
+			for(RDFNode ce1Param:ce1Params)
 			{
 				if(ce1Param.equals(ce2Param))
 				{	

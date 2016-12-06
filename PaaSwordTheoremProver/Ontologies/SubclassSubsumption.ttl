@@ -61,6 +61,13 @@ ex1:expr3 a pac:ANDContextExpression;
 ex1:expr4 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:PaymentsTable .
 
+ex1:expr5 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+
+# This is subsumed (equal) by ex1:expr5
+ex1:expr6 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours .
+
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
 
 ex1:expr1 a pac:ORContextExpression;
