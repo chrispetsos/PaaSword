@@ -2,12 +2,16 @@ package org.seerc.paasword.theoremprover.test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.seerc.paasword.theoremprover.TautologyChecker;
+import org.seerc.paasword.validator.query.JenaDataSourceInferred;
 
 public class TautologyCheckerTest {
 
@@ -23,7 +27,7 @@ public class TautologyCheckerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		tc = new TautologyChecker();
+		tc = new TautologyChecker(new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/SubclassSubsumption.ttl"))));
 	}
 
 	@After
@@ -37,7 +41,7 @@ public class TautologyCheckerTest {
 
 	@Test
 	public void testIsTautology() {
-		fail("Not yet implemented");
+		assertTrue(tc.isTautology("http://www.paasword.eu/security-policy/use-cases/car-park#expr", "http://www.paasword.eu/security-policy/use-cases/car-park#expr2"));
 	}
 
 }
