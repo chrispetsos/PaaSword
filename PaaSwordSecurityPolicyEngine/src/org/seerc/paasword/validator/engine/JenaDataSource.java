@@ -176,7 +176,7 @@ public class JenaDataSource {
 	public Resource createResourceFromUri(String uri)
 	{
 		uri = this.replaceNamespacePrefixes(uri);
-		return new ResourceImpl(uri);
+		return this.model.createResource(uri);
 	}
 
 	public BidiMap<String, String> getPrefixes() {
