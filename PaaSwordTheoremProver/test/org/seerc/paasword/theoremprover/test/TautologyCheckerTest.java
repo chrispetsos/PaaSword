@@ -41,7 +41,7 @@ public class TautologyCheckerTest {
 
 	@Test
 	public void testIsTautology() {
-		assertTrue(tc.isTautology("http://www.paasword.eu/security-policy/use-cases/car-park#expr", "http://www.paasword.eu/security-policy/use-cases/car-park#expr2"));
+		assertTrue(tc.isTautology("ex1:expr", "ex1:expr2"));
 	}
 
 }
