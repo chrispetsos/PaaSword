@@ -2,8 +2,11 @@ package org.seerc.paasword.theoremprover.test;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOError;
+import java.io.IOException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.seerc.paasword.theoremprover.TautologyChecker;
 import org.seerc.paasword.validator.query.JenaDataSourceInferred;
+import org.snim2.checker.test.CheckerTestHelper;
 
 public class TautologyCheckerTest {
 
@@ -43,5 +47,19 @@ public class TautologyCheckerTest {
 	public void testIsTautology() {
 		assertTrue(tc.isTautology("ex1:expr", "ex1:expr2"));
 	}
+	
+	@Test
+	public void testConvertToPropositionalExpression() {
+		checkOWLResourceToProposition("ex1:expr", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");
+	}
 
+	private void checkOWLResourceToProposition(String resourceUri, String desiredProposition) {
+		String propositionalExpression = tc.convertToPropositionalExpression(resourceUri);
+		CheckerTestHelper checker = new CheckerTestHelper();
+		try {
+			assertTrue(checker.checkInputStream(new ByteArrayInputStream((propositionalExpression + " <=> " + desiredProposition).getBytes())));
+		} catch (IOError | IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

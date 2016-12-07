@@ -22,7 +22,6 @@ public class TautologyChecker {
 	private JenaDataSourceInferred jdsi;
 	private CheckerTestHelper checker;
 	private HashMap<String, String> resourceVariableMap;
-	private int varCount = 0;
 
 	public TautologyChecker(JenaDataSourceInferred jdsi)
 	{
@@ -46,7 +45,7 @@ public class TautologyChecker {
 		}
 	}
 
-	private String convertToPropositionalExpression(String resourceUri)
+	public String convertToPropositionalExpression(String resourceUri)
 	{
 		Resource rootResource = jdsi.createResourceFromUri(resourceUri);
 		// List<RDFNode> resourceParams = jdsi.executeQuery("{<" + resource.getURI() + "> pac:hasParameter ?var}");
@@ -130,8 +129,8 @@ public class TautologyChecker {
 		}
 		else
 		{
-			varCount++;
-			String newVariable = "V" + varCount;
+			Resource resource = jdsi.createResourceFromUri(resourceId);
+			String newVariable = jdsi.getPrefixes().getKey(resource.getNameSpace()) + resource.getLocalName();
 			resourceVariableMap.put(resourceId, newVariable);
 			return newVariable;
 		}
