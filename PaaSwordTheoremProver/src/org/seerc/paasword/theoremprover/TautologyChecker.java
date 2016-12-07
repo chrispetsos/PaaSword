@@ -58,35 +58,11 @@ public class TautologyChecker {
 				
 				if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:ANDContextExpression").getURI()))
 				{	// pac:ANDContextExpression
-					// open parentheses
-					result += "( ";
-					// add first param
-					result += resourceParams.next().getObject().visitWith(this);
-					// for all other params
-					while(resourceParams.hasNext())
-					{
-						// add AND
-						result += " AND ";
-						// add next param
-						result += resourceParams.next().getObject().visitWith(this);
-					}
-					result += " )";
+					result = this.generateBooleanBlock(resourceParams, "AND", result);
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:ORContextExpression").getURI()))
 				{	// pac:ORContextExpression
-					// open parentheses
-					result += "( ";
-					// add first param
-					result += resourceParams.next().getObject().visitWith(this);
-					// for all other params
-					while(resourceParams.hasNext())
-					{
-						// add AND
-						result += " OR ";
-						// add next param
-						result += resourceParams.next().getObject().visitWith(this);
-					}
-					result += " )";
+					result = this.generateBooleanBlock(resourceParams, "OR", result);
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:XORContextExpression").getURI()))
 				{	// pac:XORContextExpression
@@ -102,6 +78,23 @@ public class TautologyChecker {
 					return TautologyChecker.this.getVariableFor(arg1);
 				}
 				
+				return result;
+			}
+
+			private String generateBooleanBlock(StmtIterator resourceParams, String operator, String result) {
+				// open parentheses
+				result += "( ";
+				// add first param
+				result += resourceParams.next().getObject().visitWith(this);
+				// for all other params
+				while(resourceParams.hasNext())
+				{
+					// add AND
+					result += " " + operator + " ";
+					// add next param
+					result += resourceParams.next().getObject().visitWith(this);
+				}
+				result += " )";
 				return result;
 			}
 			
