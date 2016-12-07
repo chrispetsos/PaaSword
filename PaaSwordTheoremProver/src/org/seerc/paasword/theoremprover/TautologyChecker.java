@@ -11,7 +11,6 @@ import org.snim2.checker.test.CheckerTestHelper;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.RDFVisitor;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -91,11 +90,12 @@ public class TautologyChecker {
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:XORContextExpression").getURI()))
 				{	// pac:XORContextExpression
+					// TODO: Add support for XOR
 					
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:NOTContextExpression").getURI()))
 				{	// pac:NOTContextExpression
-					
+					// TODO: Add support for NOT
 				}
 				else
 				{	// "terminating" param
@@ -107,12 +107,13 @@ public class TautologyChecker {
 			
 			@Override
 			public Object visitLiteral(Literal arg0) {
-				// Non applicable
+				// TODO: Check cases of Literals
 				return "";
 			}
 			
 			@Override
 			public Object visitBlank(Resource arg0, AnonId arg1) {
+				// TODO: Check cases of bnodes
 				// pass to URI manipulation
 				return this.visitURI(arg0, arg1.toString());
 			}
