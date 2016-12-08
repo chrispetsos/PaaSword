@@ -43,7 +43,7 @@ public class TautologyChecker {
 		
 		if(!implicationsOfCe1.isEmpty())
 		{
-			propositionToCheck += implicationsOfCe1 + " => ";
+			propositionToCheck += "( " + implicationsOfCe1 + " ) => ";
 		}
 		
 		propositionToCheck += "( " + propositionalExpressionCe1 + " => " + propositionalExpressionCe2 + " )";
@@ -61,7 +61,7 @@ public class TautologyChecker {
 		String result = "";
 		Resource resource = jdsi.createResourceFromUri(resourceUri);
 		StmtIterator resourceParams = resource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:hasParameter").getURI()));
-		HashMultimap<String, String> implications = HashMultimap.create();
+		boolean firstImplication = true;
 		
 		while(resourceParams.hasNext())
 		{
@@ -70,38 +70,17 @@ public class TautologyChecker {
 			while(subsumedNodes.hasNext())
 			{
 				RDFNode subsumedNode = subsumedNodes.next().getObject();
-				implications.put(param.toString(), subsumedNode.toString());
-			}
-		}
-		
-		if(!implications.isEmpty())
-		{
-			result += "( ";			
-		}
-		
-		Iterator<String> keySetIterator = implications.keySet().iterator();
-		while(keySetIterator.hasNext())
-		{
-			String key = keySetIterator.next();
-			Iterator<String> implicationsIterator = implications.get(key).iterator();
-			while(implicationsIterator.hasNext())
-			{
-				String implication = implicationsIterator.next();
-				String keyVar = this.getVariableFor(key);
-				String implicationVar = this.getVariableFor(implication);
-				result += "( " + keyVar + " => " + implicationVar + " )";
-				if(implicationsIterator.hasNext())
-				{	// not last, add AND
+				String keyVar = this.getVariableFor(param.toString());
+				String implicationVar = this.getVariableFor(subsumedNode.toString());
+				if(!firstImplication)
+				{
 					result += " AND ";
 				}
+				result += "( " + keyVar + " => " + implicationVar + " )";
+				firstImplication = false;
 			}
 		}
-		
-		if(!implications.isEmpty())
-		{
-			result += " )";			
-		}
-		
+
 		return result;
 	}
 

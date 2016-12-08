@@ -46,13 +46,20 @@ public class TautologyCheckerTest {
 	@Test
 	public void testIsTautology() {
 		assertTrue(tc.isTautology("ex1:expr", "ex1:expr2"));
+		assertTrue(tc.isTautology("ex1:expr2", "ex1:expr"));
+		assertTrue(tc.isTautology("ex1:expr7", "ex1:expr8"));
+		assertFalse(tc.isTautology("ex1:expr8", "ex1:expr7"));
+		assertTrue(tc.isTautology("ex1:expr9", "ex1:expr10"));
+		assertFalse(tc.isTautology("ex1:expr10", "ex1:expr9"));
+		assertFalse(tc.isTautology("ex1:expr11", "ex1:expr12"));
+		assertFalse(tc.isTautology("ex1:expr12", "ex1:expr11"));
 	}
 	
 	@Test
 	public void testConvertToPropositionalExpression() {
 		checkOWLResourceToProposition("ex1:expr", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");
 		checkOWLResourceToProposition("ex1:expr1", "ex1Parking1 OR ex1Parking2");
-		checkOWLResourceToProposition("ex1:expr2", "(ex1Parking1 OR ex1Parking2) AND ex1EmployeeWorkingHours2");
+		checkOWLResourceToProposition("ex1:expr2", "(ex1Parking1 OR ex1Parking2) AND ex1EmployeeWorkingHours");
 		checkOWLResourceToProposition("ex1:expr3", "(ex1EmployeeWorkingHours AND ex1Parking1) OR (ex1EmployeeWorkingHours AND ex1Parking2)");
 		checkOWLResourceToProposition("ex1:expr4", "ex1EmployeeWorkingHours AND ex1PaymentsTable");
 		checkOWLResourceToProposition("ex1:expr5", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");

@@ -50,11 +50,9 @@ ex1:Write a ppm:DatastorePermission.
 ex1:expr a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 
-# This is subsumed (equal) by ex1:expr
+# This is subsumed by ex1:expr
 ex1:expr2 a pac:ANDContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours2, ex1:expr1 .
-
-ex1:EmployeeWorkingHours pac:subsumes ex1:EmployeeWorkingHours2 .
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 
 ex1:expr3 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
@@ -69,6 +67,31 @@ ex1:expr5 a pac:ANDContextExpression;
 # This is subsumed (equal) by ex1:expr5
 ex1:expr6 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours .
+
+ex1:expr7 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+
+# This is subsumed by ex1:expr7
+ex1:expr8 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours2 .
+
+ex1:expr9 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking1 .
+
+# This is subsumed by ex1:expr9
+ex1:expr10 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours2, ex1:Parking2 .
+
+ex1:expr11 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking2 .
+
+# This is subsumed by ex1:expr9
+ex1:expr12 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours2, ex1:Parking1 .
+
+ex1:EmployeeWorkingHours pac:subsumes ex1:EmployeeWorkingHours2 .
+
+ex1:Parking1 pac:subsumes ex1:Parking2 .
 
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
 
