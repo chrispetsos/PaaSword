@@ -4,13 +4,17 @@ import java.io.ByteArrayInputStream;
 import java.io.IOError;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import org.seerc.paasword.validator.query.JenaDataSourceInferred;
 import org.snim2.checker.test.CheckerTestHelper;
 
+import com.google.common.collect.HashMultimap;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.RDFVisitor;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
@@ -33,8 +37,16 @@ public class TautologyChecker {
 	{
 		String propositionalExpressionCe1 = this.convertToPropositionalExpression(ce1);
 		String propositionalExpressionCe2 = this.convertToPropositionalExpression(ce2);
+		String implicationsOfCe1 = this.generateImplications(ce1);
 		
-		String propositionToCheck = propositionalExpressionCe1 + " => " + propositionalExpressionCe2;
+		String propositionToCheck = "";
+		
+		if(!implicationsOfCe1.isEmpty())
+		{
+			propositionToCheck += implicationsOfCe1 + " => ";
+		}
+		
+		propositionToCheck += "( " + propositionalExpressionCe1 + " => " + propositionalExpressionCe2 + " )";
 
 		try {
 			return checker.checkInputStream(new ByteArrayInputStream(propositionToCheck.getBytes()));
@@ -42,6 +54,55 @@ public class TautologyChecker {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	private String generateImplications(String resourceUri)
+	{
+		String result = "";
+		Resource resource = jdsi.createResourceFromUri(resourceUri);
+		StmtIterator resourceParams = resource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:hasParameter").getURI()));
+		HashMultimap<String, String> implications = HashMultimap.create();
+		
+		while(resourceParams.hasNext())
+		{
+			RDFNode param = resourceParams.next().getObject();
+			StmtIterator subsumedNodes = param.asResource().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()));
+			while(subsumedNodes.hasNext())
+			{
+				RDFNode subsumedNode = subsumedNodes.next().getObject();
+				implications.put(param.toString(), subsumedNode.toString());
+			}
+		}
+		
+		if(!implications.isEmpty())
+		{
+			result += "( ";			
+		}
+		
+		Iterator<String> keySetIterator = implications.keySet().iterator();
+		while(keySetIterator.hasNext())
+		{
+			String key = keySetIterator.next();
+			Iterator<String> implicationsIterator = implications.get(key).iterator();
+			while(implicationsIterator.hasNext())
+			{
+				String implication = implicationsIterator.next();
+				String keyVar = this.getVariableFor(key);
+				String implicationVar = this.getVariableFor(implication);
+				result += "( " + keyVar + " => " + implicationVar + " )";
+				if(implicationsIterator.hasNext())
+				{	// not last, add AND
+					result += " AND ";
+				}
+			}
+		}
+		
+		if(!implications.isEmpty())
+		{
+			result += " )";			
+		}
+		
+		return result;
 	}
 
 	public String convertToPropositionalExpression(String resourceUri)

@@ -6,5 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="src" path="/ICQueryValidator"/>
 	<classpathentry kind="src" path="/tautology-checker"/>
+	<classpathentry kind="lib" path="lib/guava-20.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

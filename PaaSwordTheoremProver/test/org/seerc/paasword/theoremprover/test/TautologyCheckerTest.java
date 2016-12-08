@@ -52,7 +52,7 @@ public class TautologyCheckerTest {
 	public void testConvertToPropositionalExpression() {
 		checkOWLResourceToProposition("ex1:expr", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");
 		checkOWLResourceToProposition("ex1:expr1", "ex1Parking1 OR ex1Parking2");
-		checkOWLResourceToProposition("ex1:expr2", "(ex1Parking1 OR ex1Parking2) AND ex1EmployeeWorkingHours");
+		checkOWLResourceToProposition("ex1:expr2", "(ex1Parking1 OR ex1Parking2) AND ex1EmployeeWorkingHours2");
 		checkOWLResourceToProposition("ex1:expr3", "(ex1EmployeeWorkingHours AND ex1Parking1) OR (ex1EmployeeWorkingHours AND ex1Parking2)");
 		checkOWLResourceToProposition("ex1:expr4", "ex1EmployeeWorkingHours AND ex1PaymentsTable");
 		checkOWLResourceToProposition("ex1:expr5", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");
