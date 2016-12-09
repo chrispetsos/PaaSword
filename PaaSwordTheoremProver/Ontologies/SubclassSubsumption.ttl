@@ -85,7 +85,7 @@ ex1:expr10 a pac:ANDContextExpression;
 ex1:expr11 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking2 .
 
-# This is subsumed by ex1:expr9
+# This is subsumed by ex1:expr11
 ex1:expr12 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours2, ex1:Parking1 .
 
