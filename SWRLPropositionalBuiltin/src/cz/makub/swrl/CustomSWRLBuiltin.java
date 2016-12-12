@@ -19,7 +19,7 @@ import java.util.*;
  *
  * @author Martin Kuba makub@ics.muni.cz
  */
-public abstract class CustomSWRLBuiltin implements BuiltIn {
+public class CustomSWRLBuiltin implements BuiltIn {
 
     /**
      * Interface for a SWRL built-in implementation.
@@ -193,6 +193,16 @@ public abstract class CustomSWRLBuiltin implements BuiltIn {
             }
         }
     }
+
+	@Override
+	public boolean apply(ABox arg0, Literal[] arg1) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<arg1.length;i++)
+		{
+			System.out.println(arg1[i]);
+		}
+		return false;
+	}
 
 
 
