@@ -1,9 +1,8 @@
-package org.seerc.paasword.validator.query;
+package org.seerc.paasword.validator.engine;
 
 import java.io.InputStream;
 
 import org.mindswap.pellet.jena.PelletReasonerFactory;
-import org.seerc.paasword.validator.engine.JenaDataSource;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.InfModel;

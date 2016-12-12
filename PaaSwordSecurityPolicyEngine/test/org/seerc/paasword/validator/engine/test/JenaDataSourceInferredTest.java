@@ -1,4 +1,4 @@
-package org.seerc.paasword.validator.query;
+package org.seerc.paasword.validator.engine.test;
 
 import static org.junit.Assert.*;
 
@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.seerc.paasword.validator.engine.JenaDataSource;
+import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 
 public class JenaDataSourceInferredTest {
 

@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.seerc.paasword.theoremprover.TautologyChecker;
-import org.seerc.paasword.validator.query.JenaDataSourceInferred;
+import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.snim2.checker.test.CheckerTestHelper;
 
 public class TautologyCheckerTest {

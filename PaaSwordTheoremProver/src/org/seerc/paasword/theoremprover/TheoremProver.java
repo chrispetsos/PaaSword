@@ -2,7 +2,7 @@ package org.seerc.paasword.theoremprover;
 
 import java.io.InputStream;
 
-import org.seerc.paasword.validator.query.JenaDataSourceInferred;
+import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 
 public class TheoremProver {
 

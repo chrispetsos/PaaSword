@@ -13,7 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.seerc.paasword.validator.query.JenaDataSourceInferred;
+import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.seerc.paasword.validator.query.QueryValidator;
 import org.seerc.paasword.validator.query.QueryValidatorErrors;
 

@@ -4,13 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOError;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
-import org.seerc.paasword.validator.query.JenaDataSourceInferred;
+import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.snim2.checker.test.CheckerTestHelper;
 
-import com.google.common.collect.HashMultimap;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;

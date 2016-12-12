@@ -1,0 +1,20 @@
+@prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
+@prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+ex1:expr a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+
+ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
+
+ex1:expr1 a pac:ORContextExpression;
+	pac:hasParameter ex1:Parking1, ex1:Parking2.
+
+ex1:Parking1 a pcm:Point.
+
+ex1:Parking2 a pcm:Point.

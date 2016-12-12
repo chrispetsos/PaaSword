@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.seerc.paasword.translator.QueryConstraint;
 import org.seerc.paasword.validator.engine.JenaDataSource;
+import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
