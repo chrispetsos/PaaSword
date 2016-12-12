@@ -20,6 +20,7 @@ import org.snim2.checker.test.CheckerTestHelper;
 public class TautologyCheckerTest {
 
 	TautologyChecker tc;
+	JenaDataSourceInferred jdsi;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -31,7 +32,8 @@ public class TautologyCheckerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		tc = new TautologyChecker(new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/SubclassSubsumption.ttl"))));
+		jdsi = new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/SubclassSubsumption.ttl")));
+		tc = new TautologyChecker(jdsi);
 	}
 
 	@After
@@ -74,5 +76,12 @@ public class TautologyCheckerTest {
 		} catch (IOError | IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testEnhanceModelWithTautologies() 
+	{
+		tc.enhanceModel("pac:ContextExpression");
+		jdsi.printModel(System.out);
 	}
 }

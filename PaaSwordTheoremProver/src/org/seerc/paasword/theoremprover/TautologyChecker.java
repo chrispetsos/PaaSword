@@ -4,11 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.io.IOError;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.snim2.checker.test.CheckerTestHelper;
 
 import com.hp.hpl.jena.ontology.Individual;
+import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -16,6 +18,7 @@ import com.hp.hpl.jena.rdf.model.RDFVisitor;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class TautologyChecker {
 
@@ -166,6 +169,30 @@ public class TautologyChecker {
 			return newVariable;
 		}
 		
+	}
+
+	public void enhanceModel(String classUri)
+	{
+		List<Individual> individualsIterator = ((OntModel)this.jdsi.getModel()).listIndividuals(this.jdsi.createResourceFromUri(classUri)).toList();
+		for(Individual i1:individualsIterator)
+		{
+			for(Individual i2:individualsIterator)
+			{
+				if(!i1.equals(i2))
+				{
+					boolean isT = this.isTautology(i1.getURI(), i2.getURI());
+					if(isT)
+					{
+						this.jdsi.getModel().add(
+								ResourceFactory.createResource(jdsi.createResourceFromUri(i1.getURI()).getURI()), 
+								ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), 
+								ResourceFactory.createResource(jdsi.createResourceFromUri(i2.getURI()).getURI()) 
+								);
+						//this.jdsi.createResourceFromUri(i1.getURI()).addProperty(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), i2.getURI());
+					}
+				}
+			}
+		}
 	}
 
 }
