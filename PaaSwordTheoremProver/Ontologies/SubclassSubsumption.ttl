@@ -96,7 +96,7 @@ ex1:Parking1 pac:subsumes ex1:Parking2 .
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
 
 ex1:expr1 a pac:ORContextExpression;
-	pac:hasParameter ex1:Parking1, ex1:expr13.
+	pac:hasParameter ex1:Parking1, ex1:Parking2.
 
 ex1:expr13 a pac:ORContextExpression;
 	pac:hasParameter ex1:Parking1, ex1:Parking2.

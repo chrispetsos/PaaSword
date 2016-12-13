@@ -66,17 +66,31 @@ public class TautologyChecker {
 		while(resourceParams.hasNext())
 		{
 			RDFNode param = resourceParams.next().getObject();
-			StmtIterator subsumedNodes = param.asResource().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()));
-			while(subsumedNodes.hasNext())
+			boolean isNestedNode = param.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:ContextExpression").getURI());
+			if(!isNestedNode)
 			{
-				RDFNode subsumedNode = subsumedNodes.next().getObject();
-				String keyVar = this.getVariableFor(param.toString());
-				String implicationVar = this.getVariableFor(subsumedNode.toString());
+				StmtIterator subsumedNodes = param.asResource().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()));
+				while(subsumedNodes.hasNext())
+				{
+					RDFNode subsumedNode = subsumedNodes.next().getObject();
+					String keyVar = this.getVariableFor(param.toString());
+					String implicationVar = this.getVariableFor(subsumedNode.toString());
+					if(!firstImplication)
+					{
+						result += " AND ";
+					}
+					result += "( " + keyVar + " => " + implicationVar + " )";
+					firstImplication = false;
+				}
+			}
+			else
+			{
+				String nestedResult = this.generateImplications(param.toString());
 				if(!firstImplication)
 				{
 					result += " AND ";
 				}
-				result += "( " + keyVar + " => " + implicationVar + " )";
+				result += nestedResult;
 				firstImplication = false;
 			}
 		}
