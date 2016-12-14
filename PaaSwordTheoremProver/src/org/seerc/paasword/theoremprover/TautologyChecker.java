@@ -46,7 +46,7 @@ public class TautologyChecker {
 			propositionToCheck += "( " + implicationsOfCe1 + " ) => ";
 		}
 		
-		propositionToCheck += "( " + propositionalExpressionCe1 + " => " + propositionalExpressionCe2 + " )";
+		propositionToCheck += "( " + propositionalExpressionCe2 + " => " + propositionalExpressionCe1 + " )";
 
 		try {
 			return checker.checkInputStream(new ByteArrayInputStream(propositionToCheck.getBytes()));
@@ -79,7 +79,7 @@ public class TautologyChecker {
 					{
 						result += " AND ";
 					}
-					result += "( " + keyVar + " => " + implicationVar + " )";
+					result += "( " + implicationVar + " => " + keyVar + " )";
 					firstImplication = false;
 				}
 			}
