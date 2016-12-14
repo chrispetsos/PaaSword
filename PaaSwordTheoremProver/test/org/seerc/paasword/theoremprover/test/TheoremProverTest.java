@@ -63,7 +63,7 @@ public class TheoremProverTest {
 	@Test
 	public void testContextExpressionSubsumptionWithLessParams() 
 	{
-		boolean exprSubsumesExpr2 = tp.contextExpressionSubsumes("ex1:expr5", "ex1:expr6");
+		boolean exprSubsumesExpr2 = tp.contextExpressionSubsumes("ex1:expr6", "ex1:expr5");
 		assertTrue(exprSubsumesExpr2);
 	}
 
