@@ -187,8 +187,6 @@ public class TautologyChecker {
 
 	protected String getVariableFor(String resourceId)
 	{
-		// TODO: Should enhance this, so that we not only look for key being the resourceId,
-		// but also if the resourceId is subsumed (in any way this is expressed) by some key.
 		if(resourceVariableMap.containsKey(resourceId))
 		{
 			return resourceVariableMap.get(resourceId);
