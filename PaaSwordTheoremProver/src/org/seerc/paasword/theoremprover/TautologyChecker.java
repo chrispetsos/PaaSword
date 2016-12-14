@@ -38,12 +38,30 @@ public class TautologyChecker {
 		String propositionalExpressionCe1 = this.convertToPropositionalExpression(ce1);
 		String propositionalExpressionCe2 = this.convertToPropositionalExpression(ce2);
 		String implicationsOfCe1 = this.generateImplications(ce1);
+		String implicationsOfCe2 = this.generateImplications(ce2);
+		String allImplications = "";
 		
 		String propositionToCheck = "";
 		
-		if(!implicationsOfCe1.isEmpty())
+		if(implicationsOfCe1.isEmpty())
 		{
-			propositionToCheck += "( " + implicationsOfCe1 + " ) => ";
+			allImplications += implicationsOfCe2;
+		}
+		else
+		{
+			if(implicationsOfCe2.isEmpty())
+			{
+				allImplications += implicationsOfCe1;
+			}
+			else
+			{
+				allImplications += implicationsOfCe1 + " AND " + implicationsOfCe2;
+			}
+		}
+		
+		if(!allImplications.isEmpty())
+		{
+			propositionToCheck += "( " + allImplications + " ) => ";
 		}
 		
 		propositionToCheck += "( " + propositionalExpressionCe2 + " => " + propositionalExpressionCe1 + " )";
