@@ -2,8 +2,10 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix schema: <http://schema.org/> .
 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
+@prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
 @prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
 @prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
 @prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
@@ -59,6 +61,21 @@ ex1:Parking1 a pcm:Point.
 
 ex1:Parking2 a pcm:Point.
 
+otp:TheoremProvingBaseClass a owl:Class .
+otp:TheoremProvingParameterProperty a owl:ObjectProperty .
+otp:subsumes a owl:ObjectProperty .
+otp:ANDTheoremProvingClass a owl:Class .
+otp:ORTheoremProvingClass a owl:Class .
+otp:XORTheoremProvingClass a owl:Class .
+otp:NOTTheoremProvingClass a owl:Class .
+
+pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:subsumes owl:equivalentProperty otp:subsumes .
+pac:ANDContextExpression rdfs:subClassOf otp:ANDTheoremProvingClass .
+pac:ORContextExpression rdfs:subClassOf otp:ORTheoremProvingClass .
+pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .
+pac:NOTContextExpression rdfs:subClassOf otp:NOTheoremProvingClass .
 
 
 #################################################################
