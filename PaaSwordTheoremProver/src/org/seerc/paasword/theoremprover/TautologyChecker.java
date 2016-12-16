@@ -104,12 +104,12 @@ public class TautologyChecker {
 			else
 			{
 				String nestedResult = this.generateImplications(param.toString());
-				if(!firstImplication)
+				if(!nestedResult.isEmpty() && !firstImplication)
 				{
 					result += " AND ";
+					result += nestedResult;
+					firstImplication = false;
 				}
-				result += nestedResult;
-				firstImplication = false;
 			}
 		}
 
