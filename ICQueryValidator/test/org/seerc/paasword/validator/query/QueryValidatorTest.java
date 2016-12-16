@@ -852,5 +852,6 @@ public class QueryValidatorTest {
 		
 		TheoremProvingDataSource tpds = new TheoremProvingDataSource(policy);
 		tpds.printModel(System.out);
+		int i=0;
 	}	
 }
