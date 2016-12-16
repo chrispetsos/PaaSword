@@ -44,6 +44,14 @@ pac:ABACRule rdfs:subClassOf
                 owl:onClass pcm:Subject
               ] .
 
+# ABAC rules should be subsumed only by themselves
+pac:ABACRule rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:subsumes ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:ABACRule
+              ] .
+
 # Context expression is optional but if it exists it should have at least
 # one parameter
 pac:ContextExpression rdfs:subClassOf

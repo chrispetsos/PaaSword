@@ -214,9 +214,9 @@ pac:hasAction a rdf:Property;
 	rdfs:domain pac:ABACRule;
 	rdfs:range ppm:DataPermission.
 
-#pac:hasActor a rdf:Property;
-#	rdfs:domain pac:ABACRule;
-#	rdfs:range pcm:Subject.
+pac:hasActor a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pcm:Subject.
 
 pac:hasContextExpression a rdf:Property;
 	rdfs:domain pac:ABACRule;

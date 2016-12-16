@@ -12,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.seerc.paasword.theoremprover.TheoremProvingDataSource;
 
 public class QueryValidatorTest {
 
@@ -46,7 +47,7 @@ public class QueryValidatorTest {
 	@Test
 	public void testValidate() {
 		List<QueryValidatorErrors> validationResult = qv.validate();
-		assertEquals(1, validationResult.size());
+		assertEquals(0, validationResult.size());
 	}
 
 	// TODO: We do not support yet subclass constraints.
@@ -843,5 +844,13 @@ public class QueryValidatorTest {
 		qv = new QueryValidator(constraints, policy);
 		
 		assertEquals(1, qv.validate().size());
+	}	
+
+	@Test
+	public void testPrintSubclassSubsumption() throws Exception {
+		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		
+		TheoremProvingDataSource tpds = new TheoremProvingDataSource(policy);
+		tpds.printModel(System.out);
 	}	
 }
