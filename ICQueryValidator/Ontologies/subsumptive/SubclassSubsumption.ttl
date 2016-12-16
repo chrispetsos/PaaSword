@@ -43,7 +43,7 @@ ex1:ABACRule_2 a pac:ABACRule;
 	pac:hasAuthorisation pac:positive;
 	pac:hasAction ex1:Read;
 	pac:hasActor ex1:ParkingEmployee;
-	pac:hasContextExpression ex1:expr.
+	pac:hasContextExpression ex1:expr2.
 
 ex1:Write a ppm:DatastorePermission.
 #############################################################################
@@ -52,7 +52,13 @@ ex1:Write a ppm:DatastorePermission.
 ex1:expr a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 
+ex1:expr2 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours2, ex1:Parking1 .
+
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
+ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval.
+
+ex1:EmployeeWorkingHours pac:subsumes ex1:EmployeeWorkingHours2 .
 
 ex1:expr1 a pac:ORContextExpression;
 	pac:hasParameter ex1:Parking1, ex1:Parking2.
@@ -77,63 +83,16 @@ pac:ORContextExpression rdfs:subClassOf otp:ORTheoremProvingClass .
 pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .
 pac:NOTContextExpression rdfs:subClassOf otp:NOTheoremProvingClass .
 
+pac:ABACRule rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:hasControlledObject rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasAuthorisation rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasAction rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasActor rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasContextExpression rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:subsumes owl:equivalentProperty otp:subsumes .
+pac:ABACRule rdfs:subClassOf otp:ANDTheoremProvingClass .
 
-#################################################################
-#    Rules
-#################################################################
 
-<urn:swrl#r1> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
-
-<urn:swrl#r2> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
-
-<urn:swrl#ce1> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
-
-<urn:swrl#ce2> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
-
-[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
-   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
-                                                       <http://www.w3.org/2003/11/swrl#classPredicate> pac:ABACRule ;
-                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1>
-                                                     ] ;
-                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
-                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> pac:ABACRule ;
-                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r2>
-                                                                ] ;
-                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
-                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
-                                                                             <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1> ;
-                                                                             <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce1>
-                                                                           ] ;
-                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
-                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
-                                                                                        <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r2> ;
-                                                                                        <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce2>
-                                                                                      ] ;
-                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:subsumes ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ce1> ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce2>
-                                                                                                 ] ;
-                                                                                       rdf:rest rdf:nil
-                                                                                     ]
-                                                                          ]
-                                                               ]
-                                                    ]
-                                         ] ;
-   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
-                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:subsumes ;
-                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1> ;
-                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#r2>
-                                                     ] ;
-                                           rdf:rest rdf:nil
-                                         ]
- ] .
  
 
 
