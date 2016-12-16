@@ -208,18 +208,15 @@ public class TautologyChecker {
 		{
 			for(Individual i2:individualsIterator)
 			{
-				if(!i1.equals(i2))
+				boolean isT = this.isTautology(i1.getURI(), i2.getURI());
+				if(isT)
 				{
-					boolean isT = this.isTautology(i1.getURI(), i2.getURI());
-					if(isT)
-					{
-						this.jdsi.getModel().add(
-								ResourceFactory.createResource(jdsi.createResourceFromUri(i1.getURI()).getURI()), 
-								ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), 
-								ResourceFactory.createResource(jdsi.createResourceFromUri(i2.getURI()).getURI()) 
-								);
-						//this.jdsi.createResourceFromUri(i1.getURI()).addProperty(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), i2.getURI());
-					}
+					this.jdsi.getModel().add(
+							ResourceFactory.createResource(jdsi.createResourceFromUri(i1.getURI()).getURI()), 
+							ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), 
+							ResourceFactory.createResource(jdsi.createResourceFromUri(i2.getURI()).getURI()) 
+							);
+					//this.jdsi.createResourceFromUri(i1.getURI()).addProperty(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), i2.getURI());
 				}
 			}
 		}
