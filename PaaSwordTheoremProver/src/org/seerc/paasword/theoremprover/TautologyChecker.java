@@ -107,6 +107,9 @@ public class TautologyChecker {
 				if(!nestedResult.isEmpty() && !firstImplication)
 				{
 					result += " AND ";
+				}
+				if(!nestedResult.isEmpty())
+				{
 					result += nestedResult;
 					firstImplication = false;
 				}
