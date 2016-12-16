@@ -108,9 +108,9 @@ ex1:Parking1 a pcm:Point.
 ex1:Parking2 a pcm:Point.
 
 
-
 otp:TheoremProvingBaseClass a owl:Class .
 otp:TheoremProvingParameterProperty a owl:ObjectProperty .
+otp:subsumes a owl:ObjectProperty .
 otp:ANDTheoremProvingClass a owl:Class .
 otp:ORTheoremProvingClass a owl:Class .
 otp:XORTheoremProvingClass a owl:Class .
@@ -118,6 +118,7 @@ otp:NOTTheoremProvingClass a owl:Class .
 
 pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
 pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:subsumes owl:equivalentProperty otp:subsumes .
 pac:ANDContextExpression rdfs:subClassOf otp:ANDTheoremProvingClass .
 pac:ORContextExpression rdfs:subClassOf otp:ORTheoremProvingClass .
 pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .

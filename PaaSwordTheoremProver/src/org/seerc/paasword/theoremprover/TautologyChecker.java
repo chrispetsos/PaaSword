@@ -87,7 +87,7 @@ public class TautologyChecker {
 			boolean isNestedNode = param.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:TheoremProvingBaseClass").getURI());
 			if(!isNestedNode)
 			{
-				StmtIterator subsumedNodes = param.asResource().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()));
+				StmtIterator subsumedNodes = param.asResource().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()));
 				while(subsumedNodes.hasNext())
 				{
 					RDFNode subsumedNode = subsumedNodes.next().getObject();
@@ -213,7 +213,7 @@ public class TautologyChecker {
 				{
 					this.jdsi.getModel().add(
 							ResourceFactory.createResource(jdsi.createResourceFromUri(i1.getURI()).getURI()), 
-							ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), 
+							ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
 							ResourceFactory.createResource(jdsi.createResourceFromUri(i2.getURI()).getURI()) 
 							);
 					//this.jdsi.createResourceFromUri(i1.getURI()).addProperty(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), i2.getURI());
