@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
+import org.seerc.paasword.theoremprover.TheoremProvingDataSource;
 import org.seerc.paasword.translator.QueryConstraint;
 import org.seerc.paasword.validator.engine.JenaDataSource;
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
@@ -34,7 +35,7 @@ public class QueryValidator {
 		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(ontologies));
 		SequenceInputStream sis = new SequenceInputStream(enumOnto);
 
-		jds = new JenaDataSourceInferred(sis);
+		jds = new TheoremProvingDataSource(sis);
 		
 		OntModel constraintsModel;
 		constraintsModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM);
