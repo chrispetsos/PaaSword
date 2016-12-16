@@ -78,13 +78,13 @@ public class TautologyChecker {
 	{
 		String result = "";
 		Resource resource = jdsi.createResourceFromUri(resourceUri);
-		StmtIterator resourceParams = resource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:hasParameter").getURI()));
+		StmtIterator resourceParams = resource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()));
 		boolean firstImplication = true;
 		
 		while(resourceParams.hasNext())
 		{
 			RDFNode param = resourceParams.next().getObject();
-			boolean isNestedNode = param.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:ContextExpression").getURI());
+			boolean isNestedNode = param.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:TheoremProvingBaseClass").getURI());
 			if(!isNestedNode)
 			{
 				StmtIterator subsumedNodes = param.asResource().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()));
@@ -124,24 +124,24 @@ public class TautologyChecker {
 			
 			@Override
 			public Object visitURI(Resource resource, String arg1) {
-				StmtIterator resourceParams = resource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:hasParameter").getURI()));
+				StmtIterator resourceParams = resource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()));
 
 				String result = "";
 				
-				if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:ANDContextExpression").getURI()))
+				if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:ANDTheoremProvingClass").getURI()))
 				{	// pac:ANDContextExpression
 					result = this.generateBooleanBlock(resourceParams, "AND", result);
 				}
-				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:ORContextExpression").getURI()))
+				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:ORTheoremProvingClass").getURI()))
 				{	// pac:ORContextExpression
 					result = this.generateBooleanBlock(resourceParams, "OR", result);
 				}
-				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:XORContextExpression").getURI()))
+				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:XORTheoremProvingClass").getURI()))
 				{	// pac:XORContextExpression
 					// TODO: Add support for XOR
 					
 				}
-				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("pac:NOTContextExpression").getURI()))
+				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:NOTheoremProvingClass").getURI()))
 				{	// pac:NOTContextExpression
 					// TODO: Add support for NOT
 				}
@@ -201,9 +201,9 @@ public class TautologyChecker {
 		
 	}
 
-	public void enhanceModel(String classUri)
+	public void enhanceModel()
 	{
-		List<Individual> individualsIterator = ((OntModel)this.jdsi.getModel()).listIndividuals(this.jdsi.createResourceFromUri(classUri)).toList();
+		List<Individual> individualsIterator = ((OntModel)this.jdsi.getModel()).listIndividuals(this.jdsi.createResourceFromUri("otp:TheoremProvingBaseClass")).toList();
 		for(Individual i1:individualsIterator)
 		{
 			for(Individual i2:individualsIterator)

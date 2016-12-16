@@ -18,6 +18,6 @@ public class TheoremProvingDataSource extends JenaDataSourceInferred {
 		
 		// enhance the model with tautologies
 		TautologyChecker tc = new TautologyChecker(this);
-		tc.enhanceModel("pac:ContextExpression");
+		tc.enhanceModel();
 	}
 }

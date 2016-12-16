@@ -229,7 +229,7 @@ public class TautologyCheckerTest {
 	@Test
 	public void testEnhanceModelWithTautologies() 
 	{
-		tc.enhanceModel("pac:ContextExpression");
+		tc.enhanceModel();
 		jdsi.printModel(System.out);
 	}
 }
