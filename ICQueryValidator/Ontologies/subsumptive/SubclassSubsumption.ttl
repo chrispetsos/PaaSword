@@ -39,11 +39,14 @@ ex1:Read a ppm:DatastorePermission.
 ex1:ParkingEmployee a pcm:Person.
 
 ex1:ABACRule_2 a pac:ABACRule;
-	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasControlledObject ex1:DepartmentAPaymentsTable;
 	pac:hasAuthorisation pac:positive;
 	pac:hasAction ex1:Read;
-	pac:hasActor ex1:ParkingEmployee;
+	pac:hasActor ex1:ParkingSectionAEmployee;
 	pac:hasContextExpression ex1:expr2.
+
+ex1:DepartmentAPaymentsTable a pcm:Relational.
+ex1:ParkingSectionAEmployee a pcm:Person.
 
 ex1:Write a ppm:DatastorePermission.
 #############################################################################
@@ -59,6 +62,8 @@ ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
 ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval.
 
 ex1:EmployeeWorkingHours pac:subsumes ex1:EmployeeWorkingHours2 .
+ex1:PaymentsTable pac:subsumes ex1:DepartmentAPaymentsTable .
+ex1:ParkingEmployee pac:subsumes ex1:ParkingSectionAEmployee .
 
 ex1:expr1 a pac:ORContextExpression;
 	pac:hasParameter ex1:Parking1, ex1:Parking2.
