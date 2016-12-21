@@ -7,6 +7,17 @@ import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 
 import cz.makub.swrl.CustomSWRLBuiltin.CustomSWRLFunction;
 
+/**
+ * The effort of creating a propositional checking built-in could not be made
+ * successful. First I would have to patch the class in cz.makub.swrl package to
+ * work with Pellet 2.4 and support individuals. 
+ * After that, we would be locked to the Pellet Reasoner.
+ * 
+ * @author Chris Petsos
+ *
+ */
+
+// TODO: Consider if this should be deprecated.
 public class SWRLPropositionalBuiltin implements CustomSWRLFunction {
 
 	TautologyChecker tc;
