@@ -1,5 +1,11 @@
 package org.seerc.paasword.validator.query;
 
+/**
+ * Data class that holds data to be queried that are transmitted over REST.
+ * 
+ * @author Chris Petsos
+ *
+ */
 public class QueryData {
 
 	private String query;
