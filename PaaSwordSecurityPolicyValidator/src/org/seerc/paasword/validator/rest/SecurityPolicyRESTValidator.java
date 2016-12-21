@@ -15,7 +15,13 @@ import org.seerc.paasword.validator.engine.SecurityPolicyValidator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * This uses the old SecurityPolicyValidator.
+ * @author Chris Petsos
+ *
+ */
 @Path("/")
+// TODO: This should be deprecated.
 public class SecurityPolicyRESTValidator {
 
 	Gson gson = new GsonBuilder().setPrettyPrinting().create();
