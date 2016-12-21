@@ -100,6 +100,10 @@ public class JenaDataSourceInferredTest {
 				);
 	}
 
+	/*
+	 * Performs a print out of ontologies with and without inferrences.
+	 * Optionoally it can check the sizes of the two version of the ontologies.
+	 */
 	private void performInferredTest(int originalSize, int inferredSize, String... ontoPaths) {
 		// a Jena data source with inferences
 		jdsi = new JenaDataSourceInferred(createStream(ontoPaths));
