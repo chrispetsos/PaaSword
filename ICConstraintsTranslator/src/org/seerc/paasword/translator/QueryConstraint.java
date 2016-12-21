@@ -1,8 +1,17 @@
 package org.seerc.paasword.translator;
 
+/**
+ * Data class that holds results of axiom-to-query conversions.
+ * It holds the OWL form of the restriction and the converted SPARQL query.
+ * 
+ * @author Chris Petsos
+ *
+ */
 public class QueryConstraint {
 
+	// This will hold the OWL representation of the restriction.
 	String constraintStatements;
+	// This will hold the converted SPARQL query.
 	String query;
 	
 	public QueryConstraint(String statements, String query)
