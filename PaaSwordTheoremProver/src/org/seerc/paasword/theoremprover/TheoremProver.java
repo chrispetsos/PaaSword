@@ -4,6 +4,12 @@ import java.io.InputStream;
 
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 
+/**
+ * This class wraps the TautologyChecker. It may not be needed anymore.
+ * @author Chris Petsos
+ *
+ */
+// TODO: Consider whether this class can be deprecated.
 public class TheoremProver {
 
 	JenaDataSourceInferred jdsi;
