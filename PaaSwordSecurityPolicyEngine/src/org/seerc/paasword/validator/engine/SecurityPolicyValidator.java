@@ -24,6 +24,12 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
 
+/**
+ * The first version of the way of validating security policies.
+ * @author Chris Petsos
+ *
+ */
+// TODO: Make this deprecated.
 public class SecurityPolicyValidator {
 
 	JenaDataSource jds;
