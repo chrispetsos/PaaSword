@@ -20,33 +20,70 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
+/**
+ * Given a constraints ontology and a knowledge base ontology this class can assess
+ * whether the KB violates any of the constraints. Uses a DCQnot approach for validation
+ * which means that it follows the Closed World Assumptions and the Unique Name
+ * Assumption.
+ * 
+ * @author Chris Petsos
+ *
+ */
 public class QueryValidator {
 	
+	// Talk to ontologies with Jena.
 	JenaDataSource jds;
+	
+	// The converted query constraints
 	List<QueryConstraint> queryConstraints;
 	
+	/**
+	 * Constructs a QueryValidator and extracts constraints from the constraints
+	 * ontology. Uses InputStreams for input.
+	 * 
+	 * @param constraints The contraints ontology.
+	 * @param ontologies The ontologies to be used as knowledge base.
+	 */
 	public QueryValidator(InputStream constraints, InputStream... ontologies)
 	{
 		this.extractConstraints(constraints, ontologies);
 	}
 
+	/**
+	 * Uses a TheoremProvingDataSource to talk to Jena.
+	 * 
+	 * @param constraints The contraints ontology.
+	 * @param ontologies The ontologies to be used as knowledge base.
+	 */
 	public void extractConstraints(InputStream constraints,
 			InputStream... ontologies) {
+		// Combine multiple ontologies in a single InputStream 
 		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(ontologies));
 		SequenceInputStream sis = new SequenceInputStream(enumOnto);
 
+		// Create the TheoremProvingDataSource
 		jds = new TheoremProvingDataSource(sis);
 		
+		// Read constraints ontology
 		OntModel constraintsModel;
 		constraintsModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM);
 		constraintsModel.read(constraints, null , "TTL");
 		constraintsModel.prepare();
 		
+		// Convert OWL axiom constraints to SPARQL queries.
 		queryConstraints = ICAxiomToSPARQLTranslator.translateModelToSPARQL(constraintsModel);
 	}
-	
+
+	/**
+	 * Constructs a QueryValidator and extracts constraints from the constraints
+	 * ontology. Uses String representation for input.
+	 * 
+	 * @param constraints The contraints ontology.
+	 * @param ontologies The ontologies to be used as knowledge base.
+	 */
 	public QueryValidator(String constraints, String... ontologies)
 	{
+		// Convert Strings to InputStreams
 		InputStream constraintsIs = new ByteArrayInputStream(constraints.getBytes(StandardCharsets.UTF_8));
 		InputStream[] ontologiesIs = new ByteArrayInputStream[ontologies.length];
 
@@ -60,6 +97,12 @@ public class QueryValidator {
 		this.extractConstraints(constraintsIs, ontologiesIs);
 	}
 	
+	/**
+	 * Performs the validation. Executes each covnerted query on the KB. If the query
+	 * returns a result then we have a violation.
+	 *  
+	 * @return A List of QueryValidatorErrors that were found.
+	 */
 	public List<QueryValidatorErrors> validate()
 	{
 		List<QueryValidatorErrors> errors = new ArrayList<>();
