@@ -18,9 +18,22 @@ import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.seerc.paasword.validator.query.QueryValidator;
 import org.seerc.paasword.validator.query.QueryValidatorErrors;
 
+/**
+ * REST interface to the QueryValidator. Supports validating and querying ontologies.
+ * Uses a TheoremProvingDataSource to access the data.
+ * 
+ * @author Chris Petsos
+ *
+ */
 @Path("/")
 public class QueryValidatorREST {
 
+	/**
+	 * Performs the validation.
+	 * 
+	 * @param data Data under validation in the form of a RESTValidationData object.
+	 * @return A validation report.
+	 */
 	@POST
 	@Path("/validate")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -41,6 +54,10 @@ public class QueryValidatorREST {
 		}
 	}
 	
+	/*
+	 * Generates a validation report.
+	 * TODO: This is quite verbose now. Should be more human-friendly.
+	 */
 	private String generateReport(List<QueryValidatorErrors> errors)
 	{
 		String report = errors.size() + " validation errors.\n\n";
@@ -96,6 +113,12 @@ public class QueryValidatorREST {
 		return report;
 	}
 
+	/**
+	 * Queries an ontology.
+	 * 
+	 * @param data Data to be queried in the form of a QueryData object.
+	 * @return The query's result.
+	 */
 	@POST
 	@Path("/query")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -103,6 +126,7 @@ public class QueryValidatorREST {
 	public String query(QueryData data) {
 		try
 		{
+			// Create a single InputStream from the potentially multiple ontologies. 
 			Vector<InputStream> ontologiesIs = new Vector<>();
 			
 			for(String ontology:data.getOntologies())
@@ -111,10 +135,13 @@ public class QueryValidatorREST {
 			}
 			SequenceInputStream sis = new SequenceInputStream(ontologiesIs.elements());
 			
+			// Answer the query using a TheoremProvingDataSource.
 			JenaDataSourceInferred jdsi = new TheoremProvingDataSource(sis);
 			
+			// execute the query
 			String result = jdsi.executeReadyQuery(data.getQuery()).toString();
 			
+			// TODO: These checks do not behave as expected for some reason.
 			if(result == null || result.equals(""))
 			{
 				return "No result.";
