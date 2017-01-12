@@ -273,4 +273,8 @@ pac:hasParameter a rdf:Property;
 pac:hasEvaluationResult a rdf:Property;
 	rdfs:domain pac:ContextExpression;
 	rdfs:range xsd:boolean.
+
+pac:refersTo a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range pcm:Subject, pcm:Object.
 #############################################################################

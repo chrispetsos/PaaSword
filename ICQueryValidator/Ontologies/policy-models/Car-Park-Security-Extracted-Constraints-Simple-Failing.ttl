@@ -47,9 +47,18 @@ ex1:ParkingEmployee a pcm:Person.
 pac:positive a pac:Authorisation.
 
 ex1:PaymentsTable a pcm:Relational.
+
 ex1:CloudStorage a pcm:InfrastructureArtefact.
 
 ex1:expr a pac:ANDContextExpression;
+	# pac:refersTo ex1:ParkingEmployee;	# Violation: A Context Expression that hasParameter a Location should refersTo a Subject or Object
+	pac:hasParameter ex1:Parking1, ex1:Parking2, ex1:expr1 .
+
+ex1:Parking1 a pcm:Point.
+
+ex1:Parking2 a pcm:Point.
+
+ex1:expr1 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours. # Violation: AND Context Expression should have exactly two parameters of type pcm:SecurityContextElement OR pac:ContextExpression.
 
 ex1:EmployeeWorkingHours a pcm:DateTimeIntervl. # This typo made ex1:EmployeeWorkingHours not being a pcm:SecurityContextElement.

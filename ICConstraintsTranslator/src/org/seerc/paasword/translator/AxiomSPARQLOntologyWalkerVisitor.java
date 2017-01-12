@@ -233,6 +233,8 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
     private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processExactCardinalityRestriction(T ce) {
 		if(!preprocess()) return;
 
+		if(this.isNestedExpressionInRestriction(ce)) return;
+		
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
 
@@ -257,6 +259,8 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
     private <T extends OWLCardinalityRestriction, OWLQuantifiedRestriction> void processMaxCardinalityRestriction(T ce) {
 		if(!preprocess()) return;
 
+		if(this.isNestedExpressionInRestriction(ce)) return;
+		
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
 
@@ -282,6 +286,8 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
     private void processQuantifiedRestriction(OWLQuantifiedRestriction ce, int cardinality) {
 		if(!preprocess()) return;
 
+		if(this.isNestedExpressionInRestriction(ce)) return;
+		
 		// create unique names for all used variables
 		String subclassVar = classVarGenerator.newVar();
 
@@ -293,6 +299,18 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
   				+ closeBlock();
 		
 		postProcess(ce, groupGraphPattern);
+	}
+
+	private boolean isNestedExpressionInRestriction(OWLObject ce) {
+		// If the current axiom's super-class is not equal to the current class expression then this is a nested expression.
+		if(!ce.equals(((OWLSubClassOfAxiom) this.getCurrentAxiom()).getSuperClass()))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
     
     /*
@@ -423,7 +441,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	private boolean preprocess()
 	{
 		reset();
-		return checkPreconditions();
+		return true;
 	}
 
 	/*
@@ -435,26 +453,6 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 		datatypeVarGenerator = new VarGenerator("d");
 	}
 
-	/*
-	 * The only precondition currently is that the axiom should not have already been visited.
-	 */
-	private boolean checkPreconditions() {
-		return !this.axiomAlreadyVisited();
-	}
-
-    private boolean axiomAlreadyVisited() {
-		// if current axiom has been visited
-		if(visitedAxioms.contains(this.getCurrentAxiom()))
-		{	// this means that we are visiting an "internal" restriction of an outer "complex" restriction
-			// which has been already converted.
-			System.out.println("The current axiom is considered as an \"internal\" expression of an outer \"complex\" expression, ignoring...");
-			return true;
-		}
-		// new axiom, add it to visitedAxioms and continue
-		visitedAxioms.add(this.getCurrentAxiom());
-		return false;
-	}
-    
     /*
      * After successful conversion, add query (along with the corresponding converted axiom) in a prettified form inside the results. 
      */

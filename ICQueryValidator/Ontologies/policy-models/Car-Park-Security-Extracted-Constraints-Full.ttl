@@ -76,12 +76,14 @@ ex1:Write a ppm:DatastorePermission.
 
 ### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
 ex1:expr a pac:ANDContextExpression;
+	# pac:refersTo ex1:ParkingEmployee; # This refersTo is irrelevant, since it hasParameter a DateTime
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 #	pac:hasEvaluationResult xsd:boolean.
 
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
 
 ex1:expr1 a pac:ORContextExpression;
+	pac:refersTo ex1:ParkingEmployee;
 	pac:hasParameter ex1:Parking1, ex1:Parking2.
 
 ex1:Parking1 a pcm:Point.
