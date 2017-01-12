@@ -36,6 +36,8 @@ public class TautologyChecker {
 	private CheckerTestHelper checker;
 	// A Map from resources to variables.
 	private HashMap<String, String> resourceVariableMap;
+	
+	private static long variableCounter = 0;
 
 	/**
 	 * Constructs a TautologyChecker object.
@@ -318,11 +320,19 @@ public class TautologyChecker {
 			// namespace appended with its local name.
 			// This is not very good decision, because the CheckerTestHelper only allows characters and numbers. If the 
 			// namespace or the local name of the resource have any special characters (e.g. "_") this will fail.
-			// TODO: For debugging purposes leave it like this, but before deploying change this to something more robust
+			// For debugging purposes leave it like this, but before deploying change this to something more robust
 			// e.g. have a standard prefic for variable names ("e.g. "V") and append a counter to that, thus having only
 			// characters and numbers in the variable names.
-			Resource resource = jdsi.createResourceFromUri(resourceId);
-			String newVariable = jdsi.getPrefixes().getKey(resource.getNameSpace()) + resource.getLocalName();
+			//
+			// DONE
+			// 
+			// Leave it here just in case we need to temporarily 'revive' it at some point for debugging purposes.
+			/*Resource resource = jdsi.createResourceFromUri(resourceId);
+			String newVariable = jdsi.getPrefixes().getKey(resource.getNameSpace()) + resource.getLocalName();*/
+			
+			variableCounter++;
+			String newVariable = "V" + String.valueOf(variableCounter);
+			
 			resourceVariableMap.put(resourceId, newVariable);
 			return newVariable;
 		}

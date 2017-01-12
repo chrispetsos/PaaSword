@@ -207,13 +207,22 @@ public class TautologyCheckerTest {
 	
 	@Test
 	public void testConvertToPropositionalExpression() {
-		checkOWLResourceToProposition("ex1:expr", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");
+		checkOWLResourceToProposition("ex1:expr", "V3 AND (V2 OR V1)");
+		checkOWLResourceToProposition("ex1:expr1", "V2 OR V1");
+		checkOWLResourceToProposition("ex1:expr2", "(V1 OR V2) AND V3");
+		checkOWLResourceToProposition("ex1:expr3", "(V3 AND V1) OR (V3 AND V2)");
+		checkOWLResourceToProposition("ex1:expr4", "V3 AND V4");
+		checkOWLResourceToProposition("ex1:expr5", "V3 AND (V1 OR V2)");
+		checkOWLResourceToProposition("ex1:expr6", "V3");
+		
+		// Comment above and uncomment this if you revert to verbose variable names for debugging purposes.
+		/*checkOWLResourceToProposition("ex1:expr", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");
 		checkOWLResourceToProposition("ex1:expr1", "ex1Parking1 OR ex1Parking2");
 		checkOWLResourceToProposition("ex1:expr2", "(ex1Parking1 OR ex1Parking2) AND ex1EmployeeWorkingHours");
 		checkOWLResourceToProposition("ex1:expr3", "(ex1EmployeeWorkingHours AND ex1Parking1) OR (ex1EmployeeWorkingHours AND ex1Parking2)");
 		checkOWLResourceToProposition("ex1:expr4", "ex1EmployeeWorkingHours AND ex1PaymentsTable");
 		checkOWLResourceToProposition("ex1:expr5", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");
-		checkOWLResourceToProposition("ex1:expr6", "ex1EmployeeWorkingHours");
+		checkOWLResourceToProposition("ex1:expr6", "ex1EmployeeWorkingHours");*/
 	}
 
 	private void checkOWLResourceToProposition(String resourceUri, String desiredProposition) {
