@@ -232,4 +232,10 @@ public class TautologyCheckerTest {
 		tc.enhanceModel();
 		jdsi.printModel(System.out);
 	}
+
+	@Test
+	public void testXORContextExpression() 
+	{
+		assertTrue(tc.isTautology("ex1:expr14", "ex1:expr15"));
+	}
 }

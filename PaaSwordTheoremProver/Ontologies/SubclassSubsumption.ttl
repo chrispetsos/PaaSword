@@ -103,9 +103,18 @@ ex1:expr1 a pac:ORContextExpression;
 ex1:expr13 a pac:ORContextExpression;
 	pac:hasParameter ex1:Parking1, ex1:Parking2.
 	
+ex1:expr14 a pac:XORContextExpression;
+	pac:hasParameter ex1:Parking1, ex1:Parking3.
+
+ex1:expr15 a pac:ANDContextExpression;
+	pac:hasParameter ex1:expr14, ex1:EmployeeWorkingHours.
+
+
 ex1:Parking1 a pcm:Point.
 
 ex1:Parking2 a pcm:Point.
+
+ex1:Parking3 a pcm:Point.
 
 
 otp:TheoremProvingBaseClass a owl:Class .

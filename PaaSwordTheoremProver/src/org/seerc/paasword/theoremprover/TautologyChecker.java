@@ -209,8 +209,7 @@ public class TautologyChecker {
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:XORTheoremProvingClass").getURI()))
 				{	// otp:XORTheoremProvingClass
-					// TODO: Add support for XOR
-					
+					result = this.generateXORBlock(resourceParams, result);					
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:NOTheoremProvingClass").getURI()))
 				{	// otp:NOTheoremProvingClass
@@ -222,6 +221,28 @@ public class TautologyChecker {
 					return TautologyChecker.this.getVariableFor(arg1);
 				}
 				
+				return result;
+			}
+
+			/*
+			 * XOR Statements should have exactly two operands. 
+			 */
+			private String generateXORBlock(StmtIterator resourceParams, String result) {
+				// open parentheses
+				result += "( ";
+				// get first param, visit it recursively with the same visitor.
+				String param1 = resourceParams.next().getObject().visitWith(this).toString();
+				
+				// get second param, visit it recursively with the same visitor.
+				String param2 = resourceParams.next().getObject().visitWith(this).toString();
+				
+				// build XOR as expressed with AND, NOT, OR
+				// p XOR q = ( p AND NOT q ) OR ( NOT p AND q )
+				result += "( " + param1 + " AND NOT " + param2 + " ) OR ( NOT " + param1 + " AND " + param2 + " )";
+				
+				// close parentheses
+				result += " )";
+
 				return result;
 			}
 
