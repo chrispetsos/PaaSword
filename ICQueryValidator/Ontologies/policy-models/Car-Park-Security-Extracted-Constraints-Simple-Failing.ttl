@@ -49,8 +49,8 @@ pac:positive a pac:Authorisation.
 ex1:PaymentsTable a pcm:Relational.
 ex1:CloudStorage a pcm:InfrastructureArtefact.
 
-ex1:expr a pac:ContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours. # Violation: Context Expression should have at least one parameter of type pcm:SecurityContextElement OR pac:ContextExpression.
+ex1:expr a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours. # Violation: AND Context Expression should have exactly two parameters of type pcm:SecurityContextElement OR pac:ContextExpression.
 
 ex1:EmployeeWorkingHours a pcm:DateTimeIntervl. # This typo made ex1:EmployeeWorkingHours not being a pcm:SecurityContextElement.
 
