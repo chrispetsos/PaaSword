@@ -213,7 +213,7 @@ public class TautologyChecker {
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:NOTheoremProvingClass").getURI()))
 				{	// otp:NOTheoremProvingClass
-					// TODO: Add support for NOT
+					result = this.generateNOTBlock(resourceParams, result);					
 				}
 				else
 				{	// "terminating" param
@@ -225,11 +225,31 @@ public class TautologyChecker {
 			}
 
 			/*
+			 * NOT Statements should have exactly one operand. 
+			 */
+			private String generateNOTBlock(StmtIterator resourceParams, String result) {
+				// open parentheses
+				result += "( ";
+				
+				// get param, visit it recursively with the same visitor.
+				String param = resourceParams.next().getObject().visitWith(this).toString();
+				
+				// build NOT statement
+				result += "NOT " + param;
+				
+				// close parentheses
+				result += " )";
+
+				return result;
+			}
+
+			/*
 			 * XOR Statements should have exactly two operands. 
 			 */
 			private String generateXORBlock(StmtIterator resourceParams, String result) {
 				// open parentheses
 				result += "( ";
+				
 				// get first param, visit it recursively with the same visitor.
 				String param1 = resourceParams.next().getObject().visitWith(this).toString();
 				

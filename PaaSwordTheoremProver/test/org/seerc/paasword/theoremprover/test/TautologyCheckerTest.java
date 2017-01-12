@@ -238,4 +238,11 @@ public class TautologyCheckerTest {
 	{
 		assertTrue(tc.isTautology("ex1:expr14", "ex1:expr15"));
 	}
+
+	@Test
+	public void testNOTContextExpression() 
+	{
+		assertFalse(tc.isTautology("ex1:expr16", "ex1:expr17"));
+		assertFalse(tc.isTautology("ex1:expr16", "ex1:expr18"));
+	}
 }

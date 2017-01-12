@@ -109,6 +109,15 @@ ex1:expr14 a pac:XORContextExpression;
 ex1:expr15 a pac:ANDContextExpression;
 	pac:hasParameter ex1:expr14, ex1:EmployeeWorkingHours.
 
+ex1:expr16 a pac:ANDContextExpression;
+	pac:hasParameter ex1:Parking1, ex1:Parking3.
+
+ex1:expr17 a pac:NOTContextExpression;
+	pac:hasParameter ex1:Parking1.
+
+ex1:expr18 a pac:NOTContextExpression;
+	pac:hasParameter ex1:Parking3.
+
 
 ex1:Parking1 a pcm:Point.
 
