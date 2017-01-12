@@ -52,7 +52,7 @@ ex1:CloudStorage a pcm:InfrastructureArtefact.
 
 ex1:expr a pac:ANDContextExpression;
 	# pac:refersTo ex1:ParkingEmployee;	# Violation: A Context Expression that hasParameter a Location should refersTo a Subject or Object
-	pac:hasParameter ex1:Parking1, ex1:Parking2, ex1:expr1 .
+	pac:hasParameter ex1:Parking1, ex1:Parking2, ex1:expr1 . # Violation: AND Context Expression should have exactly two parameters of type pcm:SecurityContextElement OR pac:ContextExpression.
 
 ex1:Parking1 a pcm:Point.
 
