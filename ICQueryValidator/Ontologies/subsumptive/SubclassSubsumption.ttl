@@ -42,11 +42,12 @@ ex1:ABACRule_2 a pac:ABACRule;
 	pac:hasControlledObject ex1:DepartmentAPaymentsTable;
 	pac:hasAuthorisation pac:positive;
 	pac:hasAction ex1:Read;
-	pac:hasActor ex1:ParkingSectionAEmployee;
+	pac:hasActor ex1:ParkingSectionAArea1Employee;
 	pac:hasContextExpression ex1:expr2.
 
 ex1:DepartmentAPaymentsTable a pcm:Relational.
 ex1:ParkingSectionAEmployee a pcm:Person.
+ex1:ParkingSectionAArea1Employee a pcm:Person.
 
 ex1:Write a ppm:DatastorePermission.
 #############################################################################
@@ -56,14 +57,17 @@ ex1:expr a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 
 ex1:expr2 a pac:ANDContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours2, ex1:Parking1 .
+	pac:hasParameter ex1:EmployeeWorkingHours3, ex1:Parking1 .
 
 ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
 ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval.
+ex1:EmployeeWorkingHours3 a pcm:DateTimeInterval.
 
 ex1:EmployeeWorkingHours pac:subsumes ex1:EmployeeWorkingHours2 .
+ex1:EmployeeWorkingHours2 pac:subsumes ex1:EmployeeWorkingHours3 .
 ex1:PaymentsTable pac:subsumes ex1:DepartmentAPaymentsTable .
 ex1:ParkingEmployee pac:subsumes ex1:ParkingSectionAEmployee .
+ex1:ParkingSectionAEmployee pac:subsumes ex1:ParkingSectionAArea1Employee .
 
 ex1:expr1 a pac:ORContextExpression;
 	pac:hasParameter ex1:Parking1, ex1:Parking2.
@@ -74,7 +78,7 @@ ex1:Parking2 a pcm:Point.
 
 otp:TheoremProvingBaseClass a owl:Class .
 otp:TheoremProvingParameterProperty a owl:ObjectProperty .
-otp:subsumes a owl:ObjectProperty .
+otp:subsumes a owl:ObjectProperty, owl:TransitiveProperty .
 otp:ANDTheoremProvingClass a owl:Class .
 otp:ORTheoremProvingClass a owl:Class .
 otp:XORTheoremProvingClass a owl:Class .
