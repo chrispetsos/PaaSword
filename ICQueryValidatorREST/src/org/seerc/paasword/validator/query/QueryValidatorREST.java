@@ -80,6 +80,8 @@ public class QueryValidatorREST {
 			report += error.getQueryConstraint().getConstraintStatements().toString() + "\n";
 			report += "which have been translated to the following query:\n";
 			report += error.getQueryConstraint().getQuery() + "\n";
+			report += "and has the following description:\n";
+			report += error.getQueryConstraint().getConstraintDescription() + "\n";
 			if(error.getProblematicResources().isEmpty())
 			{
 				report += "has NOT  been violated.\n";
