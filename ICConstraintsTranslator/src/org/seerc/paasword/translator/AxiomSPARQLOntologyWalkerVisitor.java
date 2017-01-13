@@ -474,7 +474,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 			// extract it as Literal
 			axiomDescription = ((OWLLiteral)labelIterator.next().getValue()).getLiteral();
 		}
-    	queries.add(new QueryConstraint(axiom.toString(), query));
+    	queries.add(new QueryConstraint(axiom.toString(), query, axiomDescription));
 	}
     
     private String createPrettyQuery(String groupGraphPattern) {

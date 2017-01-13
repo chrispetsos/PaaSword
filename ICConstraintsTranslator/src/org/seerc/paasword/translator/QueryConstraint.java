@@ -13,11 +13,14 @@ public class QueryConstraint {
 	String constraintStatements;
 	// This will hold the converted SPARQL query.
 	String query;
+	// This will hold the human-friendly constraint description as added to its rdfs:label.
+	String constraintDescription;
 	
-	public QueryConstraint(String statements, String query)
+	public QueryConstraint(String statements, String query, String constraintDescription)
 	{
 		this.constraintStatements = statements;
 		this.query = query;
+		this.constraintDescription = constraintDescription;
 	}
 
 	public String getConstraintStatements() {
@@ -26,6 +29,10 @@ public class QueryConstraint {
 
 	public String getQuery() {
 		return query;
+	}
+
+	public String getConstraintDescription() {
+		return constraintDescription;
 	}
 
 }
