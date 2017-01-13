@@ -18,6 +18,9 @@ import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.seerc.paasword.validator.query.QueryValidator;
 import org.seerc.paasword.validator.query.QueryValidatorErrors;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
  * REST interface to the QueryValidator. Supports validating and querying ontologies.
  * Uses a TheoremProvingDataSource to access the data.
@@ -27,6 +30,8 @@ import org.seerc.paasword.validator.query.QueryValidatorErrors;
  */
 @Path("/")
 public class QueryValidatorREST {
+	
+	Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
 	/**
 	 * Performs the validation.
@@ -44,7 +49,7 @@ public class QueryValidatorREST {
 			QueryValidator qv = new QueryValidator(data.getConstraints(), data.getOntologies());
 			List<QueryValidatorErrors> errors = qv.validate();
 			
-			String report = this.generateReport(errors);
+			String report = gson.toJson(errors);
 			
 			return report;
 		}
