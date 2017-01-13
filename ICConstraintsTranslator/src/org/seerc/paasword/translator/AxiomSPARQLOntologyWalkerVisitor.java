@@ -1,6 +1,7 @@
 package org.seerc.paasword.translator;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -8,7 +9,9 @@ import org.aksw.owl2sparql.OWLClassExpressionToSPARQLConverter;
 import org.aksw.owl2sparql.OWLObjectPropertyExpressionConverter;
 import org.aksw.owl2sparql.util.VarGenerator;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
+import org.semanticweb.owlapi.model.OWLAnnotationSubject;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLCardinalityRestriction;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -20,6 +23,8 @@ import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDataPropertyRangeAxiom;
 import org.semanticweb.owlapi.model.OWLDataRange;
 import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
 import org.semanticweb.owlapi.model.OWLObjectMaxCardinality;
@@ -32,6 +37,7 @@ import org.semanticweb.owlapi.model.OWLProperty;
 import org.semanticweb.owlapi.model.OWLPropertyExpression;
 import org.semanticweb.owlapi.model.OWLQuantifiedRestriction;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.search.EntitySearcher;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 import org.semanticweb.owlapi.util.OWLOntologyWalkerVisitor;
 
@@ -454,11 +460,20 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	}
 
     /*
-     * After successful conversion, add query (along with the corresponding converted axiom) in a prettified form inside the results. 
+     * After successful conversion, add query (along with the corresponding converted axiom and axiom description if there is one) in a prettified form inside the results. 
      */
-    private void postProcess(Object axiom, String groupGraphPattern)
+    private void postProcess(OWLObject axiom, String groupGraphPattern)
 	{
 		String query = createPrettyQuery(groupGraphPattern);
+		// get OWLObject's rdfs:label annotations
+		Iterator<OWLAnnotation> labelIterator = EntitySearcher.getAnnotations(axiom.getSignature().iterator().next(), this.getCurrentOntology(), factory.getRDFSLabel()).iterator();
+		String axiomDescription = null;
+		// if there is one
+		if(labelIterator.hasNext())
+		{
+			// extract it as Literal
+			axiomDescription = ((OWLLiteral)labelIterator.next().getValue()).getLiteral();
+		}
     	queries.add(new QueryConstraint(axiom.toString(), query));
 	}
     

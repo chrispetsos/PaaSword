@@ -3,6 +3,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-:is_responsible_for rdfs:domain :Project_Leader .
+:is_responsible_for rdfs:domain :Project_Leader ;
+	rdfs:label "Property is_responsible_for should have as domain a Project_Leader."^^xsd:string .
 
               
