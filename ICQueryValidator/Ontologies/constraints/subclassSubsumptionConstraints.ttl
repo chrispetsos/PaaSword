@@ -44,11 +44,11 @@ pac:ABACRule rdfs:subClassOf
                 owl:onClass pcm:Subject
               ] .
 
-# ABAC rules should be subsumed at most by themselves
+# ABAC rules should not subsume any other rule
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:subsumes ;
-                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                 owl:onClass pac:ABACRule
               ] .
 
