@@ -859,12 +859,12 @@ public class QueryValidatorTest {
 		assertEquals(2, qv.validate().size());
 	}	
 
-	/*@Test
+	@Test
 	public void testPrintSubclassSubsumption() throws Exception {
 		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
 		
 		TheoremProvingDataSource tpds = new TheoremProvingDataSource(policy);
 		tpds.printModel(System.out);
 		int i=0;
-	}*/	
+	}	
 }

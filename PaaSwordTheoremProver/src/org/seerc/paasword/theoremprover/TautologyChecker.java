@@ -327,11 +327,11 @@ public class TautologyChecker {
 			// DONE
 			// 
 			// Leave it here just in case we need to temporarily 'revive' it at some point for debugging purposes.
-			/*Resource resource = jdsi.createResourceFromUri(resourceId);
-			String newVariable = jdsi.getPrefixes().getKey(resource.getNameSpace()) + resource.getLocalName();*/
+			Resource resource = jdsi.createResourceFromUri(resourceId);
+			String newVariable = jdsi.getPrefixes().getKey(resource.getNameSpace()) + resource.getLocalName();
 			
-			variableCounter++;
-			String newVariable = "V" + String.valueOf(variableCounter);
+			/*variableCounter++;
+			String newVariable = "V" + String.valueOf(variableCounter);*/
 			
 			resourceVariableMap.put(resourceId, newVariable);
 			return newVariable;
