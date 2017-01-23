@@ -12,11 +12,24 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.util.OWLOntologyWalker;
 
+/**
+ * AxiomSPARQLTranslator uses a AxiomSPARQLOntologyWalkerVisitor internally to convert 
+ * an OWL ontology to DCQnot SPARQL Integrity Constraints.
+ * 
+ * @author Chris Petsos
+ *
+ */
 public class AxiomSPARQLTranslator {
 
 	OWLOntologyManager manager;
 	OWLOntology ontology;
 
+	/**
+	 * Generates the AxiomSPARQLTranslator and the internal OWL ontology that it
+	 * operates on.
+	 * 
+	 * @param axioms The ontology as an InputStream.
+	 */
 	public AxiomSPARQLTranslator(InputStream axioms)
 	{
 		manager = OWLManager.createOWLOntologyManager();
@@ -27,6 +40,12 @@ public class AxiomSPARQLTranslator {
 		}
 	}
 	
+	/**
+	 * Walks the currently loaded ontology, visits axioms and generates the query
+	 * contraints.
+	 *  
+	 * @return A list of QueryConstraints.
+	 */
 	public List<QueryConstraint> convertToSPARQLDCQnot()
 	{
 		List<QueryConstraint> queries = new ArrayList<QueryConstraint>();

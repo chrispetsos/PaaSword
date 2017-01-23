@@ -12,6 +12,8 @@
 		<project>owlapi-parsers</project>
 		<project>owlapi-api</project>
 		<project>owlapi-impl</project>
+		<project>PaaSwordTheoremProver</project>
+		<project>tautology-checker</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

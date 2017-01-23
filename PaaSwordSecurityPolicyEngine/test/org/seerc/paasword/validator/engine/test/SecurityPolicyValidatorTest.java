@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.seerc.paasword.validator.engine.ProblematicRules;
 import org.seerc.paasword.validator.engine.SecurityPolicyValidator;
 
+// TODO: This should be deprecated.
 public class SecurityPolicyValidatorTest {
 
 	SecurityPolicyValidator scv;

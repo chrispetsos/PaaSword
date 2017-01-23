@@ -1,0 +1,1646 @@
+@prefix schema: <http://schema.org/> .
+@prefix orgX:  <http://www.paasword.eu/security-policy/orgX#> .
+@prefix pcpm:  <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#> .
+@prefix usdl-sec: <http://www.linked-usdl.org/ns/usdl-sec#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix gr:    <http://purl.org/goodrelations/v1#> .
+@prefix ppm:   <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix usdl-business-roles: <http://www.linked-usdl.org/ns/usdl-business-roles#> .
+@prefix pbe:   <http://www.paasword.eu/security-policy/seerc/pbe#> .
+@prefix pac:   <http://www.paasword.eu/security-policy/seerc/pac#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix usdl-core: <http://www.linked-usdl.org/ns/usdl-core#> .
+@prefix pdm:   <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pcm:   <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pwd:   <http://www.paasword.eu/security-policy/seerc/pwd#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix ex1:   <http://www.paasword.eu/security-policy/use-cases/car-park#> .
+
+pcm:hasEndpoint  a                owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Service ;
+        rdfs:range                xsd:anyURI ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasEndpoint ;
+        owl:equivalentProperty    pcm:hasEndpoint ;
+        owl:propertyDisjointWith  pcm:hasDay , pcm:hasMobileOS , pcm:hasHour , pcm:hasSubnet , pcm:hasDownloadRate , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasPort , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasZone , pcm:hasFloorNumber , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasYear , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond .
+
+pcm:isChildOf  a                  owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:HierarchicalDataStructure ;
+        rdfs:range                pcm:HierarchicalDataStructure ;
+        rdfs:subPropertyOf        pcm:isChildOf , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:isChildOf ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+<http://www.w3.org/2006/time#Instant>
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  <http://www.w3.org/2006/time#Instant> .
+
+schema:Place  a              owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  schema:Place .
+
+usdl-core:ServiceModel
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-core:ServiceModel .
+
+usdl-sec:Confidentiality
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-sec:Confidentiality .
+
+owl:bottomObjectProperty
+        a                         owl:ObjectProperty , owl:SymmetricProperty , owl:AsymmetricProperty , owl:IrreflexiveProperty ;
+        rdfs:domain               pwd:PolicySet , pcm:Address , pac:PolicySetCombiningAlgorithms , pbdfd:PaaSwordDataFragmentationAndDistribution , pbdfd:BootstrappingDFDPolicySet , usdl-core:Role , ppm:DataPermission , pac:ABACPolicy , pbe:BootstrappingCryptoPolicy , pdm:DatabaseFragmentation , pcm:ConnectionMetric , pcm:Object , pcm:HierarchicalDataStructure , pcm:Coordinates , pcm:AuthorizationMethod , pwd:Policy , pcm:Point , pdm:CryptographicType , pcm:DateTime , pcm:DateTimeInterval , pbe:BootstrappingCryptoPolicySet , pbdfd:BootstrappingDFDRule , pbe:PaaSwordDataEncryption , pcm:Subject , pac:Authorisation , pac:PaaSwordABAC , pcm:AbstractLocation , pcm:Service , pcm:SecurityContextElement , pcm:AuthenticationMethod , pcm:ClassHandler , pbdfd:BootstrappingDFDPolicy , pcm:category , pac:ContextExpression , pcm:POI , pbe:BootstrappingCryptoRule , pcpm:ContextPattern , pac:ABACPolicySet , pcm:Area , pwd:Rule , pac:ABACRule , pcm:IdentityType , pcm:ConnectionType , pac:PolicyCombiningAlgorithms , gr:DayOfWeek ;
+        rdfs:range                pwd:PolicySet , pcm:Address , pac:PolicySetCombiningAlgorithms , pbdfd:PaaSwordDataFragmentationAndDistribution , pbdfd:BootstrappingDFDPolicySet , usdl-core:Role , ppm:DataPermission , pac:ABACPolicy , pbe:BootstrappingCryptoPolicy , pdm:DatabaseFragmentation , pcm:ConnectionMetric , pcm:Object , pcm:HierarchicalDataStructure , pcm:Coordinates , pwd:Policy , pcm:AuthorizationMethod , pcm:Point , pdm:CryptographicType , pcm:DateTime , pbe:BootstrappingCryptoPolicySet , pcm:DateTimeInterval , pbdfd:BootstrappingDFDRule , pbe:PaaSwordDataEncryption , pcm:Subject , pac:Authorisation , pac:PaaSwordABAC , pcm:SecurityContextElement , pcm:AbstractLocation , pcm:Service , pcm:AuthenticationMethod , pcm:ClassHandler , pbdfd:BootstrappingDFDPolicy , pcm:category , pac:ContextExpression , pcm:POI , pbe:BootstrappingCryptoRule , pcpm:ContextPattern , pac:ABACPolicySet , pcm:Area , pwd:Rule , pac:ABACRule , pcm:IdentityType , pcm:ConnectionType , pac:PolicyCombiningAlgorithms , gr:DayOfWeek ;
+        rdfs:subPropertyOf        usdl-core:withBusinessRole , pwd:hasRule , pac:hasPolicySetCombiningAlgorithm , pcm:isChildOf , pcm:name , pac:hasABACRule , pbdfd:belongsToDFDPolicySet , usdl-sec:isImplementedBy , pcm:after , usdl-sec:isRealizedByTechnology , pcm:hasAreaCoordinates , pcm:hasPointCoordinates , pbe:hasSecurityGoal , pcm:legalName , pac:hasControlledObject , pcm:hasBrand , pac:hasParameter , pwd:belongsToPolicySet , pbdfd:hasControlledObject , pbe:isImplementedBy , pbdfd:hasSecurityRealizationType , pcm:elevation , pbdfd:hasDFDElement , pac:hasContextExpression , pcm:category , pcm:hasIdentityType , pac:hasSecurityRealizationType , pbdfd:hasSecurityGoal , pac:hasPolicySetContextExpression , pcm:streetAddress , pcm:hasArea , pcm:hasRole , pac:hasPolicyCombiningAlgorithm , pcm:postalCode , pcm:description , pbdfd:isImplementedBy , pcm:hasBeginningDay , pbe:hasCryptoElement , pac:hasSecurityGoal , pcm:addressCountry , owl:topObjectProperty , pcm:hasDUNS , pcm:hasConnectionMetric , pbe:hasCryptoPolicySet , pcm:before , pbe:isRealizedByTechnology , pcm:isLocatedIn , pbe:hasSecurityRealizationType , pac:hasABACPolicySet , pcm:handler , pac:hasAuthorisation , pcm:hasAddress , pac:hasAction , pcm:addressRegion , pbdfd:hasBootstrappingDFDRule , pac:belongsToABACPolicySet , pbe:hasControlledObject , usdl-core:ofBusinessEntity , pcm:hasAuthenticationMethod , pcm:latitude , usdl-sec:hasSecurityRealizationType , pbdfd:isRealizedByTechnology , pac:isRealizedByTechnology , pac:hasPolicyContextExpression , pcm:longitude , pbe:hasBootStrappingCryptoRule , usdl-core:hasEntityInvolvement , pbdfd:hasDFDPolicySet , skos:broader , pcm:hasAuthorizationMethod , pcm:hasEndDay , pcm:addressLocality , pbe:belongsToCryptoPolicySet , usdl-sec:hasSecurityGoal , owl:bottomObjectProperty , pac:hasPatternParameter , pac:isImplementedBy , usdl-sec:hasSecurityProfile ;
+        owl:equivalentProperty    owl:bottomObjectProperty ;
+        owl:propertyDisjointWith  usdl-core:withBusinessRole , pwd:hasRule , pac:hasPolicySetCombiningAlgorithm , pcm:isChildOf , pcm:name , pac:hasABACRule , pbdfd:belongsToDFDPolicySet , usdl-sec:isImplementedBy , pcm:after , usdl-sec:isRealizedByTechnology , pcm:hasAreaCoordinates , pcm:hasPointCoordinates , pbe:hasSecurityGoal , pcm:legalName , pac:hasControlledObject , pcm:hasBrand , pac:hasParameter , pwd:belongsToPolicySet , pbdfd:hasControlledObject , pbe:isImplementedBy , pbdfd:hasSecurityRealizationType , pcm:elevation , pbdfd:hasDFDElement , pac:hasContextExpression , pcm:category , pcm:hasIdentityType , pac:hasSecurityRealizationType , pbdfd:hasSecurityGoal , pac:hasPolicySetContextExpression , pcm:streetAddress , pcm:hasArea , pcm:hasRole , pac:hasPolicyCombiningAlgorithm , pcm:postalCode , pcm:description , pbdfd:isImplementedBy , pcm:hasBeginningDay , pbe:hasCryptoElement , pac:hasSecurityGoal , owl:topObjectProperty , pcm:addressCountry , pcm:hasDUNS , pcm:hasConnectionMetric , pbe:hasCryptoPolicySet , pcm:before , pbe:isRealizedByTechnology , pcm:isLocatedIn , pbe:hasSecurityRealizationType , pac:hasABACPolicySet , pcm:handler , pac:hasAuthorisation , pcm:hasAddress , pac:hasAction , pcm:addressRegion , pbdfd:hasBootstrappingDFDRule , pac:belongsToABACPolicySet , pbe:hasControlledObject , usdl-core:ofBusinessEntity , pcm:hasAuthenticationMethod , usdl-sec:hasSecurityRealizationType , pcm:latitude , pbdfd:isRealizedByTechnology , pac:hasPolicyContextExpression , pac:isRealizedByTechnology , pcm:longitude , pbe:hasBootStrappingCryptoRule , usdl-core:hasEntityInvolvement , pbdfd:hasDFDPolicySet , skos:broader , pcm:hasAuthorizationMethod , pcm:hasEndDay , pcm:addressLocality , pbe:belongsToCryptoPolicySet , usdl-sec:hasSecurityGoal , owl:bottomObjectProperty , pac:hasPatternParameter , pac:isImplementedBy , usdl-sec:hasSecurityProfile .
+
+pbdfd:isRealizedByTechnology
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        pbdfd:isRealizedByTechnology , owl:topObjectProperty , usdl-sec:isRealizedByTechnology ;
+        owl:equivalentProperty    pbdfd:isRealizedByTechnology ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasAuthorizationMethod
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:range                pcm:AuthorizationMethod ;
+        rdfs:subPropertyOf        pcm:hasAuthorizationMethod , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasAuthorizationMethod ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasBuildingNumber
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasBuildingNumber , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasBuildingNumber ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:hasTarget  a                  owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Object ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasTarget ;
+        owl:equivalentProperty    pcm:hasTarget ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:hasRectangularRangeHeight
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:comment              "This property describes the height of the Rectangular area with a center pointed by the hasAreaCoordinates property(e.g. 2Km)" ;
+        rdfs:domain               pcm:Area ;
+        rdfs:range                xsd:double ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasRectangularRangeHeight ;
+        owl:equivalentProperty    pcm:hasRectangularRangeHeight ;
+        owl:propertyDisjointWith  pcm:hasDay , pcm:hasMobileOS , pcm:hasHour , pcm:hasSubnet , pcm:hasDownloadRate , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasPort , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasZone , pcm:hasFloorNumber , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasEnd , pcm:hasRelationalType , pcm:hasYear , pcm:hasSecond .
+
+pcm:hasIMSI  a                    owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Mobile ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasIMSI ;
+        owl:equivalentProperty    pcm:hasIMSI ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pbdfd:DFDType  a    usdl-sec:InUsage , owl:Thing ;
+        owl:sameAs  pbdfd:DFDType .
+
+pcm:EphemeralId  a           owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to frequently changing  information that can be used for identifying an agent." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:IdentityType , pcm:Auth ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:EphemeralId .
+
+pwd:PolicySet  a             owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pwd:PolicySet .
+
+pcm:Person  a                owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:Subject , foaf:Person , foaf:Agent , pcm:SecurityContextElement , owl:Thing , schema:Product , gr:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Person .
+
+pcm:SecurityProtocol  a      owl:Class , rdfs:Class ;
+        rdfs:comment         "This class reveals the security technology or protocol adopted for establishing an encrypted link between a server and a client." ;
+        rdfs:subClassOf      pcm:ConnectionSecurity , pcm:SecurityContextElement , owl:Thing , pcm:Connectivity ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:SecurityProtocol .
+
+owl:topDataProperty  a            owl:DatatypeProperty ;
+        rdfs:subPropertyOf        owl:topDataProperty ;
+        owl:equivalentProperty    owl:topDataProperty ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+pbe:PaaSwordBootstrappingCryptoProfile
+        a                         owl:Thing , usdl-sec:SecurityProfile ;
+        usdl-sec:hasSecurityGoal  pbe:CryptoGoal ;
+        pbe:hasSecurityGoal       pbe:CryptoGoal ;
+        owl:sameAs                pbe:PaaSwordBootstrappingCryptoProfile .
+
+schema:Product  a            owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  schema:Product .
+
+pcm:Point  a                 owl:Class , rdfs:Class ;
+        rdfs:comment         "A specific spot where data are stored or from which a particular entity is requesting to access data." ;
+        rdfs:subClassOf      gr:Location , pcm:SecurityContextElement , owl:Thing , schema:Place , pcm:PhysicalLocation , pcm:Location ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Point .
+
+pcm:hasVolumeType  a              owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Volume ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasVolumeType ;
+        owl:equivalentProperty    pcm:hasVolumeType ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:Product  a               owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Product .
+
+pcm:hasMonth  a                   owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Instant ;
+        rdfs:range                xsd:positiveInteger ;
+        rdfs:subPropertyOf        pcm:hasMonth , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasMonth ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pac:isImplementedBy  a            owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:isImplementedBy , pac:isImplementedBy , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:isImplementedBy ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:handler  a                    owl:ObjectProperty , rdf:Property ;
+        rdfs:comment              "This property associates a SecurityContextElement or any of its sub-classes with a specific class handler" ;
+        rdfs:domain               pcm:SecurityContextElement ;
+        rdfs:range                pcm:ClassHandler ;
+        rdfs:subPropertyOf        pcm:handler , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:handler ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:legalName  a                  owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:subPropertyOf        pcm:legalName , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:legalName ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasPointCoordinates
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Point ;
+        rdfs:range                pcm:Coordinates ;
+        rdfs:subPropertyOf        pcm:hasPointCoordinates , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasPointCoordinates ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+usdl-core:ofBusinessEntity
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-core:ofBusinessEntity , owl:topObjectProperty ;
+        owl:equivalentProperty    usdl-core:ofBusinessEntity ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:Tablet  a                owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:DeviceType , pcm:Connectivity , gr:ProductOrService , pcm:Mobile ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Tablet .
+
+pcm:Relational  a            owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to accessible data entities that exist in relational databases, i.e. structured to recognize relations between stored items of information." ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:DataArtefact ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Relational .
+
+pcm:refersToEconomicUnion
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:refersToEconomicUnion , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:refersToEconomicUnion ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+usdl-sec:Cryptography
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-sec:Cryptography .
+
+orgX:EntityOrganisationX
+        a                           owl:Thing , usdl-core:EntityInvolvement ;
+        usdl-core:ofBusinessEntity  orgX:OrganisationX ;
+        usdl-core:withBusinessRole  usdl-business-roles:provider ;
+        owl:sameAs                  orgX:EntityOrganisationX .
+
+pcm:Coordinates  a           owl:Class , rdfs:Class ;
+        rdfs:comment         "Refers to the positioning of an entity using a geographic coordinate system." ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Coordinates .
+
+pbdfd:hasDFDElement  a            owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pbdfd:BootstrappingDFDRule ;
+        rdfs:range                pdm:DatabaseFragmentation ;
+        rdfs:subPropertyOf        pbdfd:hasDFDElement , owl:topObjectProperty ;
+        owl:equivalentProperty    pbdfd:hasDFDElement ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasAddress  a                 owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:POI ;
+        rdfs:range                pcm:Address ;
+        rdfs:subPropertyOf        pcm:hasAddress , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasAddress ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pbe:hasCryptoElement  a           owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pbe:BootstrappingCryptoRule ;
+        rdfs:range                pdm:CryptographicType ;
+        rdfs:subPropertyOf        pbe:hasCryptoElement , owl:topObjectProperty ;
+        owl:equivalentProperty    pbe:hasCryptoElement ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasHour  a                    owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Instant ;
+        rdfs:range                xsd:nonNegativeInteger ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasHour ;
+        owl:equivalentProperty    pcm:hasHour ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pcm:hasMetricUnit  a              owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:ConnectionMetric ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasMetricUnit ;
+        owl:equivalentProperty    pcm:hasMetricUnit ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pbe:hasSecurityGoal  a            owl:ObjectProperty ;
+        rdfs:subPropertyOf        pbe:hasSecurityGoal , usdl-sec:hasSecurityGoal , owl:topObjectProperty ;
+        owl:equivalentProperty    pbe:hasSecurityGoal ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:description  a                owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:subPropertyOf        pcm:description , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:description ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+owl:topObjectProperty
+        a                         owl:ObjectProperty , owl:TransitiveProperty , owl:SymmetricProperty , owl:ReflexiveProperty ;
+        rdfs:subPropertyOf        owl:topObjectProperty ;
+        owl:equivalentProperty    owl:topObjectProperty ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:after  a                      owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:DateTime ;
+        rdfs:range                pcm:DateTime ;
+        rdfs:subPropertyOf        pcm:after , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:after ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:File  a                  owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to any kind of sensitive information that is stored in a file based system." ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:DataArtefact ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:File .
+
+pcm:hasDay  a                     owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Instant ;
+        rdfs:range                xsd:positiveInteger ;
+        rdfs:subPropertyOf        pcm:hasDay , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasDay ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pac:hasPolicySetCombiningAlgorithm
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ABACPolicySet ;
+        rdfs:range                pac:PolicySetCombiningAlgorithms ;
+        rdfs:subPropertyOf        pac:hasPolicySetCombiningAlgorithm , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasPolicySetCombiningAlgorithm ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:ProductOrService  a      owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:ProductOrService .
+
+pbe:isRealizedByTechnology
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        pbe:isRealizedByTechnology , owl:topObjectProperty , usdl-sec:isRealizedByTechnology ;
+        owl:equivalentProperty    pbe:isRealizedByTechnology ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:NetworkLocation  a       owl:Class , rdfs:Class ;
+        rdfs:comment         "An identifier for a node or network telecommunication interface from which a particular entity is requesting to access data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:Location ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:NetworkLocation .
+
+pcm:Mobile  a                owl:Class , rdfs:Class ;
+        rdfs:comment         "It refers to a portable product used when requesting access to sensitive data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:DeviceType , pcm:Connectivity , gr:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Mobile .
+
+pcm:hasSecond  a                  owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Instant ;
+        rdfs:range                xsd:nonNegativeInteger ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasSecond ;
+        owl:equivalentProperty    pcm:hasSecond ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pcm:IdentityType  a          owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to permanent/static and ephemeral information that can be used for identifying an agent." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:Auth ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:IdentityType .
+
+gr:BusinessEntity  a         owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  gr:BusinessEntity .
+
+pac:positive  a     pac:Authorisation , owl:Thing ;
+        owl:sameAs  pac:positive .
+
+pcm:hasBeginningDay  a            owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:DateTimeInterval ;
+        rdfs:range                gr:DayOfWeek ;
+        rdfs:subPropertyOf        pcm:hasBeginningDay , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasBeginningDay ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:SoftwareArtefact  a      owl:Class , rdfs:Class ;
+        rdfs:comment         "This class denotes  any computerized medium that manages or gives access to sensitive data." ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:Product , pcm:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:SoftwareArtefact .
+
+pcm:hasAreaCoordinates
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:comment              "This property associates an Area with specific coordinates (class)" ;
+        rdfs:domain               pcm:Area ;
+        rdfs:range                pcm:Coordinates ;
+        rdfs:subPropertyOf        owl:topObjectProperty , pcm:hasAreaCoordinates ;
+        owl:equivalentProperty    pcm:hasAreaCoordinates ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:hasSecurityRealizationType
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:hasSecurityRealizationType , pac:hasSecurityRealizationType , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasSecurityRealizationType ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasTelecommunicationsProvider
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:ConnectionType ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasTelecommunicationsProvider , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasTelecommunicationsProvider ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:Stationary  a            owl:Class , rdfs:Class ;
+        rdfs:comment         "It refers to an immobile product used when requesting access to sensitive data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:DeviceType , pcm:Connectivity , gr:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Stationary .
+
+pac:hasAction  a                  owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ABACRule ;
+        rdfs:range                ppm:DataPermission ;
+        rdfs:subPropertyOf        pac:hasAction , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasAction ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pbdfd:PaaSwordDataFragmentationAndDistribution
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , usdl-sec:SecurityTechnology ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbdfd:PaaSwordDataFragmentationAndDistribution .
+
+pbdfd:hasBootstrappingDFDRule
+        a                         owl:ObjectProperty ;
+        rdfs:domain               pwd:Policy , pbdfd:BootstrappingDFDPolicy ;
+        rdfs:range                pwd:Rule , pbdfd:BootstrappingDFDRule ;
+        rdfs:subPropertyOf        pwd:hasRule , pbdfd:hasBootstrappingDFDRule , owl:topObjectProperty ;
+        owl:equivalentProperty    pbdfd:hasBootstrappingDFDRule ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:ANDContextExpression
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pac:ContextExpression ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:ANDContextExpression .
+
+pac:Authorisation  a         owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:Authorisation .
+
+pcm:hasCircularRadius
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:comment              "This property declares the diameter of a circular area with a center pointed by the hasAreaCoordinates property (e.g.diameter 1km)" ;
+        rdfs:domain               pcm:Area ;
+        rdfs:range                xsd:double ;
+        rdfs:subPropertyOf        pcm:hasCircularRadius , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasCircularRadius ;
+        owl:propertyDisjointWith  pcm:hasDay , pcm:hasMobileOS , pcm:hasHour , pcm:hasSubnet , pcm:hasDownloadRate , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasPort , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasZone , pcm:hasFloorNumber , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasEnd , pcm:hasRelationalType , pcm:hasYear , pcm:hasSecond .
+
+pbdfd:hasSecurityGoal
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:hasSecurityGoal , pbdfd:hasSecurityGoal , owl:topObjectProperty ;
+        owl:equivalentProperty    pbdfd:hasSecurityGoal ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:streetAddress  a              owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:subPropertyOf        owl:topObjectProperty , pcm:streetAddress ;
+        owl:equivalentProperty    pcm:streetAddress ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+usdl-sec:hasSecurityRealizationType
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:hasSecurityRealizationType , owl:topObjectProperty ;
+        owl:equivalentProperty    usdl-sec:hasSecurityRealizationType ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+foaf:Person  a               owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  foaf:Person .
+
+pac:AccessControlGoal
+        a                         owl:Thing , usdl-sec:Authorization ;
+        usdl-sec:isImplementedBy  pac:AccessControlMechanism ;
+        pac:isImplementedBy       pac:AccessControlMechanism ;
+        owl:sameAs                pac:AccessControlGoal .
+
+pcm:PermanentId  a           owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to unfrequently changing  information that can be used for identifying an agent." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:IdentityType , pcm:Auth ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:PermanentId .
+
+pac:hasEvaluationResult
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pac:ContextExpression ;
+        rdfs:range                xsd:boolean ;
+        rdfs:subPropertyOf        pac:hasEvaluationResult , owl:topDataProperty ;
+        owl:equivalentProperty    pac:hasEvaluationResult ;
+        owl:propertyDisjointWith  pcm:hasDay , pcm:hasMobileOS , pcm:hasHour , pcm:hasSubnet , pcm:hasDownloadRate , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasPort , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:hasVolumeType , pcm:hasBeginning , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasZone , pcm:hasFloorNumber , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasYear , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond .
+
+pcm:before  a                     owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:DateTime ;
+        rdfs:range                pcm:DateTime ;
+        rdfs:subPropertyOf        pcm:before , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:before ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:name  a                       owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:subPropertyOf        pcm:name , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:name ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:City  a                  owl:Class ;
+        rdfs:subClassOf      gr:Location , pcm:SecurityContextElement , owl:Thing , pcm:Area , schema:Place , pcm:PhysicalLocation , pcm:Location ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:City .
+
+pcm:AuthorizationMethod
+        a                    owl:Class , rdfs:Class ;
+        rdfs:comment         "This class indicates the framework used for granting access rights to a subject." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:Auth ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:AuthorizationMethod .
+
+pcm:supportsEncryptedStorageMobile
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Mobile ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:supportsEncryptedStorageMobile ;
+        owl:equivalentProperty    pcm:supportsEncryptedStorageMobile ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:hasAuthenticationMethod
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:range                pcm:AuthenticationMethod ;
+        rdfs:subPropertyOf        pcm:hasAuthenticationMethod , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasAuthenticationMethod ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pbe:BootstrappingCryptoPolicySet
+        a                    owl:Class ;
+        rdfs:subClassOf      pwd:PolicySet , owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbe:BootstrappingCryptoPolicySet .
+
+pbdfd:DFDMechanism  a                 owl:Thing , pbdfd:DataFragmentationAndDistribution ;
+        usdl-sec:hasSecurityRealizationType
+                pbdfd:DFDType ;
+        usdl-sec:isRealizedByTechnology
+                pbdfd:DFDTechnology ;
+        pbdfd:hasSecurityRealizationType
+                pbdfd:DFDType ;
+        pbdfd:isRealizedByTechnology  pbdfd:DFDTechnology ;
+        owl:sameAs                    pbdfd:DFDMechanism .
+
+pcm:Method  a                owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:Product , pcm:ProductOrService , pcm:SoftwareArtefact ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Method .
+
+usdl-sec:Privacy  a          owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-sec:Privacy .
+
+pcm:Group  a                 owl:Class , rdfs:Class ;
+        rdfs:subClassOf      foaf:Group , pcm:Subject , foaf:Agent , owl:Thing , pcm:SecurityContextElement , schema:Product , gr:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Group .
+
+pcm:Volume  a                owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:Product , pcm:InfrastructureArtefact , pcm:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Volume .
+
+skos:Concept  a              owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  skos:Concept .
+
+pcm:DAO  a                   owl:Class , rdfs:Class ;
+        rdfs:comment         "It refers to a Data Access Object." ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:Product , pcm:Method , pcm:ProductOrService , pcm:SoftwareArtefact ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:DAO .
+
+pcm:hasMobileOS  a                owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Mobile ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasMobileOS , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasMobileOS ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:hasUploadRate  a              owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:ConnectionMetric ;
+        rdfs:range                xsd:nonNegativeInteger ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasUploadRate ;
+        owl:equivalentProperty    pcm:hasUploadRate ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pcm:hasMinute  a                  owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Instant ;
+        rdfs:range                xsd:nonNegativeInteger ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasMinute ;
+        owl:equivalentProperty    pcm:hasMinute ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+usdl-business-roles:provider
+        a           owl:Thing ;
+        owl:sameAs  usdl-business-roles:provider .
+
+pcm:hasYear  a                    owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Instant ;
+        rdfs:range                xsd:positiveInteger ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasYear ;
+        owl:equivalentProperty    pcm:hasYear ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pcm:ConnectionSecurity
+        a                    owl:Class , rdfs:Class ;
+        rdfs:comment         "This class provides details on the level of security in the established connection for accessing sensitive data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:Connectivity ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:ConnectionSecurity .
+
+pcm:hasName  a                    owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:AbstractLocation , pcm:Method , pcm:POI ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasName , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasName ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pac:PolicyCombiningAlgorithms
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pac:CombiningAlgorithms ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:PolicyCombiningAlgorithms .
+
+pcm:packageName  a                owl:DatatypeProperty , rdf:Property ;
+        rdfs:comment              "This ClassHandler property specifies the fully qualified name of the Java class implementing the class handler/adapter functionality (e.g. eu.paasword.handler.LocationHandler)" ;
+        rdfs:domain               pcm:ClassHandler ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:packageName , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:packageName ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pbe:belongsToCryptoPolicySet
+        a                         owl:ObjectProperty ;
+        rdfs:domain               pwd:PolicySet , pwd:Policy , pbe:BootstrappingCryptoPolicySet , pbe:BootstrappingCryptoPolicy ;
+        rdfs:range                pwd:PolicySet , pbe:BootstrappingCryptoPolicySet ;
+        rdfs:subPropertyOf        pbe:belongsToCryptoPolicySet , pwd:belongsToPolicySet , owl:topObjectProperty ;
+        owl:equivalentProperty    pbe:belongsToCryptoPolicySet ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+schema:Service  a            owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  schema:Service .
+
+pcm:hasRectangularRangeWidth
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:comment              "This property describes the width of the Rectangular area with a center pointed by the hasAreaCoordinates property(e.g. 1km)" ;
+        rdfs:domain               pcm:Area ;
+        rdfs:range                xsd:double ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasRectangularRangeWidth ;
+        owl:equivalentProperty    pcm:hasRectangularRangeWidth ;
+        owl:propertyDisjointWith  pcm:hasDay , pcm:hasMobileOS , pcm:hasHour , pcm:hasSubnet , pcm:hasDownloadRate , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasPort , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasZone , pcm:hasFloorNumber , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasEnd , pcm:hasRelationalType , pcm:hasYear , pcm:hasSecond .
+
+pcm:hasSecurityProtocolImplementation
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:SecurityProtocol ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasSecurityProtocolImplementation , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasSecurityProtocolImplementation ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:Service  a               owl:Class , rdfs:Class ;
+        rdfs:comment         "It refers to a software endpoint that provides access and/or manages data." ;
+        rdfs:subClassOf      pcm:Object , owl:Thing , pcm:SecurityContextElement , pcm:Product , pcm:ProductOrService , pcm:SoftwareArtefact , schema:Service ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Service .
+
+pbe:hasCryptoPolicySet
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pbe:PaaSwordDataEncryption ;
+        rdfs:range                pbe:BootstrappingCryptoPolicySet ;
+        rdfs:subPropertyOf        pbe:hasCryptoPolicySet , owl:topObjectProperty ;
+        owl:equivalentProperty    pbe:hasCryptoPolicySet ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:negative  a     pac:Authorisation , owl:Thing ;
+        owl:sameAs  pac:negative .
+
+pbe:hasSecurityRealizationType
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        pbe:hasSecurityRealizationType , usdl-sec:hasSecurityRealizationType , owl:topObjectProperty ;
+        owl:equivalentProperty    pbe:hasSecurityRealizationType ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+usdl-core:hasEntityInvolvement
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-core:hasEntityInvolvement , owl:topObjectProperty ;
+        owl:equivalentProperty    usdl-core:hasEntityInvolvement ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+usdl-sec:hasSecurityGoal
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:hasSecurityGoal , owl:topObjectProperty ;
+        owl:equivalentProperty    usdl-sec:hasSecurityGoal ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+usdl-core:EntityInvolvement
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-core:EntityInvolvement .
+
+pac:ContextExpression
+        a                    owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:ContextExpression .
+
+pbdfd:DFDGoal  a                  owl:Thing , usdl-sec:Privacy ;
+        usdl-sec:isImplementedBy  pbdfd:DFDMechanism ;
+        pbdfd:isImplementedBy     pbdfd:DFDMechanism ;
+        owl:sameAs                pbdfd:DFDGoal .
+
+pcm:DateTimeInterval  a      owl:Class , rdfs:Class ;
+        rdfs:comment         "A period described by a start instance and end instance or a duration." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , <http://www.w3.org/2006/time#TemporalEntity> , pcm:DateTime ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:DateTimeInterval .
+
+pac:CombiningAlgorithms
+        a                    owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:CombiningAlgorithms .
+
+usdl-sec:SecurityTechnology
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-sec:SecurityTechnology .
+
+pac:ABACRule  a              owl:Class ;
+        rdfs:subClassOf      owl:Thing , pwd:Rule ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:ABACRule .
+
+ex1:Requestor  a         gr:Location , pcm:SecurityContextElement , owl:Thing , pcm:Area , schema:Place , pcm:PhysicalLocation , pcm:Location ;
+        pcm:isLocatedIn  ex1:SouthEurope , ex1:Athens ;
+        owl:sameAs       ex1:Requestor .
+
+pcm:HierarchicalDataStructure
+        a                    owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:DataArtefact , pcm:NonRelational ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:HierarchicalDataStructure .
+
+pbdfd:DFDTechnology  a  owl:Thing , usdl-sec:SecurityTechnology , pbdfd:PaaSwordDataFragmentationAndDistribution ;
+        owl:sameAs  pbdfd:DFDTechnology .
+
+pcm:hasSubnet  a                  owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:NetworkLocation ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasSubnet ;
+        owl:equivalentProperty    pcm:hasSubnet ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:hasRelationalType
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Relational ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasRelationalType , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasRelationalType ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pac:hasPolicyCombiningAlgorithm
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ABACPolicy ;
+        rdfs:range                pac:PolicyCombiningAlgorithms ;
+        rdfs:subPropertyOf        pac:hasPolicyCombiningAlgorithm , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasPolicyCombiningAlgorithm ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasBeginning  a               owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:DateTimeInterval ;
+        rdfs:range                xsd:dateTime ;
+        rdfs:subPropertyOf        pcm:hasBeginning , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasBeginning ;
+        owl:propertyDisjointWith  pcm:hasDay , pcm:hasMobileOS , pcm:hasHour , pcm:hasSubnet , pcm:hasDownloadRate , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasPort , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasZone , pcm:hasFloorNumber , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasRelationalType , pcm:hasYear , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond .
+
+pac:hasContextExpression
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ABACRule ;
+        rdfs:range                pac:ContextExpression ;
+        rdfs:subPropertyOf        pac:hasContextExpression , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasContextExpression ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasRole  a                    owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:range                usdl-core:Role ;
+        rdfs:subPropertyOf        pcm:hasRole , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasRole ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pbe:CryptoType  a   usdl-sec:InUsage , owl:Thing ;
+        owl:sameAs  pbe:CryptoType .
+
+pbdfd:hasSecurityRealizationType
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:hasSecurityRealizationType , pbdfd:hasSecurityRealizationType , owl:topObjectProperty ;
+        owl:equivalentProperty    pbdfd:hasSecurityRealizationType ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:ORContextExpression
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pac:ContextExpression ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:ORContextExpression .
+
+pac:hasABACRule  a                owl:ObjectProperty ;
+        rdfs:domain               pwd:Policy , pac:ABACPolicy ;
+        rdfs:range                pwd:Rule , pac:ABACRule ;
+        rdfs:subPropertyOf        pwd:hasRule , pac:hasABACRule , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasABACRule ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:NOTContextExpression
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pac:ContextExpression ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:NOTContextExpression .
+
+pcm:NonRelational  a         owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to accessible data entities that exist in non-relational databases (i.e. schema-less)" ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:DataArtefact ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:NonRelational .
+
+pac:hasParameter  a               owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ContextExpression ;
+        rdfs:range                pcm:SecurityContextElement , pac:ContextExpression ;
+        rdfs:subPropertyOf        pac:hasParameter , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasParameter ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:PaaSwordAccessControlProfile
+        a                         owl:Thing , usdl-sec:SecurityProfile ;
+        usdl-sec:hasSecurityGoal  pac:AccessControlGoal ;
+        pac:hasSecurityGoal       pac:AccessControlGoal ;
+        owl:sameAs                pac:PaaSwordAccessControlProfile .
+
+pbdfd:belongsToDFDPolicySet
+        a                         owl:ObjectProperty ;
+        rdfs:domain               pwd:PolicySet , pwd:Policy , pbdfd:BootstrappingDFDPolicySet , pbdfd:BootstrappingDFDPolicy ;
+        rdfs:range                pwd:PolicySet , pbdfd:BootstrappingDFDPolicySet ;
+        rdfs:subPropertyOf        pwd:belongsToPolicySet , pbdfd:belongsToDFDPolicySet , owl:topObjectProperty ;
+        owl:equivalentProperty    pbdfd:belongsToDFDPolicySet ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pwd:hasRule  a                    owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pwd:Policy ;
+        rdfs:range                pwd:Rule ;
+        rdfs:subPropertyOf        pwd:hasRule , owl:topObjectProperty ;
+        owl:equivalentProperty    pwd:hasRule ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:ConnectionMetric  a      owl:Class , rdfs:Class ;
+        rdfs:comment         "This class provides quantitative characteristics of the connection type used for accessing sensitive data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:Connectivity ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:ConnectionMetric .
+
+pcm:Notebook  a              owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:DeviceType , pcm:Connectivity , gr:ProductOrService , pcm:Mobile ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Notebook .
+
+pcm:hasNonRelationalType
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:NonRelational ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasNonRelationalType ;
+        owl:equivalentProperty    pcm:hasNonRelationalType ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pac:hasPatternParameter
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ContextExpression ;
+        rdfs:range                pac:ContextExpression , pcpm:ContextPattern ;
+        rdfs:subPropertyOf        pac:hasPatternParameter , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasPatternParameter ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+usdl-sec:InUsage  a          owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-sec:InUsage .
+
+pac:hasAuthorisation  a           owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ABACRule ;
+        rdfs:range                pac:Authorisation ;
+        rdfs:subPropertyOf        pac:hasAuthorisation , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasAuthorisation ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:ConnectionType  a        owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to different ways of transmitting an access request (e.g. 3G, Cable, Satelite)." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:Connectivity ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:ConnectionType .
+
+pwd:PaaSwordSecurityModel
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , usdl-core:ServiceModel ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pwd:PaaSwordSecurityModel .
+
+usdl-core:withBusinessRole
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-core:withBusinessRole , owl:topObjectProperty ;
+        owl:equivalentProperty    usdl-core:withBusinessRole ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:addressRegion  a              owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:subPropertyOf        pcm:addressRegion , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:addressRegion ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:ABACPolicy  a            owl:Class ;
+        rdfs:subClassOf      owl:Thing , pwd:Policy ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:ABACPolicy .
+
+orgX:OrganisationX  a  owl:Thing , gr:BusinessEntity ;
+        owl:sameAs  orgX:OrganisationX .
+
+pcm:hasFileType  a                owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:File ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasFileType ;
+        owl:equivalentProperty    pcm:hasFileType ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:SecurityContextElement
+        a                    owl:Class , rdfs:Class ;
+        rdfs:comment         "Parent class of all PaaSword Context Model context elements" ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:SecurityContextElement .
+
+pcm:DateTime  a              owl:Class , rdfs:Class ;
+        rdfs:comment         "This class describes the specific chronological point expressed either as instant or interval that characterizes an access request." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , <http://www.w3.org/2006/time#TemporalEntity> ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:DateTime .
+
+pac:AccessControlTechnology
+        a           pac:PaaSwordABAC , owl:Thing , usdl-sec:SecurityTechnology ;
+        owl:sameAs  pac:AccessControlTechnology .
+
+pac:hasSecurityGoal  a            owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:hasSecurityGoal , pac:hasSecurityGoal , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasSecurityGoal ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:ABACPolicySet  a         owl:Class ;
+        rdfs:subClassOf      pwd:PolicySet , owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:ABACPolicySet .
+
+pcm:hasBrand  a                   owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:subPropertyOf        pcm:hasBrand , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasBrand ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:Connectivity  a          owl:Class , rdfs:Class ;
+        rdfs:comment         "This class captures the inforation related to the connection used by the subject for accessing sensitive data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Connectivity .
+
+pbdfd:BootstrappingDFDPolicySet
+        a                    owl:Class ;
+        rdfs:subClassOf      pwd:PolicySet , owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbdfd:BootstrappingDFDPolicySet .
+
+pcm:POI  a                   owl:Class , rdfs:Class ;
+        rdfs:comment         "Points of interest that might be meanigful for access control of sensitive data. " ;
+        rdfs:subClassOf      gr:Location , pcm:SecurityContextElement , owl:Thing , schema:Place , pcm:PhysicalLocation , pcm:Location ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:POI .
+
+foaf:Group  a                owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  foaf:Group .
+
+owl:Thing  a                 owl:Class ;
+        owl:complementOf     owl:Nothing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  owl:Thing .
+
+usdl-sec:isRealizedByTechnology
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        owl:topObjectProperty , usdl-sec:isRealizedByTechnology ;
+        owl:equivalentProperty    usdl-sec:isRealizedByTechnology ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pwd:Policy  a                owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pwd:Policy .
+
+pcm:Organization  a          owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:Subject , foaf:Agent , pcm:SecurityContextElement , owl:Thing , foaf:Organization , schema:Product , gr:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Organization .
+
+pcm:postalCode  a                 owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:subPropertyOf        pcm:postalCode , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:postalCode ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+ex1:Athens  a            gr:Location , pcm:SecurityContextElement , owl:Thing , pcm:Area , schema:Place , pcm:City , pcm:PhysicalLocation , pcm:Location ;
+        pcm:isLocatedIn  ex1:SouthEurope ;
+        owl:sameAs       ex1:Athens .
+
+pbdfd:PaaSwordBootstrappingDFDProfile
+        a                         owl:Thing , usdl-sec:SecurityProfile ;
+        usdl-sec:hasSecurityGoal  pbdfd:DFDGoal ;
+        pbdfd:hasSecurityGoal     pbdfd:DFDGoal ;
+        owl:sameAs                pbdfd:PaaSwordBootstrappingDFDProfile .
+
+usdl-sec:hasSecurityProfile
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        owl:topObjectProperty , usdl-sec:hasSecurityProfile ;
+        owl:equivalentProperty    usdl-sec:hasSecurityProfile ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasIdentityType  a            owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:range                pcm:IdentityType ;
+        rdfs:subPropertyOf        pcm:hasIdentityType , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasIdentityType ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:category  a                   owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject , pcm:Service ;
+        rdfs:range                pcm:category ;
+        rdfs:subPropertyOf        pcm:category , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:category ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:latitude  a                   owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Coordinates ;
+        rdfs:subPropertyOf        pcm:latitude , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:latitude ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasIPAddressRange
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:NetworkLocation ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasIPAddressRange ;
+        owl:equivalentProperty    pcm:hasIPAddressRange ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:supportsEncryptedStorageStationary
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Stationary ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:supportsEncryptedStorageStationary ;
+        owl:equivalentProperty    pcm:supportsEncryptedStorageStationary ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pwd:Rule  a                  owl:Class , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pwd:Rule .
+
+pcm:Object  a                owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to any kind of artefacts that shoud be protected based on their sensitivity levels. These artefacts may refer to (non)relational data or even software artefacts that manage sensitive data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Object .
+
+foaf:Agent  a                owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  foaf:Agent .
+
+pcm:DataArtefact  a          owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to any sensitive data entitites stored in schema-based or schema-less databases that should be protected from unauthorized access." ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:DataArtefact .
+
+ex1:SouthEurope  a  gr:Location , pcm:SecurityContextElement , owl:Thing , pcm:Area , schema:Place , pcm:PhysicalLocation , pcm:Location ;
+        owl:sameAs  ex1:SouthEurope .
+
+pbe:BootstrappingCryptoPolicy
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pwd:Policy ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbe:BootstrappingCryptoPolicy .
+
+pbe:isImplementedBy  a            owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:isImplementedBy , pbe:isImplementedBy , owl:topObjectProperty ;
+        owl:equivalentProperty    pbe:isImplementedBy ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pwd:belongsToPolicySet
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pwd:PolicySet , pwd:Policy ;
+        rdfs:range                pwd:PolicySet ;
+        rdfs:subPropertyOf        pwd:belongsToPolicySet , owl:topObjectProperty ;
+        owl:equivalentProperty    pwd:belongsToPolicySet ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:XORContextExpression
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pac:ContextExpression ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:XORContextExpression .
+
+usdl-sec:Authorization
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-sec:Authorization .
+
+pcm:PhysicalLocation  a      owl:Class , rdfs:Class ;
+        rdfs:comment         "A physical location is a point or area of interest where data are stored or from which a particular entity is requesting to access data. Physical locations are characterized by an address and/or geographical position or area and/or abstract location and/or a Point of Interest." ;
+        rdfs:subClassOf      gr:Location , pcm:SecurityContextElement , owl:Thing , schema:Place , pcm:Location ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:PhysicalLocation .
+
+pcm:longitude  a                  owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Coordinates ;
+        rdfs:subPropertyOf        owl:topObjectProperty , pcm:longitude ;
+        owl:equivalentProperty    pcm:longitude ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:AuthenticationMethod
+        a                    owl:Class , rdfs:Class ;
+        rdfs:comment         "This class reveals the technological way used for validating the agent's identity during an access request." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:Auth ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:AuthenticationMethod .
+
+pcm:ClassHandler  a          owl:Class , rdfs:Class ;
+        rdfs:comment         "An instance of this class represents a handler descriptor for any class referencing it through pcm:handler property. A handler is a piece of software used to capture semantic information related to a context model class." ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:ClassHandler .
+
+pac:hasPolicySetContextExpression
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ABACPolicySet ;
+        rdfs:range                pac:ContextExpression ;
+        rdfs:subPropertyOf        pac:hasPolicySetContextExpression , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasPolicySetContextExpression ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:addressLocality  a            owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:subPropertyOf        pcm:addressLocality , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:addressLocality ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:belongsToABACPolicySet
+        a                         owl:ObjectProperty ;
+        rdfs:domain               pwd:PolicySet , pwd:Policy , pac:ABACPolicy , pac:ABACPolicySet ;
+        rdfs:range                pwd:PolicySet , pac:ABACPolicySet ;
+        rdfs:subPropertyOf        pac:belongsToABACPolicySet , pwd:belongsToPolicySet , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:belongsToABACPolicySet ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:SoftwareAgent  a         owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:Subject , foaf:Agent , pcm:SecurityContextElement , owl:Thing , schema:Product , gr:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:SoftwareAgent .
+
+usdl-sec:SecurityProfile
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-sec:SecurityProfile .
+
+pcm:hasEnd  a                     owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:DateTimeInterval ;
+        rdfs:range                xsd:dateTime ;
+        rdfs:subPropertyOf        pcm:hasEnd , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasEnd ;
+        owl:propertyDisjointWith  pcm:hasDay , pcm:hasMobileOS , pcm:hasHour , pcm:hasSubnet , pcm:hasDownloadRate , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasPort , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasZone , pcm:hasFloorNumber , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasRelationalType , pcm:hasYear , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond .
+
+pcm:hasConnectionMetric
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:comment              "This class refers to different ways of transmitting an access request (e.g. 3G, Cable, Satelite)" ;
+        rdfs:domain               pcm:ConnectionType ;
+        rdfs:range                pcm:ConnectionMetric ;
+        rdfs:subPropertyOf        pcm:hasConnectionMetric , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasConnectionMetric ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasDomain  a                  owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:NetworkLocation ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasDomain , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasDomain ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:hasDUNS  a                    owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Subject ;
+        rdfs:subPropertyOf        pcm:hasDUNS , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasDUNS ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasTimezone  a                owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:DateTime ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasTimezone , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasTimezone ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+foaf:Organization  a         owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  foaf:Organization .
+
+pcm:hasPort  a                    owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:NetworkLocation ;
+        rdfs:range                xsd:positiveInteger ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasPort ;
+        owl:equivalentProperty    pcm:hasPort ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pbe:hasControlledObject
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pbe:BootstrappingCryptoRule ;
+        rdfs:range                pcm:Object ;
+        rdfs:subPropertyOf        pbe:hasControlledObject , owl:topObjectProperty ;
+        owl:equivalentProperty    pbe:hasControlledObject ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasFileName  a                owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:File ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasFileName ;
+        owl:equivalentProperty    pcm:hasFileName ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pbe:CryptoTechnology  a  owl:Thing , usdl-sec:SecurityTechnology , pbe:PaaSwordDataEncryption ;
+        owl:sameAs  pbe:CryptoTechnology .
+
+gr:ProductOrService  a       owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  gr:ProductOrService .
+
+pcm:hasIMEI  a                    owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Mobile ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        pcm:hasIMEI , owl:topDataProperty ;
+        owl:equivalentProperty    pcm:hasIMEI ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:elevation  a                  owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Coordinates ;
+        rdfs:subPropertyOf        pcm:elevation , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:elevation ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:addressCountry  a             owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:subPropertyOf        owl:topObjectProperty , pcm:addressCountry ;
+        owl:equivalentProperty    pcm:addressCountry ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+<http://www.w3.org/2006/time#TemporalEntity>
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  <http://www.w3.org/2006/time#TemporalEntity> .
+
+pac:AccessControlMechanism
+        a                               owl:Thing , usdl-sec:Access_Control ;
+        usdl-sec:hasSecurityRealizationType
+                pac:AccessControlType ;
+        usdl-sec:isRealizedByTechnology
+                pac:AccessControlTechnology ;
+        pac:hasSecurityRealizationType  pac:AccessControlType ;
+        pac:isRealizedByTechnology      pac:AccessControlTechnology ;
+        owl:sameAs                      pac:AccessControlMechanism .
+
+pbdfd:isImplementedBy
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:isImplementedBy , pbdfd:isImplementedBy , owl:topObjectProperty ;
+        owl:equivalentProperty    pbdfd:isImplementedBy ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasZone  a                    owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:NetworkLocation ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasZone ;
+        owl:equivalentProperty    pcm:hasZone ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:isLocatedIn  a                owl:ObjectProperty , owl:TransitiveProperty ;
+        rdfs:domain               pcm:Area ;
+        rdfs:range                pcm:Area ;
+        rdfs:subPropertyOf        pcm:isLocatedIn , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:isLocatedIn ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:DeviceType  a            owl:Class , rdfs:Class ;
+        rdfs:comment         "This class describes a product used when requesting access to sensitive data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:Connectivity , gr:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:DeviceType .
+
+pcm:Subject  a               owl:Class , rdfs:Class ;
+        rdfs:comment         "An instance of this class represents the legal agent seeking access to a particular offering. This can be a legal body, a person or a service. A business entity has at least a primary mailing address and contact details." ;
+        rdfs:subClassOf      foaf:Agent , pcm:SecurityContextElement , owl:Thing , schema:Product , gr:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Subject .
+
+pcm:Smartphone  a            owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing , pcm:DeviceType , pcm:Connectivity , gr:ProductOrService , pcm:Mobile ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Smartphone .
+
+pbdfd:DataFragmentationAndDistribution
+        a                    owl:Thing , skos:Concept , rdfs:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbdfd:DataFragmentationAndDistribution ;
+        owl:sameAs           pbdfd:DataFragmentationAndDistribution ;
+        skos:broader         usdl-sec:SecurityMechanism .
+
+pcm:Auth  a                  owl:Class , rdfs:Class ;
+        rdfs:comment         "Common parent class of all Authentication, Authorization and Identity context element classes" ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Auth .
+
+pbdfd:hasControlledObject
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pbdfd:BootstrappingDFDRule ;
+        rdfs:range                pcm:Object ;
+        rdfs:subPropertyOf        pbdfd:hasControlledObject , owl:topObjectProperty ;
+        owl:equivalentProperty    pbdfd:hasControlledObject ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pbdfd:BootstrappingDFDPolicy
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pwd:Policy ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbdfd:BootstrappingDFDPolicy .
+
+pac:hasPolicyContextExpression
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ABACPolicy ;
+        rdfs:range                pac:ContextExpression ;
+        rdfs:subPropertyOf        pac:hasPolicyContextExpression , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasPolicyContextExpression ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasRoomNumber  a              owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasRoomNumber ;
+        owl:equivalentProperty    pcm:hasRoomNumber ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:hasArea  a                    owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:AbstractLocation ;
+        rdfs:range                pcm:Area ;
+        rdfs:subPropertyOf        pcm:hasArea , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasArea ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:PaaSwordABAC  a          owl:Class ;
+        rdfs:subClassOf      owl:Thing , usdl-sec:SecurityTechnology ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:PaaSwordABAC .
+
+pcm:hasDownloadRate  a            owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:ConnectionMetric ;
+        rdfs:range                xsd:nonNegativeInteger ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasDownloadRate ;
+        owl:equivalentProperty    pcm:hasDownloadRate ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pac:isRealizedByTechnology
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        pac:isRealizedByTechnology , owl:topObjectProperty , usdl-sec:isRealizedByTechnology ;
+        owl:equivalentProperty    pac:isRealizedByTechnology ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:hasFilePath  a                owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:File ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasFilePath ;
+        owl:equivalentProperty    pcm:hasFilePath ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:hasFloorNumber  a             owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:range                xsd:nonNegativeInteger ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasFloorNumber ;
+        owl:equivalentProperty    pcm:hasFloorNumber ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasZone , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth .
+
+pcm:hasEndDay  a                  owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pcm:DateTimeInterval ;
+        rdfs:range                gr:DayOfWeek ;
+        rdfs:subPropertyOf        pcm:hasEndDay , owl:topObjectProperty ;
+        owl:equivalentProperty    pcm:hasEndDay ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:refersToContinentalUnion
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Address ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:refersToContinentalUnion ;
+        owl:equivalentProperty    pcm:refersToContinentalUnion ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+owl:bottomDataProperty
+        a                         owl:DatatypeProperty ;
+        rdfs:domain               pcm:AbstractLocation , pcm:Service , pcm:Address , pcm:Instant , pcm:ClassHandler , pac:ContextExpression , pcm:POI , pcm:NonRelational , pcm:SecurityProtocol , pcm:File , pcm:NetworkLocation , pcm:ConnectionMetric , pcm:Object , pcm:Relational , pcm:Area , pcm:Volume , pcm:Method , pcm:DateTime , pcm:Stationary , pcm:DateTimeInterval , pcm:ConnectionType , pcm:Mobile ;
+        rdfs:range                xsd:boolean , xsd:nonNegativeInteger , xsd:positiveInteger , xsd:anyURI , xsd:dateTime , xsd:string , xsd:double ;
+        rdfs:subPropertyOf        pcm:hasMobileOS , pcm:hasDownloadRate , pcm:hasFileType , pcm:hasBuildingNumber , pcm:hasName , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasNonRelationalType , pcm:hasEndpoint , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , owl:topDataProperty , pcm:hasRectangularRangeHeight , pcm:hasDay , pcm:hasHour , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasDomain , pcm:hasPort , pcm:volumeOutputSpeed , pac:hasEvaluationResult , pcm:hasIMEI , pcm:hasTimezone , pcm:hasZone , pcm:hasFloorNumber , pcm:hasIPAddress , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasYear , pcm:hasRectangularRangeWidth , pcm:hasSecond ;
+        owl:equivalentProperty    owl:bottomDataProperty ;
+        owl:propertyDisjointWith  pcm:hasMobileOS , pcm:hasDownloadRate , pcm:hasFileType , pcm:hasBuildingNumber , pcm:hasName , pcm:supportsEncryptedStorageStationary , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:hasFilePath , pcm:isVolumeEncrypted , pcm:hasVolumeType , pcm:hasBeginning , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasNonRelationalType , pcm:hasEndpoint , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , owl:topDataProperty , pcm:hasRectangularRangeHeight , pcm:hasDay , pcm:hasHour , pcm:hasSubnet , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasDomain , pcm:hasPort , pcm:volumeOutputSpeed , pac:hasEvaluationResult , pcm:hasIMEI , pcm:hasTimezone , pcm:hasZone , pcm:hasFloorNumber , pcm:hasIPAddress , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasYear , pcm:hasRectangularRangeWidth , pcm:hasSecond .
+
+pac:hasControlledObject
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:ABACRule ;
+        rdfs:range                pcm:Object ;
+        rdfs:subPropertyOf        pac:hasControlledObject , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasControlledObject ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:Location  a              owl:Class , rdfs:Class ;
+        rdfs:comment         "This class describes a physical and/or a network location where data are stored or from which a particular entity is requesting to access data." ;
+        rdfs:subClassOf      pcm:SecurityContextElement , owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Location .
+
+skos:broader  a                   owl:ObjectProperty ;
+        rdfs:subPropertyOf        skos:broader , owl:topObjectProperty ;
+        owl:equivalentProperty    skos:broader ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pac:AccessControlType
+        a           usdl-sec:InUsage , owl:Thing ;
+        owl:sameAs  pac:AccessControlType .
+
+pcpm:ContextPattern  a       owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcpm:ContextPattern .
+
+pac:hasABACPolicySet  a           owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pac:PaaSwordABAC ;
+        rdfs:range                pac:ABACPolicySet ;
+        rdfs:subPropertyOf        pac:hasABACPolicySet , owl:topObjectProperty ;
+        owl:equivalentProperty    pac:hasABACPolicySet ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pwd:PaaSwordFramework
+        a                               owl:Thing , pwd:PaaSwordSecurityModel , usdl-core:ServiceModel ;
+        usdl-core:hasEntityInvolvement  orgX:EntityOrganisationX ;
+        usdl-sec:hasSecurityProfile     pbe:PaaSwordBootstrappingCryptoProfile , pac:PaaSwordAccessControlProfile , pbdfd:PaaSwordBootstrappingDFDProfile ;
+        owl:sameAs                      pwd:PaaSwordFramework .
+
+pbe:CryptoGoal  a                 owl:Thing , usdl-sec:Confidentiality ;
+        usdl-sec:isImplementedBy  pbe:CryptoMechanism ;
+        pbe:isImplementedBy       pbe:CryptoMechanism ;
+        owl:sameAs                pbe:CryptoGoal .
+
+usdl-sec:SecurityMechanism
+        a           owl:Thing ;
+        owl:sameAs  usdl-sec:SecurityMechanism .
+
+pcm:isVolumeEncrypted
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Volume ;
+        rdfs:range                xsd:boolean ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:isVolumeEncrypted ;
+        owl:equivalentProperty    pcm:isVolumeEncrypted ;
+        owl:propertyDisjointWith  pcm:hasDay , pcm:hasMobileOS , pcm:hasHour , pcm:hasSubnet , pcm:hasDownloadRate , pcm:volumeInputSpeed , pcm:hasFileName , pcm:hasFileType , pcm:hasIMSI , pcm:hasIPAddressRange , pcm:supportsEncryptedStorageMobile , pcm:refersToEconomicUnion , pcm:hasBuildingNumber , pcm:hasSecurityProtocolImplementation , pcm:hasMonth , pcm:hasName , pcm:hasDomain , pcm:supportsEncryptedStorageStationary , pcm:hasPort , pcm:hasRoomNumber , pcm:hasTarget , owl:bottomDataProperty , pcm:volumeOutputSpeed , pcm:hasFilePath , pcm:hasVolumeType , pcm:hasBeginning , pcm:hasIMEI , pcm:packageName , pcm:hasTelecommunicationsProvider , pcm:hasTimezone , pcm:refersToContinentalUnion , pcm:hasMinute , pcm:hasZone , pcm:hasFloorNumber , pcm:hasNonRelationalType , pcm:hasIPAddress , pcm:hasEndpoint , pcm:hasStationaryOS , pcm:hasMetricUnit , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasEnd , pcm:hasRelationalType , pcm:hasYear , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond .
+
+pbdfd:hasDFDPolicySet
+        a                         owl:ObjectProperty , rdf:Property ;
+        rdfs:domain               pbdfd:PaaSwordDataFragmentationAndDistribution ;
+        rdfs:range                pbdfd:BootstrappingDFDPolicySet ;
+        rdfs:subPropertyOf        pbdfd:hasDFDPolicySet , owl:topObjectProperty ;
+        owl:equivalentProperty    pbdfd:hasDFDPolicySet ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pcm:InfrastructureArtefact
+        a                    owl:Class , rdfs:Class ;
+        rdfs:subClassOf      pcm:Object , pcm:SecurityContextElement , owl:Thing , pcm:Product , pcm:ProductOrService ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:InfrastructureArtefact .
+
+pbe:PaaSwordDataEncryption
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , usdl-sec:SecurityTechnology ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbe:PaaSwordDataEncryption .
+
+pbe:BootstrappingCryptoRule
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pwd:Rule ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbe:BootstrappingCryptoRule .
+
+pcm:ConnectionCiphersuite
+        a                    owl:Class , rdfs:Class ;
+        rdfs:comment         "This class refers to the mode or the ciphersuite used for establishing a secure connection." ;
+        rdfs:subClassOf      pcm:ConnectionSecurity , pcm:SecurityContextElement , owl:Thing , pcm:Connectivity ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:ConnectionCiphersuite .
+
+pcm:hasStationaryOS  a            owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Stationary ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasStationaryOS ;
+        owl:equivalentProperty    pcm:hasStationaryOS ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:volumeOutputSpeed
+        a                         owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Volume ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:volumeOutputSpeed ;
+        owl:equivalentProperty    pcm:volumeOutputSpeed ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pcm:Instant  a               owl:Class , rdfs:Class ;
+        rdfs:comment         "A precise point in time used to specify which date the access request takes place." ;
+        rdfs:subClassOf      owl:Thing , pcm:SecurityContextElement , <http://www.w3.org/2006/time#TemporalEntity> , pcm:DateTime , <http://www.w3.org/2006/time#Instant> ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Instant .
+
+usdl-sec:isImplementedBy
+        a                         owl:ObjectProperty ;
+        rdfs:subPropertyOf        usdl-sec:isImplementedBy , owl:topObjectProperty ;
+        owl:equivalentProperty    usdl-sec:isImplementedBy ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+gr:Location  a               owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  gr:Location .
+
+pbdfd:BootstrappingDFDRule
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pwd:Rule ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pbdfd:BootstrappingDFDRule .
+
+pcm:AbstractLocation  a      owl:Class , rdfs:Class ;
+        rdfs:comment         "Conceptual characterization of a physical location (e.g. non-organization premises, building, room, section, department etc)" ;
+        rdfs:subClassOf      gr:Location , pcm:SecurityContextElement , owl:Thing , schema:Place , pcm:PhysicalLocation , pcm:Location ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:AbstractLocation .
+
+pcm:Address  a               owl:Class , rdfs:Class ;
+        rdfs:comment         "Physical address where data are stored or from which a particular entity is requesting to access sensitive data." ;
+        rdfs:subClassOf      gr:Location , owl:Thing , pcm:SecurityContextElement , schema:Place , pcm:PhysicalLocation , pcm:Location , schema:PostalAddress ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Address .
+
+owl:Nothing  a               owl:Class ;
+        rdfs:subClassOf      foaf:Person , pcm:Address , pbdfd:BootstrappingDFDPolicySet , pac:ABACPolicy , pbe:BootstrappingCryptoPolicy , gr:Location , pcm:Coordinates , schema:Place , pcm:AuthorizationMethod , usdl-sec:SecurityProfile , pcm:Point , pcm:InfrastructureArtefact , pcm:DateTime , pbdfd:BootstrappingDFDRule , usdl-core:ServiceModel , pac:PaaSwordABAC , pcm:Service , pac:NOTContextExpression , pcm:SecurityContextElement , pcm:AuthenticationMethod , gr:BusinessEntity , pcm:Tablet , pcm:ClassHandler , pbdfd:BootstrappingDFDPolicy , usdl-sec:Access_Control , pbe:BootstrappingCryptoRule , pcm:NonRelational , pcpm:ContextPattern , usdl-sec:Privacy , skos:Concept , pcm:ConnectionType , pac:ANDContextExpression , pcm:Location , pwd:PolicySet , foaf:Agent , pcm:Group , pcm:DeviceType , pcm:Instant , pcm:DataArtefact , usdl-sec:Authorization , pcm:File , pcm:NetworkLocation , pcm:Person , pcm:DAO , pcm:Object , pwd:Policy , pcm:SoftwareArtefact , pbe:PaaSwordDataEncryption , pcm:Subject , pcm:AbstractLocation , pcm:City , <http://www.w3.org/2006/time#TemporalEntity> , pcm:Product , pcm:ProductOrService , pcm:POI , <http://www.w3.org/2006/time#Instant> , pcm:ConnectionCiphersuite , pac:CombiningAlgorithms , pcm:Organization , pcm:IdentityType , pcm:Mobile , owl:Thing , pbdfd:PaaSwordDataFragmentationAndDistribution , pcm:SecurityProtocol , schema:PostalAddress , pcm:Relational , pcm:Method , pcm:Stationary , pcm:DateTimeInterval , pcm:Auth , pac:Authorisation , pcm:EphemeralId , pac:ContextExpression , schema:Product , schema:Service , pac:ABACPolicySet , usdl-sec:SecurityTechnology , pcm:Area , pcm:PermanentId , pcm:Volume , pac:ABACRule , pwd:PaaSwordSecurityModel , pac:ORContextExpression , usdl-core:EntityInvolvement , pac:PolicyCombiningAlgorithms , foaf:Group , usdl-sec:InUsage , pac:PolicySetCombiningAlgorithms , pcm:Connectivity , pcm:ConnectionMetric , pcm:HierarchicalDataStructure , pcm:Smartphone , pbe:BootstrappingCryptoPolicySet , pcm:PhysicalLocation , gr:ProductOrService , pcm:Notebook , pac:XORContextExpression , pcm:ConnectionSecurity , usdl-sec:Cryptography , foaf:Organization , pbdfd:DataFragmentationAndDistribution , pwd:Rule , usdl-sec:Confidentiality , pcm:SoftwareAgent ;
+        owl:complementOf     owl:Thing ;
+        owl:disjointWith     foaf:Person , pcm:Address , pbdfd:BootstrappingDFDPolicySet , pac:ABACPolicy , pbe:BootstrappingCryptoPolicy , gr:Location , pcm:Coordinates , schema:Place , usdl-sec:SecurityProfile , pcm:AuthorizationMethod , pcm:Point , pcm:InfrastructureArtefact , pcm:DateTime , pbdfd:BootstrappingDFDRule , usdl-core:ServiceModel , pac:PaaSwordABAC , pcm:SecurityContextElement , pcm:Service , pac:NOTContextExpression , pcm:AuthenticationMethod , gr:BusinessEntity , pcm:Tablet , pcm:ClassHandler , pbdfd:BootstrappingDFDPolicy , usdl-sec:Access_Control , pbe:BootstrappingCryptoRule , pcm:NonRelational , pcpm:ContextPattern , usdl-sec:Privacy , skos:Concept , pac:ANDContextExpression , pcm:ConnectionType , pcm:Location , foaf:Agent , pwd:PolicySet , pcm:Group , pcm:DeviceType , pcm:Instant , pcm:DataArtefact , usdl-sec:Authorization , pcm:File , pcm:NetworkLocation , pcm:Object , pcm:Person , pcm:DAO , pwd:Policy , owl:Nothing , pcm:SoftwareArtefact , pbe:PaaSwordDataEncryption , pcm:Subject , pcm:AbstractLocation , <http://www.w3.org/2006/time#TemporalEntity> , pcm:City , pcm:Product , pcm:ProductOrService , pcm:POI , <http://www.w3.org/2006/time#Instant> , pcm:ConnectionCiphersuite , pac:CombiningAlgorithms , pcm:Organization , pcm:IdentityType , pcm:Mobile , owl:Thing , pbdfd:PaaSwordDataFragmentationAndDistribution , pcm:SecurityProtocol , schema:PostalAddress , pcm:Relational , pcm:Method , pcm:Stationary , pcm:DateTimeInterval , pcm:Auth , pac:Authorisation , pcm:EphemeralId , schema:Product , pac:ContextExpression , schema:Service , pac:ABACPolicySet , usdl-sec:SecurityTechnology , pcm:Area , pcm:Volume , pcm:PermanentId , pac:ABACRule , pwd:PaaSwordSecurityModel , pac:ORContextExpression , usdl-core:EntityInvolvement , pac:PolicyCombiningAlgorithms , foaf:Group , usdl-sec:InUsage , pac:PolicySetCombiningAlgorithms , pcm:Connectivity , pcm:ConnectionMetric , pcm:HierarchicalDataStructure , pcm:Smartphone , pbe:BootstrappingCryptoPolicySet , pcm:PhysicalLocation , gr:ProductOrService , pcm:Notebook , pac:XORContextExpression , pcm:ConnectionSecurity , usdl-sec:Cryptography , foaf:Organization , pbdfd:DataFragmentationAndDistribution , pwd:Rule , usdl-sec:Confidentiality , pcm:SoftwareAgent ;
+        owl:equivalentClass  owl:Nothing .
+
+pcm:volumeInputSpeed  a           owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:Volume ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:volumeInputSpeed ;
+        owl:equivalentProperty    pcm:volumeInputSpeed ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+pac:PolicySetCombiningAlgorithms
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , pac:CombiningAlgorithms ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pac:PolicySetCombiningAlgorithms .
+
+schema:PostalAddress  a      owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  schema:PostalAddress .
+
+pcm:Area  a                  owl:Class , rdfs:Class ;
+        rdfs:comment         "This class describes a geographical region from which a data access request can be originated from." ;
+        rdfs:subClassOf      gr:Location , pcm:SecurityContextElement , owl:Thing , schema:Place , pcm:PhysicalLocation , pcm:Location ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  pcm:Area .
+
+pcm:hasIPAddress  a               owl:DatatypeProperty , rdf:Property ;
+        rdfs:domain               pcm:NetworkLocation ;
+        rdfs:range                xsd:string ;
+        rdfs:subPropertyOf        owl:topDataProperty , pcm:hasIPAddress ;
+        owl:equivalentProperty    pcm:hasIPAddress ;
+        owl:propertyDisjointWith  pcm:hasBeginning , pac:hasEvaluationResult , pcm:hasDay , pcm:hasHour , pcm:hasMinute , pcm:hasFloorNumber , pcm:hasDownloadRate , pcm:hasEndpoint , pcm:hasUploadRate , pcm:hasCircularRadius , pcm:hasMonth , pcm:hasEnd , pcm:hasPort , pcm:hasYear , owl:bottomDataProperty , pcm:hasRectangularRangeHeight , pcm:hasRectangularRangeWidth , pcm:hasSecond , pcm:isVolumeEncrypted .
+
+usdl-sec:Access_Control
+        a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  usdl-sec:Access_Control .
+
+pbe:hasBootStrappingCryptoRule
+        a                         owl:ObjectProperty ;
+        rdfs:domain               pwd:Policy , pbe:BootstrappingCryptoPolicy ;
+        rdfs:range                pwd:Rule , pbe:BootstrappingCryptoRule ;
+        rdfs:subPropertyOf        pwd:hasRule , pbe:hasBootStrappingCryptoRule , owl:topObjectProperty ;
+        owl:equivalentProperty    pbe:hasBootStrappingCryptoRule ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+pbe:CryptoMechanism  a                  owl:Thing , usdl-sec:Cryptography ;
+        usdl-sec:hasSecurityRealizationType
+                pbe:CryptoType ;
+        usdl-sec:isRealizedByTechnology
+                pbe:CryptoTechnology ;
+        pbe:hasSecurityRealizationType  pbe:CryptoType ;
+        pbe:isRealizedByTechnology      pbe:CryptoTechnology ;
+        owl:sameAs                      pbe:CryptoMechanism .

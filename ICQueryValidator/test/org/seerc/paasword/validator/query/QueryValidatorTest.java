@@ -12,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.seerc.paasword.theoremprover.TheoremProvingDataSource;
 
 public class QueryValidatorTest {
 
@@ -46,7 +47,7 @@ public class QueryValidatorTest {
 	@Test
 	public void testValidate() {
 		List<QueryValidatorErrors> validationResult = qv.validate();
-		assertEquals(1, validationResult.size());
+		assertEquals(0, validationResult.size());
 	}
 
 	// TODO: We do not support yet subclass constraints.
@@ -807,7 +808,7 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesFull() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/abacRulesConstraints.ttl"));
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Full.ttl"));
 		
 		qv = new QueryValidator(constraints, policy);
@@ -817,7 +818,7 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesSimple() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/abacRulesConstraints.ttl"));
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple.ttl"));
 		
 		qv = new QueryValidator(constraints, policy);
@@ -827,11 +828,43 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesSimpleFailing() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/abacRulesConstraints.ttl"));
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl"));
 		
 		qv = new QueryValidator(constraints, policy);
 		
 		assertEquals(9, qv.validate().size());
 	}	
+
+	@Test
+	public void testSubclassSubsumption() throws Exception {
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
+		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		
+		qv = new QueryValidator(constraints, policy);
+		
+		assertEquals(2, qv.validate().size());
+	}	
+
+	// These two tests (above and below) are the same now.
+	// TODO: Eliminate one of two.
+	
+	@Test
+	public void testContradiction() throws Exception {
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
+		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		
+		qv = new QueryValidator(constraints, policy);
+		
+		assertEquals(2, qv.validate().size());
+	}	
+
+	/*@Test
+	public void testPrintSubclassSubsumption() throws Exception {
+		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		
+		TheoremProvingDataSource tpds = new TheoremProvingDataSource(policy);
+		tpds.printModel(System.out);
+		int i=0;
+	}*/	
 }

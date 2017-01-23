@@ -1,0 +1,78 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2015/11/30#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <http://schema.org/> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+
+<http://www.paasword-project.eu/ontologies/psm/2015/11/30>
+  a owl:Ontology ;
+  ppm:Comment "PaaSword Permissions Model (version 2015-11-30)" .
+
+ppm:hasActionStatus
+  a owl:DatatypeProperty ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range xsd:string .
+
+ppm:hasEndTime
+  a owl:DatatypeProperty ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range xsd:dateTime .
+
+ppm:hasResult
+  a owl:DatatypeProperty ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range xsd:string .
+
+ppm:hasStartTime
+  a owl:DatatypeProperty ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range xsd:dateTime .
+
+ppm:hasTarget
+  a owl:DatatypeProperty ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range pcm:Object .
+
+schema:Action a rdfs:Class .
+ppm:DDLPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:Permission ;
+  rdfs:comment "This class reveals the data definition language (DDL) related actions on specific objects." .
+
+ppm:DataPermission
+  a rdfs:Class ;
+  rdfs:subClassOf schema:Action, ppm:Permission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a data entity." .
+
+ppm:DatastoreDDLPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DDLPermission .
+
+ppm:DatastorePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a data entity in a datastore." .
+
+ppm:FilePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a file." .
+
+ppm:FileSystemStructurePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DDLPermission .
+
+ppm:Permission
+  a rdfs:Class ;
+  rdfs:comment "This class refers to allowed actions of a subject upon an object." .
+
+ppm:VolumePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission .
+
+ppm:WebEndpointPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any Web endpoint action allowed by a direct agent upon a data entity in a datastore." .
+

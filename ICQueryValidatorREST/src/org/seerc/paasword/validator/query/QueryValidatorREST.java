@@ -13,13 +13,32 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.seerc.paasword.validator.query.JenaDataSourceInferred;
+import org.seerc.paasword.theoremprover.TheoremProvingDataSource;
+import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.seerc.paasword.validator.query.QueryValidator;
 import org.seerc.paasword.validator.query.QueryValidatorErrors;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+/**
+ * REST interface to the QueryValidator. Supports validating and querying ontologies.
+ * Uses a TheoremProvingDataSource to access the data.
+ * 
+ * @author Chris Petsos
+ *
+ */
 @Path("/")
 public class QueryValidatorREST {
+	
+	Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
+	/**
+	 * Performs the validation.
+	 * 
+	 * @param data Data under validation in the form of a RESTValidationData object.
+	 * @return A validation report.
+	 */
 	@POST
 	@Path("/validate")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -30,7 +49,7 @@ public class QueryValidatorREST {
 			QueryValidator qv = new QueryValidator(data.getConstraints(), data.getOntologies());
 			List<QueryValidatorErrors> errors = qv.validate();
 			
-			String report = this.generateReport(errors);
+			String report = gson.toJson(errors);
 			
 			return report;
 		}
@@ -40,6 +59,10 @@ public class QueryValidatorREST {
 		}
 	}
 	
+	/*
+	 * Generates a validation report.
+	 * TODO: This is quite verbose now. Should be more human-friendly.
+	 */
 	private String generateReport(List<QueryValidatorErrors> errors)
 	{
 		String report = errors.size() + " validation errors.\n\n";
@@ -62,6 +85,8 @@ public class QueryValidatorREST {
 			report += error.getQueryConstraint().getConstraintStatements().toString() + "\n";
 			report += "which have been translated to the following query:\n";
 			report += error.getQueryConstraint().getQuery() + "\n";
+			report += "and has the following description:\n";
+			report += error.getQueryConstraint().getConstraintDescription() + "\n";
 			if(error.getProblematicResources().isEmpty())
 			{
 				report += "has NOT  been violated.\n";
@@ -95,6 +120,12 @@ public class QueryValidatorREST {
 		return report;
 	}
 
+	/**
+	 * Queries an ontology.
+	 * 
+	 * @param data Data to be queried in the form of a QueryData object.
+	 * @return The query's result.
+	 */
 	@POST
 	@Path("/query")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -102,6 +133,7 @@ public class QueryValidatorREST {
 	public String query(QueryData data) {
 		try
 		{
+			// Create a single InputStream from the potentially multiple ontologies. 
 			Vector<InputStream> ontologiesIs = new Vector<>();
 			
 			for(String ontology:data.getOntologies())
@@ -110,10 +142,13 @@ public class QueryValidatorREST {
 			}
 			SequenceInputStream sis = new SequenceInputStream(ontologiesIs.elements());
 			
-			JenaDataSourceInferred jdsi = new JenaDataSourceInferred(sis);
+			// Answer the query using a TheoremProvingDataSource.
+			JenaDataSourceInferred jdsi = new TheoremProvingDataSource(sis);
 			
+			// execute the query
 			String result = jdsi.executeReadyQuery(data.getQuery()).toString();
 			
+			// TODO: These checks do not behave as expected for some reason.
 			if(result == null || result.equals(""))
 			{
 				return "No result.";

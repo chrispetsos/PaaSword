@@ -1,0 +1,23 @@
+@prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
+@prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+pcm:City rdfs:subClassOf pcm:Area .
+
+ex1:SouthEurope a pcm:Area .
+
+ex1:Athens a pcm:City ;
+	pcm:isLocatedIn ex1:SouthEurope .
+
+pcm:isLocatedIn a owl:TransitiveProperty;
+	rdfs:domain pcm:Area;
+	rdfs:range pcm:Area .
+	
+ex1:Requestor pcm:isLocatedIn ex1:Athens . # Should infer that Requestor is located in SouthEurope also.

@@ -1,0 +1,235 @@
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#
+# PaaSword Context Pattern Model (version 2016-05-20)
+#
+
+pcpm:hasPattern
+  a rdf:Property ;
+  rdfs:range pcpm:ContextPattern ;
+  rdfs:domain pcpm:ContextPattern .
+
+pcpm:hasAccessedObject
+  a rdf:Property ;
+  rdfs:domain pcpm:AccessSequencePattern ;
+  rdfs:range pcm:Object .
+
+pcpm:hasConnectionSecurity
+  a rdf:Property ;
+  rdfs:range pcm:ConnectionSecurity ;
+  rdfs:domain pcpm:UsualConnectionSecurity .
+
+pcpm:hasConnectionType
+  a rdf:Property ;
+  rdfs:range pcm:ConnectionType ;
+  rdfs:domain pcpm:MostFrequentConnectionType, pcpm:UsualConnectionType .
+
+pcpm:hasDeviceType
+  a rdf:Property ;
+  rdfs:range pcm:DeviceType ;
+  rdfs:domain pcpm:MostFrequentDeviceType, pcpm:UsualDeviceType .
+
+pcpm:hasLocation
+  a rdf:Property ;
+  rdfs:range pcm:Location ;
+  rdfs:domain pcpm:LocationPattern .
+
+pcpm:hasPermission
+  a rdf:Property ;
+  rdfs:range ppm:Permission ;
+  rdfs:domain pcpm:PermissionPattern .
+
+pcpm:hasTimeWindow
+  a rdf:Property ;
+  rdfs:domain pcpm:ContextPattern ;
+  rdfs:range pcm:DateTime .
+
+pcpm:hasUAOThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsuallyAccessedObject ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUAThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualAccessLocation ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUCSThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualConnectionSecurity ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUCTThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualConnectionType ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUDTThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualDeviceType ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUGThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsuallyGrantedPermission ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUTIThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualDateTimeInterval ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUTThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualDateTimeInstance ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:refersToObject
+  a rdf:Property ;
+  rdfs:domain pcpm:ContextPattern ;
+  rdfs:range pcm:Object .
+
+pcpm:refersToPermission
+  a rdf:Property ;
+  rdfs:domain pcpm:ContextPattern ;
+  rdfs:range ppm:Permission .
+
+pcpm:refersToSubject
+  a rdf:Property ;
+  rdfs:domain pcpm:ContextPattern ;
+  rdfs:range pcm:Subject .
+
+pcpm:AccessSequencePattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to data access occurences that are recognized by any preceeding access actions of a specific subject." .
+
+pcpm:ConnectivityPattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the Connectivity context element." .
+
+pcpm:ContextPattern
+  a rdfs:Class ;
+  rdfs:comment "Context patterns are recurring motives of data access occurences that are recognized in repeating context elements instances." .
+
+pcpm:DateTimePattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the DateTime context element." .
+
+pcpm:LeastAccessedObject
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ObjectPattern .
+
+pcpm:LeastFrequentAccessLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:LocationPattern .
+
+pcpm:LeastFrequentDateTimeInstance
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:LeastFrequentDateTimeInterval
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:LocationPattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the Location context element." .
+
+pcpm:MostFrequentAccessLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:LocationPattern .
+
+pcpm:MostFrequentConnectionType
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:MostFrequentDateTimeInstance
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:MostFrequentDateTimeInterval
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:MostFrequentDeviceType
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:MostFrequentlyAccessedObject
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ObjectPattern .
+
+pcpm:MostFrequentlyDeniedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+
+pcpm:MostFrequentlyGrantedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+
+pcpm:ObjectPattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the Object context element." .
+
+pcpm:PermissionPattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the Permission element." .
+
+pcpm:RecentAccessLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:LocationPattern .
+
+pcpm:RecentlyAccessedObject
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ObjectPattern .
+
+pcpm:RecentlyDeniedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+
+pcpm:RecentlyGrantedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+
+pcpm:UsualAccessLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:LocationPattern .
+
+pcpm:UsualConnectionSecurity
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:UsualConnectionType
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:UsualDateTimeInstance
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:UsualDateTimeInterval
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:UsualDeviceType
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:UsuallyAccessedObject
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ObjectPattern .
+
+pcpm:UsuallyGrantedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .

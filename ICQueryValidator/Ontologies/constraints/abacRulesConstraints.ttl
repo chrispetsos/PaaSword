@@ -76,12 +76,35 @@ pac:ABACRule rdfs:subClassOf
                 owl:onClass pcm:Subject
               ] .
 
-# Context expression is optional but if it exists it should have at least
-# one parameter
-pac:ContextExpression rdfs:subClassOf
+# NOT Context expressions should have exactly one parameter
+pac:NOTContextExpression rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:hasParameter ;
-                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
+              ] .
+
+# AND Context expressions should have exactly two parameters
+pac:ANDContextExpression rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:hasParameter ;
+                owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
+              ] .
+
+# OR Context expressions should have exactly two parameters
+pac:ORContextExpression rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:hasParameter ;
+                owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
+              ] .
+
+# XOR Context expressions should have exactly two parameters
+pac:XORContextExpression rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:hasParameter ;
+                owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] .
 

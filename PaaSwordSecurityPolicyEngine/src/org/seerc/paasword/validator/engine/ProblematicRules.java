@@ -1,5 +1,10 @@
 package org.seerc.paasword.validator.engine;
 
+/**
+ * Data class that holds problematic rules. It contains a reason and the two rules
+ * that are problematic.
+ */
+// TODO: Is this deprecated?
 public class ProblematicRules {
 
 	String reason;
