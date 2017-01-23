@@ -37,6 +37,7 @@ pac:positive a pac:Authorisation.
 ex1:Read a ppm:DatastorePermission.
 
 ex1:ParkingEmployee a pcm:Person.
+ex1:ParkingEmployee2 a pcm:Person.
 
 ex1:ABACRule_2 a pac:ABACRule;
 	pac:hasControlledObject ex1:PaymentsTable;
@@ -50,11 +51,13 @@ ex1:Write a ppm:DatastorePermission.
 
 ### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
 ex1:expr a pac:ANDContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1;
+	pac:refersTo ex1:ParkingEmployee .
 
 # This is subsumed by ex1:expr
 ex1:expr2 a pac:ANDContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1;
+	pac:refersTo ex1:ParkingEmployee2 .
 
 ex1:expr3 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
@@ -128,6 +131,7 @@ ex1:Parking3 a pcm:Point.
 
 otp:TheoremProvingBaseClass a owl:Class .
 otp:TheoremProvingParameterProperty a owl:ObjectProperty .
+otp:TheoremProvingReferenceProperty a owl:ObjectProperty .
 otp:subsumes a owl:ObjectProperty .
 otp:ANDTheoremProvingClass a owl:Class .
 otp:ORTheoremProvingClass a owl:Class .
@@ -136,6 +140,7 @@ otp:NOTTheoremProvingClass a owl:Class .
 
 pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
 pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:refersTo rdfs:subPropertyOf otp:TheoremProvingReferenceProperty .
 pac:subsumes owl:equivalentProperty otp:subsumes .
 pac:ANDContextExpression rdfs:subClassOf otp:ANDTheoremProvingClass .
 pac:ORContextExpression rdfs:subClassOf otp:ORTheoremProvingClass .

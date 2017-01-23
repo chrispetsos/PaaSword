@@ -47,9 +47,10 @@ public class TautologyCheckerTest {
 
 	@Test
 	public void testIsTautology() {
+		assertTrue(tc.isTautology("ex1:expr", "ex1:expr2"));
+
 		assertFalse(tc.isTautology("ex1:expr11", "ex1:expr7"));
 
-		assertTrue(tc.isTautology("ex1:expr", "ex1:expr2"));
 		assertTrue(tc.isTautology("ex1:expr2", "ex1:expr"));
 		assertFalse(tc.isTautology("ex1:expr7", "ex1:expr8"));
 		assertFalse(tc.isTautology("ex1:expr8", "ex1:expr7"));
