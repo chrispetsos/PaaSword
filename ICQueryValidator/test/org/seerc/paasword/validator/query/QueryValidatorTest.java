@@ -808,7 +808,7 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesFull() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/abacRulesConstraints.ttl"));
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Full.ttl"));
 		
 		qv = new QueryValidator(constraints, policy);
@@ -818,7 +818,7 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesSimple() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/abacRulesConstraints.ttl"));
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple.ttl"));
 		
 		qv = new QueryValidator(constraints, policy);
@@ -828,7 +828,7 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesSimpleFailing() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/abacRulesConstraints.ttl"));
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl"));
 		
 		qv = new QueryValidator(constraints, policy);
@@ -838,17 +838,20 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testSubclassSubsumption() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/subclassSubsumptionConstraints.ttl"));
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
 		
 		qv = new QueryValidator(constraints, policy);
 		
-		assertEquals(1, qv.validate().size());
+		assertEquals(2, qv.validate().size());
 	}	
 
+	// These two tests (above and below) are the same now.
+	// TODO: Eliminate one of two.
+	
 	@Test
 	public void testContradiction() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/contradictionConstraints.ttl"));
+		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
 		
 		qv = new QueryValidator(constraints, policy);
