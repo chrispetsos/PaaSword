@@ -18,13 +18,11 @@ import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.RDFVisitor;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 /**
  * This class takes a JenaDataSourceInferred and checks for tautologies inside
@@ -44,8 +42,8 @@ public class TautologyChecker {
 	private HashMap<SimpleEntry<Resource, Resource>, String> resourceVariableMap;
 	// A Map from resources to references.
 	private HashMap<Resource, Resource> resourceReferenceMap;
-	// A List with variable implications 
-	private List<SimpleEntry<String, String>> implications;
+	// A List with variable subsumptions 
+	private List<SimpleEntry<String, String>> subsumptions;
 	
 	private static long variableCounter = 0;
 
@@ -60,7 +58,7 @@ public class TautologyChecker {
 		checker = new CheckerTestHelper();
 		resourceVariableMap = new HashMap<SimpleEntry<Resource, Resource>, String>();
 		resourceReferenceMap = new HashMap<Resource, Resource>();
-		implications = new ArrayList<AbstractMap.SimpleEntry<String,String>>();
+		subsumptions = new ArrayList<AbstractMap.SimpleEntry<String,String>>();
 	}
 
 	/**
@@ -81,9 +79,9 @@ public class TautologyChecker {
 		String propositionalExpressionCe2 = this.convertToPropositionalExpression(ce2);
 		
 		// Calculate implications based on subsumptions
-		for(SimpleEntry<String, String> implication:implications)
+		for(SimpleEntry<String, String> implication:subsumptions)
 		{
-			if(!implications.get(0).equals(implication))
+			if(!subsumptions.get(0).equals(implication))
 			{	// not first, add AND
 				allImplications += " AND ";
 			}
@@ -168,7 +166,7 @@ public class TautologyChecker {
 				else
 				{	// "terminating" param
 					// Return the variable to which this resource maps.
-					// use the last resource pushed
+					// use the last resource pushed as base of current
 					Resource baseResource = resourceStack.peek();
 					return TautologyChecker.this.getVariableFor(resource, baseResource);
 				}
@@ -279,20 +277,13 @@ public class TautologyChecker {
 		// return the current entry's var.
 		for(SimpleEntry<Resource, Resource> entryKey:resourceVariableMap.keySet())
 		{
-			if(
-				resource.equals(entryKey.getKey()) ||
-				entryKey.getKey().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
-						ResourceFactory.createStatement(entryKey.getKey(), 
-						ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
-						resource)
-						)
-			)
+			if(resource.equals(entryKey.getKey()) || resourceSubsumes(entryKey.getKey(), resource))
 			{	// equal or subsuming resources
-				
 				// both have no reference
 				if(entryKey.getValue() == null && referenceOfBaseOfNewResource == null)
 				{	// add implication
-					implications.add(new SimpleEntry<String, String>(resourceVariableMap.get(entryKey), newVariable));
+					subsumptions.add(new SimpleEntry<String, String>(resourceVariableMap.get(entryKey), newVariable));
+					continue;
 				}
 				
 				// one of the two has null reference, thus they are different
@@ -302,16 +293,33 @@ public class TautologyChecker {
 				}
 				
 				// Does current entry's reference subsumes referenceOfBaseOfNewResource or are they equal?
-				if(
-					entryKey.getValue().equals(referenceOfBaseOfNewResource) ||
-					entryKey.getValue().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
-							ResourceFactory.createStatement(entryKey.getValue(), 
-							ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
-							referenceOfBaseOfNewResource)
-							)
-				)
+				if(entryKey.getValue().equals(referenceOfBaseOfNewResource) ||resourceSubsumes(entryKey.getValue(), referenceOfBaseOfNewResource))
 				{	// add implication
-					implications.add(new SimpleEntry<String, String>(resourceVariableMap.get(entryKey), newVariable));
+					subsumptions.add(new SimpleEntry<String, String>(resourceVariableMap.get(entryKey), newVariable));
+				}
+			}
+			
+			// check other way too for reverse subsumptions...
+			
+			if(resource.equals(entryKey.getKey()) || resourceSubsumes(resource, entryKey.getKey()))
+			{	// equal or subsuming resources
+				// both have no reference
+				if(entryKey.getValue() == null && referenceOfBaseOfNewResource == null)
+				{	// add implication
+					subsumptions.add(new SimpleEntry<String, String>(newVariable, resourceVariableMap.get(entryKey)));
+					continue;
+				}
+				
+				// one of the two has null reference, thus they are different
+				if(entryKey.getValue() == null || referenceOfBaseOfNewResource == null)
+				{	// no implication
+					continue;
+				}
+				
+				// Does current entry's reference subsumes referenceOfBaseOfNewResource or are they equal?
+				if(entryKey.getValue().equals(referenceOfBaseOfNewResource) ||resourceSubsumes(referenceOfBaseOfNewResource, entryKey.getValue()))
+				{	// add implication
+					subsumptions.add(new SimpleEntry<String, String>(newVariable, resourceVariableMap.get(entryKey)));
 				}
 			}
 		}
@@ -337,6 +345,17 @@ public class TautologyChecker {
 		return newVariable;
 		
 	}
+
+	/*
+	 * Answers whether resource1 subsumes resource2.
+	 */
+	private boolean resourceSubsumes(Resource resource1, Resource resource2) {
+		return resource1.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
+				ResourceFactory.createStatement(resource1, 
+				ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
+				resource2)
+				);
+	}
 	
 	/*
 	 * Enhances the current data source's model by adding the subsumptions that the tautology checker has found.
@@ -361,7 +380,6 @@ public class TautologyChecker {
 							ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
 							ResourceFactory.createResource(jdsi.createResourceFromUri(i2.getURI()).getURI()) 
 							);
-					//this.jdsi.createResourceFromUri(i1.getURI()).addProperty(ResourceFactory.createProperty(jdsi.createResourceFromUri("pac:subsumes").getURI()), i2.getURI());
 				}
 			}
 		}
