@@ -51,7 +51,7 @@ public class TautologyCheckerTest {
 
 		assertFalse(tc.isTautology("ex1:expr11", "ex1:expr7"));
 
-		assertTrue(tc.isTautology("ex1:expr2", "ex1:expr"));
+		assertFalse(tc.isTautology("ex1:expr2", "ex1:expr"));
 		assertFalse(tc.isTautology("ex1:expr7", "ex1:expr8"));
 		assertFalse(tc.isTautology("ex1:expr8", "ex1:expr7"));
 		assertTrue(tc.isTautology("ex1:expr9", "ex1:expr10"));
@@ -64,16 +64,16 @@ public class TautologyCheckerTest {
 		assertTrue(tc.isTautology("ex1:expr", "ex1:expr"));
 		assertFalse(tc.isTautology("ex1:expr", "ex1:expr1"));
 		assertTrue(tc.isTautology("ex1:expr", "ex1:expr2"));
-		assertTrue(tc.isTautology("ex1:expr", "ex1:expr3"));
+		assertFalse(tc.isTautology("ex1:expr", "ex1:expr3"));
 		assertFalse(tc.isTautology("ex1:expr", "ex1:expr4"));
-		assertTrue(tc.isTautology("ex1:expr", "ex1:expr5"));
+		assertFalse(tc.isTautology("ex1:expr", "ex1:expr5"));
 		assertFalse(tc.isTautology("ex1:expr", "ex1:expr6"));
-		assertTrue(tc.isTautology("ex1:expr", "ex1:expr7"));
+		assertFalse(tc.isTautology("ex1:expr", "ex1:expr7"));
 		assertFalse(tc.isTautology("ex1:expr", "ex1:expr8"));
-		assertTrue(tc.isTautology("ex1:expr", "ex1:expr9"));
-		assertTrue(tc.isTautology("ex1:expr", "ex1:expr10"));
-		assertTrue(tc.isTautology("ex1:expr", "ex1:expr11"));
-		assertTrue(tc.isTautology("ex1:expr", "ex1:expr12"));
+		assertFalse(tc.isTautology("ex1:expr", "ex1:expr9"));
+		assertFalse(tc.isTautology("ex1:expr", "ex1:expr10"));
+		assertFalse(tc.isTautology("ex1:expr", "ex1:expr11"));
+		assertFalse(tc.isTautology("ex1:expr", "ex1:expr12"));
 		assertFalse(tc.isTautology("ex1:expr", "ex1:expr13"));
 		
 		// ex1:expr4
@@ -93,9 +93,9 @@ public class TautologyCheckerTest {
 		assertFalse(tc.isTautology("ex1:expr4", "ex1:expr13"));
 		
 		// ex1:expr6
-		assertTrue(tc.isTautology("ex1:expr6", "ex1:expr"));
+		assertFalse(tc.isTautology("ex1:expr6", "ex1:expr"));
 		assertFalse(tc.isTautology("ex1:expr6", "ex1:expr1"));
-		assertTrue(tc.isTautology("ex1:expr6", "ex1:expr2"));
+		assertFalse(tc.isTautology("ex1:expr6", "ex1:expr2"));
 		assertTrue(tc.isTautology("ex1:expr6", "ex1:expr3"));
 		assertTrue(tc.isTautology("ex1:expr6", "ex1:expr4"));
 		assertTrue(tc.isTautology("ex1:expr6", "ex1:expr5"));
@@ -125,9 +125,9 @@ public class TautologyCheckerTest {
 		assertFalse(tc.isTautology("ex1:expr8", "ex1:expr13"));
 
 		// ex1:expr9
-		assertTrue(tc.isTautology("ex1:expr9", "ex1:expr"));
+		assertFalse(tc.isTautology("ex1:expr9", "ex1:expr"));
 		assertFalse(tc.isTautology("ex1:expr9", "ex1:expr1"));
-		assertTrue(tc.isTautology("ex1:expr9", "ex1:expr2"));
+		assertFalse(tc.isTautology("ex1:expr9", "ex1:expr2"));
 		assertTrue(tc.isTautology("ex1:expr9", "ex1:expr3"));
 		assertFalse(tc.isTautology("ex1:expr9", "ex1:expr4"));
 		assertTrue(tc.isTautology("ex1:expr9", "ex1:expr5"));
@@ -210,11 +210,11 @@ public class TautologyCheckerTest {
 	public void testConvertToPropositionalExpression() {
 		checkOWLResourceToProposition("ex1:expr", "V3 AND (V2 OR V1)");
 		checkOWLResourceToProposition("ex1:expr1", "V2 OR V1");
-		checkOWLResourceToProposition("ex1:expr2", "(V1 OR V2) AND V3");
-		checkOWLResourceToProposition("ex1:expr3", "(V3 AND V1) OR (V3 AND V2)");
-		checkOWLResourceToProposition("ex1:expr4", "V3 AND V4");
-		checkOWLResourceToProposition("ex1:expr5", "V3 AND (V1 OR V2)");
-		checkOWLResourceToProposition("ex1:expr6", "V3");
+		checkOWLResourceToProposition("ex1:expr2", "(V1 OR V2) AND V4");
+		checkOWLResourceToProposition("ex1:expr3", "(V5 AND V1) OR (V5 AND V2)");
+		checkOWLResourceToProposition("ex1:expr4", "V5 AND V6");
+		checkOWLResourceToProposition("ex1:expr5", "V5 AND (V1 OR V2)");
+		checkOWLResourceToProposition("ex1:expr6", "V5");
 		
 		// Comment above and uncomment this if you revert to verbose variable names for debugging purposes.
 		/*checkOWLResourceToProposition("ex1:expr", "ex1EmployeeWorkingHours AND (ex1Parking1 OR ex1Parking2)");

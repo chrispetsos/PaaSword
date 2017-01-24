@@ -3,6 +3,11 @@ package org.seerc.paasword.theoremprover;
 import java.io.ByteArrayInputStream;
 import java.io.IOError;
 import java.io.IOException;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +22,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.RDFVisitor;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
@@ -34,8 +40,12 @@ public class TautologyChecker {
 	private JenaDataSourceInferred jdsi;
 	// The encapsulated checker that asserts tautologies
 	private CheckerTestHelper checker;
-	// A Map from resources to variables.
-	private HashMap<String, String> resourceVariableMap;
+	// A Map from pairs of resource/baseReference to variables.
+	private HashMap<SimpleEntry<Resource, Resource>, String> resourceVariableMap;
+	// A Map from resources to references.
+	private HashMap<Resource, Resource> resourceReferenceMap;
+	// A List with variable implications 
+	private List<SimpleEntry<String, String>> implications;
 	
 	private static long variableCounter = 0;
 
@@ -48,7 +58,9 @@ public class TautologyChecker {
 	{
 		this.jdsi = jdsi;
 		checker = new CheckerTestHelper();
-		resourceVariableMap = new HashMap<String, String>();
+		resourceVariableMap = new HashMap<SimpleEntry<Resource, Resource>, String>();
+		resourceReferenceMap = new HashMap<Resource, Resource>();
+		implications = new ArrayList<AbstractMap.SimpleEntry<String,String>>();
 	}
 
 	/**
@@ -61,16 +73,26 @@ public class TautologyChecker {
 	 */
 	public boolean isTautology(String ce1, String ce2)
 	{
+		String propositionToCheck = "";
+		String allImplications = "";
+		
 		// Convert the OWL expressions to propositional statements
 		String propositionalExpressionCe1 = this.convertToPropositionalExpression(ce1);
 		String propositionalExpressionCe2 = this.convertToPropositionalExpression(ce2);
 		
 		// Calculate implications based on subsumptions
-		String implicationsOfCe1 = this.generateImplications(ce1);
+		for(SimpleEntry<String, String> implication:implications)
+		{
+			if(!implications.get(0).equals(implication))
+			{	// not first, add AND
+				allImplications += " AND ";
+			}
+			allImplications += "( " + implication.getValue() + " => " + implication.getKey() + " )";
+		}
+		
+		/*String implicationsOfCe1 = this.generateImplications(ce1);
 		String implicationsOfCe2 = this.generateImplications(ce2);
 		String allImplications = "";
-		
-		String propositionToCheck = "";
 		
 		if(implicationsOfCe1.isEmpty())
 		{
@@ -86,7 +108,7 @@ public class TautologyChecker {
 			{
 				allImplications += implicationsOfCe1 + " AND " + implicationsOfCe2;
 			}
-		}
+		}*/
 		
 		if(!allImplications.isEmpty())
 		{
@@ -137,8 +159,8 @@ public class TautologyChecker {
 				{
 					RDFNode subsumedNode = subsumedNodes.next().getObject();
 					// Create or get variables for "key" node and subsumed node. 
-					String keyVar = this.getVariableFor(param.toString());
-					String implicationVar = this.getVariableFor(subsumedNode.toString());
+					String keyVar = this.getVariableFor(param.asResource(), resource);
+					String implicationVar = this.getVariableFor(subsumedNode.asResource(), null);	// Here, I cannot know the base of the subsumed param...
 					
 					// If this is not the first implication append an "AND" to the already existing one(s).
 					if(!firstImplication)
@@ -190,6 +212,8 @@ public class TautologyChecker {
 		// Traverse it with an RDFVisitor recursively.
 		return rootResource.visitWith(new RDFVisitor() {
 			
+			Deque<Resource> resourceStack = new ArrayDeque<Resource>();
+			
 			@Override
 			public Object visitURI(Resource resource, String arg1) {
 				// Resource object.
@@ -198,29 +222,48 @@ public class TautologyChecker {
 
 				String result = "";
 				
+				// Get the reference statement. Should be at most one... 
+				StmtIterator referenceStatementIterator = resource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingReferenceProperty").getURI()));
+				if(referenceStatementIterator.hasNext())
+				{
+					Statement referenceStatement = referenceStatementIterator.next();
+					resourceReferenceMap.put(resource, referenceStatement.getObject().asResource());
+				}
+				
 				// Switch cases of resource
 				if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:ANDTheoremProvingClass").getURI()))
 				{	// otp:ANDTheoremProvingClass
 					// generate the propositional block for this AND resource
+					resourceStack.push(resource);
 					result = this.generateBooleanBlock(resourceParams, "AND", result);
+					resourceStack.pop();
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:ORTheoremProvingClass").getURI()))
 				{	// otp:ORTheoremProvingClass
 					// generate the propositional block for this OR resource
+					resourceStack.push(resource);
 					result = this.generateBooleanBlock(resourceParams, "OR", result);
+					resourceStack.pop();
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:XORTheoremProvingClass").getURI()))
 				{	// otp:XORTheoremProvingClass
+					resourceStack.push(resource);
 					result = this.generateXORBlock(resourceParams, result);					
+					resourceStack.pop();
 				}
 				else if(resource.as(Individual.class).hasOntClass(jdsi.createResourceFromUri("otp:NOTheoremProvingClass").getURI()))
 				{	// otp:NOTheoremProvingClass
+					resourceStack.push(resource);
 					result = this.generateNOTBlock(resourceParams, result);					
+					resourceStack.pop();
 				}
 				else
 				{	// "terminating" param
 					// Return the variable to which this resource maps.
-					return TautologyChecker.this.getVariableFor(arg1);
+					// use the last non-terminating "param"
+					// this should be the last non-terminating "param"
+					Resource baseResource = resourceStack.peek();
+					return TautologyChecker.this.getVariableFor(resource, baseResource);
 				}
 				
 				return result;
@@ -308,35 +351,117 @@ public class TautologyChecker {
 	/*
 	 * Get the variable that a resource is mapped to. If such a mapping doesn't exist, creates it.
 	 */
-	protected String getVariableFor(String resourceId)
+	protected String getVariableFor(Resource resource, Resource baseResource)
 	{
-		if(resourceVariableMap.containsKey(resourceId))
-		{
-			return resourceVariableMap.get(resourceId);
-		}
-		else
-		{
-			// Currently, when mapping variables, the key is the resourceId and the value it maps to is the resourceId's
-			// namespace appended with its local name.
-			// This is not very good decision, because the CheckerTestHelper only allows characters and numbers. If the 
-			// namespace or the local name of the resource have any special characters (e.g. "_") this will fail.
-			// For debugging purposes leave it like this, but before deploying change this to something more robust
-			// e.g. have a standard prefic for variable names ("e.g. "V") and append a counter to that, thus having only
-			// characters and numbers in the variable names.
-			//
-			// DONE
-			// 
-			// Leave it here just in case we need to temporarily 'revive' it at some point for debugging purposes.
-			/*Resource resource = jdsi.createResourceFromUri(resourceId);
-			String newVariable = jdsi.getPrefixes().getKey(resource.getNameSpace()) + resource.getLocalName();*/
-			
-			variableCounter++;
-			String newVariable = "V" + String.valueOf(variableCounter);
-			
-			resourceVariableMap.put(resourceId, newVariable);
-			return newVariable;
-		}
+		Resource referenceOfBaseOfNewResource = resourceReferenceMap.get(baseResource);
+		SimpleEntry<Resource, Resource> key = new AbstractMap.SimpleEntry<Resource, Resource>(resource, referenceOfBaseOfNewResource);
 		
+		if(resourceVariableMap.containsKey(key))
+		{	// contains key as it is, return it
+			return resourceVariableMap.get(key);
+		}
+
+		// will be a new mapping
+		variableCounter++;
+		String newVariable = "V" + String.valueOf(variableCounter);
+
+		//if(referenceOfBaseOfNewResource != null)
+		{	// we have reference
+			// if the referenceOfBaseOfNewResource is subsumed by some reference in current map or are equal 
+			// and the resources are equal or subsuming return that entry's var.
+			for(SimpleEntry<Resource, Resource> entryKey:resourceVariableMap.keySet())
+			{
+				if(
+					resource.equals(entryKey.getKey()) ||
+					entryKey.getKey().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
+							ResourceFactory.createStatement(entryKey.getKey(), 
+							ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
+							resource)
+							)
+				)
+				{	// equal or subsuming resources
+					// Does referenceOfBaseOfCurrentEntry subsumes referenceOfBaseOfNewResource or are they equal?
+					if(entryKey.getValue() == null && referenceOfBaseOfNewResource == null)
+					{
+						implications.add(new SimpleEntry<String, String>(resourceVariableMap.get(entryKey), newVariable));
+					}
+					
+					if(entryKey.getValue() == null || referenceOfBaseOfNewResource == null)
+					{
+						continue;
+					}
+					
+					if(
+						(entryKey.getValue() == null && referenceOfBaseOfNewResource == null) || entryKey.getValue().equals(referenceOfBaseOfNewResource) ||
+						entryKey.getValue().listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
+								ResourceFactory.createStatement(entryKey.getValue(), 
+								ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
+								referenceOfBaseOfNewResource)
+								)
+					)
+					{
+						implications.add(new SimpleEntry<String, String>(resourceVariableMap.get(entryKey), newVariable));
+					}
+				}
+				
+				// check also the other way - NOT!
+				
+				/*if(
+					resource.equals(entryKey.getKey()) ||
+					resource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
+							ResourceFactory.createStatement(resource, 
+							ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
+							entryKey.getKey())
+							)
+				)
+				{
+					if(
+						referenceOfBaseOfNewResource.equals(entryKey.getValue()) ||
+						referenceOfBaseOfNewResource.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
+								ResourceFactory.createStatement(referenceOfBaseOfNewResource, 
+								ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
+								entryKey.getValue())
+								)
+					)
+					{
+						// replace with the subsuming entry and the same variable 
+						String variableOfOldEntry = resourceVariableMap.get(entryKey);
+						resourceVariableMap.remove(entryKey);
+						resourceVariableMap.put(key, variableOfOldEntry);
+						return resourceVariableMap.get(key);
+					}
+				}*/
+
+			}
+		}
+
+		// Reaching here means that we could not find the resource/reference pair neither as it is or with a 
+		// subsuming entry. Go on and create a new entry.
+		
+		// Currently, when mapping variables, the key is the resourceId and the value it maps to is the resourceId's
+		// namespace appended with its local name.
+		// This is not very good decision, because the CheckerTestHelper only allows characters and numbers. If the 
+		// namespace or the local name of the resource have any special characters (e.g. "_") this will fail.
+		// For debugging purposes leave it like this, but before deploying change this to something more robust
+		// e.g. have a standard prefic for variable names ("e.g. "V") and append a counter to that, thus having only
+		// characters and numbers in the variable names.
+		//
+		// DONE
+		// 
+		// Leave it here just in case we need to temporarily 'revive' it at some point for debugging purposes.
+		/*Resource resource = jdsi.createResourceFromUri(resourceId);
+		String newVariable = jdsi.getPrefixes().getKey(resource.getNameSpace()) + resource.getLocalName();*/
+		
+		resourceVariableMap.put(key, newVariable);
+		return newVariable;
+		
+	}
+	
+	private Resource getReferenceStatementOf(Resource param) 
+	{
+		//Resource baseResource = jdsi.getModel().listResourcesWithProperty(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), param).toList().get(0);
+		Resource baseResource = jdsi.getModel().listStatements(null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), param).toList().get(0).getSubject().asResource();
+		return resourceReferenceMap.get(baseResource);
 	}
 
 	/*

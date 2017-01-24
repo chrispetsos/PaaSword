@@ -39,6 +39,8 @@ ex1:Read a ppm:DatastorePermission.
 ex1:ParkingEmployee a pcm:Person.
 ex1:ParkingEmployee2 a pcm:Person.
 
+ex1:ParkingEmployee pac:subsumes ex1:ParkingEmployee2.
+
 ex1:ABACRule_2 a pac:ABACRule;
 	pac:hasControlledObject ex1:PaymentsTable;
 	pac:hasAuthorisation pac:positive;
