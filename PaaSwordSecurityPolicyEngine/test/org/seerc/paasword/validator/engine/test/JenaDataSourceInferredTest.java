@@ -22,6 +22,8 @@ import org.seerc.paasword.validator.engine.JenaDataSource;
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 
 import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntResource;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class JenaDataSourceInferredTest {
 
@@ -69,16 +71,19 @@ public class JenaDataSourceInferredTest {
 	@Test
 	public void testSubclassSubsumption() throws FileNotFoundException {
 		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(
-				createStream(	"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
-								"Ontologies/policy-models/Security-Policy.ttl",
+				createStream(
 								"Ontologies/subsumptive/SubclassSubsumption.ttl")
 				);
 		
 		assertNotNull(jdsi);
 		
-		OntClass contextExpression1 = jdsi.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#CE1").as(OntClass.class);
-		OntClass contextExpression2 = jdsi.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#CE2").as(OntClass.class);
-		assertTrue(contextExpression1.listSubClasses().toList().contains(contextExpression2));
+		OntClass contextExpression1Class = jdsi.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#CE1Class").as(OntClass.class);
+		OntClass contextExpression2Class = jdsi.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#CE2Class").as(OntClass.class);
+		List<? extends OntResource> ce1Instances = contextExpression1Class.listInstances().toList();
+		List<? extends OntResource> ce2Instances = contextExpression2Class.listInstances().toList();
+		assertEquals(3, ce1Instances.size());
+		assertEquals(3, ce2Instances.size());
+		assertTrue(contextExpression1Class.listSubClasses().toList().contains(contextExpression2Class));
 	}
 	
 	@Test
