@@ -19,6 +19,15 @@
 @prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
 @prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+ex1:CE1 rdf:type owl:Class, pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours .
+
+ex1:CE2 rdf:type owl:Class, pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking .
+
+ex1:CE2 rdfs:subClassOf ex1:CE1 .
 
 # The first two rules are identical. This should fail.
 ex1:ABACRule_1 a pac:ABACRule;
