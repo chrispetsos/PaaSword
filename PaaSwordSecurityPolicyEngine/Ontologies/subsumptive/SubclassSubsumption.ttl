@@ -21,8 +21,6 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-pac:hasParameter a owl:ObjectProperty .
-
 #ex1:CE1 a pac:ANDContextExpression;
 #	pac:hasParameter ex1:EmployeeWorkingHours .
 
@@ -45,6 +43,40 @@ ex1:CE2 a owl:Class ;
 	  		[a owl:Restriction ;
 		    owl:onProperty pac:hasParameter ;
 		    owl:hasValue ex1:Parking] 
+  		)
+	  ] .
+
+ex1:CE3 a owl:Class ;
+	owl:equivalentClass
+	  [	
+	  owl:intersectionOf (
+			[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:Athens] 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:WorkingHours1] 	   
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:refersTo ;
+		    owl:hasValue ex1:Simos] 
+  		)
+	  ] .
+
+ex1:CE4 a owl:Class ;
+	owl:equivalentClass
+	  [	
+	  owl:intersectionOf ( 
+	  		[owl:unionOf (
+		  		[a owl:Restriction ;
+			    owl:onProperty pac:hasParameter ;
+			    owl:hasValue ex1:Athens] 
+		  		[a owl:Restriction ;
+			    owl:onProperty pac:hasParameter ;
+			    owl:hasValue ex1:WorkingHours1] 
+		  	)] 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:refersTo ;
+		    owl:hasValue ex1:Simos] 
   		)
 	  ] .
 

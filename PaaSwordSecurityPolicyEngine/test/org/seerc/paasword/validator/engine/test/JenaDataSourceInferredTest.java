@@ -77,17 +77,24 @@ public class JenaDataSourceInferredTest {
 		
 		assertNotNull(jdsi);
 		
-		assertClassSubsumes(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE1", "http://www.paasword.eu/security-policy/use-cases/car-park#CE2");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE2", "http://www.paasword.eu/security-policy/use-cases/car-park#CE1");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE3", "http://www.paasword.eu/security-policy/use-cases/car-park#CE4");
 		/*List<? extends OntResource> ce1Instances = contextExpression1.listInstances().toList();
 		List<? extends OntResource> ce2Instances = contextExpression2.listInstances().toList();
 		assertEquals(1, ce1Instances.size());
 		assertEquals(0, ce2Instances.size());*/
 	}
 
-	private void assertClassSubsumes(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
-		OntClass contextExpression1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
-		OntClass contextExpression2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
-		assertTrue(contextExpression1.listSubClasses().toList().contains(contextExpression2));
+	private void assertSubclassOf(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
+		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
+		assertTrue(class2.listSubClasses().toList().contains(class1));
+	}
+	
+	private void assertClassesEquivalent(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
+		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
+		assertTrue(class1.listEquivalentClasses().toList().contains(class2));
 	}
 	
 	@Test
