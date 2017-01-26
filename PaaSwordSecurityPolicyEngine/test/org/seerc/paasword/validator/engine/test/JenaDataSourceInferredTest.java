@@ -77,13 +77,13 @@ public class JenaDataSourceInferredTest {
 		
 		assertNotNull(jdsi);
 		
-		OntClass contextExpression1Class = jdsi.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#CE1Class").as(OntClass.class);
-		OntClass contextExpression2Class = jdsi.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#CE2Class").as(OntClass.class);
-		List<? extends OntResource> ce1Instances = contextExpression1Class.listInstances().toList();
-		List<? extends OntResource> ce2Instances = contextExpression2Class.listInstances().toList();
-		assertEquals(3, ce1Instances.size());
-		assertEquals(1, ce2Instances.size());
-		assertTrue(contextExpression1Class.listSubClasses().toList().contains(contextExpression2Class));
+		OntClass contextExpression1 = jdsi.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#CE1").as(OntClass.class);
+		OntClass contextExpression2 = jdsi.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#CE2").as(OntClass.class);
+		List<? extends OntResource> ce1Instances = contextExpression1.listInstances().toList();
+		List<? extends OntResource> ce2Instances = contextExpression2.listInstances().toList();
+		assertEquals(1, ce1Instances.size());
+		assertEquals(0, ce2Instances.size());
+		assertTrue(contextExpression1.listSubClasses().toList().contains(contextExpression2));
 	}
 	
 	@Test

@@ -23,20 +23,20 @@
 
 pac:hasParameter a owl:ObjectProperty .
 
-ex1:CE1 a pac:ANDContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours .
+#ex1:CE1 a pac:ANDContextExpression;
+#	pac:hasParameter ex1:EmployeeWorkingHours .
 
-ex1:CE2 a pac:ANDContextExpression;
-	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking .
+#ex1:CE2 a pac:ANDContextExpression;
+#	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking .
 
-ex1:CE1Class a owl:Class ;
+ex1:CE1 a owl:Class ;
 	owl:equivalentClass
 	  [ a owl:Restriction ;
 	    owl:onProperty pac:hasParameter ;
 	    owl:hasValue ex1:EmployeeWorkingHours
 	  ] .
 
-ex1:CE2Class a owl:Class ;
+ex1:CE2 a owl:Class ;
 	owl:equivalentClass
 	  [ owl:intersectionOf ( 
 	  		[a owl:Restriction ;
@@ -46,10 +46,7 @@ ex1:CE2Class a owl:Class ;
 		    owl:onProperty pac:hasParameter ;
 		    owl:hasValue ex1:Parking] 
   		)
-	    
 	  ] .
-
-#ex1:CE2Class rdfs:subClassOf ex1:CE1Class .
 
 # The first two rules are identical. This should fail.
 ex1:ABACRule_1 a pac:ABACRule;
