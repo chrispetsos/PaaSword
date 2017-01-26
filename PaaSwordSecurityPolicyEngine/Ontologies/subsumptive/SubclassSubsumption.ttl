@@ -38,9 +38,15 @@ ex1:CE1Class a owl:Class ;
 
 ex1:CE2Class a owl:Class ;
 	owl:equivalentClass
-	  [ a owl:Restriction ;
-	    owl:onProperty pac:hasParameter ;
-	    owl:hasValue ex1:EmployeeWorkingHours
+	  [ owl:intersectionOf ( 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:EmployeeWorkingHours] 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:Parking] 
+  		)
+	    
 	  ] .
 
 #ex1:CE2Class rdfs:subClassOf ex1:CE1Class .
