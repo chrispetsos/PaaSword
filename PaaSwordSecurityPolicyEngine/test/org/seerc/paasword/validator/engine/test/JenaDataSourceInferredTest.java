@@ -83,7 +83,8 @@ public class JenaDataSourceInferredTest {
 		List<? extends OntResource> ce2Instances = contextExpression2Class.listInstances().toList();
 		assertEquals(3, ce1Instances.size());
 		assertEquals(3, ce2Instances.size());
-		assertTrue(contextExpression1Class.listSubClasses().toList().contains(contextExpression2Class));
+		assertTrue(contextExpression1Class.listEquivalentClasses().toList().contains(contextExpression2Class));
+		//assertTrue(contextExpression1Class.listSubClasses().toList().contains(contextExpression2Class));
 	}
 	
 	@Test
