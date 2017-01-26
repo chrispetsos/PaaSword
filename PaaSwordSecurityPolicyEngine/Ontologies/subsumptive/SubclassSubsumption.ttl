@@ -21,12 +21,14 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-ex1:CE1 rdf:type owl:Class, pac:ANDContextExpression;
+ex1:CE1 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours .
 
-ex1:CE2 rdf:type owl:Class, pac:ANDContextExpression;
+ex1:CE2 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking .
 
+ex1:CE1 a owl:Class .
+ex1:CE2 a owl:Class .
 ex1:CE2 rdfs:subClassOf ex1:CE1 .
 
 # The first two rules are identical. This should fail.
