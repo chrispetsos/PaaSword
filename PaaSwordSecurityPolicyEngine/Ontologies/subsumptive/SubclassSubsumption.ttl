@@ -49,13 +49,15 @@ ex1:CE2 a owl:Class ;
 ex1:CE3 a owl:Class ;
 	owl:equivalentClass
 	  [	
-	  owl:intersectionOf (
-			[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:Athens] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:WorkingHours1] 	   
+	  owl:intersectionOf ( 
+	  		[owl:intersectionOf (
+		  		[a owl:Restriction ;
+			    owl:onProperty pac:hasParameter ;
+			    owl:hasValue ex1:Athens] 
+		  		[a owl:Restriction ;
+			    owl:onProperty pac:hasParameter ;
+			    owl:hasValue ex1:WorkingHours1] 
+		  	)] 
 	  		[a owl:Restriction ;
 		    owl:onProperty pac:refersTo ;
 		    owl:hasValue ex1:Simos] 
