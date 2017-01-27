@@ -89,6 +89,7 @@ public class JenaDataSourceInferredTest {
 		
 		// Rules
 		assertEquivalentClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_1", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_4", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_3");
 		
 		/*List<? extends OntResource> ce1Instances = contextExpression1.listInstances().toList();
 		List<? extends OntResource> ce2Instances = contextExpression2.listInstances().toList();
