@@ -146,6 +146,28 @@ ex1:ABACRule_1 a pac:ABACRule;
 	pac:hasActor ex1:ParkingEmployee;
 	pac:hasContextExpression ex1:expr.
 
+ex1:ABACRule_1 a owl:Class ;
+	owl:equivalentClass
+	  [	
+	  owl:intersectionOf ( 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasControlledObject ;
+	    owl:hasValue ex1:PaymentsTable] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasAuthorisation ;
+	    owl:hasValue pac:positive] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasAction ;
+	    owl:hasValue ex1:Read] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasActor ;
+	    owl:hasValue ex1:ParkingEmployee] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasContextExpression ;
+	    owl:hasValue ex1:expr] 
+  		)
+	  ] .
+
 ex1:PaymentsTable a pcm:Relational.
 
 pac:positive a pac:Authorisation.
@@ -160,6 +182,28 @@ ex1:ABACRule_2 a pac:ABACRule;
 	pac:hasAction ex1:Read;
 	pac:hasActor ex1:ParkingEmployee;
 	pac:hasContextExpression ex1:expr.
+
+ex1:ABACRule_2 a owl:Class ;
+	owl:equivalentClass
+	  [	
+	  owl:intersectionOf ( 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasControlledObject ;
+	    owl:hasValue ex1:PaymentsTable] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasAuthorisation ;
+	    owl:hasValue pac:positive] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasAction ;
+	    owl:hasValue ex1:Read] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasActor ;
+	    owl:hasValue ex1:ParkingEmployee] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasContextExpression ;
+	    owl:hasValue ex1:expr] 
+  		)
+	  ] .
 
 ex1:Write a ppm:DatastorePermission.
 #############################################################################
