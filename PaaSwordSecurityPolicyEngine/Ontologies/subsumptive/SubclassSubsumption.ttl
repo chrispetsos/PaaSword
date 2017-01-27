@@ -261,6 +261,60 @@ owl:hasValue ex1:PaymentsTableColumn]
 		owl:onProperty pac:hasControlledObject ;
 		owl:hasValue ex1:PaymentsTable] .
 		
+ex1:ABACRule_5 a owl:Class ;
+	owl:equivalentClass
+	  [	
+	  owl:intersectionOf ( 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasControlledObject ;
+	    owl:hasValue ex1:PaymentsTable] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasAuthorisation ;
+	    owl:hasValue pac:positive] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasAction ;
+	    owl:hasValue ex1:Read] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasActor ;
+	    owl:hasValue ex1:ParkingEmployee] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasContextExpression ;
+	    owl:hasValue ex1:CE1] 
+  		)
+	  ] .
+
+ex1:ABACRule_6 a owl:Class ;
+	owl:equivalentClass
+	  [	
+	  owl:intersectionOf ( 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasControlledObject ;
+	    owl:hasValue ex1:PaymentsTable] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasAuthorisation ;
+	    owl:hasValue pac:positive] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasAction ;
+	    owl:hasValue ex1:Read] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasActor ;
+	    owl:hasValue ex1:ParkingEmployee] 
+  		[a owl:Restriction ;
+	    owl:onProperty pac:hasContextExpression ;
+	    owl:hasValue ex1:CE2] 
+  		)
+	  ] .
+
+#ex1:CE1 pac:subsumes ex1:CE2 .
+
+[a owl:Restriction ;
+owl:onProperty pac:hasContextExpression ;
+owl:hasValue ex1:CE2] 
+	rdfs:subClassOf
+		[a owl:Restriction ;
+		owl:onProperty pac:hasContextExpression ;
+		owl:hasValue ex1:CE1] .
+		
 #############################################################################
 
 ### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
