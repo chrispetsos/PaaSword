@@ -80,6 +80,11 @@ public class JenaDataSourceInferredTest {
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE2", "http://www.paasword.eu/security-policy/use-cases/car-park#CE1");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE3", "http://www.paasword.eu/security-policy/use-cases/car-park#CE4");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE6");
+		assertEquivalentClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE4", "http://www.paasword.eu/security-policy/use-cases/car-park#CE6");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE3", "http://www.paasword.eu/security-policy/use-cases/car-park#CE6");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE4");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE3");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE6");
 		/*List<? extends OntResource> ce1Instances = contextExpression1.listInstances().toList();
 		List<? extends OntResource> ce2Instances = contextExpression2.listInstances().toList();
 		assertEquals(1, ce1Instances.size());
@@ -92,7 +97,7 @@ public class JenaDataSourceInferredTest {
 		assertTrue(class2.listSubClasses().toList().contains(class1));
 	}
 	
-	private void assertClassesEquivalent(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+	private void assertEquivalentClasses(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
 		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
 		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
 		assertTrue(class1.listEquivalentClasses().toList().contains(class2));

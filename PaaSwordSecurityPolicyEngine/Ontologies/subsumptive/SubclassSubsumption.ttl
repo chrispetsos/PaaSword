@@ -118,8 +118,25 @@ ex1:CE6 a owl:Class ;
   		)
 	  ] .
 
-ex1:Athens pac:subsumes ex1:Faliro . 
-ex1:WorkingHours1 pac:subsumes ex1:WorkingHours2 .
+#ex1:Athens pac:subsumes ex1:Faliro .
+
+[a owl:Restriction ;
+owl:onProperty pac:hasParameter ;
+owl:hasValue ex1:Faliro] 
+	rdfs:subClassOf
+		[a owl:Restriction ;
+		owl:onProperty pac:hasParameter ;
+		owl:hasValue ex1:Athens] .
+	
+#ex1:WorkingHours1 pac:subsumes ex1:WorkingHours2 .
+
+[a owl:Restriction ;
+owl:onProperty pac:hasParameter ;
+owl:hasValue ex1:WorkingHours2] 
+	rdfs:subClassOf
+		[a owl:Restriction ;
+		owl:onProperty pac:hasParameter ;
+		owl:hasValue ex1:WorkingHours1] .
 
 # The first two rules are identical. This should fail.
 ex1:ABACRule_1 a pac:ABACRule;
