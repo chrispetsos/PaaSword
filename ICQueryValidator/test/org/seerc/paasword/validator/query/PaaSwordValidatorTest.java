@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -25,7 +27,6 @@ public class PaaSwordValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		pwdv = new PaaSwordValidator(new FileInputStream(new File("Ontologies/final/policies/Car-Park-Security.ttl")));
 	}
 
 	@After
@@ -33,8 +34,47 @@ public class PaaSwordValidatorTest {
 	}
 
 	@Test
-	public void testValidate() {
+	public void testValidate() throws Exception {
+		pwdv = new PaaSwordValidator(new FileInputStream(new File("Ontologies/final/policies/Car-Park-Security.ttl")));
 		assertNotNull(pwdv);
+		
+		List<QueryValidatorErrors> validationResult = pwdv.validate();
+		assertEquals(2, validationResult.size());
 	}
 
+	@Test
+	public void testAbacRulesFull() throws Exception {
+		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Full.ttl"));
+		
+		pwdv = new PaaSwordValidator(policy);
+		
+		assertEquals(0, pwdv.validate().size());
+	}	
+
+	@Test
+	public void testAbacRulesSimple() throws Exception {
+		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple.ttl"));
+		
+		pwdv = new PaaSwordValidator(policy);
+		
+		assertEquals(0, pwdv.validate().size());
+	}	
+
+	@Test
+	public void testAbacRulesSimpleFailing() throws Exception {
+		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl"));
+		
+		pwdv = new PaaSwordValidator(policy);
+		
+		assertEquals(9, pwdv.validate().size());
+	}	
+
+	@Test
+	public void testSubclassSubsumptionContradiction() throws Exception {
+		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		
+		pwdv = new PaaSwordValidator(policy);
+		
+		assertEquals(2, pwdv.validate().size());
+	}
 }
