@@ -333,6 +333,21 @@ public class AxiomSPARQLTranslatorTest {
 				, queries.get(0).getQuery());
 	}
 
+	@Test
+	public void testHasValueWithOneOf() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/hasValueWithOneOfConstraint.owl"));
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Supervisor>\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#supervises> ?x1\n" + 
+						"      VALUES ?x1 { <http://www.seerc.org/test/pellet-icv#anEmployee> }\n" + 
+						"    }\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0).getQuery());
+	}
 
 	public FileInputStream createFileInputStream(String filePath) {
 		try {
