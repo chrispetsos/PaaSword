@@ -59,6 +59,32 @@ public class QueryValidatorREST {
 		}
 	}
 	
+	/**
+	 * Performs the validation.
+	 * 
+	 * @param data Data under validation in the form of a RESTValidationData object.
+	 * @return A validation report.
+	 */
+	@POST
+	@Path("/validatePolicy")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String validatePolicy(InputStream policy) {
+		try
+		{
+			PaaSwordValidator pwdv = new PaaSwordValidator(policy);
+			List<QueryValidatorErrors> errors = pwdv.validate();
+			
+			String report = gson.toJson(errors);
+			
+			return report;
+		}
+		catch(Exception e)
+		{
+			return e.toString();
+		}
+	}
+	
 	/*
 	 * Generates a validation report.
 	 * TODO: This is quite verbose now. Should be more human-friendly.
