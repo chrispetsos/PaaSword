@@ -21,20 +21,24 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
-#ex1:CE1 a pac:ANDContextExpression;
-#	pac:hasParameter ex1:EmployeeWorkingHours .
+ex1:CE1 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours .
 
-#ex1:CE2 a pac:ANDContextExpression;
-#	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking .
+ex1:CE2 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking .
 
-ex1:CE1 a owl:Class ;
+# The fact that ex1:CE1 is in ex1:CE1Class is inferred by the reasoner.
+#[owl:oneOf (ex1:CE1)] rdfs:subClassOf ex1:CE1Class .
+ex1:CE1Class a owl:Class ;
 	owl:equivalentClass
 	  [ a owl:Restriction ;
 	    owl:onProperty pac:hasParameter ;
 	    owl:hasValue ex1:EmployeeWorkingHours
 	  ] .
 
-ex1:CE2 a owl:Class ;
+# The fact that ex1:CE2 is in ex1:CE2Class is inferred by the reasoner.
+#[owl:oneOf (ex1:CE2)] rdfs:subClassOf ex1:CE2Class .
+ex1:CE2Class a owl:Class ;
 	owl:equivalentClass
 	  [ owl:intersectionOf ( 
 	  		[a owl:Restriction ;
