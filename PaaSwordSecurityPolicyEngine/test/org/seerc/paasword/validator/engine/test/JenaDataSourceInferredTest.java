@@ -86,7 +86,11 @@ public class JenaDataSourceInferredTest {
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE4");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE3");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE6");
-		
+
+		// Complex CEs
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE7", "http://www.paasword.eu/security-policy/use-cases/car-park#CE8");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE9", "http://www.paasword.eu/security-policy/use-cases/car-park#CE10");
+
 		// Rules
 		assertEquivalentClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_1", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2");
 		assertEquivalentClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_3");

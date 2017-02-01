@@ -138,6 +138,75 @@ owl:hasValue ex1:WorkingHours2]
 		owl:onProperty pac:hasParameter ;
 		owl:hasValue ex1:WorkingHours1] .
 
+ex1:CE7 a owl:Class ;
+	owl:equivalentClass
+	  [ owl:intersectionOf ( 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:CE3] 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:CE5] 
+  		)
+	  ] .
+
+ex1:CE8 a owl:Class ;
+	owl:equivalentClass
+	  [ owl:intersectionOf ( 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:CE4] 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:CE6] 
+  		)
+	  ] .
+
+ex1:CE9 a owl:Class ;
+	owl:equivalentClass
+	  [ owl:intersectionOf ( 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:CE3] 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:CE5] 
+  		)
+	  ] .
+
+ex1:CE10 a owl:Class ;
+	owl:equivalentClass
+	  [ owl:unionOf ( 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:CE4] 
+	  		[a owl:Restriction ;
+		    owl:onProperty pac:hasParameter ;
+		    owl:hasValue ex1:CE6] 
+  		)
+	  ] .
+
+#ex1:CE4 pac:subsumes ex1:CE3 .
+
+[a owl:Restriction ;
+owl:onProperty pac:hasParameter ;
+owl:hasValue ex1:CE3] 
+	rdfs:subClassOf
+		[a owl:Restriction ;
+		owl:onProperty pac:hasParameter ;
+		owl:hasValue ex1:CE4] .
+
+#ex1:CE6 pac:subsumes ex1:CE5 .
+
+[a owl:Restriction ;
+owl:onProperty pac:hasParameter ;
+owl:hasValue ex1:CE5] 
+	rdfs:subClassOf
+		[a owl:Restriction ;
+		owl:onProperty pac:hasParameter ;
+		owl:hasValue ex1:CE6] .
+
+
 # The first two rules are identical. This should fail.
 ex1:ABACRule_1 a pac:ABACRule;
 	pac:hasControlledObject ex1:PaymentsTable;
