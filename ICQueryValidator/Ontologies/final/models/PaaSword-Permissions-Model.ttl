@@ -1,0 +1,69 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
+@prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
+@prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix usdl-core: <http://www.linked-usdl.org/ns/usdl-core#>.
+@prefix usdl-business-roles: <http://www.linked-usdl.org/ns/usdl-business-roles#>.
+@prefix usdl-sec: <http://www.linked-usdl.org/ns/usdl-sec#>.
+@prefix orgX: <http://www.paasword.eu/security-policy/orgX#>. 
+@prefix gr: <http://purl.org/goodrelations/v1#>. 
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+#
+# PaaSword Permissions Model (version 2016-05-20)
+# Some statements have been transferred to the constraints' ontology.
+#
+schema:Action a rdfs:Class .
+ppm:DDLPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:Permission ;
+  rdfs:comment "This class reveals the data definition language (DDL) related actions on specific objects." .
+
+ppm:DataPermission
+  a rdfs:Class ;
+  rdfs:subClassOf schema:Action, ppm:Permission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a data entity." .
+
+ppm:DatastoreDDLPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DDLPermission .
+
+ppm:DatastorePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a data entity in a datastore." .
+
+ppm:FilePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a file." .
+
+ppm:FileSystemStructurePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DDLPermission .
+
+ppm:Permission
+  a rdfs:Class ;
+  rdfs:comment "This class refers to allowed actions of a subject upon an object." .
+
+ppm:VolumePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission .
+
+ppm:WebEndpointPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any Web endpoint action allowed by a direct agent upon a data entity in a datastore." .
+#############################################################################

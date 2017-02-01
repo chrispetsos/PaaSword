@@ -2,5 +2,6 @@
     <wb-module deploy-name="ICQueryValidator">
         <wb-resource deploy-path="/" source-path="/src"/>
         <wb-resource deploy-path="/" source-path="/test"/>
+        <wb-resource deploy-path="/" source-path="/Ontologies/final"/>
     </wb-module>
 </project-modules>
