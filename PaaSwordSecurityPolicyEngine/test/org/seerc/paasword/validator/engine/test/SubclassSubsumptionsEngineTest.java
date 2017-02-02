@@ -67,6 +67,7 @@ public class SubclassSubsumptionsEngineTest {
 		// Complex CEs
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE7", "http://www.paasword.eu/security-policy/use-cases/car-park#CE8");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE9", "http://www.paasword.eu/security-policy/use-cases/car-park#CE10");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE12", "http://www.paasword.eu/security-policy/use-cases/car-park#CE11");
 
 		// Rules
 		assertEquivalentClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_1", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2");

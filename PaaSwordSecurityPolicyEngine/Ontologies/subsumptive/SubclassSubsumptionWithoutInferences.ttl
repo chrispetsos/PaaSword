@@ -259,6 +259,32 @@ ex1:CE10 a pac:ORContextExpression;
 #		owl:onProperty pac:hasParameter ;
 #		owl:hasValue ex1:CE6] .
 
+ex1:CE11 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:CE13 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:CE12 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours3, ex1:Parking1 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:CE13 a pac:ORContextExpression;
+	pac:hasParameter ex1:Parking1, ex1:Parking2 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
+ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval.
+ex1:EmployeeWorkingHours3 a pcm:DateTimeInterval.
+
+ex1:EmployeeWorkingHours pac:subsumes ex1:EmployeeWorkingHours2 .
+ex1:EmployeeWorkingHours2 pac:subsumes ex1:EmployeeWorkingHours3 .
+ex1:PaymentsTable pac:subsumes ex1:DepartmentAPaymentsTable .
+ex1:ParkingEmployee pac:subsumes ex1:ParkingSectionAEmployee .
+ex1:ParkingSectionAEmployee pac:subsumes ex1:ParkingSectionAArea1Employee .
+
+ex1:Parking1 a pcm:Point.
+
+ex1:Parking2 a pcm:Point.
+
 
 # The first two rules are identical. This should fail.
 
