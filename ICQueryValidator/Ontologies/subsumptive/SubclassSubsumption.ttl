@@ -87,8 +87,12 @@ ex1:Parking1 a pcm:Point.
 
 ex1:Parking2 a pcm:Point.
 
+pac:contradicts a owl:ObjectProperty, owl:TransitiveProperty .
+
+# alignment to otp namespace for context expressions
 otp:TheoremProvingBaseClass a owl:Class .
 otp:TheoremProvingParameterProperty a owl:ObjectProperty .
+	otp:TheoremProvingReferenceProperty a owl:ObjectProperty .
 otp:subsumes a owl:ObjectProperty, owl:TransitiveProperty .
 otp:ANDTheoremProvingClass a owl:Class .
 otp:ORTheoremProvingClass a owl:Class .
@@ -97,24 +101,21 @@ otp:NOTTheoremProvingClass a owl:Class .
 
 pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
 pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+	pac:refersTo rdfs:subPropertyOf otp:TheoremProvingReferenceProperty .
 pac:subsumes owl:equivalentProperty otp:subsumes .
 pac:ANDContextExpression rdfs:subClassOf otp:ANDTheoremProvingClass .
 pac:ORContextExpression rdfs:subClassOf otp:ORTheoremProvingClass .
 pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .
 pac:NOTContextExpression rdfs:subClassOf otp:NOTheoremProvingClass .
 
-pac:contradicts a owl:ObjectProperty, owl:TransitiveProperty .
-
+# alignment to otp namespace for rules
 #pac:ABACRule rdfs:subClassOf otp:TheoremProvingBaseClass .
 #pac:hasControlledObject rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
 #pac:hasAuthorisation rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
 #pac:hasAction rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
 #pac:hasActor rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
 #pac:hasContextExpression rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
-#pac:subsumes owl:equivalentProperty otp:subsumes .
 #pac:ABACRule rdfs:subClassOf otp:ANDTheoremProvingClass .
-
-
 
 
 
