@@ -55,7 +55,7 @@ public class SubclassSubsumptionsEngineTest {
 		sse.enhanceModel();
 
 		// Context Expressions
-		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE2Class", "http://www.paasword.eu/security-policy/use-cases/car-park#CE1Class");
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE2", "http://www.paasword.eu/security-policy/use-cases/car-park#CE1");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE3", "http://www.paasword.eu/security-policy/use-cases/car-park#CE4");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE6");
 		assertEquivalentClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE4", "http://www.paasword.eu/security-policy/use-cases/car-park#CE6");

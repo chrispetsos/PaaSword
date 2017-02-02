@@ -20,6 +20,7 @@
 @prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
 
 ex1:CE1 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours .
@@ -29,26 +30,43 @@ ex1:CE2 a pac:ANDContextExpression;
 
 # The fact that ex1:CE1 is in ex1:CE1Class is inferred by the reasoner.
 #[owl:oneOf (ex1:CE1)] rdfs:subClassOf ex1:CE1Class .
-ex1:CE1Class a owl:Class ;
-	owl:equivalentClass
-	  [ a owl:Restriction ;
-	    owl:onProperty pac:hasParameter ;
-	    owl:hasValue ex1:EmployeeWorkingHours
-	  ] .
+#ex1:CE1Class a owl:Class ;
+#	owl:equivalentClass
+#	  [ a owl:Restriction ;
+#	    owl:onProperty pac:hasParameter ;
+#	    owl:hasValue ex1:EmployeeWorkingHours
+#	  ] .
 
 # The fact that ex1:CE2 is in ex1:CE2Class is inferred by the reasoner.
 #[owl:oneOf (ex1:CE2)] rdfs:subClassOf ex1:CE2Class .
-ex1:CE2Class a owl:Class ;
-	owl:equivalentClass
-	  [ owl:intersectionOf ( 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:EmployeeWorkingHours] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:Parking] 
-  		)
-	  ] .
+#ex1:CE2Class a owl:Class ;
+#	owl:equivalentClass
+#	  [ owl:intersectionOf ( 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:EmployeeWorkingHours] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:Parking] 
+#  		)
+#	  ] .
+
+# alignment to otp namespace
+otp:TheoremProvingBaseClass a owl:Class .
+otp:TheoremProvingParameterProperty a owl:ObjectProperty .
+otp:subsumes a owl:ObjectProperty, owl:TransitiveProperty .
+otp:ANDTheoremProvingClass a owl:Class .
+otp:ORTheoremProvingClass a owl:Class .
+otp:XORTheoremProvingClass a owl:Class .
+otp:NOTTheoremProvingClass a owl:Class .
+
+pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:subsumes owl:equivalentProperty otp:subsumes .
+pac:ANDContextExpression rdfs:subClassOf otp:ANDTheoremProvingClass .
+pac:ORContextExpression rdfs:subClassOf otp:ORTheoremProvingClass .
+pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .
+pac:NOTContextExpression rdfs:subClassOf otp:NOTheoremProvingClass .
 
 ex1:CE3 a owl:Class ;
 	owl:equivalentClass
