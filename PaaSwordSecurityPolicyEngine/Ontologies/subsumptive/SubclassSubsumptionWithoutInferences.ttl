@@ -62,47 +62,56 @@ otp:NOTTheoremProvingClass a owl:Class .
 
 pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
 pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:refersTo rdfs:subPropertyOf otp:TheoremProvingReferenceProperty .
 pac:subsumes owl:equivalentProperty otp:subsumes .
 pac:ANDContextExpression rdfs:subClassOf otp:ANDTheoremProvingClass .
 pac:ORContextExpression rdfs:subClassOf otp:ORTheoremProvingClass .
 pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .
 pac:NOTContextExpression rdfs:subClassOf otp:NOTheoremProvingClass .
 
-ex1:CE3 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-	  		[owl:intersectionOf (
-		  		[a owl:Restriction ;
-			    owl:onProperty pac:hasParameter ;
-			    owl:hasValue ex1:Athens] 
-		  		[a owl:Restriction ;
-			    owl:onProperty pac:hasParameter ;
-			    owl:hasValue ex1:WorkingHours1] 
-		  	)] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:refersTo ;
-		    owl:hasValue ex1:Simos] 
-  		)
-	  ] .
+ex1:CE3 a pac:ANDContextExpression;
+	pac:hasParameter ex1:Athens, ex1:WorkingHours1 ;
+	pac:refersTo ex1:Simos .
+	
+#ex1:CE3 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#	  		[owl:intersectionOf (
+#		  		[a owl:Restriction ;
+#			    owl:onProperty pac:hasParameter ;
+#			    owl:hasValue ex1:Athens] 
+#		  		[a owl:Restriction ;
+#			    owl:onProperty pac:hasParameter ;
+#			    owl:hasValue ex1:WorkingHours1] 
+#		  	)] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:refersTo ;
+#		    owl:hasValue ex1:Simos] 
+#  		)
+#	  ] .
 
-ex1:CE4 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-	  		[owl:unionOf (
-		  		[a owl:Restriction ;
-			    owl:onProperty pac:hasParameter ;
-			    owl:hasValue ex1:Athens] 
-		  		[a owl:Restriction ;
-			    owl:onProperty pac:hasParameter ;
-			    owl:hasValue ex1:WorkingHours1] 
-		  	)] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:refersTo ;
-		    owl:hasValue ex1:Simos] 
-  		)
-	  ] .
+ex1:CE4 a pac:ORContextExpression;
+	pac:hasParameter ex1:Athens, ex1:WorkingHours1 ;
+	pac:refersTo ex1:Simos .
+	
+#ex1:CE4 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#	  		[owl:unionOf (
+#		  		[a owl:Restriction ;
+#			    owl:onProperty pac:hasParameter ;
+#			    owl:hasValue ex1:Athens] 
+#		  		[a owl:Restriction ;
+#			    owl:onProperty pac:hasParameter ;
+#			    owl:hasValue ex1:WorkingHours1] 
+#		  	)] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:refersTo ;
+#		    owl:hasValue ex1:Simos] 
+# 		)
+#	  ] .
 
 ex1:CE5 a owl:Class ;
 	owl:equivalentClass
