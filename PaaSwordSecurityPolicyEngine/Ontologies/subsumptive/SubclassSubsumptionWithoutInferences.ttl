@@ -113,41 +113,50 @@ ex1:CE4 a pac:ORContextExpression;
 # 		)
 #	  ] .
 
-ex1:CE5 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-	  		[owl:intersectionOf (
-		  		[a owl:Restriction ;
-			    owl:onProperty pac:hasParameter ;
-			    owl:hasValue ex1:Faliro] 
-		  		[a owl:Restriction ;
-			    owl:onProperty pac:hasParameter ;
-			    owl:hasValue ex1:WorkingHours2] 
-		  	)] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:refersTo ;
-		    owl:hasValue ex1:Simos] 
-  		)
-	  ] .
+ex1:CE5 a pac:ANDContextExpression;
+	pac:hasParameter ex1:Faliro, ex1:WorkingHours2 ;
+	pac:refersTo ex1:Simos .
 
-ex1:CE6 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-	  		[owl:unionOf (
-		  		[a owl:Restriction ;
-			    owl:onProperty pac:hasParameter ;
-			    owl:hasValue ex1:Athens] 
-		  		[a owl:Restriction ;
-			    owl:onProperty pac:hasParameter ;
-			    owl:hasValue ex1:WorkingHours1] 
-		  	)] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:refersTo ;
-		    owl:hasValue ex1:Simos] 
-  		)
-	  ] .
+#ex1:CE5 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#	  		[owl:intersectionOf (
+#		  		[a owl:Restriction ;
+#			    owl:onProperty pac:hasParameter ;
+#			    owl:hasValue ex1:Faliro] 
+#		  		[a owl:Restriction ;
+#			    owl:onProperty pac:hasParameter ;
+#			    owl:hasValue ex1:WorkingHours2] 
+#		  	)] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:refersTo ;
+#		    owl:hasValue ex1:Simos] 
+# 		)
+#	  ] .
+
+ex1:CE6 a pac:ORContextExpression;
+	pac:hasParameter ex1:Athens, ex1:WorkingHours1 ;
+	pac:refersTo ex1:Simos .
+	
+
+#ex1:CE6 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#	  		[owl:unionOf (
+#		  		[a owl:Restriction ;
+#			    owl:onProperty pac:hasParameter ;
+#			    owl:hasValue ex1:Athens] 
+#		  		[a owl:Restriction ;
+#			    owl:onProperty pac:hasParameter ;
+#			    owl:hasValue ex1:WorkingHours1] 
+#		  	)] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:refersTo ;
+#		    owl:hasValue ex1:Simos] 
+# 		)
+#	  ] .
 
 #ex1:Athens pac:subsumes ex1:Faliro .
 
