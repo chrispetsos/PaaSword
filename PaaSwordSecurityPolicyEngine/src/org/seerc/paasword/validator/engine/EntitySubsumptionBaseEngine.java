@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.ResourceFactory;
 
 /**
  * Base abstract class for all classes that want to add subsumption facilities to a 
@@ -45,6 +47,17 @@ public abstract class EntitySubsumptionBaseEngine {
 		}
 	}
 
+	/*
+	 * Answers whether resource1 subsumes resource2.
+	 */
+	protected boolean resourceSubsumes(Resource resource1, Resource resource2) {
+		return resource1.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
+				ResourceFactory.createStatement(resource1, 
+				ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
+				resource2)
+				);
+	}
+	
 	protected abstract boolean entitySubsumes(String entity1Uri, String entity2Uri);
 
 	protected abstract void addSubsumption(String entity1Uri, String entity2Uri);

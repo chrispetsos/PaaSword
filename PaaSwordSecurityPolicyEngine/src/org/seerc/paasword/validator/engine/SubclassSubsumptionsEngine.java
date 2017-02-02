@@ -5,10 +5,8 @@ import java.util.List;
 
 import com.hp.hpl.jena.ontology.HasValueRestriction;
 import com.hp.hpl.jena.ontology.Individual;
-import com.hp.hpl.jena.ontology.IntersectionClass;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.UnionClass;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFList;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -25,6 +23,9 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		// create the translations of statements from the "otp" namespace 
 		// to restriction statements
 		this.generateRestrictionStatements();
+		
+		// create subclass statement for entities that are connected with "otp:subsumes"
+		this.createSubclassStatements();
 	}
 
 	private void generateRestrictionStatements()
@@ -130,15 +131,57 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		return ((OntModel)this.jdsi.getModel()).createIntersectionClass(null, referenceIntersectionRDFList);
 	}
 
-
-	@Override
-	protected boolean entitySubsumes(String entity1Uri, String entity2Uri) {
-		return false;
+	/*
+	 * This methods creates subsumptions for entities whose subsumption has been
+	 * denoted by using the "otp:subsumes" property.
+	 */
+	private void createSubclassStatements()
+	{
+		StmtIterator subsumesStatements = ((OntModel)this.jdsi.getModel()).listStatements((Resource)null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), (RDFNode)null);
+		while(subsumesStatements.hasNext())
+		{
+			Statement subsumption = subsumesStatements.next();
+			this.addSubsumption(subsumption.getSubject().getURI(), subsumption.getObject().asResource().getURI());
+		}
 	}
 
+	/*
+	 * return true if either entity1Uri resourceSubsumes entity2Uri OR
+	 * if entity2Uri is a subclass of entity1Uri
+	 * 
+	 * Note that this is triggered in super-class only for individuals of 
+	 * "otp:TheoremProvingBaseClass", not for paramteres; thus the reason for
+	 * createSubclassStatements().
+	 */
 	@Override
-	protected void addSubsumption(String entity1Uri, String entity2Uri) {
-		
+	protected boolean entitySubsumes(String entity1Uri, String entity2Uri)
+	{
+		Resource resource1 = ((OntModel)this.jdsi.getModel()).createResource(entity1Uri);
+		Resource resource2 = ((OntModel)this.jdsi.getModel()).createResource(entity2Uri);
+		return 	this.resourceSubsumes(resource1, resource2)
+			||	resource1.as(OntClass.class).listSubClasses().toList().contains(resource2);
+	}
+
+	/*
+	 * Adds a subclass statement of the form,
+	 * 
+	 * 	[a owl:Restriction ;
+		owl:onProperty pac:hasParameter ;
+		owl:hasValue entity2Uri] 
+			rdfs:subClassOf
+				[a owl:Restriction ;
+				owl:onProperty pac:hasParameter ;
+				owl:hasValue entity1Uri] .
+	 * 
+	 * (non-Javadoc)
+	 * @see org.seerc.paasword.validator.engine.EntitySubsumptionBaseEngine#addSubsumption(java.lang.String, java.lang.String)
+	 */
+	@Override
+	protected void addSubsumption(String entity1Uri, String entity2Uri)
+	{
+		HasValueRestriction subClassHasValueRestriction = ((OntModel)this.jdsi.getModel()).createHasValueRestriction(null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), ((OntModel)this.jdsi.getModel()).createResource(entity2Uri));
+		HasValueRestriction superClassHasValueRestriction = ((OntModel)this.jdsi.getModel()).createHasValueRestriction(null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), ((OntModel)this.jdsi.getModel()).createResource(entity1Uri));
+		subClassHasValueRestriction.addSuperClass(superClassHasValueRestriction);
 	}
 
 }

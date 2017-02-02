@@ -345,17 +345,6 @@ public class TautologyChecker extends EntitySubsumptionBaseEngine {
 	}
 
 	/*
-	 * Answers whether resource1 subsumes resource2.
-	 */
-	private boolean resourceSubsumes(Resource resource1, Resource resource2) {
-		return resource1.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI())).toList().contains(
-				ResourceFactory.createStatement(resource1, 
-				ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
-				resource2)
-				);
-	}
-
-	/*
 	 * Answers whether one entity subsumes another using a tautology checker. 
 	 * 
 	 * (non-Javadoc)
