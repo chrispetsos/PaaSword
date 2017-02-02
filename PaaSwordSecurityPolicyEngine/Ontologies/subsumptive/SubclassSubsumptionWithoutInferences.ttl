@@ -51,7 +51,7 @@ ex1:CE2 a pac:ANDContextExpression;
 #  		)
 #	  ] .
 
-# alignment to otp namespace
+# alignment to otp namespace for context expressions
 otp:TheoremProvingBaseClass a owl:Class .
 otp:TheoremProvingParameterProperty a owl:ObjectProperty .
 otp:subsumes a owl:ObjectProperty, owl:TransitiveProperty .
@@ -178,76 +178,98 @@ ex1:WorkingHours1 pac:subsumes ex1:WorkingHours2 .
 #		owl:onProperty pac:hasParameter ;
 #		owl:hasValue ex1:WorkingHours1] .
 
-ex1:CE7 a owl:Class ;
-	owl:equivalentClass
-	  [ owl:intersectionOf ( 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:CE3] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:CE5] 
-  		)
-	  ] .
+ex1:CE7 a pac:ANDContextExpression;
+	pac:hasParameter ex1:CE3, ex1:CE5 .
 
-ex1:CE8 a owl:Class ;
-	owl:equivalentClass
-	  [ owl:intersectionOf ( 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:CE4] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:CE6] 
-  		)
-	  ] .
+#ex1:CE7 a owl:Class ;
+#	owl:equivalentClass
+#	  [ owl:intersectionOf ( 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:CE3] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:CE5] 
+# 		)
+#	  ] .
 
-ex1:CE9 a owl:Class ;
-	owl:equivalentClass
-	  [ owl:intersectionOf ( 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:CE3] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:CE5] 
-  		)
-	  ] .
+ex1:CE8 a pac:ANDContextExpression;
+	pac:hasParameter ex1:CE4, ex1:CE6 .
 
-ex1:CE10 a owl:Class ;
-	owl:equivalentClass
-	  [ owl:unionOf ( 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:CE4] 
-	  		[a owl:Restriction ;
-		    owl:onProperty pac:hasParameter ;
-		    owl:hasValue ex1:CE6] 
-  		)
-	  ] .
+#ex1:CE8 a owl:Class ;
+#	owl:equivalentClass
+#	  [ owl:intersectionOf ( 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:CE4] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:CE6] 
+# 		)
+#	  ] .
+
+ex1:CE9 a pac:ANDContextExpression;
+	pac:hasParameter ex1:CE3, ex1:CE5 .
+
+#ex1:CE9 a owl:Class ;
+#	owl:equivalentClass
+#	  [ owl:intersectionOf ( 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:CE3] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:CE5] 
+# 		)
+#	  ] .
+
+ex1:CE10 a pac:ORContextExpression;
+	pac:hasParameter ex1:CE4, ex1:CE6 .
+
+#ex1:CE10 a owl:Class ;
+#	owl:equivalentClass
+#	  [ owl:unionOf ( 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:CE4] 
+#	  		[a owl:Restriction ;
+#		    owl:onProperty pac:hasParameter ;
+#		    owl:hasValue ex1:CE6] 
+# 		)
+#	  ] .
 
 #ex1:CE4 pac:subsumes ex1:CE3 .
 
-[a owl:Restriction ;
-owl:onProperty pac:hasParameter ;
-owl:hasValue ex1:CE3] 
-	rdfs:subClassOf
-		[a owl:Restriction ;
-		owl:onProperty pac:hasParameter ;
-		owl:hasValue ex1:CE4] .
+#[a owl:Restriction ;
+#owl:onProperty pac:hasParameter ;
+#owl:hasValue ex1:CE3] 
+#	rdfs:subClassOf
+#		[a owl:Restriction ;
+#		owl:onProperty pac:hasParameter ;
+#		owl:hasValue ex1:CE4] .
 
 #ex1:CE6 pac:subsumes ex1:CE5 .
 
-[a owl:Restriction ;
-owl:onProperty pac:hasParameter ;
-owl:hasValue ex1:CE5] 
-	rdfs:subClassOf
-		[a owl:Restriction ;
-		owl:onProperty pac:hasParameter ;
-		owl:hasValue ex1:CE6] .
+#[a owl:Restriction ;
+#owl:onProperty pac:hasParameter ;
+#owl:hasValue ex1:CE5] 
+#	rdfs:subClassOf
+#		[a owl:Restriction ;
+#		owl:onProperty pac:hasParameter ;
+#		owl:hasValue ex1:CE6] .
 
 
 # The first two rules are identical. This should fail.
+
+# alignment to otp namespace for rules
+pac:ABACRule rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:hasControlledObject rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasAuthorisation rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasAction rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasActor rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasContextExpression rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:ABACRule rdfs:subClassOf otp:ANDTheoremProvingClass .
+
 ex1:ABACRule_1 a pac:ABACRule;
 	pac:hasControlledObject ex1:PaymentsTable;
 	pac:hasAuthorisation pac:positive;
@@ -255,27 +277,27 @@ ex1:ABACRule_1 a pac:ABACRule;
 	pac:hasActor ex1:ParkingEmployee;
 	pac:hasContextExpression ex1:expr.
 
-ex1:ABACRule_1 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasControlledObject ;
-	    owl:hasValue ex1:PaymentsTable] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAuthorisation ;
-	    owl:hasValue pac:positive] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAction ;
-	    owl:hasValue ex1:Read] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasActor ;
-	    owl:hasValue ex1:ParkingEmployee] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasContextExpression ;
-	    owl:hasValue ex1:expr] 
-  		)
-	  ] .
+#ex1:ABACRule_1 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasControlledObject ;
+#	    owl:hasValue ex1:PaymentsTable] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAuthorisation ;
+#	    owl:hasValue pac:positive] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAction ;
+#	    owl:hasValue ex1:Read] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasActor ;
+#	    owl:hasValue ex1:ParkingEmployee] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasContextExpression ;
+#	    owl:hasValue ex1:expr] 
+#  		)
+#	  ] .
 
 ex1:PaymentsTable a pcm:Relational.
 
@@ -292,137 +314,165 @@ ex1:ABACRule_2 a pac:ABACRule;
 	pac:hasActor ex1:ParkingEmployee;
 	pac:hasContextExpression ex1:expr.
 
-ex1:ABACRule_2 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasControlledObject ;
-	    owl:hasValue ex1:PaymentsTable] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAuthorisation ;
-	    owl:hasValue pac:positive] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAction ;
-	    owl:hasValue ex1:Read] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasActor ;
-	    owl:hasValue ex1:ParkingEmployee] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasContextExpression ;
-	    owl:hasValue ex1:expr] 
-  		)
-	  ] .
+#ex1:ABACRule_2 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasControlledObject ;
+#	    owl:hasValue ex1:PaymentsTable] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAuthorisation ;
+#	    owl:hasValue pac:positive] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAction ;
+#	    owl:hasValue ex1:Read] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasActor ;
+#	    owl:hasValue ex1:ParkingEmployee] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasContextExpression ;
+#	    owl:hasValue ex1:expr] 
+#  		)
+#	  ] .
 
 ex1:Write a ppm:DatastorePermission.
 
-ex1:ABACRule_3 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasControlledObject ;
-	    owl:hasValue ex1:PaymentsTable] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAuthorisation ;
-	    owl:hasValue pac:positive] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAction ;
-	    owl:hasValue ex1:Read] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasActor ;
-	    owl:hasValue ex1:ParkingEmployee] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasContextExpression ;
-	    owl:hasValue ex1:expr] 
-  		)
-	  ] .
+ex1:ABACRule_3 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr.
 
-ex1:ABACRule_4 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasControlledObject ;
-	    owl:hasValue ex1:PaymentsTableColumn] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAuthorisation ;
-	    owl:hasValue pac:positive] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAction ;
-	    owl:hasValue ex1:Read] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasActor ;
-	    owl:hasValue ex1:ParkingEmployee] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasContextExpression ;
-	    owl:hasValue ex1:expr] 
-  		)
-	  ] .
+#ex1:ABACRule_3 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasControlledObject ;
+#	    owl:hasValue ex1:PaymentsTable] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAuthorisation ;
+#	    owl:hasValue pac:positive] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAction ;
+#	    owl:hasValue ex1:Read] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasActor ;
+#	    owl:hasValue ex1:ParkingEmployee] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasContextExpression ;
+#	    owl:hasValue ex1:expr] 
+#  		)
+#	  ] .
 
-#ex1:PaymentsTable pac:subsumes ex1:PaymentsTableColumn .
+ex1:ABACRule_4 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTableColumn;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr.
 
-[a owl:Restriction ;
-owl:onProperty pac:hasControlledObject ;
-owl:hasValue ex1:PaymentsTableColumn] 
-	rdfs:subClassOf
-		[a owl:Restriction ;
-		owl:onProperty pac:hasControlledObject ;
-		owl:hasValue ex1:PaymentsTable] .
+#ex1:ABACRule_4 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasControlledObject ;
+#	    owl:hasValue ex1:PaymentsTableColumn] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAuthorisation ;
+#	    owl:hasValue pac:positive] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAction ;
+#	    owl:hasValue ex1:Read] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasActor ;
+#	    owl:hasValue ex1:ParkingEmployee] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasContextExpression ;
+#	    owl:hasValue ex1:expr] 
+#  		)
+#	  ] .
+
+ex1:PaymentsTable pac:subsumes ex1:PaymentsTableColumn .
+
+#[a owl:Restriction ;
+#owl:onProperty pac:hasControlledObject ;
+#owl:hasValue ex1:PaymentsTableColumn] 
+#	rdfs:subClassOf
+#		[a owl:Restriction ;
+#		owl:onProperty pac:hasControlledObject ;
+#		owl:hasValue ex1:PaymentsTable] .
 		
-ex1:ABACRule_5 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasControlledObject ;
-	    owl:hasValue ex1:PaymentsTable] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAuthorisation ;
-	    owl:hasValue pac:positive] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAction ;
-	    owl:hasValue ex1:Read] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasActor ;
-	    owl:hasValue ex1:ParkingEmployee] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasContextExpression ;
-	    owl:hasValue ex1:CE1] 
-  		)
-	  ] .
+ex1:ABACRule_5 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:CE1.
 
-ex1:ABACRule_6 a owl:Class ;
-	owl:equivalentClass
-	  [	
-	  owl:intersectionOf ( 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasControlledObject ;
-	    owl:hasValue ex1:PaymentsTable] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAuthorisation ;
-	    owl:hasValue pac:positive] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasAction ;
-	    owl:hasValue ex1:Read] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasActor ;
-	    owl:hasValue ex1:ParkingEmployee] 
-  		[a owl:Restriction ;
-	    owl:onProperty pac:hasContextExpression ;
-	    owl:hasValue ex1:CE2] 
-  		)
-	  ] .
+#ex1:ABACRule_5 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasControlledObject ;
+#	    owl:hasValue ex1:PaymentsTable] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAuthorisation ;
+#	    owl:hasValue pac:positive] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAction ;
+#	    owl:hasValue ex1:Read] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasActor ;
+#	    owl:hasValue ex1:ParkingEmployee] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasContextExpression ;
+#	    owl:hasValue ex1:CE1] 
+#  		)
+#	  ] .
+
+ex1:ABACRule_6 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:CE2.
+
+#ex1:ABACRule_6 a owl:Class ;
+#	owl:equivalentClass
+#	  [	
+#	  owl:intersectionOf ( 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasControlledObject ;
+#	    owl:hasValue ex1:PaymentsTable] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAuthorisation ;
+#	    owl:hasValue pac:positive] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasAction ;
+#	    owl:hasValue ex1:Read] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasActor ;
+#	    owl:hasValue ex1:ParkingEmployee] 
+#  		[a owl:Restriction ;
+#	    owl:onProperty pac:hasContextExpression ;
+#	    owl:hasValue ex1:CE2] 
+#  		)
+#	  ] .
 
 #ex1:CE1 pac:subsumes ex1:CE2 .
 
-[a owl:Restriction ;
-owl:onProperty pac:hasContextExpression ;
-owl:hasValue ex1:CE2] 
-	rdfs:subClassOf
-		[a owl:Restriction ;
-		owl:onProperty pac:hasContextExpression ;
-		owl:hasValue ex1:CE1] .
+#[a owl:Restriction ;
+#owl:onProperty pac:hasContextExpression ;
+#owl:hasValue ex1:CE2] 
+#	rdfs:subClassOf
+#		[a owl:Restriction ;
+#		owl:onProperty pac:hasContextExpression ;
+#		owl:hasValue ex1:CE1] .
 		
 #############################################################################
 
