@@ -54,6 +54,7 @@ ex1:CE2 a pac:ANDContextExpression;
 # alignment to otp namespace for context expressions
 otp:TheoremProvingBaseClass a owl:Class .
 otp:TheoremProvingParameterProperty a owl:ObjectProperty .
+otp:TheoremProvingReferenceProperty a owl:ObjectProperty .
 otp:subsumes a owl:ObjectProperty, owl:TransitiveProperty .
 otp:ANDTheoremProvingClass a owl:Class .
 otp:ORTheoremProvingClass a owl:Class .
