@@ -11,11 +11,11 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 
+import org.seerc.paasword.validator.engine.EntitySubsumptionBaseEngine;
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.snim2.checker.test.CheckerTestHelper;
 
 import com.hp.hpl.jena.ontology.Individual;
-import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.AnonId;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFVisitor;
@@ -25,17 +25,15 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 /**
- * This class takes a JenaDataSourceInferred and checks for tautologies inside
- * its ontologies, getting instructed by the classes in the "otp" namespace.
+ * This class extends the EntitySubsumptionBaseEngine absrtact class and checks for tautologies inside
+ * its data source's ontologies, getting instructed by the classes in the "otp" namespace.
  * Having found the tautologies it can infer which OWL entities subsume others.
  * 
  * @author Chris Petsos
  *
  */
-public class TautologyChecker {
+public class TautologyChecker extends EntitySubsumptionBaseEngine {
 
-	// The data source
-	private JenaDataSourceInferred jdsi;
 	// The encapsulated checker that asserts tautologies
 	private CheckerTestHelper checker;
 	// A Map from pairs of resource/baseReference to variables.
@@ -54,7 +52,7 @@ public class TautologyChecker {
 	 */
 	public TautologyChecker(JenaDataSourceInferred jdsi)
 	{
-		this.jdsi = jdsi;
+		super(jdsi);
 		checker = new CheckerTestHelper();
 		resourceVariableMap = new HashMap<SimpleEntry<Resource, Resource>, String>();
 		resourceReferenceMap = new HashMap<Resource, Resource>();
@@ -356,33 +354,31 @@ public class TautologyChecker {
 				resource2)
 				);
 	}
-	
+
 	/*
-	 * Enhances the current data source's model by adding the subsumptions that the tautology checker has found.
+	 * Answers whether one entity subsumes another using a tautology checker. 
+	 * 
+	 * (non-Javadoc)
+	 * @see org.seerc.paasword.validator.engine.EntitySubsumptionBaseEngine#entitySubsumes(java.lang.String, java.lang.String)
 	 */
-	public void enhanceModel()
-	{
-		// Get all the individuals of the otp:TheoremProvingBaseClass.
-		List<Individual> individualsIterator = ((OntModel)this.jdsi.getModel()).listIndividuals(this.jdsi.createResourceFromUri("otp:TheoremProvingBaseClass")).toList();
-		
-		// Iterate over them pair-wise. 
-		for(Individual i1:individualsIterator)
-		{
-			for(Individual i2:individualsIterator)
-			{
-				// Is the one a tautology of the other?
-				boolean isT = this.isTautology(i1.getURI(), i2.getURI());
-				if(isT)
-				{
-					// Add the subsumption inference in the model.
-					this.jdsi.getModel().add(
-							ResourceFactory.createResource(jdsi.createResourceFromUri(i1.getURI()).getURI()), 
-							ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
-							ResourceFactory.createResource(jdsi.createResourceFromUri(i2.getURI()).getURI()) 
-							);
-				}
-			}
-		}
+	@Override
+	protected boolean entitySubsumes(String entity1Uri, String entity2Uri) {
+		return this.isTautology(entity1Uri, entity2Uri);
+	}
+
+	/*
+	 * Adds the subsumption in the model using the "otp:subsumes" property
+	 * 
+	 * (non-Javadoc)
+	 * @see org.seerc.paasword.validator.engine.EntitySubsumptionBaseEngine#addSubsumption(java.lang.String, java.lang.String)
+	 */
+	@Override
+	protected void addSubsumption(String entity1Uri, String entity2Uri) {
+		this.jdsi.getModel().add(
+				ResourceFactory.createResource(jdsi.createResourceFromUri(entity1Uri).getURI()), 
+				ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), 
+				ResourceFactory.createResource(jdsi.createResourceFromUri(entity2Uri).getURI()) 
+				);
 	}
 
 }
