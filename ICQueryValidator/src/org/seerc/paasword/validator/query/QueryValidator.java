@@ -15,6 +15,7 @@ import org.seerc.paasword.theoremprover.TheoremProvingDataSource;
 import org.seerc.paasword.translator.QueryConstraint;
 import org.seerc.paasword.validator.engine.JenaDataSource;
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
+import org.seerc.paasword.validator.engine.SubclassSubsumptionDataSource;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -61,8 +62,8 @@ public class QueryValidator {
 		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(ontologies));
 		SequenceInputStream sis = new SequenceInputStream(enumOnto);
 
-		// Create the TheoremProvingDataSource
-		jds = new TheoremProvingDataSource(sis);
+		// Create the SubclassSubsumptionDataSource
+		jds = new SubclassSubsumptionDataSource(sis);
 		
 		// Read constraints ontology
 		OntModel constraintsModel;

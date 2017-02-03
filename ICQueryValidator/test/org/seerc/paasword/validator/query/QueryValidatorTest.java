@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.seerc.paasword.theoremprover.TheoremProvingDataSource;
+import org.seerc.paasword.validator.engine.SubclassSubsumptionDataSource;
 
 public class QueryValidatorTest {
 
@@ -863,7 +864,7 @@ public class QueryValidatorTest {
 	public void testPrintSubclassSubsumption() throws Exception {
 		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
 		
-		TheoremProvingDataSource tpds = new TheoremProvingDataSource(policy);
+		SubclassSubsumptionDataSource tpds = new SubclassSubsumptionDataSource(policy);
 		tpds.printModel(System.out);
 		int i=0;
 	}*/	

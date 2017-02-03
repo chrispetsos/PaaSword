@@ -109,13 +109,13 @@ pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .
 pac:NOTContextExpression rdfs:subClassOf otp:NOTheoremProvingClass .
 
 # alignment to otp namespace for rules
-#pac:ABACRule rdfs:subClassOf otp:TheoremProvingBaseClass .
-#pac:hasControlledObject rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
-#pac:hasAuthorisation rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
-#pac:hasAction rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
-#pac:hasActor rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
-#pac:hasContextExpression rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
-#pac:ABACRule rdfs:subClassOf otp:ANDTheoremProvingClass .
+pac:ABACRule rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:hasControlledObject rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasAuthorisation rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasAction rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasActor rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasContextExpression rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:ABACRule rdfs:subClassOf otp:ANDTheoremProvingClass .
 
 
 
