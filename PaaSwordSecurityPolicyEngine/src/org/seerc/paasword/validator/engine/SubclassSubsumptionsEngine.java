@@ -36,37 +36,14 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		// Iterate over them. 
 		for(Individual individual:individualsIterator)
 		{
-			// Get the reference statement iterator. Should have at most one element... 
-			StmtIterator referenceStatementIterator = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingReferenceProperty").getURI()));
-			
-			// Get the statements where the individual is subject of a "otp:TheoremProvingParameterProperty" parameter.
-			StmtIterator resourceParams = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()));
-
 			// the class, either intersection or union etc., with the parameter restrictions.
-			OntClass parameterRestrictionClass = null;
+			OntClass parameterRestrictionClass = createParameterRestrictionClass(individual);
 			
 			// the class to which this individual will become equivalent
-			OntClass equivalentClass = null;
+			OntClass equivalentClass = parameterRestrictionClass;
 			
-			// Switch cases of individual
-			if(individual.hasOntClass(jdsi.createResourceFromUri("otp:ANDTheoremProvingClass").getURI()))
-			{	// otp:ANDTheoremProvingClass
-				parameterRestrictionClass = this.createIntersectionRestriction(resourceParams);
-			}
-			else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:ORTheoremProvingClass").getURI()))
-			{	// otp:ORTheoremProvingClass
-				parameterRestrictionClass = this.createUnionRestriction(resourceParams);
-			}
-			else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:XORTheoremProvingClass").getURI()))
-			{	// otp:XORTheoremProvingClass
-				// TODO
-			}
-			else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:NOTheoremProvingClass").getURI()))
-			{	// otp:NOTheoremProvingClass
-				// TODO
-			}
-			
-			equivalentClass = parameterRestrictionClass;
+			// Get the reference statement iterator. Should have at most one element... 
+			StmtIterator referenceStatementIterator = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingReferenceProperty").getURI()));
 			
 			if(referenceStatementIterator.hasNext())
 			{	// this expression has reference
@@ -81,8 +58,32 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		}
 	}
 
-	private OntClass createIntersectionRestriction(StmtIterator resourceParams)
+	private OntClass createParameterRestrictionClass(Individual individual) {
+		// Switch cases of individual
+		if(individual.hasOntClass(jdsi.createResourceFromUri("otp:ANDTheoremProvingClass").getURI()))
+		{	// otp:ANDTheoremProvingClass
+			return this.createIntersectionRestriction(individual);
+		}
+		else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:ORTheoremProvingClass").getURI()))
+		{	// otp:ORTheoremProvingClass
+			return this.createUnionRestriction(individual);
+		}
+		else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:XORTheoremProvingClass").getURI()))
+		{	// otp:XORTheoremProvingClass
+			// TODO
+		}
+		else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:NOTheoremProvingClass").getURI()))
+		{	// otp:NOTheoremProvingClass
+			// TODO
+		}
+		return null;
+	}
+
+	private OntClass createIntersectionRestriction(Individual individual)
 	{
+		// Get the statements where the individual is subject of a "otp:TheoremProvingParameterProperty" parameter.
+		StmtIterator resourceParams = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()));
+
 		// the hasValue Restrictions RDFList
 		RDFList hasValueRestrictionsRDFList = createHasValueRestrictionsRDFList(resourceParams);
 		
@@ -90,8 +91,11 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		return ((OntModel)this.jdsi.getModel()).createIntersectionClass(null, hasValueRestrictionsRDFList);
 	}
 
-	private OntClass createUnionRestriction(StmtIterator resourceParams)
+	private OntClass createUnionRestriction(Individual individual)
 	{
+		// Get the statements where the individual is subject of a "otp:TheoremProvingParameterProperty" parameter.
+		StmtIterator resourceParams = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()));
+
 		// the hasValue Restrictions RDFList
 		RDFList hasValueRestrictionsRDFList = createHasValueRestrictionsRDFList(resourceParams);
 		
@@ -108,9 +112,7 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		while(valueStatements.hasNext())
 		{
 			Statement statement = valueStatements.next();
-			Property valueProperty = statement.getPredicate();
-			RDFNode value = statement.getObject();
-			HasValueRestriction hvr = ((OntModel)this.jdsi.getModel()).createHasValueRestriction(null, valueProperty, value);
+			HasValueRestriction hvr = this.createHasValueRestriction(statement.getObject());
 			hasValueRestrictionsList.add(hvr);
 		}
 
@@ -179,9 +181,16 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 	@Override
 	protected void addSubsumption(String entity1Uri, String entity2Uri)
 	{
-		HasValueRestriction subClassHasValueRestriction = ((OntModel)this.jdsi.getModel()).createHasValueRestriction(null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), ((OntModel)this.jdsi.getModel()).createResource(entity2Uri));
-		HasValueRestriction superClassHasValueRestriction = ((OntModel)this.jdsi.getModel()).createHasValueRestriction(null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), ((OntModel)this.jdsi.getModel()).createResource(entity1Uri));
+		//HasValueRestriction subClassHasValueRestriction = ((OntModel)this.jdsi.getModel()).createHasValueRestriction(null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), ((OntModel)this.jdsi.getModel()).createResource(entity2Uri));
+		HasValueRestriction subClassHasValueRestriction = this.createHasValueRestriction(((OntModel)this.jdsi.getModel()).createResource(entity2Uri));
+		//HasValueRestriction superClassHasValueRestriction = ((OntModel)this.jdsi.getModel()).createHasValueRestriction(null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), ((OntModel)this.jdsi.getModel()).createResource(entity1Uri));
+		HasValueRestriction superClassHasValueRestriction = this.createHasValueRestriction(((OntModel)this.jdsi.getModel()).createResource(entity1Uri));
 		subClassHasValueRestriction.addSuperClass(superClassHasValueRestriction);
+	}
+
+	private HasValueRestriction createHasValueRestriction(RDFNode rdfNode) {
+		HasValueRestriction hvr = ((OntModel)this.jdsi.getModel()).createHasValueRestriction(null, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()), rdfNode);
+		return hvr;
 	}
 
 }
