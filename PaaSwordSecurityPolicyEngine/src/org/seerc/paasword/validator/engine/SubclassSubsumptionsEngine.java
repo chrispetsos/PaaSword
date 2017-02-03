@@ -76,35 +76,65 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		{	// otp:NOTheoremProvingClass
 			// TODO
 		}
+		else
+		{	// terminating param
+			return this.createHasValueRestriction(individual);
+		}
 		return null;
 	}
 
 	private OntClass createIntersectionRestriction(Individual individual)
 	{
+		// the RDFList with the restrictions, either hasValue params or nested expression restrictions etc.
+		RDFList restrictionsRDFList;
+		// first put them in a List
+		List<RDFNode> restrictionsList = new ArrayList<RDFNode>();
+
 		// Get the statements where the individual is subject of a "otp:TheoremProvingParameterProperty" parameter.
 		StmtIterator resourceParams = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()));
-
-		// the hasValue Restrictions RDFList
-		RDFList hasValueRestrictionsRDFList = createHasValueRestrictionsRDFList(resourceParams);
+		while(resourceParams.hasNext())
+		{	// create the param restriction class recursively
+			Statement param = resourceParams.next();
+			restrictionsList.add(this.createParameterRestrictionClass(param.getObject().as(Individual.class)));
+		}
 		
-		// create the intersection class and return it
-		return ((OntModel)this.jdsi.getModel()).createIntersectionClass(null, hasValueRestrictionsRDFList);
+		// the hasValue Restrictions RDFList
+		//RDFList hasValueRestrictionsRDFList = createHasValueRestrictionsRDFList(resourceParams);
+		
+		// build the restrictionsRDFList from restrictionsList
+		restrictionsRDFList = ((OntModel)this.jdsi.getModel()).createList(restrictionsList.iterator());
+		
+		// create the intersection class with the restrictions and return it
+		return ((OntModel)this.jdsi.getModel()).createIntersectionClass(null, restrictionsRDFList);
 	}
 
 	private OntClass createUnionRestriction(Individual individual)
 	{
+		// the RDFList with the restrictions, either hasValue params or nested expression restrictions etc.
+		RDFList restrictionsRDFList;
+		// first put them in a List
+		List<RDFNode> restrictionsList = new ArrayList<RDFNode>();
+
 		// Get the statements where the individual is subject of a "otp:TheoremProvingParameterProperty" parameter.
 		StmtIterator resourceParams = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()));
-
+		while(resourceParams.hasNext())
+		{	// create the param restriction class recursively
+			Statement param = resourceParams.next();
+			restrictionsList.add(this.createParameterRestrictionClass(param.getObject().as(Individual.class)));
+		}
+		
 		// the hasValue Restrictions RDFList
-		RDFList hasValueRestrictionsRDFList = createHasValueRestrictionsRDFList(resourceParams);
+		//RDFList hasValueRestrictionsRDFList = createHasValueRestrictionsRDFList(resourceParams);
+		
+		// build the restrictionsRDFList from restrictionsList
+		restrictionsRDFList = ((OntModel)this.jdsi.getModel()).createList(restrictionsList.iterator());
 		
 		// create the union class and return it
-		return ((OntModel)this.jdsi.getModel()).createUnionClass(null, hasValueRestrictionsRDFList);
+		return ((OntModel)this.jdsi.getModel()).createUnionClass(null, restrictionsRDFList);
 		
 	}
 
-	private RDFList createHasValueRestrictionsRDFList(StmtIterator valueStatements) {
+	/*private RDFList createHasValueRestrictionsRDFList(StmtIterator valueStatements) {
 		RDFList hasValueRestrictionsRDFList;
 		
 		// first put them in a List
@@ -119,7 +149,7 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		// then create the RDFList
 		hasValueRestrictionsRDFList = ((OntModel)this.jdsi.getModel()).createList(hasValueRestrictionsList.iterator());
 		return hasValueRestrictionsRDFList;
-	}
+	}*/
 
 	private OntClass createReferenceIntersection(OntClass parameterRestrictionClass, Statement referenceStatement)
 	{
