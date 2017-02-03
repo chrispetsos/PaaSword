@@ -184,3 +184,140 @@ pac:XORContextExpression rdfs:subClassOf pac:ContextExpression.
 
 pac:NOTContextExpression rdfs:subClassOf pac:ContextExpression.
 #############################################################################
+
+### Alignment to otp namespace for context expressions ######################
+pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:refersTo rdfs:subPropertyOf otp:TheoremProvingReferenceProperty .
+pac:subsumes owl:equivalentProperty otp:subsumes .
+pac:ANDContextExpression rdfs:subClassOf otp:ANDTheoremProvingClass .
+pac:ORContextExpression rdfs:subClassOf otp:ORTheoremProvingClass .
+pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .
+pac:NOTContextExpression rdfs:subClassOf otp:NOTheoremProvingClass .
+#############################################################################
+
+### Alignment to otp namespace for rules ####################################
+pac:ABACRule rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:hasControlledObject rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasAuthorisation rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasAction rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasActor rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasContextExpression rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:ABACRule rdfs:subClassOf otp:ANDTheoremProvingClass .
+#############################################################################
+
+### The contradicts property ################################################
+pac:contradicts a owl:ObjectProperty, owl:TransitiveProperty .
+#############################################################################
+
+#############################################################################
+#    SWRL Rule for contradiction
+#############################################################################
+
+<urn:swrl#r1> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#r2> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#action> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#actor> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#ce> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#co> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> pac:ABACRule ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> pac:ABACRule ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r2>
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasControlledObject ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1> ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#co>
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasControlledObject ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r2> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#co>
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasAuthorisation ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> pac:positive
+                                                                                                 ] ;
+                                                                                       rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                  rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasAuthorisation ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r2> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument2> pac:negative
+                                                                                                            ] ;
+                                                                                                  rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                             rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasAction ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#action>
+                                                                                                                       ] ;
+                                                                                                             rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                        rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasAction ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r2> ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#action>
+                                                                                                                                  ] ;
+                                                                                                                        rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                   rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                               <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasActor ;
+                                                                                                                                               <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1> ;
+                                                                                                                                               <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#actor>
+                                                                                                                                             ] ;
+                                                                                                                                   rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                              rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                                          <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasActor ;
+                                                                                                                                                          <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r2> ;
+                                                                                                                                                          <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#actor>
+                                                                                                                                                        ] ;
+                                                                                                                                              rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                                         rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                                                     <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
+                                                                                                                                                                     <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1> ;
+                                                                                                                                                                     <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
+                                                                                                                                                                   ] ;
+                                                                                                                                                         rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                                                    rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                                                                <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
+                                                                                                                                                                                <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r2> ;
+                                                                                                                                                                                <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
+                                                                                                                                                                              ] ;
+                                                                                                                                                                    rdf:rest rdf:nil
+                                                                                                                                                                  ]
+                                                                                                                                                       ]
+                                                                                                                                            ]
+                                                                                                                                 ]
+                                                                                                                      ]
+                                                                                                           ]
+                                                                                                ]
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:contradicts ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r1> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#r2>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+#############################################################################
+
