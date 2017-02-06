@@ -82,6 +82,10 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		{	// otp:NOTheoremProvingClass
 			// TODO
 		}
+		else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:TheoremProvingBaseClass").getURI()))
+		{	// otp:TheoremProvingBaseClass
+			return this.createIntersectionRestriction(individual);
+		}
 		else
 		{	// terminating param
 			return this.createHasValueRestriction(individual);
@@ -105,7 +109,6 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		
 		// create the union class and return it
 		return ((OntModel)this.jdsi.getModel()).createUnionClass(null, restrictionsRDFList);
-		
 	}
 
 	/*

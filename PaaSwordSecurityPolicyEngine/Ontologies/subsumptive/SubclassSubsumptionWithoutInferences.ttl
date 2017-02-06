@@ -285,6 +285,9 @@ ex1:Parking1 a pcm:Point.
 
 ex1:Parking2 a pcm:Point.
 
+ex1:CE14 a pac:ContextExpression;
+	pac:hasParameter ex1:Parking1 ;
+	pac:refersTo ex1:ParkingEmployee .
 
 # The first two rules are identical. This should fail.
 
