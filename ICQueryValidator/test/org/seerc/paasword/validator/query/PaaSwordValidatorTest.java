@@ -75,6 +75,6 @@ public class PaaSwordValidatorTest {
 		
 		pwdv = new PaaSwordValidator(policy);
 		
-		assertEquals(2, pwdv.validate().size());
+		assertEquals(4, pwdv.validate().size());
 	}
 }

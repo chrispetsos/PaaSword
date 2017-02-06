@@ -843,7 +843,7 @@ public class QueryValidatorTest {
 		
 		qv = new QueryValidator(constraints, policy);
 		
-		assertEquals(2, qv.validate().size());
+		assertEquals(4, qv.validate().size());
 	}	
 
 	// These two tests (above and below) are the same now.
@@ -856,7 +856,7 @@ public class QueryValidatorTest {
 		
 		qv = new QueryValidator(constraints, policy);
 		
-		assertEquals(2, qv.validate().size());
+		assertEquals(4, qv.validate().size());
 	}	
 
 	/*@Test

@@ -53,6 +53,14 @@ ex1:ABACRule_3 a pac:ABACRule;
 	pac:hasActor ex1:ParkingEmployee;
 	pac:hasContextExpression ex1:expr.
 
+# This is subsumed by rule 1 and is equivalent to rule 2
+ex1:ABACRule_4 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr3.
+
 
 ex1:DepartmentAPaymentsTable a pcm:Relational.
 ex1:ParkingSectionAEmployee a pcm:Person.
@@ -66,6 +74,11 @@ ex1:expr a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 
 ex1:expr2 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours3, ex1:Parking1 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+# This is a base expression and has more than one parameters
+ex1:expr3 a pac:ContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours3, ex1:Parking1 ;
 	pac:refersTo ex1:ParkingEmployee .
 

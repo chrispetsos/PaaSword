@@ -132,6 +132,23 @@ pac:XORContextExpression rdfs:subClassOf
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] .
 
+# Base Context expressions should have exactly one parameter
+# These are the context expressions that are not NOT, AND, OR, XOR
+[ owl:intersectionOf (
+	pac:ContextExpression
+	[owl:complementOf pac:NOTContextExpression]
+	[owl:complementOf pac:ANDContextExpression]
+	[owl:complementOf pac:ORContextExpression]
+	[owl:complementOf pac:XORContextExpression]
+	)
+] 
+	rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:hasParameter ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
+              ] .
+
 # Context expression should also referTo at most one Subject or Object
 pac:ContextExpression rdfs:subClassOf
               [ a owl:Restriction ;
