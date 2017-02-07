@@ -81,9 +81,17 @@ pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty rdfs:subClassOf ;
                 owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onClass pac:ABACRule;
-                rdfs:label "Subsuming rules."^^xsd:string
+                owl:onClass pac:ABACRule 
               ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:ABACRule ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty rdfs:subClassOf ;
+               owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:ABACRule 
+             ] ;
+    rdfs:label "Subsuming rules."^^xsd:string .
 
 # ABAC rules should be equivalent at most to themselves 
 pac:ABACRule rdfs:subClassOf
