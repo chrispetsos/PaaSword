@@ -1,8 +1,10 @@
 package org.seerc.paasword.translator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.aksw.owl2sparql.OWLClassExpressionToSPARQLConverter;
 import org.aksw.owl2sparql.OWLObjectPropertyExpressionConverter;
@@ -177,7 +179,14 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				createClassExpressionGraphPattern(ce, domainVar) + 
 				closeBlock();
 		
-		postProcess(axiom, groupGraphPattern);
+		postProcess(this.createLabelAnnotatedAxiom(axiom, "Invalid domain of property " + axiom.getProperty() + "."), groupGraphPattern);
+	}
+
+	private OWLAxiom createLabelAnnotatedAxiom(OWLAxiom axiom, String labelValue) {
+		Set<OWLAnnotation> annotations = new HashSet<OWLAnnotation>();
+		OWLAnnotation domainAnnotationLabel = factory.getOWLAnnotation(factory.getRDFSLabel(), factory.getOWLLiteral(labelValue));
+		annotations.add(domainAnnotationLabel);
+		return axiom.getAnnotatedAxiom(annotations);
 	}
 
     /**
@@ -197,7 +206,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				createClassExpressionGraphPattern(axiom.getRange(), rangeVar) + 
 				closeBlock();
 		
-		postProcess(axiom, groupGraphPattern);
+		postProcess(this.createLabelAnnotatedAxiom(axiom, "Invalid range of object property " + axiom.getProperty().asOWLObjectProperty() + "."), groupGraphPattern);
 	}
 
 	/**
@@ -218,7 +227,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				"!(" + createDataRangeGraphPattern(axiom.getRange(), rangeVar) + ")" + 
 				closeParentheses();
 		
-		postProcess(axiom, groupGraphPattern);
+		postProcess(this.createLabelAnnotatedAxiom(axiom, "Invalid range of data property " + axiom.getProperty().asOWLDataProperty() + "."), groupGraphPattern);
     }
 
     /**
