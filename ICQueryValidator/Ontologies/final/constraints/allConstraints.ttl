@@ -231,7 +231,7 @@ pac:ANDContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] ;
-    rdfs:label "AND Context expressions must have exactly two parameter."^^xsd:string .
+    rdfs:label "AND Context expressions must have exactly two parameters."^^xsd:string .
 
 # OR Context expressions should have exactly two parameters
 pac:ORContextExpression rdfs:subClassOf
@@ -248,7 +248,7 @@ pac:ORContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] ;
-    rdfs:label "OR Context expressions must have exactly two parameter."^^xsd:string .
+    rdfs:label "OR Context expressions must have exactly two parameters."^^xsd:string .
 
 # XOR Context expressions should have exactly two parameters
 pac:XORContextExpression rdfs:subClassOf
@@ -265,7 +265,7 @@ pac:XORContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] ;
-    rdfs:label "XOR Context expressions must have exactly two parameter."^^xsd:string .
+    rdfs:label "XOR Context expressions must have exactly two parameters."^^xsd:string .
 
 # Base Context expressions should have exactly one parameter
 # These are the context expressions that are not NOT, AND, OR, XOR
