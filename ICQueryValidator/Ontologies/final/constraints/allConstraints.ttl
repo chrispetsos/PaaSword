@@ -412,8 +412,7 @@ pac:hasABACPolicySet a rdf:Property;
 
 pac:hasControlledObject a rdf:Property;
 	rdfs:domain pac:ABACRule;
-	rdfs:range pcm:Object;
-	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
+	rdfs:range pcm:Object .
 
 pac:hasAuthorisation a rdf:Property;
 	rdfs:domain pac:ABACRule;
