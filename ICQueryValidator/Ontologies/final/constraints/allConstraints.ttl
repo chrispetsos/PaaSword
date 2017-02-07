@@ -81,7 +81,8 @@ pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty rdfs:subClassOf ;
                 owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
-                owl:onClass pac:ABACRule
+                owl:onClass pac:ABACRule;
+                rdfs:label "Subsuming rules."^^xsd:string
               ] .
 
 # ABAC rules should be equivalent at most to themselves 
@@ -177,109 +178,137 @@ pac:ContextExpression rdfs:subClassOf
 ### It is interpreted as a set of constraints.
 pwd:belongsToPolicySet a rdf:Property;
 	rdfs:domain [owl:unionOf (pwd:Policy pwd:PolicySet)];
-	rdfs:range pwd:PolicySet.
+	rdfs:range pwd:PolicySet;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pwd:hasRule a rdf:Property;
 	rdfs:domain pwd:Policy;
-	rdfs:range pwd:Rule.
+	rdfs:range pwd:Rule;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbe:hasCryptoPolicySet a rdf:Property;
 	rdfs:domain pbe:PaaSwordDataEncryption;
-	rdfs:range pbe:BootstrappingCryptoPolicySet.
+	rdfs:range pbe:BootstrappingCryptoPolicySet;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbe:hasBootStrappingCryptoRule rdfs:domain pbe:BootstrappingCryptoPolicy;
-	rdfs:range pbe:BootstrappingCryptoRule.
+	rdfs:range pbe:BootstrappingCryptoRule;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbe:belongsToCryptoPolicySet rdfs:domain [owl:unionOf (pbe:BootstrappingCryptoPolicy pbe:BootstrappingCryptoPolicySet)];
-	rdfs:range pbe:BootstrappingCryptoPolicySet.
+	rdfs:range pbe:BootstrappingCryptoPolicySet;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbe:hasControlledObject a rdf:Property;
 	rdfs:domain pbe:BootstrappingCryptoRule;
-	rdfs:range pcm:Object.
+	rdfs:range pcm:Object;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbe:hasCryptoElement a rdf:Property;
 	rdfs:domain pbe:BootstrappingCryptoRule;
-	rdfs:range pdm:CryptographicType.
+	rdfs:range pdm:CryptographicType;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbdfd:hasDFDPolicySet a rdf:Property;
 	rdfs:domain pbdfd:PaaSwordDataFragmentationAndDistribution;
-	rdfs:range pbdfd:BootstrappingDFDPolicySet.
+	rdfs:range pbdfd:BootstrappingDFDPolicySet;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbdfd:hasBootstrappingDFDRule rdfs:domain pbdfd:BootstrappingDFDPolicy;
-	rdfs:range pbdfd:BootstrappingDFDRule.
+	rdfs:range pbdfd:BootstrappingDFDRule;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbdfd:belongsToDFDPolicySet rdfs:domain [owl:unionOf (pbdfd:BootstrappingDFDPolicy pbdfd:BootstrappingDFDPolicySet)];
-	rdfs:range pbdfd:BootstrappingDFDPolicySet.
+	rdfs:range pbdfd:BootstrappingDFDPolicySet;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbdfd:hasControlledObject a rdf:Property;
 	rdfs:domain pbdfd:BootstrappingDFDRule;
-	rdfs:range pcm:Object.
+	rdfs:range pcm:Object;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pbdfd:hasDFDElement a rdf:Property;
 	rdfs:domain pbdfd:BootstrappingDFDRule;
-	rdfs:range pdm:DatabaseFragmentation.
+	rdfs:range pdm:DatabaseFragmentation;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasABACPolicySet a rdf:Property;
 	rdfs:domain pac:PaaSwordABAC;
-	rdfs:range pac:ABACPolicySet.
+	rdfs:range pac:ABACPolicySet;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasControlledObject a rdf:Property;
 	rdfs:domain pac:ABACRule;
-	rdfs:range pcm:Object.
+	rdfs:range pcm:Object;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasAuthorisation a rdf:Property;
 	rdfs:domain pac:ABACRule;
-	rdfs:range pac:Authorisation.
+	rdfs:range pac:Authorisation;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasAction a rdf:Property;
 	rdfs:domain pac:ABACRule;
-	rdfs:range ppm:DataPermission.
+	rdfs:range ppm:DataPermission;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasActor a rdf:Property;
 	rdfs:domain pac:ABACRule;
-	rdfs:range pcm:Subject.
+	rdfs:range pcm:Subject;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasContextExpression a rdf:Property;
 	rdfs:domain pac:ABACRule;
-	rdfs:range pac:ContextExpression.
+	rdfs:range pac:ContextExpression;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasABACRule rdfs:domain pac:ABACPolicy;
-	rdfs:range pac:ABACRule.
+	rdfs:range pac:ABACRule;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasPolicyContextExpression a rdf:Property;
 	rdfs:domain pac:ABACPolicy;
-	rdfs:range pac:ContextExpression.
+	rdfs:range pac:ContextExpression;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasPolicyCombiningAlgorithm a rdf:Property;
 	rdfs:domain pac:ABACPolicy;
-	rdfs:range pac:PolicyCombiningAlgorithms.
+	rdfs:range pac:PolicyCombiningAlgorithms;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:belongsToABACPolicySet rdfs:domain [owl:unionOf (pac:ABACPolicy pac:ABACPolicySet)];
-	rdfs:range pac:ABACPolicySet.
+	rdfs:range pac:ABACPolicySet;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 	
 pac:hasPolicySetContextExpression a rdf:Property;
 	rdfs:domain pac:ABACPolicySet;
-	rdfs:range pac:ContextExpression.
+	rdfs:range pac:ContextExpression;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasPolicySetCombiningAlgorithm a rdf:Property;
 	rdfs:domain pac:ABACPolicySet;
-	rdfs:range pac:PolicySetCombiningAlgorithms.
+	rdfs:range pac:PolicySetCombiningAlgorithms;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasPatternParameter a rdf:Property;
 	rdfs:domain pac:ContextExpression;
-	rdfs:range [owl:unionOf (pcpm:ContextPattern pac:ContextExpression)].
+	rdfs:range [owl:unionOf (pcpm:ContextPattern pac:ContextExpression)];
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasParameter a rdf:Property;
 	rdfs:domain pac:ContextExpression;
-	rdfs:range [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)].
+	rdfs:range [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)];
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:hasEvaluationResult a rdf:Property;
 	rdfs:domain pac:ContextExpression;
-	rdfs:range xsd:boolean.
+	rdfs:range xsd:boolean;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pac:refersTo a rdf:Property;
 	rdfs:domain pac:ContextExpression;
-	rdfs:range [owl:unionOf (pcm:Subject pcm:Object)].
+	rdfs:range [owl:unionOf (pcm:Subject pcm:Object)];
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 
 
@@ -313,376 +342,452 @@ pac:refersTo a rdf:Property;
 pcm:category
   a rdf:Property ;
   rdfs:domain [owl:unionOf (pcm:Service pcm:Subject)] ;
-  rdfs:range pcm:category .
+  rdfs:range pcm:category ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:after
   a rdf:Property ;
   rdfs:domain pcm:DateTime ;
-  rdfs:range pcm:DateTime .
+  rdfs:range pcm:DateTime ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasTimezone
   a rdf:Property ;
   rdfs:domain pcm:DateTime ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasAddress
   a rdf:Property ;
   rdfs:range pcm:Address ;
-  rdfs:domain pcm:POI .
+  rdfs:domain pcm:POI ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasArea
   a rdf:Property ;
   rdfs:domain pcm:AbstractLocation ;
-  rdfs:range pcm:Area .
+  rdfs:range pcm:Area ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasAreaCoordinates
   a rdf:Property ;
   rdfs:comment "This property associates an Area with specific coordinates (class)" ;
   rdfs:domain pcm:Area ;
-  rdfs:range pcm:Coordinates .
+  rdfs:range pcm:Coordinates ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasAuthenticationMethod
   a rdf:Property ;
   rdfs:range pcm:AuthenticationMethod ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasAuthorizationMethod
   a rdf:Property ;
   rdfs:range pcm:AuthorizationMethod ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasBeginningDay
   a rdf:Property ;
   rdfs:range gr:DayOfWeek ;
-  rdfs:domain pcm:DateTimeInterval .
+  rdfs:domain pcm:DateTimeInterval ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasConnectionMetric
   a rdf:Property ;
   rdfs:comment "This class refers to different ways of transmitting an access request (e.g. 3G, Cable, Satelite)" ;
   rdfs:range pcm:ConnectionMetric ;
-  rdfs:domain pcm:ConnectionType .
+  rdfs:domain pcm:ConnectionType ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasEndDay
   a rdf:Property ;
   rdfs:range gr:DayOfWeek ;
-  rdfs:domain pcm:DateTimeInterval .
+  rdfs:domain pcm:DateTimeInterval ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasIdentityType
   a rdf:Property ;
   rdfs:range pcm:IdentityType ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasPointCoordinates
   a rdf:Property ;
   rdfs:range pcm:Coordinates ;
-  rdfs:domain pcm:Point .
+  rdfs:domain pcm:Point ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasRole
   a rdf:Property ;
   rdfs:range <http://www.linked-usdl.org/ns/usdl-core#Role> ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:isChildOf
   a rdf:Property ;
   rdfs:range pcm:HierarchicalDataStructure ;
-  rdfs:domain pcm:HierarchicalDataStructure .
+  rdfs:domain pcm:HierarchicalDataStructure ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:addressCountry
   a rdf:Property ;
-  rdfs:domain pcm:Address .
+  rdfs:domain pcm:Address ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:addressLocality
   a rdf:Property ;
-  rdfs:domain pcm:Address .
+  rdfs:domain pcm:Address ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:addressRegion
   a rdf:Property ;
-  rdfs:domain pcm:Address .
+  rdfs:domain pcm:Address ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:before
   a rdf:Property ;
   rdfs:domain pcm:DateTime ;
-  rdfs:range pcm:DateTime .
+  rdfs:range pcm:DateTime ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:description
   a rdf:Property ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:elevation
   a rdf:Property ;
-  rdfs:domain pcm:Coordinates .
+  rdfs:domain pcm:Coordinates ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasBeginning
   a rdf:Property ;
   rdfs:domain pcm:DateTimeInterval ;
-  rdfs:range xsd:dateTime .
+  rdfs:range xsd:dateTime ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasBrand
   a rdf:Property ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasBuildingNumber
   a rdf:Property ;
   rdfs:domain pcm:Address ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasCircularRadius
   a rdf:Property ;
   rdfs:comment "This property declares the diameter of a circular area with a center pointed by the hasAreaCoordinates property (e.g.diameter 1km)" ;
   rdfs:domain pcm:Area ;
-  rdfs:range xsd:double .
+  rdfs:range xsd:double ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasDUNS
   a rdf:Property ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasDay
   a rdf:Property ;
   rdfs:domain pcm:Instant ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasDomain
   a rdf:Property ;
   rdfs:domain pcm:NetworkLocation ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasDownloadRate
   a rdf:Property ;
   rdfs:domain pcm:ConnectionMetric ;
-  rdfs:range xsd:nonNegativeInteger .
+  rdfs:range xsd:nonNegativeInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasEnd
   a rdf:Property ;
   rdfs:domain pcm:DateTimeInterval ;
-  rdfs:range xsd:dateTime .
+  rdfs:range xsd:dateTime ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasEndpoint
   a rdf:Property ;
   rdfs:domain pcm:Service ;
-  rdfs:range xsd:anyURI .
+  rdfs:range xsd:anyURI ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasFileName
   a rdf:Property ;
   rdfs:domain pcm:File ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasFilePath
   a rdf:Property ;
   rdfs:domain pcm:File ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasFileType
   a rdf:Property ;
   rdfs:domain pcm:File ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasFloorNumber
   a rdf:Property ;
   rdfs:domain pcm:Address ;
-  rdfs:range xsd:nonNegativeInteger .
+  rdfs:range xsd:nonNegativeInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasHour
   a rdf:Property ;
   rdfs:domain pcm:Instant ;
-  rdfs:range xsd:nonNegativeInteger .
+  rdfs:range xsd:nonNegativeInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasIMEI
   a rdf:Property ;
   rdfs:domain pcm:Mobile ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasIMSI
   a rdf:Property ;
   rdfs:domain pcm:Mobile ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasIPAddress
   a rdf:Property ;
   rdfs:domain pcm:NetworkLocation ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasIPAddressRange
   a rdf:Property ;
   rdfs:domain pcm:NetworkLocation ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasPort
   a rdf:Property ;
   rdfs:domain pcm:NetworkLocation ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasMetricUnit
   a rdf:Property ;
   rdfs:domain pcm:ConnectionMetric ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasMinute
   a rdf:Property ;
   rdfs:domain pcm:Instant ;
-  rdfs:range xsd:nonNegativeInteger .
+  rdfs:range xsd:nonNegativeInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasMobileOS
   a rdf:Property ;
   rdfs:domain pcm:Mobile ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasMonth
   a rdf:Property ;
   rdfs:domain pcm:Instant ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasName
   a rdf:Property ;
   rdfs:domain [owl:unionOf (pcm:AbstractLocation pcm:Method pcm:POI)] ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasNonRelationalType
   a rdf:Property ;
   rdfs:domain pcm:NonRelational ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasRectangularRangeHeight
   a rdf:Property ;
   rdfs:comment "This property describes the height of the Rectangular area with a center pointed by the hasAreaCoordinates property(e.g. 2Km)" ;
   rdfs:domain pcm:Area ;
-  rdfs:range xsd:double .
+  rdfs:range xsd:double ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasRectangularRangeWidth
   a rdf:Property ;
   rdfs:comment "This property describes the width of the Rectangular area with a center pointed by the hasAreaCoordinates property(e.g. 1km)" ;
   rdfs:domain pcm:Area ;
-  rdfs:range xsd:double .
+  rdfs:range xsd:double ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasRelationalType
   a rdf:Property ;
   rdfs:domain pcm:Relational ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasRoomNumber
   a rdf:Property ;
   rdfs:domain pcm:Address ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasSecond
   a rdf:Property ;
   rdfs:domain pcm:Instant ;
-  rdfs:range xsd:nonNegativeInteger .
+  rdfs:range xsd:nonNegativeInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasSecurityProtocolImplementation
   a rdf:Property ;
   rdfs:domain pcm:SecurityProtocol ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasStationaryOS
   a rdf:Property ;
   rdfs:domain pcm:Stationary ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasSubnet
   a rdf:Property ;
   rdfs:domain pcm:NetworkLocation ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasTarget
   a rdf:Property ;
   rdfs:domain pcm:Object ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasTelecommunicationsProvider
   a rdf:Property ;
   rdfs:domain pcm:ConnectionType ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasUploadRate
   a rdf:Property ;
   rdfs:domain pcm:ConnectionMetric ;
-  rdfs:range xsd:nonNegativeInteger .
+  rdfs:range xsd:nonNegativeInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasVolumeType
   a rdf:Property ;
   rdfs:domain pcm:Volume ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasYear
   a rdf:Property ;
   rdfs:domain pcm:Instant ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:hasZone
   a rdf:Property ;
   rdfs:domain pcm:NetworkLocation ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:isVolumeEncrypted
   a rdf:Property ;
   rdfs:domain pcm:Volume ;
-  rdfs:range xsd:boolean .
+  rdfs:range xsd:boolean ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:latitude
   a rdf:Property ;
-  rdfs:domain pcm:Coordinates .
+  rdfs:domain pcm:Coordinates ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:legalName
   a rdf:Property ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:longitude
   a rdf:Property ;
-  rdfs:domain pcm:Coordinates .
+  rdfs:domain pcm:Coordinates ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:name
   a rdf:Property ;
-  rdfs:domain pcm:Subject .
+  rdfs:domain pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:postalCode
   a rdf:Property ;
-  rdfs:domain pcm:Address .
+  rdfs:domain pcm:Address ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:refersToContinentalUnion
   a rdf:Property ;
   rdfs:domain pcm:Address ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:refersToEconomicUnion
   a rdf:Property ;
   rdfs:domain pcm:Address ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:streetAddress
   a rdf:Property ;
-  rdfs:domain pcm:Address .
+  rdfs:domain pcm:Address ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:supportsEncryptedStorageMobile
   a rdf:Property ;
   rdfs:domain pcm:Mobile ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:supportsEncryptedStorageStationary
   a rdf:Property ;
   rdfs:domain pcm:Stationary ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:volumeInputSpeed
   a rdf:Property ;
   rdfs:domain pcm:Volume ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:volumeOutputSpeed
   a rdf:Property ;
   rdfs:domain pcm:Volume ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:handler
   a rdf:Property ;
   rdfs:comment "This property associates a SecurityContextElement or any of its sub-classes with a specific class handler" ;
   rdfs:domain pcm:SecurityContextElement ;
-  rdfs:range pcm:ClassHandler .
+  rdfs:range pcm:ClassHandler ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcm:packageName
   a rdf:Property ;
   rdfs:comment "This ClassHandler property specifies the fully qualified name of the Java class implementing the class handler/adapter functionality (e.g. eu.paasword.handler.LocationHandler)" ;
   rdfs:domain pcm:ClassHandler ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 #############################################################################
 
 #
@@ -691,97 +796,116 @@ pcm:packageName
 pcpm:hasPattern
   a rdf:Property ;
   rdfs:range pcpm:ContextPattern ;
-  rdfs:domain pcpm:ContextPattern .
+  rdfs:domain pcpm:ContextPattern ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasAccessedObject
   a rdf:Property ;
   rdfs:domain pcpm:AccessSequencePattern ;
-  rdfs:range pcm:Object .
+  rdfs:range pcm:Object ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasConnectionSecurity
   a rdf:Property ;
   rdfs:range pcm:ConnectionSecurity ;
-  rdfs:domain pcpm:UsualConnectionSecurity .
+  rdfs:domain pcpm:UsualConnectionSecurity ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasConnectionType
   a rdf:Property ;
   rdfs:range pcm:ConnectionType ;
-  rdfs:domain [owl:unionOf (pcpm:MostFrequentConnectionType pcpm:UsualConnectionType)] .
+  rdfs:domain [owl:unionOf (pcpm:MostFrequentConnectionType pcpm:UsualConnectionType)] ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasDeviceType
   a rdf:Property ;
   rdfs:range pcm:DeviceType ;
-  rdfs:domain [owl:unionOf (pcpm:MostFrequentDeviceType pcpm:UsualDeviceType)] .
+  rdfs:domain [owl:unionOf (pcpm:MostFrequentDeviceType pcpm:UsualDeviceType)] ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasLocation
   a rdf:Property ;
   rdfs:range pcm:Location ;
-  rdfs:domain pcpm:LocationPattern .
+  rdfs:domain pcpm:LocationPattern ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasPermission
   a rdf:Property ;
   rdfs:range ppm:Permission ;
-  rdfs:domain pcpm:PermissionPattern .
+  rdfs:domain pcpm:PermissionPattern ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasTimeWindow
   a rdf:Property ;
   rdfs:domain pcpm:ContextPattern ;
-  rdfs:range pcm:DateTime .
+  rdfs:range pcm:DateTime ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasUAOThreshold
   a rdf:Property ;
   rdfs:domain pcpm:UsuallyAccessedObject ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasUAThreshold
   a rdf:Property ;
   rdfs:domain pcpm:UsualAccessLocation ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasUCSThreshold
   a rdf:Property ;
   rdfs:domain pcpm:UsualConnectionSecurity ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasUCTThreshold
   a rdf:Property ;
   rdfs:domain pcpm:UsualConnectionType ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasUDTThreshold
   a rdf:Property ;
   rdfs:domain pcpm:UsualDeviceType ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasUGThreshold
   a rdf:Property ;
   rdfs:domain pcpm:UsuallyGrantedPermission ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasUTIThreshold
   a rdf:Property ;
   rdfs:domain pcpm:UsualDateTimeInterval ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:hasUTThreshold
   a rdf:Property ;
   rdfs:domain pcpm:UsualDateTimeInstance ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:refersToObject
   a rdf:Property ;
   rdfs:domain pcpm:ContextPattern ;
-  rdfs:range pcm:Object .
+  rdfs:range pcm:Object ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:refersToPermission
   a rdf:Property ;
   rdfs:domain pcpm:ContextPattern ;
-  rdfs:range ppm:Permission .
+  rdfs:range ppm:Permission ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pcpm:refersToSubject
   a rdf:Property ;
   rdfs:domain pcpm:ContextPattern ;
-  rdfs:range pcm:Subject .
+  rdfs:range pcm:Subject ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 #############################################################################
 
 #
@@ -790,57 +914,68 @@ pcpm:refersToSubject
 pdm:hasAsymmetricKeySize
   a rdf:Property ;
   rdfs:domain pdm:Asymmetric ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:hasCurve
   a rdf:Property ;
   rdfs:domain pdm:Asymmetric ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:hasFragColumn
   a rdf:Property ;
   rdfs:domain [owl:unionOf (pdm:MixedFragmentation pdm:VerticalFragmentation)] ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:hasFragRow
   a rdf:Property ;
   rdfs:domain [owl:unionOf (pdm:HorizontalFragmentation pdm:MixedFragmentation)] ;
-  rdfs:range xsd:nonNegativeInteger .
+  rdfs:range xsd:nonNegativeInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:hasPrivacyConstraint
   a rdf:Property ;
   rdfs:domain pdm:RelationalDataFragmentation ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:hasSymmetricBlockSize
   a rdf:Property ;
   rdfs:domain pdm:Symmetric ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:hasSymmetricKeySize
   a rdf:Property ;
   rdfs:domain pdm:Symmetric ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:numberOfPhysicalLocations
   a rdf:Property ;
   rdfs:domain pdm:DistributionMetric ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:numberOfServers
   a rdf:Property ;
   rdfs:domain pdm:DistributionMetric ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:numberOfVMs
   a rdf:Property ;
   rdfs:domain pdm:DistributionMetric ;
-  rdfs:range xsd:positiveInteger .
+  rdfs:range xsd:positiveInteger ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 pdm:hasModeofOperation
   a rdf:Property ;
   rdfs:domain pdm:CryptographicType ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 #############################################################################
 
 #
@@ -849,25 +984,30 @@ pdm:hasModeofOperation
 ppm:hasActionStatus
   a rdf:Property ;
   rdfs:domain [owl:unionOf (ppm:DDLPermission ppm:DataPermission)] ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 ppm:hasEndTime
   a rdf:Property ;
   rdfs:domain [owl:unionOf (ppm:DDLPermission ppm:DataPermission)] ;
-  rdfs:range xsd:dateTime .
+  rdfs:range xsd:dateTime ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 ppm:hasResult
   a rdf:Property ;
   rdfs:domain [owl:unionOf (ppm:DDLPermission ppm:DataPermission)] ;
-  rdfs:range xsd:string .
+  rdfs:range xsd:string ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 ppm:hasStartTime
   a rdf:Property ;
   rdfs:domain [owl:unionOf (ppm:DDLPermission ppm:DataPermission)] ;
-  rdfs:range xsd:dateTime .
+  rdfs:range xsd:dateTime ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 
 ppm:hasTarget
   a rdf:Property ;
   rdfs:domain [owl:unionOf (ppm:DDLPermission ppm:DataPermission)] ;
-  rdfs:range pcm:Object .
+  rdfs:range pcm:Object ;
+	rdfs:label "Invalid domain and/or range of property."^^xsd:string .
 #############################################################################
