@@ -182,13 +182,30 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				createClassExpressionGraphPattern(ce, domainVar) + 
 				closeBlock();
 		
-		postProcess(this.createLabelAnnotatedAxiom(axiom, "Invalid domain of property " + axiom.getProperty() + "."), groupGraphPattern);
+		postProcess(this.createAnnotatedAxiom(axiom, "Invalid domain of property " + axiom.getProperty() + ".", "error"), groupGraphPattern);
+	}
+
+    /*
+     * Annotates an axiom with a rdfs:label description and a CUSTOM_ANNOTATION_CONSTRAINT_LEVEL
+     * constraintLevel.
+     */
+	private OWLAxiom createAnnotatedAxiom(OWLAxiom axiom, String constraintDescription, String constraintLevel) {
+		OWLAxiom result = this.createLabelAnnotatedAxiom(axiom, constraintDescription);
+		result = this.createConstraintLevelAnnotatedAxiom(result, constraintLevel);
+		return result;
 	}
 
 	private OWLAxiom createLabelAnnotatedAxiom(OWLAxiom axiom, String labelValue) {
 		Set<OWLAnnotation> annotations = new HashSet<OWLAnnotation>();
-		OWLAnnotation domainAnnotationLabel = factory.getOWLAnnotation(factory.getRDFSLabel(), factory.getOWLLiteral(labelValue));
-		annotations.add(domainAnnotationLabel);
+		OWLAnnotation annotationLabel = factory.getOWLAnnotation(factory.getRDFSLabel(), factory.getOWLLiteral(labelValue));
+		annotations.add(annotationLabel);
+		return axiom.getAnnotatedAxiom(annotations);
+	}
+
+	private OWLAxiom createConstraintLevelAnnotatedAxiom(OWLAxiom axiom, String constraintLevelValue) {
+		Set<OWLAnnotation> annotations = new HashSet<OWLAnnotation>();
+		OWLAnnotation annotationConstraintLevel = factory.getOWLAnnotation(factory.getOWLAnnotationProperty(IRI.create(CUSTOM_ANNOTATION_CONSTRAINT_LEVEL)), factory.getOWLLiteral(constraintLevelValue));
+		annotations.add(annotationConstraintLevel);
 		return axiom.getAnnotatedAxiom(annotations);
 	}
 
@@ -209,7 +226,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				createClassExpressionGraphPattern(axiom.getRange(), rangeVar) + 
 				closeBlock();
 		
-		postProcess(this.createLabelAnnotatedAxiom(axiom, "Invalid range of object property " + axiom.getProperty().asOWLObjectProperty() + "."), groupGraphPattern);
+		postProcess(this.createAnnotatedAxiom(axiom, "Invalid range of object property " + axiom.getProperty().asOWLObjectProperty() + ".", "error"), groupGraphPattern);
 	}
 
 	/**
@@ -230,7 +247,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 				"!(" + createDataRangeGraphPattern(axiom.getRange(), rangeVar) + ")" + 
 				closeParentheses();
 		
-		postProcess(this.createLabelAnnotatedAxiom(axiom, "Invalid range of data property " + axiom.getProperty().asOWLDataProperty() + "."), groupGraphPattern);
+		postProcess(this.createAnnotatedAxiom(axiom, "Invalid range of data property " + axiom.getProperty().asOWLDataProperty() + ".", "error"), groupGraphPattern);
     }
 
     /**
