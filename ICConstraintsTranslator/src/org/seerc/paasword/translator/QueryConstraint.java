@@ -15,12 +15,15 @@ public class QueryConstraint {
 	String query;
 	// This will hold the human-friendly constraint description as added to its rdfs:label.
 	String constraintDescription;
+	// This will hold the constraint level (error, warning etc.).
+	String constraintLevel;
 	
-	public QueryConstraint(String statements, String query, String constraintDescription)
+	public QueryConstraint(String statements, String query, String constraintDescription, String constraintLevel)
 	{
 		this.constraintStatements = statements;
 		this.query = query;
 		this.constraintDescription = constraintDescription;
+		this.constraintLevel = constraintLevel;
 	}
 
 	public String getConstraintStatements() {
@@ -33,6 +36,10 @@ public class QueryConstraint {
 
 	public String getConstraintDescription() {
 		return constraintDescription;
+	}
+
+	public String getConstraintLevel() {
+		return constraintLevel;
 	}
 
 }

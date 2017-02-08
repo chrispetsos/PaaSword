@@ -10,6 +10,7 @@ import org.aksw.owl2sparql.OWLClassExpressionToSPARQLConverter;
 import org.aksw.owl2sparql.OWLObjectPropertyExpressionConverter;
 import org.aksw.owl2sparql.util.VarGenerator;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -479,7 +480,16 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 			axiomDescription = ((OWLLiteral)axiomLabelIterator.next().getValue()).getLiteral();
 		}
 
-    	queries.add(new QueryConstraint(axiom.toString(), query, axiomDescription));
+		String axiomConstraintLevel = null;
+		// get all constraintLevel annotations of axiom
+		Iterator<OWLAnnotation> axiomConstraintLevelIterator = axiom.getAnnotations(factory.getOWLAnnotationProperty(IRI.create("http://www.paasword.eu/security-policy/seerc/pwd#constraintLevel"))).iterator();
+		// if there is one
+		if(axiomConstraintLevelIterator.hasNext())
+		{	// take the first as axiom constraintLevel
+			axiomConstraintLevel = ((OWLLiteral)axiomConstraintLevelIterator.next().getValue()).getLiteral();
+		}
+
+    	queries.add(new QueryConstraint(axiom.toString(), query, axiomDescription, axiomConstraintLevel));
 	}
     
     private String createPrettyQuery(String groupGraphPattern) {

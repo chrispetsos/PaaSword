@@ -163,7 +163,10 @@ pac:ABACRule rdfs:subClassOf
                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                owl:onClass pac:ABACRule 
              ] ;
-    rdfs:label "Subsuming rules."^^xsd:string .
+    rdfs:label "Subsuming rules."^^xsd:string ;
+    pwd:constraintLevel "warning"^^xsd:string .
+
+pwd:constraintLevel a owl:AnnotationProperty.
 
 # ABAC rules should be equivalent at most to themselves 
 pac:ABACRule rdfs:subClassOf
