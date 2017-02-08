@@ -11,6 +11,10 @@
 @prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
 @prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
 @prefix gr: <http://purl.org/goodrelations/v1#>. 
+@prefix anon: <http://www.seerc.org/ontologies/anon#>.
+
+# Our custom annotation property for constraint level
+anon:constraintLevel a owl:AnnotationProperty.
 
 # Policies are comprised of one or more rules
 pwd:Policy rdfs:subClassOf
@@ -164,9 +168,7 @@ pac:ABACRule rdfs:subClassOf
                owl:onClass pac:ABACRule 
              ] ;
     rdfs:label "Subsuming rules."^^xsd:string ;
-    pwd:constraintLevel "warning"^^xsd:string .
-
-pwd:constraintLevel a owl:AnnotationProperty.
+    anon:constraintLevel "warning"^^xsd:string .
 
 # ABAC rules should be equivalent at most to themselves 
 pac:ABACRule rdfs:subClassOf
