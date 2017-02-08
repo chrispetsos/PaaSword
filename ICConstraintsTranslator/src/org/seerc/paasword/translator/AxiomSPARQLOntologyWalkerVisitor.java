@@ -55,8 +55,6 @@ import com.hp.hpl.jena.query.QueryFactory;
  */
 public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 
-	private static final String CUSTOM_ANNOTATION_CONSTRAINT_LEVEL = "http://www.seerc.org/ontologies/anon#constraintLevel";
-
 	// We need visited axioms cached, so they are not visited multiple times
 	// in cases of nested expressions.
 	List<OWLAxiom> visitedAxioms = new ArrayList<OWLAxiom>();
@@ -186,26 +184,25 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	}
 
     /*
-     * Annotates an axiom with a rdfs:label description and a CUSTOM_ANNOTATION_CONSTRAINT_LEVEL
-     * constraintLevel.
+     * Annotates an axiom with a rdfs:comment description and a rdfs:label constraintLevel.
      */
 	private OWLAxiom createAnnotatedAxiom(OWLAxiom axiom, String constraintDescription, String constraintLevel) {
-		OWLAxiom result = this.createLabelAnnotatedAxiom(axiom, constraintDescription);
-		result = this.createConstraintLevelAnnotatedAxiom(result, constraintLevel);
+		OWLAxiom result = this.createCommentAnnotatedAxiom(axiom, constraintDescription);
+		result = this.createLabelAnnotatedAxiom(result, constraintLevel);
 		return result;
 	}
 
-	private OWLAxiom createLabelAnnotatedAxiom(OWLAxiom axiom, String labelValue) {
+	private OWLAxiom createCommentAnnotatedAxiom(OWLAxiom axiom, String labelValue) {
 		Set<OWLAnnotation> annotations = new HashSet<OWLAnnotation>();
-		OWLAnnotation annotationLabel = factory.getOWLAnnotation(factory.getRDFSLabel(), factory.getOWLLiteral(labelValue));
-		annotations.add(annotationLabel);
+		OWLAnnotation annotationComment = factory.getOWLAnnotation(factory.getRDFSComment(), factory.getOWLLiteral(labelValue));
+		annotations.add(annotationComment);
 		return axiom.getAnnotatedAxiom(annotations);
 	}
 
-	private OWLAxiom createConstraintLevelAnnotatedAxiom(OWLAxiom axiom, String constraintLevelValue) {
+	private OWLAxiom createLabelAnnotatedAxiom(OWLAxiom axiom, String constraintLevelValue) {
 		Set<OWLAnnotation> annotations = new HashSet<OWLAnnotation>();
-		OWLAnnotation annotationConstraintLevel = factory.getOWLAnnotation(factory.getOWLAnnotationProperty(IRI.create(CUSTOM_ANNOTATION_CONSTRAINT_LEVEL)), factory.getOWLLiteral(constraintLevelValue));
-		annotations.add(annotationConstraintLevel);
+		OWLAnnotation annotationLabel = factory.getOWLAnnotation(factory.getRDFSLabel(), factory.getOWLLiteral(constraintLevelValue));
+		annotations.add(annotationLabel);
 		return axiom.getAnnotatedAxiom(annotations);
 	}
 
@@ -491,21 +488,21 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	{
 		String query = createPrettyQuery(groupGraphPattern);
 		String axiomDescription = null;
-		// get all label annotations of axiom
-		Iterator<OWLAnnotation> axiomLabelIterator = axiom.getAnnotations(factory.getRDFSLabel()).iterator();
+		// get all comment annotations of axiom
+		Iterator<OWLAnnotation> axiomCommentIterator = axiom.getAnnotations(factory.getRDFSComment()).iterator();
 		// if there is one
-		if(axiomLabelIterator.hasNext())
+		if(axiomCommentIterator.hasNext())
 		{	// take the first as axiom description
-			axiomDescription = ((OWLLiteral)axiomLabelIterator.next().getValue()).getLiteral();
+			axiomDescription = ((OWLLiteral)axiomCommentIterator.next().getValue()).getLiteral();
 		}
 
 		String axiomConstraintLevel = null;
-		// get all constraintLevel annotations of axiom
-		Iterator<OWLAnnotation> axiomConstraintLevelIterator = axiom.getAnnotations(factory.getOWLAnnotationProperty(IRI.create(CUSTOM_ANNOTATION_CONSTRAINT_LEVEL))).iterator();
+		// get all label of axiom
+		Iterator<OWLAnnotation> axiomLabelIterator = axiom.getAnnotations(factory.getRDFSLabel()).iterator();
 		// if there is one
-		if(axiomConstraintLevelIterator.hasNext())
+		if(axiomLabelIterator.hasNext())
 		{	// take the first as axiom constraintLevel
-			axiomConstraintLevel = ((OWLLiteral)axiomConstraintLevelIterator.next().getValue()).getLiteral();
+			axiomConstraintLevel = ((OWLLiteral)axiomLabelIterator.next().getValue()).getLiteral();
 		}
 
     	queries.add(new QueryConstraint(axiom.toString(), query, axiomDescription, axiomConstraintLevel));
