@@ -55,6 +55,8 @@ import com.hp.hpl.jena.query.QueryFactory;
  */
 public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 
+	private static final String CUSTOM_ANNOTATION_CONSTRAINT_LEVEL = "http://www.seerc.org/ontologies/anon#constraintLevel";
+
 	// We need visited axioms cached, so they are not visited multiple times
 	// in cases of nested expressions.
 	List<OWLAxiom> visitedAxioms = new ArrayList<OWLAxiom>();
@@ -482,7 +484,7 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 
 		String axiomConstraintLevel = null;
 		// get all constraintLevel annotations of axiom
-		Iterator<OWLAnnotation> axiomConstraintLevelIterator = axiom.getAnnotations(factory.getOWLAnnotationProperty(IRI.create("http://www.paasword.eu/security-policy/seerc/pwd#constraintLevel"))).iterator();
+		Iterator<OWLAnnotation> axiomConstraintLevelIterator = axiom.getAnnotations(factory.getOWLAnnotationProperty(IRI.create(CUSTOM_ANNOTATION_CONSTRAINT_LEVEL))).iterator();
 		// if there is one
 		if(axiomConstraintLevelIterator.hasNext())
 		{	// take the first as axiom constraintLevel
