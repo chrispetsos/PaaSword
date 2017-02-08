@@ -31,7 +31,8 @@ pwd:Policy rdfs:subClassOf
                 owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pwd:Rule
               ] ;
-    rdfs:label "Policies must have at least one rule."^^xsd:string .
+    rdfs:label "Policies must have at least one rule."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # Policies belong to exactly one PolicySet
 pwd:Policy rdfs:subClassOf
@@ -48,7 +49,8 @@ pwd:Policy rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pwd:PolicySet
               ] ;
-    rdfs:label "Policies must must belong to exactly one policy set."^^xsd:string .
+    rdfs:label "Policies must must belong to exactly one policy set."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # ABAC Policies have exactly one Policy Combining Algorithm
 pac:ABACPolicy rdfs:subClassOf
@@ -65,7 +67,8 @@ pac:ABACPolicy rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pac:PolicyCombiningAlgorithms
               ] ;
-    rdfs:label "ABAC Policies must have exactly one Policy Combining Algorithm."^^xsd:string .
+    rdfs:label "ABAC Policies must have exactly one Policy Combining Algorithm."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # ABAC Policies Sets have exactly one Policy Set Combining Algorithm
 pac:ABACPolicySet rdfs:subClassOf
@@ -82,7 +85,8 @@ pac:ABACPolicySet rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pac:PolicySetCombiningAlgorithms
               ] ;
-    rdfs:label "ABAC Policies Sets must have exactly one Policy Set Combining Algorithm."^^xsd:string .
+    rdfs:label "ABAC Policies Sets must have exactly one Policy Set Combining Algorithm."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # ABAC rules should have exactly one Controlled Object
 pac:ABACRule rdfs:subClassOf
@@ -99,7 +103,8 @@ pac:ABACRule rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pcm:Object
               ] ;
-    rdfs:label "ABAC rules must have exactly one Controlled Object."^^xsd:string .
+    rdfs:label "ABAC rules must have exactly one Controlled Object."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # ABAC rules should have exactly one Authorisation
 pac:ABACRule rdfs:subClassOf
@@ -116,7 +121,8 @@ pac:ABACRule rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pac:Authorisation
               ] ;
-    rdfs:label "ABAC rules must have exactly one Authorisation."^^xsd:string .
+    rdfs:label "ABAC rules must have exactly one Authorisation."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # ABAC rules should have exactly one Action
 pac:ABACRule rdfs:subClassOf
@@ -133,7 +139,8 @@ pac:ABACRule rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass ppm:DataPermission
               ] ;
-    rdfs:label "ABAC rules must have exactly one Action."^^xsd:string .
+    rdfs:label "ABAC rules must have exactly one Action."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # ABAC rules should have exactly one Actor
 pac:ABACRule rdfs:subClassOf
@@ -150,7 +157,8 @@ pac:ABACRule rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pcm:Subject
               ] ;
-    rdfs:label "ABAC rules must have exactly one Actor."^^xsd:string .
+    rdfs:label "ABAC rules must have exactly one Actor."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # ABAC rules should not have other rules as subclasses 
 pac:ABACRule rdfs:subClassOf
@@ -185,7 +193,8 @@ pac:ABACRule rdfs:subClassOf
                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pac:ABACRule
               ] ;
-    rdfs:label "Equivalent rules."^^xsd:string .
+    rdfs:label "Equivalent rules."^^xsd:string ;
+    anon:constraintLevel "warning"^^xsd:string .
 
 # ABAC rules should not contradict any other rule 
 pac:ABACRule rdfs:subClassOf
@@ -202,7 +211,8 @@ pac:ABACRule rdfs:subClassOf
                 owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                 owl:onClass pac:ABACRule
               ] ;
-    rdfs:label "Contradicting rules."^^xsd:string .
+    rdfs:label "Contradicting rules."^^xsd:string ;
+    anon:constraintLevel "warning"^^xsd:string .
 
 # NOT Context expressions should have exactly one parameter
 pac:NOTContextExpression rdfs:subClassOf
@@ -219,7 +229,8 @@ pac:NOTContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] ;
-    rdfs:label "NOT Context expressions must have exactly one parameter."^^xsd:string .
+    rdfs:label "NOT Context expressions must have exactly one parameter."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # AND Context expressions should have exactly two parameters
 pac:ANDContextExpression rdfs:subClassOf
@@ -236,7 +247,8 @@ pac:ANDContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] ;
-    rdfs:label "AND Context expressions must have exactly two parameters."^^xsd:string .
+    rdfs:label "AND Context expressions must have exactly two parameters."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # OR Context expressions should have exactly two parameters
 pac:ORContextExpression rdfs:subClassOf
@@ -253,7 +265,8 @@ pac:ORContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] ;
-    rdfs:label "OR Context expressions must have exactly two parameters."^^xsd:string .
+    rdfs:label "OR Context expressions must have exactly two parameters."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # XOR Context expressions should have exactly two parameters
 pac:XORContextExpression rdfs:subClassOf
@@ -270,7 +283,8 @@ pac:XORContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] ;
-    rdfs:label "XOR Context expressions must have exactly two parameters."^^xsd:string .
+    rdfs:label "XOR Context expressions must have exactly two parameters."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # Base Context expressions should have exactly one parameter
 # These are the context expressions that are not NOT, AND, OR, XOR
@@ -303,7 +317,8 @@ pac:XORContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:SecurityContextElement pac:ContextExpression)]
               ] ;
-    rdfs:label "Base Context expressions must have exactly one parameter."^^xsd:string .
+    rdfs:label "Base Context expressions must have exactly one parameter."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # Context expression should also referTo at most one Subject or Object
 pac:ContextExpression rdfs:subClassOf
@@ -320,7 +335,8 @@ pac:ContextExpression rdfs:subClassOf
                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
               ] ;
-    rdfs:label "Context expressions must referTo at most one Subject or Object."^^xsd:string .
+    rdfs:label "Context expressions must referTo at most one Subject or Object."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 # More specifically, when the context expression hasParameter Location or
 # Connectivity, it should referTo exactly one Subject or Object
@@ -348,7 +364,8 @@ pac:ContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
               ] ;
-    rdfs:label "Context expressions with Location or Connectivity parameters must referTo exactly one Subject or Object."^^xsd:string .
+    rdfs:label "Context expressions with Location or Connectivity parameters must referTo exactly one Subject or Object."^^xsd:string ;
+    anon:constraintLevel "error"^^xsd:string .
 
 ### This is a portion of the Policy meta-model we present in D2.2.
 ### Specifically all domain/range statements have been tranferred here
