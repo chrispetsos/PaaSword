@@ -12,6 +12,7 @@ import org.aksw.owl2sparql.util.VarGenerator;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLCardinalityRestriction;
@@ -193,16 +194,17 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
 	}
 
 	private OWLAxiom createCommentAnnotatedAxiom(OWLAxiom axiom, String labelValue) {
-		Set<OWLAnnotation> annotations = new HashSet<OWLAnnotation>();
-		OWLAnnotation annotationComment = factory.getOWLAnnotation(factory.getRDFSComment(), factory.getOWLLiteral(labelValue));
-		annotations.add(annotationComment);
-		return axiom.getAnnotatedAxiom(annotations);
+		return this.createAxiomAnnotation(axiom, factory.getRDFSComment(), labelValue);
 	}
 
 	private OWLAxiom createLabelAnnotatedAxiom(OWLAxiom axiom, String constraintLevelValue) {
+		return this.createAxiomAnnotation(axiom, factory.getRDFSLabel(), constraintLevelValue);
+	}
+
+	private OWLAxiom createAxiomAnnotation(OWLAxiom axiom, OWLAnnotationProperty annotationProperty, String labelValue) {
 		Set<OWLAnnotation> annotations = new HashSet<OWLAnnotation>();
-		OWLAnnotation annotationLabel = factory.getOWLAnnotation(factory.getRDFSLabel(), factory.getOWLLiteral(constraintLevelValue));
-		annotations.add(annotationLabel);
+		OWLAnnotation annotation = factory.getOWLAnnotation(annotationProperty, factory.getOWLLiteral(labelValue));
+		annotations.add(annotation);
 		return axiom.getAnnotatedAxiom(annotations);
 	}
 
@@ -487,25 +489,23 @@ public class AxiomSPARQLOntologyWalkerVisitor extends OWLOntologyWalkerVisitor {
     private void postProcess(OWLAxiom axiom, String groupGraphPattern)
 	{
 		String query = createPrettyQuery(groupGraphPattern);
-		String axiomDescription = null;
-		// get all comment annotations of axiom
-		Iterator<OWLAnnotation> axiomCommentIterator = axiom.getAnnotations(factory.getRDFSComment()).iterator();
-		// if there is one
-		if(axiomCommentIterator.hasNext())
-		{	// take the first as axiom description
-			axiomDescription = ((OWLLiteral)axiomCommentIterator.next().getValue()).getLiteral();
-		}
-
-		String axiomConstraintLevel = null;
-		// get all label of axiom
-		Iterator<OWLAnnotation> axiomLabelIterator = axiom.getAnnotations(factory.getRDFSLabel()).iterator();
-		// if there is one
-		if(axiomLabelIterator.hasNext())
-		{	// take the first as axiom constraintLevel
-			axiomConstraintLevel = ((OWLLiteral)axiomLabelIterator.next().getValue()).getLiteral();
-		}
+		String axiomDescription = this.getAxiomAnnotation(axiom, factory.getRDFSComment());
+		String axiomConstraintLevel = this.getAxiomAnnotation(axiom, factory.getRDFSLabel());
 
     	queries.add(new QueryConstraint(axiom.toString(), query, axiomDescription, axiomConstraintLevel));
+	}
+
+	private String getAxiomAnnotation(OWLAxiom axiom, OWLAnnotationProperty annotationProperty) {
+		// get all annotationProperty annotations of axiom
+		Iterator<OWLAnnotation> axiomAnnotationPropertyIterator = axiom.getAnnotations(annotationProperty).iterator();
+		// if there is one
+		if(axiomAnnotationPropertyIterator.hasNext())
+		{	// take the first as axiom annotation
+			return ((OWLLiteral)axiomAnnotationPropertyIterator.next().getValue()).getLiteral();
+		}
+		
+		// otherwise return null
+		return null;
 	}
     
     private String createPrettyQuery(String groupGraphPattern) {
