@@ -64,7 +64,7 @@ otp:NOTTheoremProvingClass a owl:Class .
 pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
 pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
 pac:refersTo rdfs:subPropertyOf otp:TheoremProvingReferenceProperty .
-pac:subsumes owl:equivalentProperty otp:subsumes .
+pac:subsumes rdfs:subPropertyOf otp:subsumes .
 pac:isSubsumedBy owl:inverseOf otp:subsumes .
 pac:isLocatedIn owl:inverseOf otp:subsumes .
 pac:ANDContextExpression rdfs:subClassOf otp:ANDTheoremProvingClass .
