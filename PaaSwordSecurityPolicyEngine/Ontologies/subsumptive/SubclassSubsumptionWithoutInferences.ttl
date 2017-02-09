@@ -63,6 +63,8 @@ otp:NOTTheoremProvingClass a owl:Class .
 
 pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
 pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:hasLocationParameter rdfs:subPropertyOf pac:hasParameter .
+pac:hasTimeParameter rdfs:subPropertyOf pac:hasParameter .
 pac:refersTo rdfs:subPropertyOf otp:TheoremProvingReferenceProperty .
 pac:subsumes rdfs:subPropertyOf otp:subsumes .
 pac:isSubsumedBy owl:inverseOf otp:subsumes .
@@ -73,7 +75,8 @@ pac:XORContextExpression rdfs:subClassOf otp:XORTheoremProvingClass .
 pac:NOTContextExpression rdfs:subClassOf otp:NOTheoremProvingClass .
 
 ex1:CE3 a pac:ANDContextExpression;
-	pac:hasParameter ex1:Athens, ex1:WorkingHours1 ;
+	pac:hasLocationParameter ex1:Athens ;
+	pac:hasTimeParameter ex1:WorkingHours1 ;
 	pac:refersTo ex1:Simos .
 	
 #ex1:CE3 a owl:Class ;
@@ -95,7 +98,8 @@ ex1:CE3 a pac:ANDContextExpression;
 #	  ] .
 
 ex1:CE4 a pac:ORContextExpression;
-	pac:hasParameter ex1:Athens, ex1:WorkingHours1 ;
+	pac:hasLocationParameter ex1:Athens ;
+	pac:hasTimeParameter ex1:WorkingHours1 ;
 	pac:refersTo ex1:Simos .
 	
 #ex1:CE4 a owl:Class ;
