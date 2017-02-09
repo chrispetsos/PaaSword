@@ -60,19 +60,19 @@ public class QueryValidatorREST {
 	}
 	
 	/**
-	 * Performs the validation.
+	 * Performs the validation of a PaaSword Security Policy.
 	 * 
-	 * @param data Data under validation in the form of a RESTValidationData object.
+	 * @param policy PaaSword Policy under validation.
 	 * @return A validation report.
 	 */
 	@POST
-	@Path("/validatePolicy")
+	@Path("/validateSecurityPolicy")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String validatePolicy(InputStream policy) {
+	public String validateSecurityPolicy(String policy) {
 		try
 		{
-			PaaSwordValidator pwdv = new PaaSwordValidator(policy);
+			PaaSwordValidator pwdv = new PaaSwordValidator(new ByteArrayInputStream(policy.getBytes(StandardCharsets.UTF_8)));
 			List<QueryValidatorErrors> errors = pwdv.validate();
 			
 			String report = gson.toJson(errors);
