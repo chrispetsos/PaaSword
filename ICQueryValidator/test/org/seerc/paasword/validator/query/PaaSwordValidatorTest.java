@@ -77,4 +77,16 @@ public class PaaSwordValidatorTest {
 		
 		assertEquals(4, pwdv.validate().size());
 	}
+	
+	
+	@Test
+	public void testOldContradictingRulesExample() throws Exception
+	{
+		InputStream policy = new FileInputStream(new File("Ontologies/test/ContradictingRulesExample.ttl"));
+
+		pwdv = new PaaSwordValidator(policy);
+		
+		assertEquals(4, pwdv.validate().size());
+	}
+
 }

@@ -311,6 +311,10 @@ ex1:CE18 a pac:ORContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours2, ex1:PaymentsTable ;
 	pac:refersTo ex1:ParkingEmployee .
 
+# This CE is not subsumed or anything else
+ex1:CE19 a pac:ORContextExpression;
+	pac:hasParameter ex1:somethingElse .
+
 # The first two rules are identical. This should fail.
 
 # alignment to otp namespace for rules

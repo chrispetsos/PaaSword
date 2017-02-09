@@ -56,7 +56,7 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 			}
 			
 			// make the individual also a class and equivalent to the desired class
-			((OntModel)this.jdsi.getModel()).createClass(individual.getURI()).addEquivalentClass(equivalentClass);
+			((OntModel)this.jdsi.getModel()).createClass(individual.toString()).addEquivalentClass(equivalentClass);
 
 		}
 	}
@@ -159,7 +159,7 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		while(subsumesStatements.hasNext())
 		{
 			Statement subsumption = subsumesStatements.next();
-			this.addSubsumption(subsumption.getSubject().getURI(), subsumption.getObject().asResource().getURI());
+			this.addSubsumption(subsumption.getSubject().toString(), subsumption.getObject().asResource().toString());
 		}
 	}
 

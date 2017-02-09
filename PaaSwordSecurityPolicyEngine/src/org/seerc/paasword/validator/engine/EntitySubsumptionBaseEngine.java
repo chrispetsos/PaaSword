@@ -37,11 +37,18 @@ public abstract class EntitySubsumptionBaseEngine {
 		{
 			for(Individual i2:individualsIterator)
 			{
+				/*
+				 *  TODO: using toString() instead of getURI() so that I can cover cases of anonymous resources (which have null URI).
+				 *  Might need to find a more elegant way to tackle this in the future.
+				 *  Same for other places where I made this conversion. Specifically, when
+				 *  I make individuals also classes in generateRestrictionStatements() and
+				 *  when I createSubclassStatements(). 
+				 */
 				// Does the one subsume the other?
-				if(this.entitySubsumes(i1.getURI(), i2.getURI()))
+				if(this.entitySubsumes(i1.toString(), i2.toString()))
 				{
 					// Add the subsumption inference in the model.
-					this.addSubsumption(i1.getURI(), i2.getURI());
+					this.addSubsumption(i1.toString(), i2.toString());
 				}
 			}
 		}
