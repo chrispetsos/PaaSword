@@ -291,6 +291,22 @@ ex1:CE14 a pac:ContextExpression;
 	pac:hasParameter ex1:Parking1 ;
 	pac:refersTo ex1:ParkingEmployee .
 
+ex1:CE15 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking1 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:CE16 a pac:ORContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:Parking1 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:CE17 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:DepartmentAPaymentsTable ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:CE18 a pac:ORContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours2, ex1:PaymentsTable ;
+	pac:refersTo ex1:ParkingEmployee .
+
 # The first two rules are identical. This should fail.
 
 # alignment to otp namespace for rules
