@@ -86,8 +86,11 @@ ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
 ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval.
 ex1:EmployeeWorkingHours3 a pcm:DateTimeInterval.
 
+# Custom alignment to otp namespace
+pac:isContainedIn owl:inverseOf otp:subsumes .
+
 ex1:EmployeeWorkingHours pac:subsumes ex1:EmployeeWorkingHours2 .
-ex1:EmployeeWorkingHours2 pac:subsumes ex1:EmployeeWorkingHours3 .
+ex1:EmployeeWorkingHours3 pac:isContainedIn ex1:EmployeeWorkingHours2 .
 ex1:PaymentsTable pac:subsumes ex1:DepartmentAPaymentsTable .
 ex1:ParkingEmployee pac:subsumes ex1:ParkingSectionAEmployee .
 ex1:ParkingSectionAEmployee pac:subsumes ex1:ParkingSectionAArea1Employee .
