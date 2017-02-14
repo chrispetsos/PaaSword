@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 
 import org.seerc.paasword.translator.QueryConstraint;
 import org.seerc.paasword.validator.engine.JenaDataSource;
-import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
-import org.seerc.paasword.validator.engine.SubclassSubsumptionDataSource;
+import org.seerc.paasword.validator.engine.PaaSwordDataSource;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -61,8 +59,8 @@ public class QueryValidator {
 		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(ontologies));
 		SequenceInputStream sis = new SequenceInputStream(enumOnto);
 
-		// Create the SubclassSubsumptionDataSource
-		jds = new SubclassSubsumptionDataSource(sis);
+		// Create the PaaSwordDataSource
+		jds = new PaaSwordDataSource(sis);
 		
 		// Read constraints ontology
 		OntModel constraintsModel;

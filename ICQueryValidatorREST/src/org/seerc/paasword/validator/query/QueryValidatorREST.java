@@ -14,9 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
-import org.seerc.paasword.validator.engine.SubclassSubsumptionDataSource;
-import org.seerc.paasword.validator.query.QueryValidator;
-import org.seerc.paasword.validator.query.QueryValidatorErrors;
+import org.seerc.paasword.validator.engine.PaaSwordDataSource;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -168,8 +166,8 @@ public class QueryValidatorREST {
 			}
 			SequenceInputStream sis = new SequenceInputStream(ontologiesIs.elements());
 			
-			// Answer the query using a TheoremProvingDataSource.
-			JenaDataSourceInferred jdsi = new SubclassSubsumptionDataSource(sis);
+			// Answer the query using a PaaSwordDataSource.
+			JenaDataSourceInferred jdsi = new PaaSwordDataSource(sis);
 			
 			// execute the query
 			String result = jdsi.executeReadyQuery(data.getQuery()).toString();

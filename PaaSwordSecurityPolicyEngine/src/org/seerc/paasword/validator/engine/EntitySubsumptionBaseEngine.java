@@ -14,7 +14,7 @@ import com.hp.hpl.jena.rdf.model.ResourceFactory;
  * @author Chris Petsos
  *
  */
-public abstract class EntitySubsumptionBaseEngine {
+public abstract class EntitySubsumptionBaseEngine implements JenaModelEnhancer {
 	
 	// The data source
 	protected JenaDataSourceInferred jdsi;
