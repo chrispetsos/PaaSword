@@ -22,6 +22,16 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
 
+# Fix-up for rule antecedent and conclusion needed for policy subsumption
+pac:RuleAntecedent a owl:Class .
+pac:RuleConclusion a owl:Class .
+pac:hasAntecedent a owl:ObjectProperty ;
+	rdfs:domain pac:ABACRule ;
+	rdfs:range pac:RuleAntecedent .
+pac:hasConclusion a owl:ObjectProperty ;
+	rdfs:domain pac:ABACRule ;
+	rdfs:range pac:RuleConclusion .
+
 ex1:CE1 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours .
 
