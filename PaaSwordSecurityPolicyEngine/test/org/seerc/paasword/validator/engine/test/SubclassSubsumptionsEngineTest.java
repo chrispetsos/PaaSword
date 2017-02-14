@@ -90,6 +90,22 @@ public class SubclassSubsumptionsEngineTest {
 		assertEquals(1, ce1Instances.size());
 		assertEquals(0, ce2Instances.size());*/
 	}
+	
+	@Test
+	public void testPolicySubsumption() throws FileNotFoundException {
+		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(
+				createStream(
+								"Ontologies/subsumptive/PolicySubsumption.ttl")
+				);
+		
+		assertNotNull(jdsi);
+
+		SubclassSubsumptionsEngine sse = new SubclassSubsumptionsEngine(jdsi);
+		
+		assertNotNull(sse);
+		
+		sse.enhanceModel();
+	}
 
 	private void assertSubclassOf(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
 		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
