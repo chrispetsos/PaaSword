@@ -32,6 +32,11 @@ pac:hasConclusion a owl:ObjectProperty ;
 	rdfs:domain pac:ABACRule ;
 	rdfs:range pac:RuleConclusion .
 
+# alignment to otp namespace for rule antecedents
+# the various parameter properties are declared later for rules
+pac:RuleAntecedent rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:RuleAntecedent rdfs:subClassOf otp:ANDTheoremProvingClass .
+
 ex1:CE1 a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours .
 

@@ -11,9 +11,14 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.seerc.paasword.validator.engine.PaaSwordDataSource;
 
+import com.hp.hpl.jena.ontology.Individual;
+import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
 
 public class PaaSwordDataSourceTest {
 
@@ -42,4 +47,30 @@ public class PaaSwordDataSourceTest {
 		assertEquals(7, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleConclusion")).toList().size());
 	}
 
+	@Test
+	public void testRuleAntecedentSubsumption() throws Exception {
+		PaaSwordDataSource pds = new PaaSwordDataSource(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
+		
+		Individual abacRule1 = pds.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_1").as(Individual.class);
+		RDFNode abacRule1Antecedent = abacRule1.getPropertyValue(pds.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasAntecedent"));
+		
+		Individual abacRule2 = pds.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2").as(Individual.class);
+		RDFNode abacRule2Antecedent = abacRule2.getPropertyValue(pds.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasAntecedent"));
+		
+		assertEquivalentClasses(pds, abacRule1Antecedent.toString(), abacRule2Antecedent.toString());
+		
+	}
+
+	private void assertSubclassOf(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
+		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
+		assertTrue(class2.listSubClasses().toList().contains(class1));
+	}
+	
+	private void assertEquivalentClasses(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
+		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
+		assertTrue(class1.listEquivalentClasses().toList().contains(class2));
+	}
+	
 }

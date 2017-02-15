@@ -13,10 +13,13 @@ public class PaaSwordDataSource extends JenaDataSourceInferred implements JenaMo
 		
 		enhancers = new ArrayList<JenaModelEnhancer>();
 		
-		// register the SubclassSubsumptionsEngine enhancer
-		this.enhancers.add(new SubclassSubsumptionsEngine(this));
 		// register the RuleAntecedentConclusionEnhnacer enhancer
 		this.enhancers.add(new RuleAntecedentConclusionEnhnacer(this));
+		
+		// NOTE!!! The order of adding these makes a difference !!!
+		
+		// register the SubclassSubsumptionsEngine enhancer
+		this.enhancers.add(new SubclassSubsumptionsEngine(this));
 
 		// enhance model
 		this.enhanceModel();
