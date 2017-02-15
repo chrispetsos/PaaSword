@@ -42,9 +42,9 @@ public class PaaSwordDataSourceTest {
 	public void testEnhanceModel() throws Exception {
 		PaaSwordDataSource pds = new PaaSwordDataSource(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
 		
-		// assert that we have 6 RuleAntecedents and 6 RuleConclusions
-		assertEquals(7, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleAntecedent")).toList().size());
-		assertEquals(7, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleConclusion")).toList().size());
+		// assert that we have 8 RuleAntecedents and 8 RuleConclusions
+		assertEquals(8, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleAntecedent")).toList().size());
+		assertEquals(8, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleConclusion")).toList().size());
 	}
 
 	@Test
@@ -59,6 +59,9 @@ public class PaaSwordDataSourceTest {
 		assertAntecedentSubclassOf(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_4", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2");
 		assertAntecedentSubclassOf(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_6", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_5");
 
+		// rule 7 has different authorization from rule 1, but it should still have equivalent
+		// antecedent
+		assertAntecedentEquivalentClasses(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_1", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_7");
 	}
 
 	private RDFNode getRuleAntecedent(JenaDataSourceInferred jdsi, String rule) {
