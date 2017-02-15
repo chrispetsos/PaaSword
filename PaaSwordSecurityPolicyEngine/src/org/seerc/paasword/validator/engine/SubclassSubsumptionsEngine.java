@@ -19,15 +19,27 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 
 	public SubclassSubsumptionsEngine(JenaDataSourceInferred jdsi) {
 		super(jdsi);
-		
+	}
+
+	/*
+	 * generates restriction and subclass statements and then calls enhanceModel()
+	 * of super-class.
+	 * 
+	 * (non-Javadoc)
+	 * @see org.seerc.paasword.validator.engine.EntitySubsumptionBaseEngine#enhanceModel()
+	 */
+	public void enhanceModel()
+	{
 		// create the translations of statements from the "otp" namespace 
 		// to restriction statements
 		this.generateRestrictionStatements();
 		
 		// create subclass statement for entities that are connected with "otp:subsumes"
 		this.createSubclassStatements();
-	}
 
+		super.enhanceModel();
+	}
+	
 	/*
 	 * Generated restriction statements for all individuals of otp:TheoremProvingBaseClass.
 	 */
