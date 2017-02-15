@@ -189,7 +189,7 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		Resource resource1 = ((OntModel)this.jdsi.getModel()).createResource(entity1Uri);
 		Resource resource2 = ((OntModel)this.jdsi.getModel()).createResource(entity2Uri);
 		return 	this.resourceSubsumes(resource1, resource2)
-			||	resource1.as(OntClass.class).listSubClasses().toList().contains(resource2);
+				|| resource1.as(OntClass.class).hasSubClass(resource2);
 	}
 
 	/*
