@@ -555,7 +555,12 @@ ex1:Parking1 a pcm:Point.
 
 ex1:Parking2 a pcm:Point.
 
-
+[a pac:ABACRule]
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:CE2.
 
 
 
