@@ -51,14 +51,14 @@ public class PaaSwordDataSourceTest {
 	public void testRuleAntecedentSubsumption() throws Exception {
 		PaaSwordDataSource pds = new PaaSwordDataSource(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
 		
-		Individual abacRule1 = pds.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_1").as(Individual.class);
+		assertEquivalentClasses(pds, this.getRuleAntecedent(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_1"), this.getRuleAntecedent(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2"));
+		
+	}
+
+	private String getRuleAntecedent(PaaSwordDataSource pds, String rule) {
+		Individual abacRule1 = pds.getModel().getResource(rule).as(Individual.class);
 		RDFNode abacRule1Antecedent = abacRule1.getPropertyValue(pds.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasAntecedent"));
-		
-		Individual abacRule2 = pds.getModel().getResource("http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2").as(Individual.class);
-		RDFNode abacRule2Antecedent = abacRule2.getPropertyValue(pds.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasAntecedent"));
-		
-		assertEquivalentClasses(pds, abacRule1Antecedent.toString(), abacRule2Antecedent.toString());
-		
+		return abacRule1Antecedent.toString();
 	}
 
 	private void assertSubclassOf(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
