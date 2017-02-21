@@ -171,7 +171,7 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		List<RDFNode> notPAndQList = new ArrayList<RDFNode>();
 		notPAndQList.add(((OntModel)this.jdsi.getModel()).createComplementClass(null, this.createParameterRestrictionClass(xorParam1)));
 		notPAndQList.add(this.createParameterRestrictionClass(xorParam2));
-		RDFList notPAndQRDFList = ((OntModel)this.jdsi.getModel()).createList(pAndNotQList.iterator());
+		RDFList notPAndQRDFList = ((OntModel)this.jdsi.getModel()).createList(notPAndQList.iterator());
 		OntClass notPAndQClass = ((OntModel)this.jdsi.getModel()).createIntersectionClass(null, notPAndQRDFList);
 		
 		List<RDFNode> orList = new ArrayList<RDFNode>();

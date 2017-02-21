@@ -76,8 +76,6 @@ public class SubclassSubsumptionsEngineTest {
 		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE21", "http://www.paasword.eu/security-policy/use-cases/car-park#CE9");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE22", "http://www.paasword.eu/security-policy/use-cases/car-park#CE8");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE22", "http://www.paasword.eu/security-policy/use-cases/car-park#CE10");
-		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE22", "http://www.paasword.eu/security-policy/use-cases/car-park#CE20");
-		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE22", "http://www.paasword.eu/security-policy/use-cases/car-park#CE21");
 		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE22", "http://www.paasword.eu/security-policy/use-cases/car-park#CE3");
 		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE22", "http://www.paasword.eu/security-policy/use-cases/car-park#CE5");
 		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE22", "http://www.paasword.eu/security-policy/use-cases/car-park#CE7");
