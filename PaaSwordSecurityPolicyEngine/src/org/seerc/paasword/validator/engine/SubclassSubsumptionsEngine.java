@@ -88,7 +88,7 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		}
 		else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:XORTheoremProvingClass").getURI()))
 		{	// otp:XORTheoremProvingClass
-			// TODO
+			return this.createXORRestriction(individual);
 		}
 		else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:NOTheoremProvingClass").getURI()))
 		{	// otp:NOTheoremProvingClass
@@ -102,7 +102,6 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		{	// terminating param
 			return this.createHasValueRestriction(individual);
 		}
-		return null;
 	}
 
 	private OntClass createIntersectionRestriction(Individual individual)
@@ -152,6 +151,36 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		Statement notParam = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI())).next();
 		
 		return ((OntModel)this.jdsi.getModel()).createComplementClass(null, this.createParameterRestrictionClass(notParam.getObject().as(Individual.class)));
+	}
+
+	private OntClass createXORRestriction(Individual individual)
+	{
+		// Get the statements (should be exactly two) where the individual is subject of a "otp:TheoremProvingParameterProperty" parameter.
+		StmtIterator xorParams = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI()));
+		Individual xorParam1 = xorParams.next().getObject().as(Individual.class);
+		Individual xorParam2 = xorParams.next().getObject().as(Individual.class);
+		
+		// p XOR q   =             ( p AND NOT q )  OR     ( NOT p AND q )
+		
+		List<RDFNode> pAndNotQList = new ArrayList<RDFNode>();
+		pAndNotQList.add(this.createParameterRestrictionClass(xorParam1));
+		pAndNotQList.add(((OntModel)this.jdsi.getModel()).createComplementClass(null, this.createParameterRestrictionClass(xorParam2)));
+		RDFList pAndNotQRDFList = ((OntModel)this.jdsi.getModel()).createList(pAndNotQList.iterator());
+		OntClass pAndNotQClass = ((OntModel)this.jdsi.getModel()).createIntersectionClass(null, pAndNotQRDFList);
+		
+		List<RDFNode> notPAndQList = new ArrayList<RDFNode>();
+		notPAndQList.add(((OntModel)this.jdsi.getModel()).createComplementClass(null, this.createParameterRestrictionClass(xorParam1)));
+		notPAndQList.add(this.createParameterRestrictionClass(xorParam2));
+		RDFList notPAndQRDFList = ((OntModel)this.jdsi.getModel()).createList(pAndNotQList.iterator());
+		OntClass notPAndQClass = ((OntModel)this.jdsi.getModel()).createIntersectionClass(null, notPAndQRDFList);
+		
+		List<RDFNode> orList = new ArrayList<RDFNode>();
+		orList.add(pAndNotQClass);
+		orList.add(notPAndQClass);
+		RDFList orRDFList = ((OntModel)this.jdsi.getModel()).createList(orList.iterator());
+		OntClass orClass = ((OntModel)this.jdsi.getModel()).createUnionClass(null, orRDFList);
+		
+		return orClass;
 	}
 
 	/*

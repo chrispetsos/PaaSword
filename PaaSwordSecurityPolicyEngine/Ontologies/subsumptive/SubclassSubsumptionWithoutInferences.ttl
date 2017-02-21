@@ -323,6 +323,10 @@ ex1:CE20 a pac:NOTContextExpression;
 ex1:CE21 a pac:NOTContextExpression;
 	pac:hasParameter ex1:Faliro .
 
+# This CE should be subsumed by CEs that have either Athens or WorkingHours1 parameter, but not both.
+ex1:CE22 a pac:XORContextExpression;
+	pac:hasParameter ex1:Athens, ex1:WorkingHours1 .
+
 # The first two rules are identical. This should fail.
 
 # alignment to otp namespace for rules
