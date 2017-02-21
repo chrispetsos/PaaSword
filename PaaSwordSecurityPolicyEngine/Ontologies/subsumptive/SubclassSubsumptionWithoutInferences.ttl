@@ -315,6 +315,14 @@ ex1:CE18 a pac:ORContextExpression;
 ex1:CE19 a pac:ORContextExpression;
 	pac:hasParameter ex1:somethingElse .
 
+# This CE should be disjoint with all CEs that have an Athens parameter
+ex1:CE20 a pac:NOTContextExpression;
+	pac:hasParameter ex1:Athens .
+
+# This CE should be disjoint with all CEs that have a Faliro parameter
+ex1:CE21 a pac:NOTContextExpression;
+	pac:hasParameter ex1:Faliro .
+
 # The first two rules are identical. This should fail.
 
 # alignment to otp namespace for rules

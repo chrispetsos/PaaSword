@@ -92,7 +92,7 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		}
 		else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:NOTheoremProvingClass").getURI()))
 		{	// otp:NOTheoremProvingClass
-			// TODO
+			return this.createComplementRestriction(individual);
 		}
 		else if(individual.hasOntClass(jdsi.createResourceFromUri("otp:TheoremProvingBaseClass").getURI()))
 		{	// otp:TheoremProvingBaseClass
@@ -144,6 +144,14 @@ public class SubclassSubsumptionsEngine extends EntitySubsumptionBaseEngine {
 		restrictionsRDFList = ((OntModel)this.jdsi.getModel()).createList(restrictionsList.iterator());
 		
 		return restrictionsRDFList;
+	}
+
+	private OntClass createComplementRestriction(Individual individual)
+	{
+		// Get the statement (should be exactly one) where the individual is subject of a "otp:TheoremProvingParameterProperty" parameter.
+		Statement notParam = individual.listProperties(ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:TheoremProvingParameterProperty").getURI())).next();
+		
+		return ((OntModel)this.jdsi.getModel()).createComplementClass(null, this.createParameterRestrictionClass(notParam.getObject().as(Individual.class)));
 	}
 
 	/*

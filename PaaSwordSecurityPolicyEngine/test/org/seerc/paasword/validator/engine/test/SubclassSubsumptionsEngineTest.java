@@ -53,6 +53,8 @@ public class SubclassSubsumptionsEngineTest {
 		assertNotNull(sse);
 		
 		sse.enhanceModel();
+		
+		//jdsi.printModel(System.out);
 
 		// Context Expressions
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE2", "http://www.paasword.eu/security-policy/use-cases/car-park#CE1");
@@ -65,6 +67,13 @@ public class SubclassSubsumptionsEngineTest {
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE5", "http://www.paasword.eu/security-policy/use-cases/car-park#CE6");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE15", "http://www.paasword.eu/security-policy/use-cases/car-park#CE16");
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE17", "http://www.paasword.eu/security-policy/use-cases/car-park#CE18");
+		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE20", "http://www.paasword.eu/security-policy/use-cases/car-park#CE3");
+		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE20", "http://www.paasword.eu/security-policy/use-cases/car-park#CE5");
+		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE20", "http://www.paasword.eu/security-policy/use-cases/car-park#CE7");
+		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE20", "http://www.paasword.eu/security-policy/use-cases/car-park#CE9");
+		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE21", "http://www.paasword.eu/security-policy/use-cases/car-park#CE5");
+		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE21", "http://www.paasword.eu/security-policy/use-cases/car-park#CE7");
+		assertDisjointClasses(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE21", "http://www.paasword.eu/security-policy/use-cases/car-park#CE9");
 
 		// Complex CEs
 		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#CE7", "http://www.paasword.eu/security-policy/use-cases/car-park#CE8");
@@ -117,6 +126,12 @@ public class SubclassSubsumptionsEngineTest {
 		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
 		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
 		assertTrue(class1.listEquivalentClasses().toList().contains(class2));
+	}
+	
+	private void assertDisjointClasses(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
+		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
+		assertTrue(class1.listDisjointWith().toList().contains(class2));
 	}
 	
 	private InputStream createStream(String... paths) {
