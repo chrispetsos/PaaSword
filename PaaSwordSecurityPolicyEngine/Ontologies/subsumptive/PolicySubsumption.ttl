@@ -21,6 +21,71 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
+@prefix list: <http://www.paasword.eu/security-policy/seerc/list#> .
+
+# Ontology for list of elements in next/previous order
+list:hasNext a owl:ObjectProperty ;
+	owl:inverseOf list:hasPrevious ;
+	a owl:TransitiveProperty .
+
+list:hasPrevious a owl:ObjectProperty .
+
+# Policies and Policy Set with Rules
+
+# Policy Set 1 contains Policies 1 and 2 with first-applicable combining algorithm
+ex1:ABACPolicySet_1 a pac:ABACPolicySet;
+	pac:hasPolicySetCombiningAlgorithm ex1:firstApplicable.
+
+# Policy 1 has rules 1, 2, 3 with permit-override combining algorithm
+ex1:ABACPolicy_1 a pac:ABACPolicy;
+	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
+	pac:hasPolicyCombiningAlgorithm ex1:permitOverride;
+	pac:hasABACRule ex1:R1, ex1:R2, ex1:R3 .
+
+# Policy 2 has rule 4 with permit-override combining algorithm
+ex1:ABACPolicy_2 a pac:ABACPolicy;
+	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
+	pac:hasPolicyCombiningAlgorithm ex1:permitOverride;
+	pac:hasABACRule ex1:R4 .
+
+# Allow Manager to write Report
+ex1:R1 a pac:ABACRule;
+	pac:hasControlledObject ex1:Report;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Write;
+	pac:hasActor ex1:Manager .
+
+ex1:Report a pcm:Relational .
+ex1:Manager a pcm:Person.
+
+# Allow Developer to read Report
+ex1:R2 a pac:ABACRule;
+	pac:hasControlledObject ex1:Report;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:Developer .
+
+ex1:Developer a pcm:Person.
+
+# Deny Developer to write Report
+ex1:R3 a pac:ABACRule;
+	pac:hasControlledObject ex1:Report;
+	pac:hasAuthorisation pac:negative;
+	pac:hasAction ex1:Write;
+	pac:hasActor ex1:Developer .
+
+# Allow Developer to write Report
+# This should always be overriden by R3 given the current structure of policies
+# and the combining algorithms selected.
+# So, it should be inferred that Policy 2 is subsumed by Policy 1.
+ex1:R4 a pac:ABACRule;
+	pac:hasControlledObject ex1:Report;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Write;
+	pac:hasActor ex1:Developer .
+
+ex1:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+ex1:permitOverride a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 
 # Fix-up for rule antecedent and conclusion needed for policy subsumption
 pac:RuleAntecedent a owl:Class .
