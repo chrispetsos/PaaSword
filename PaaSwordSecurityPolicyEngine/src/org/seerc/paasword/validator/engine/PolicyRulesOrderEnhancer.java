@@ -35,6 +35,11 @@ public class PolicyRulesOrderEnhancer implements JenaModelEnhancer {
 			 * in the order that they are actually added inside the RDF document. 
 			 * 
 			 * TODO: Is this always the case???
+			 * 
+			 * No! Changing the declared order inside the RDF document does NOT change
+			 * the order that Jena fetches them. Tracing a bit inside this, it seems that
+			 * a Graph data structure is used for the elements, so we cannot be sure
+			 * about the order these are returned in any case.
 			 */
 			Collections.reverse(policyRules);
 			
