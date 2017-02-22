@@ -52,17 +52,20 @@ public class PolicyRulesOrderEnhancerTest {
 		Individual r2 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R2").as(Individual.class);
 		Individual r3 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R3").as(Individual.class);
 		Individual r4 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R4").as(Individual.class);
+		Individual r5 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R5").as(Individual.class);
 		
 		assertTrue(this.hasNext(jdsi, r1, r2));
 		assertTrue(this.hasNext(jdsi, r2, r3));
 		assertFalse(this.hasNext(jdsi, r3, r4));
+		assertTrue(this.hasNext(jdsi, r4, r5));
 		
 		assertFalse(this.hasNext(jdsi, r3));
-		assertFalse(this.hasNext(jdsi, r4));
+		assertFalse(this.hasNext(jdsi, r5));
 		
 		assertTrue(this.hasPrevious(jdsi, r2, r1));
 		assertTrue(this.hasPrevious(jdsi, r3, r2));
 		assertFalse(this.hasPrevious(jdsi, r4, r3));		
+		assertTrue(this.hasPrevious(jdsi, r5, r4));
 
 		assertFalse(this.hasPrevious(jdsi, r1));
 		assertFalse(this.hasPrevious(jdsi, r4));

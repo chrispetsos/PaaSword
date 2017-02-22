@@ -42,9 +42,9 @@ public class PaaSwordDataSourceTest {
 	public void testEnhanceModel() throws Exception {
 		PaaSwordDataSource pds = new PaaSwordDataSource(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
 		
-		// assert that we have 8 RuleAntecedents and 8 RuleConclusions
-		assertEquals(12, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleAntecedent")).toList().size());
-		assertEquals(12, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleConclusion")).toList().size());
+		// assert that we have 13 RuleAntecedents and 13 RuleConclusions
+		assertEquals(13, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleAntecedent")).toList().size());
+		assertEquals(13, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleConclusion")).toList().size());
 	}
 
 	@Test

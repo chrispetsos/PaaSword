@@ -1,6 +1,7 @@
 package org.seerc.paasword.validator.engine;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.hp.hpl.jena.ontology.Individual;
@@ -40,8 +41,17 @@ public class PolicyRulesOrderEnhancer implements JenaModelEnhancer {
 			 * the order that Jena fetches them. Tracing a bit inside this, it seems that
 			 * a Graph data structure is used for the elements, so we cannot be sure
 			 * about the order these are returned in any case.
+			 * 
+			 * Instead of reversing the list, I ended up sorting it lexicographically
+			 * based on the rules' URIs. Very naive !!!!
 			 */
-			Collections.reverse(policyRules);
+			Collections.sort(policyRules, new Comparator<RDFNode>() {
+
+				@Override
+				public int compare(RDFNode arg0, RDFNode arg1) {
+					return arg0.toString().compareTo(arg1.toString());
+				}
+			});
 			
 			// Add hasNext relations between Rules
 			// iterate until the previous to last
