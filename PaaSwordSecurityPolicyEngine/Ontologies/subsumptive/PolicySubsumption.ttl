@@ -84,7 +84,7 @@ ex1:R3 a pac:ABACRule;
 # with respect to negative authorisation.
 ex1:R4 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;
-	pac:hasAuthorisation pac:positive;
+	pac:hasAuthorisation pac:negative;
 	pac:hasAction ex1:Write;
 	pac:hasActor ex1:Developer;
 	pac:hasContextExpression ex1:expr .
@@ -92,7 +92,7 @@ ex1:R4 a pac:ABACRule;
 # Deny Anyone to read Report
 ex1:R5 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;
-	pac:hasAuthorisation pac:negative;
+	pac:hasAuthorisation pac:positive;
 	pac:hasAction ex1:Read;
 	pac:hasActor ex1:Anyone;
 	pac:hasContextExpression ex1:expr .
@@ -180,15 +180,7 @@ ex1:ABACPolicy_2AccessRequestClassFor_negative a owl:Class ;
 		owl:unionOf (
 		    [
 		    	owl:intersectionOf (
-					ex1:R5Antecedent
-		    		[
-		    			owl:complementOf 
-	    				[
-	    					owl:unionOf (
-								ex1:R4Antecedent		    					
-	    					)
-	    				]
-		    		]
+					ex1:R4Antecedent
 		    	)
 		    ]
 		)

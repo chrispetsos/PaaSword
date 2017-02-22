@@ -89,7 +89,7 @@ public class PaaSwordDataSourceTest {
 
 		pds.printModel(new FileOutputStream(new File("testPolicySubsumption.ttl")));
 		
-		assertEquivalentClasses(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_2AccessRequestClassFor_negative", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_1AccessRequestClassFor_negative");
+		assertSubclassOf(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_1AccessRequestClassFor_negative", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_2AccessRequestClassFor_negative");
 	}
 
 	private void assertSubclassOf(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
