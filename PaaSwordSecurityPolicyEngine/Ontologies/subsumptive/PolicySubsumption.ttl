@@ -76,8 +76,9 @@ ex1:R3 a pac:ABACRule;
 
 # Allow Developer to write Report
 # This should always be overriden by R3 given the current structure of policies
-# and the combining algorithms selected.
-# So, it should be inferred that Policy 2 is subsumed by Policy 1.
+# and rules, and the combining algorithms selected.
+# So, it should be inferred that Policy 2 is subsumed by Policy 1
+# with respect to negative authorisation.
 ex1:R4 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;
 	pac:hasAuthorisation pac:positive;
