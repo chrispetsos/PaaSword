@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -82,4 +83,31 @@ public class PaaSwordDataSourceTest {
 		assertTrue(class2.hasEquivalentClass(class1));
 	}
 	
+	@Test
+	public void testPolicySubsumption() throws FileNotFoundException {
+		PaaSwordDataSource pds = new PaaSwordDataSource(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
+
+		pds.printModel(new FileOutputStream(new File("testPolicySubsumption.ttl")));
+		
+		assertEquivalentClasses(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_2AccessRequestClassFor_negative", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_1AccessRequestClassFor_negative");
+	}
+
+	private void assertSubclassOf(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
+		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
+		assertTrue(class2.listSubClasses().toList().contains(class1));
+	}
+	
+	private void assertEquivalentClasses(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
+		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
+		assertTrue(class1.listEquivalentClasses().toList().contains(class2));
+	}
+	
+	private void assertDisjointClasses(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
+		OntClass class1 = jdsi.getModel().getResource(class1Uri).as(OntClass.class);
+		OntClass class2 = jdsi.getModel().getResource(class2Uri).as(OntClass.class);
+		assertTrue(class1.listDisjointWith().toList().contains(class2));
+	}
+
 }

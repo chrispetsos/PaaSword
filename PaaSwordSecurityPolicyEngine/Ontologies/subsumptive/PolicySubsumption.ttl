@@ -53,7 +53,8 @@ ex1:R1 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;
 	pac:hasAuthorisation pac:positive;
 	pac:hasAction ex1:Write;
-	pac:hasActor ex1:Manager .
+	pac:hasActor ex1:Manager;
+	pac:hasContextExpression ex1:expr .
 
 ex1:Report a pcm:Relational .
 ex1:Manager a pcm:Person.
@@ -63,7 +64,8 @@ ex1:R2 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;
 	pac:hasAuthorisation pac:positive;
 	pac:hasAction ex1:Read;
-	pac:hasActor ex1:Developer .
+	pac:hasActor ex1:Developer;
+	pac:hasContextExpression ex1:expr .
 
 ex1:Developer a pcm:Person.
 
@@ -72,27 +74,30 @@ ex1:R3 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;
 	pac:hasAuthorisation pac:negative;
 	pac:hasAction ex1:Write;
-	pac:hasActor ex1:Developer .
-
-# Deny Anyone to read Report
-ex1:R4 a pac:ABACRule;
-	pac:hasControlledObject ex1:Report;
-	pac:hasAuthorisation pac:negative;
-	pac:hasAction ex1:Read;
-	pac:hasActor ex1:Anyone .
-
-ex1:Anyone a pcm:Person.
+	pac:hasActor ex1:Developer;
+	pac:hasContextExpression ex1:expr .
 
 # Allow Developer to write Report
 # This should always be overriden by R3 given the current structure of policies
 # and rules, and the combining algorithms selected.
 # So, it should be inferred that Policy 2 is subsumed by Policy 1
 # with respect to negative authorisation.
-ex1:R5 a pac:ABACRule;
+ex1:R4 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;
 	pac:hasAuthorisation pac:positive;
 	pac:hasAction ex1:Write;
-	pac:hasActor ex1:Developer .
+	pac:hasActor ex1:Developer;
+	pac:hasContextExpression ex1:expr .
+
+# Deny Anyone to read Report
+ex1:R5 a pac:ABACRule;
+	pac:hasControlledObject ex1:Report;
+	pac:hasAuthorisation pac:negative;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:Anyone;
+	pac:hasContextExpression ex1:expr .
+
+ex1:Anyone a pcm:Person.
 
 ex1:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 ex1:permitOverride a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
@@ -103,56 +108,97 @@ ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_1AccessReq
 ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_1AccessRequestClassFor_negative .
 
 # align to otp namespace 
-pac:PolicyAccessRequestClass rdfs:subClassOf otp:TheoremProvingBaseClass .
+# pac:PolicyAccessRequestClass rdfs:subClassOf otp:TheoremProvingBaseClass .
 
-ex1:ABACPolicy_1AccessRequestClassFor_positive a pac:PolicyAccessRequestClass;
-	otp:TheoremProvingParameterProperty
-		[a otp:ORTheoremProvingClass ;
-			otp:TheoremProvingParameterProperty ex1:R1Antecedent ;
-			otp:TheoremProvingParameterProperty ex1:R2Antecedent
-		] .
+#ex1:ABACPolicy_1AccessRequestClassFor_positive a pac:PolicyAccessRequestClass;
+#	otp:TheoremProvingParameterProperty
+#		[a otp:ORTheoremProvingClass ;
+#			otp:TheoremProvingParameterProperty ex1:R1Antecedent ;
+#			otp:TheoremProvingParameterProperty ex1:R2Antecedent
+#		] .
 
-ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:PolicyAccessRequestClass;
-	otp:TheoremProvingParameterProperty
-		[a otp:ORTheoremProvingClass ;
-			otp:TheoremProvingParameterProperty ex1:R3Antecedent ;
-			otp:TheoremProvingParameterProperty 
-				[a otp:ANDTheoremProvingClass ;
-					otp:TheoremProvingParameterProperty
-						[a otp:NOTTheoremProvingClass ;
-							otp:TheoremProvingParameterProperty
-								[a otp:ORTheoremProvingClass ;
-									otp:TheoremProvingParameterProperty ex1:R1Antecedent ;
-									otp:TheoremProvingParameterProperty ex1:R2Antecedent
-								]
-						]
-				]
-		] .
+ex1:ABACPolicy_1AccessRequestClassFor_negative a owl:Class ;
+	owl:equivalentClass
+	[
+		owl:unionOf (
+		    [
+		    	owl:intersectionOf (
+					ex1:R3Antecedent
+		    		[
+		    			owl:complementOf 
+	    				[
+	    					owl:unionOf (
+								ex1:R1Antecedent		    					
+								ex1:R2Antecedent		    					
+	    					)
+	    				]
+		    		]
+		    	)
+		    ]
+		)
+	] .
+
+#ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:PolicyAccessRequestClass;
+#	otp:TheoremProvingParameterProperty
+#		[a otp:ORTheoremProvingClass ;
+#			otp:TheoremProvingParameterProperty ex1:R3Antecedent ;
+#			otp:TheoremProvingParameterProperty 
+#				[a otp:ANDTheoremProvingClass ;
+#					otp:TheoremProvingParameterProperty
+#						[a otp:NOTTheoremProvingClass ;
+#							otp:TheoremProvingParameterProperty
+#								[a otp:ORTheoremProvingClass ;
+#									otp:TheoremProvingParameterProperty ex1:R1Antecedent ;
+#									otp:TheoremProvingParameterProperty ex1:R2Antecedent
+#								]
+#						]
+#				]
+#		] .
 
 ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_2AccessRequestClassFor_positive .
 ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_2AccessRequestClassFor_negative .
 
-ex1:ABACPolicy_2AccessRequestClassFor_positive a pac:PolicyAccessRequestClass;
-	otp:TheoremProvingParameterProperty
-		[a otp:ORTheoremProvingClass ;
-			otp:TheoremProvingParameterProperty ex1:R5Antecedent ;
-			otp:TheoremProvingParameterProperty 
-				[a otp:ANDTheoremProvingClass ;
-					otp:TheoremProvingParameterProperty
-						[a otp:NOTTheoremProvingClass ;
-							otp:TheoremProvingParameterProperty
-								[a otp:ORTheoremProvingClass ;
-									otp:TheoremProvingParameterProperty ex1:R4Antecedent
-								]
-						]
-				]
-		] .
+#ex1:ABACPolicy_2AccessRequestClassFor_positive a pac:PolicyAccessRequestClass;
+#	otp:TheoremProvingParameterProperty
+#		[a otp:ORTheoremProvingClass ;
+#			otp:TheoremProvingParameterProperty ex1:R5Antecedent ;
+#			otp:TheoremProvingParameterProperty 
+#				[a otp:ANDTheoremProvingClass ;
+#					otp:TheoremProvingParameterProperty
+#						[a otp:NOTTheoremProvingClass ;
+#							otp:TheoremProvingParameterProperty
+#								[a otp:ORTheoremProvingClass ;
+#									otp:TheoremProvingParameterProperty ex1:R4Antecedent
+#								]
+#						]
+#				]
+#		] .
+
+ex1:ABACPolicy_2AccessRequestClassFor_negative a owl:Class ;
+	owl:equivalentClass
+	[
+		owl:unionOf (
+		    [
+		    	owl:intersectionOf (
+					ex1:R5Antecedent
+		    		[
+		    			owl:complementOf 
+	    				[
+	    					owl:unionOf (
+								ex1:R4Antecedent		    					
+	    					)
+	    				]
+		    		]
+		    	)
+		    ]
+		)
+	] .
 		
-ex1:ABACPolicy_2AccessRequestClassFor_negative a pac:PolicyAccessRequestClass;
-	otp:TheoremProvingParameterProperty
-		[a otp:ORTheoremProvingClass ;
-			otp:TheoremProvingParameterProperty ex1:R4Antecedent
-		] .
+#ex1:ABACPolicy_2AccessRequestClassFor_negative a pac:PolicyAccessRequestClass;
+#	otp:TheoremProvingParameterProperty
+#		[a otp:ORTheoremProvingClass ;
+#			otp:TheoremProvingParameterProperty ex1:R4Antecedent
+#		] .
 
 # Fix-up for rule antecedent and conclusion needed for policy subsumption
 pac:RuleAntecedent a owl:Class .
