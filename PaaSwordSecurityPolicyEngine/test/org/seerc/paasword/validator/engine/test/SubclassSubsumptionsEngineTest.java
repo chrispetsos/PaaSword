@@ -120,6 +120,8 @@ public class SubclassSubsumptionsEngineTest {
 		assertNotNull(sse);
 		
 		sse.enhanceModel();
+		
+		assertSubclassOf(jdsi, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_2AccessRequestClassFor_negative", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_1AccessRequestClassFor_negative");
 	}
 
 	private void assertSubclassOf(JenaDataSourceInferred jdsi, String class1Uri, String class2Uri) {
