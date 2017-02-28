@@ -15,8 +15,6 @@
 @prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
 @prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 ### Policy meta‐model #######################################################
 pwd:Policy a rdfs:Class.

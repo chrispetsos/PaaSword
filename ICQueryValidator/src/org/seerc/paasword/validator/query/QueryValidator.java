@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.seerc.paasword.translator.QueryConstraint;
+import org.seerc.paasword.validator.engine.DomainRangeStatementMover;
 import org.seerc.paasword.validator.engine.JenaDataSource;
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.seerc.paasword.validator.engine.SubclassSubsumptionDataSource;
@@ -57,18 +58,22 @@ public class QueryValidator {
 	 */
 	public void extractConstraints(InputStream constraints,
 			InputStream... ontologies) {
+		// Read constraints ontology
+		OntModel constraintsModel;
+		constraintsModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
+		constraintsModel.read(constraints, null , "TTL");
+		constraintsModel.prepare();
+		
 		// Combine multiple ontologies in a single InputStream 
 		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(ontologies));
 		SequenceInputStream sis = new SequenceInputStream(enumOnto);
 
-		// Create the SubclassSubsumptionDataSource
-		jds = new SubclassSubsumptionDataSource(sis);
+		// move domain/range statements from ontologies to constraints
+		DomainRangeStatementMover drsm = new DomainRangeStatementMover();
+		InputStream strippedIS = drsm.moveDomainRangeStatements(sis, constraintsModel);
 		
-		// Read constraints ontology
-		OntModel constraintsModel;
-		constraintsModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM);
-		constraintsModel.read(constraints, null , "TTL");
-		constraintsModel.prepare();
+		// Create the SubclassSubsumptionDataSource with the input stream that does not have domain/range statements
+		jds = new SubclassSubsumptionDataSource(strippedIS);
 		
 		// Convert OWL axiom constraints to SPARQL queries.
 		queryConstraints = ICAxiomToSPARQLTranslator.translateModelToSPARQL(constraintsModel);

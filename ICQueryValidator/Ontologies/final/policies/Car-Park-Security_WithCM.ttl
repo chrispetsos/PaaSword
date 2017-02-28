@@ -1,3 +1,144 @@
+@prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
+@prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
+@prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix usdl-core: <http://www.linked-usdl.org/ns/usdl-core#>.
+@prefix usdl-business-roles: <http://www.linked-usdl.org/ns/usdl-business-roles#>.
+@prefix usdl-sec: <http://www.linked-usdl.org/ns/usdl-sec#>.
+@prefix orgX: <http://www.paasword.eu/security-policy/orgX#>. 
+@prefix gr: <http://purl.org/goodrelations/v1#>. 
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+### This is the Car Park security use case we present in D2.2, with some extensions related
+### to refersTo, subsumptions and contradictions.
+
+### Instantiated cryptographic policy set ###################################
+ex1:BootstrappingCryptoPolicySet_1 a pbe:BootstrappingCryptoPolicySet.
+
+ex1:BootstrappingCryptoPolicy_1 a pbe:BootstrappingCryptoPolicy;
+	pbe:belongsToCryptoPolicySet ex1:BootstrappingCryptoPolicySet_1;
+	pbe:hasBootStrappingCryptoRule ex1:BootstrappingCryptoRule_1.
+
+ex1:BootstrappingCryptoRule_1 a pbe:BootstrappingCryptoRule;
+	pbe:hasControlledObject ex1:PaymentCreditCardNo;
+	pbe:hasCryptoElement ex1:AES256.
+
+ex1:PaymentCreditCardNo a pcm:Relational.
+
+ex1:AES256 a pdm:Symmetric.
+#############################################################################
+
+### Instantiated data fragmentation and distribution policy set #############
+ex1:BootstrappingDFDPolicySet_1 a pbdfd:BootstrappingDFDPolicySet.
+
+ex1:BootstrappingDFDPolicy_1 a pbdfd:BootstrappingDFDPolicy;
+	pbdfd:belongsToDFDPolicySet ex1:BootstrappingDFDPolicySet_1; 
+	pbdfd:hasBootstrappingDFDRule ex1:BootstrappingDFDRule_1.
+
+ex1:BootstrappingDFDRule_1 a pbdfd:BootstrappingDFDRule;
+	pbdfd:hasControlledObject ex1:PaymentsTable;
+	pbdfd:hasDFDElement ex1:VerticalFragmentation_1.
+
+ex1:PaymentsTable a pcm:Relational.
+
+ex1:VerticalFragmentation_1 a pdm:VerticalFragmentation.
+#############################################################################
+
+### Instantiated ABAC rule template ################################
+# The first two rules are subsumed.
+ex1:ABACRule_1 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr.
+
+ex1:PaymentsTable a pcm:Relational.
+
+pac:positive a pac:Authorisation.
+
+ex1:Read a ppm:DatastorePermission.
+
+ex1:ParkingEmployee a pcm:Person.
+
+ex1:ABACRule_2 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr2.
+
+# This contradicts to rule 1
+ex1:ABACRule_3 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:negative;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr.
+
+
+ex1:DepartmentAPaymentsTable a pcm:Relational.
+ex1:ParkingSectionAEmployee a pcm:Person.
+ex1:ParkingSectionAArea1Employee a pcm:Person.
+
+ex1:Write a ppm:DatastorePermission.
+#############################################################################
+
+### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
+ex1:expr a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+
+ex1:expr2 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours3, ex1:Parking1 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
+ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval.
+ex1:EmployeeWorkingHours3 a pcm:DateTimeInterval.
+
+# Custom alignment to otp namespace
+pac:isSubsumedBy owl:inverseOf otp:subsumes .
+
+ex1:EmployeeWorkingHours2 pac:isSubsumedBy ex1:EmployeeWorkingHours .
+ex1:EmployeeWorkingHours2 pac:subsumes ex1:EmployeeWorkingHours3 .
+ex1:PaymentsTable pac:subsumes ex1:DepartmentAPaymentsTable .
+ex1:ParkingEmployee pac:subsumes ex1:ParkingSectionAEmployee .
+ex1:ParkingSectionAEmployee pac:subsumes ex1:ParkingSectionAArea1Employee .
+
+ex1:expr1 a pac:ORContextExpression;
+	pac:hasParameter ex1:Parking1, ex1:Parking2 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:Parking1 a pcm:Point.
+
+ex1:Parking2 a pcm:Point.
+
+### Instantiated ABAC policy ################################################
+ex1:ABACPolicySet_1 a pac:ABACPolicySet;
+	pac:hasPolicySetCombiningAlgorithm ex1:denyUnlessPermit.
+
+ex1:ABACPolicy_1 a pac:ABACPolicy;
+	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
+	pac:hasPolicyCombiningAlgorithm ex1:denyUnlessPermit;
+	pac:hasABACRule ex1:ABACRule_1, ex1:ABACRule_2, ex1:ABACRule_3 .
+
+ex1:denyUnlessPermit a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+#############################################################################
+
+
 @prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -120,7 +261,7 @@ pcm:elevation
 pcm:hasBeginning
   a rdf:Property ;
   rdfs:domain pcm:DateTimeInterval ;
-  rdfs:range xsd:dateTime .
+  rdfs:range xsd:time .
 
 pcm:hasBrand
   a rdf:Property ;
@@ -159,7 +300,7 @@ pcm:hasDownloadRate
 pcm:hasEnd
   a rdf:Property ;
   rdfs:domain pcm:DateTimeInterval ;
-  rdfs:range xsd:dateTime .
+  rdfs:range xsd:time .
 
 pcm:hasEndpoint
   a rdf:Property ;
