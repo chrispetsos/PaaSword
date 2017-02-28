@@ -185,6 +185,113 @@ pac:XORContextExpression rdfs:subClassOf pac:ContextExpression.
 pac:NOTContextExpression rdfs:subClassOf pac:ContextExpression.
 #############################################################################
 
+### Domain/range expressions #############################################
+pwd:belongsToPolicySet a rdf:Property;
+	rdfs:domain pwd:Policy, pwd:PolicySet;
+	rdfs:range pwd:PolicySet.
+
+pwd:hasRule a rdf:Property;
+	rdfs:domain pwd:Policy;
+	rdfs:range pwd:Rule.
+
+pbe:hasCryptoPolicySet a rdf:Property;
+	rdfs:domain pbe:PaaSwordDataEncryption;
+	rdfs:range pbe:BootstrappingCryptoPolicySet.
+
+pbe:hasBootStrappingCryptoRule rdfs:domain pbe:BootstrappingCryptoPolicy;
+	rdfs:range pbe:BootstrappingCryptoRule.
+
+pbe:belongsToCryptoPolicySet rdfs:domain pbe:BootstrappingCryptoPolicy, pbe:BootstrappingCryptoPolicySet;
+	rdfs:range pbe:BootstrappingCryptoPolicySet.
+
+pbe:hasControlledObject a rdf:Property;
+	rdfs:domain pbe:BootstrappingCryptoRule;
+	rdfs:range pcm:Object.
+
+pbe:hasCryptoElement a rdf:Property;
+	rdfs:domain pbe:BootstrappingCryptoRule;
+	rdfs:range pdm:CryptographicType.
+
+pbdfd:hasDFDPolicySet a rdf:Property;
+	rdfs:domain pbdfd:PaaSwordDataFragmentationAndDistribution;
+	rdfs:range pbdfd:BootstrappingDFDPolicySet.
+
+pbdfd:hasBootstrappingDFDRule rdfs:domain pbdfd:BootstrappingDFDPolicy;
+	rdfs:range pbdfd:BootstrappingDFDRule.
+
+pbdfd:belongsToDFDPolicySet rdfs:domain pbdfd:BootstrappingDFDPolicy, pbdfd:BootstrappingDFDPolicySet;
+	rdfs:range pbdfd:BootstrappingDFDPolicySet.
+
+pbdfd:hasControlledObject a rdf:Property;
+	rdfs:domain pbdfd:BootstrappingDFDRule;
+	rdfs:range pcm:Object.
+
+pbdfd:hasDFDElement a rdf:Property;
+	rdfs:domain pbdfd:BootstrappingDFDRule;
+	rdfs:range pdm:DatabaseFragmentation.
+
+pac:hasABACPolicySet a rdf:Property;
+	rdfs:domain pac:PaaSwordABAC;
+	rdfs:range pac:ABACPolicySet.
+
+pac:hasControlledObject a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pcm:Object.
+
+pac:hasAuthorisation a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pac:Authorisation.
+
+pac:hasAction a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range ppm:DataPermission.
+
+pac:hasActor a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pcm:Subject.
+
+pac:hasContextExpression a rdf:Property;
+	rdfs:domain pac:ABACRule;
+	rdfs:range pac:ContextExpression.
+
+pac:hasABACRule rdfs:domain pac:ABACPolicy;
+	rdfs:range pac:ABACRule.
+
+pac:hasPolicyContextExpression a rdf:Property;
+	rdfs:domain pac:ABACPolicy;
+	rdfs:range pac:ContextExpression.
+
+pac:hasPolicyCombiningAlgorithm a rdf:Property;
+	rdfs:domain pac:ABACPolicy;
+	rdfs:range pac:PolicyCombiningAlgorithms.
+
+pac:belongsToABACPolicySet rdfs:domain pac:ABACPolicy, pac:ABACPolicySet;
+	rdfs:range pac:ABACPolicySet.
+	
+pac:hasPolicySetContextExpression a rdf:Property;
+	rdfs:domain pac:ABACPolicySet;
+	rdfs:range pac:ContextExpression.
+
+pac:hasPolicySetCombiningAlgorithm a rdf:Property;
+	rdfs:domain pac:ABACPolicySet;
+	rdfs:range pac:PolicySetCombiningAlgorithms.
+
+pac:hasPatternParameter a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range pcpm:ContextPattern, pac:ContextExpression.
+
+pac:hasParameter a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range pcm:SecurityContextElement, pac:ContextExpression.
+
+pac:hasEvaluationResult a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range xsd:boolean.
+
+pac:refersTo a rdf:Property;
+	rdfs:domain pac:ContextExpression;
+	rdfs:range pcm:Subject, pcm:Object.
+
 ### Alignment to otp namespace for context expressions ######################
 pac:ContextExpression rdfs:subClassOf otp:TheoremProvingBaseClass .
 pac:hasParameter rdfs:subPropertyOf otp:TheoremProvingParameterProperty .

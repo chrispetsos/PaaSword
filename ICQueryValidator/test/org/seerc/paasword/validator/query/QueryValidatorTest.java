@@ -30,14 +30,11 @@ public class QueryValidatorTest {
 	public void setUp() throws Exception {
 		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/constraints.owl"));
 
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl"));
-		InputStream pwdcpm = new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordContextPatternModel_v2.ttl"));
-		InputStream pwdddem = new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordDDEModel_v2.ttl"));
-		InputStream pwdpm = new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordPermissionModel_v2.ttl"));
+		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
 		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/policy-models/Security-Policy.ttl"));
 		InputStream pwdSecurityPolicy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Violating.ttl"));
 		
-		qv = new QueryValidator(constraints, pwdcm, pwdcpm, pwdddem, pwdpm, pwdPolicyModel, pwdSecurityPolicy);
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, pwdSecurityPolicy);
 	}
 
 	@After
