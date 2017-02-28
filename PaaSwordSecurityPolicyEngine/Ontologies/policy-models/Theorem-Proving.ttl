@@ -1,0 +1,10 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
+
+otp:TheoremProvingBaseClass a owl:Class .
+otp:TheoremProvingParameterProperty a owl:ObjectProperty .
+otp:subsumes a owl:ObjectProperty, owl:TransitiveProperty .
+otp:ANDTheoremProvingClass a owl:Class .
+otp:ORTheoremProvingClass a owl:Class .
+otp:XORTheoremProvingClass a owl:Class .
+otp:NOTTheoremProvingClass a owl:Class .

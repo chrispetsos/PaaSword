@@ -16,10 +16,13 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mindswap.pellet.jena.PelletReasonerFactory;
+import org.seerc.paasword.validator.engine.DomainRangeStatementMover;
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.seerc.paasword.validator.engine.SubclassSubsumptionsEngine;
 
 import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class SubclassSubsumptionsEngineTest {
 
@@ -43,11 +46,20 @@ public class SubclassSubsumptionsEngineTest {
 	public void testEnhanceModel() throws FileNotFoundException {
 		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(
 				createStream(
-								"Ontologies/subsumptive/SubclassSubsumptionWithoutInferences.ttl")
+								"Ontologies/subsumptive/SubclassSubsumptionWithoutInferences.ttl",
+								"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl",
+								"Ontologies/policy-models/Security-Policy-Model.ttl",
+								"Ontologies/policy-models/Theorem-Proving.ttl"
+						)
 				);
 		
 		assertNotNull(jdsi);
 
+		// we need to move the domain/range statements away from the data source 
+		// for the subsumption to work
+		DomainRangeStatementMover drsm = new DomainRangeStatementMover();
+		drsm.moveDomainRangeStatements(jdsi, ModelFactory.createOntologyModel(PelletReasonerFactory.THE_SPEC));
+		
 		SubclassSubsumptionsEngine sse = new SubclassSubsumptionsEngine(jdsi);
 		
 		assertNotNull(sse);

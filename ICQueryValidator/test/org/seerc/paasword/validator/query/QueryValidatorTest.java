@@ -30,14 +30,11 @@ public class QueryValidatorTest {
 	public void setUp() throws Exception {
 		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/constraints.owl"));
 
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl"));
-		InputStream pwdcpm = new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordContextPatternModel_v2.ttl"));
-		InputStream pwdddem = new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordDDEModel_v2.ttl"));
-		InputStream pwdpm = new FileInputStream(new File("Ontologies/context-aware-security-models/PaaSwordPermissionModel_v2.ttl"));
-		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/policy-models/Security-Policy.ttl"));
+		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
 		InputStream pwdSecurityPolicy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Violating.ttl"));
 		
-		qv = new QueryValidator(constraints, pwdcm, pwdcpm, pwdddem, pwdpm, pwdPolicyModel, pwdSecurityPolicy);
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, pwdSecurityPolicy);
 	}
 
 	@After
@@ -47,7 +44,7 @@ public class QueryValidatorTest {
 	@Test
 	public void testValidate() {
 		List<QueryValidatorErrors> validationResult = qv.validate();
-		assertEquals(0, validationResult.size());
+		assertEquals(2, validationResult.size());
 	}
 
 	// TODO: We do not support yet subclass constraints.
@@ -799,19 +796,23 @@ public class QueryValidatorTest {
 	@Test
 	public void testAbacRulesViolating1() throws Exception {
 		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/rulesConstraints1.ttl"));
+		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/abacRulesViolating1.ttl"));
 		
-		qv = new QueryValidator(constraints, policy);
-		
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
+
 		assertEquals(2, qv.validate().size());
 	}	
 
 	@Test
 	public void testAbacRulesFull() throws Exception {
 		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
+		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Full.ttl"));
-		
-		qv = new QueryValidator(constraints, policy);
+
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
 		assertEquals(0, qv.validate().size());
 	}	
@@ -819,9 +820,11 @@ public class QueryValidatorTest {
 	@Test
 	public void testAbacRulesSimple() throws Exception {
 		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
+		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple.ttl"));
 		
-		qv = new QueryValidator(constraints, policy);
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
 		assertEquals(0, qv.validate().size());
 	}	
@@ -829,9 +832,11 @@ public class QueryValidatorTest {
 	@Test
 	public void testAbacRulesSimpleFailing() throws Exception {
 		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
+		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl"));
 		
-		qv = new QueryValidator(constraints, policy);
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
 		assertEquals(9, qv.validate().size());
 	}	
@@ -839,9 +844,12 @@ public class QueryValidatorTest {
 	@Test
 	public void testSubclassSubsumption() throws Exception {
 		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
+		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
+		InputStream pwdTheoremProvingModel = new FileInputStream(new File("Ontologies/final/models/Theorem-Proving.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
 		
-		qv = new QueryValidator(constraints, policy);
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, pwdTheoremProvingModel, policy);
 		
 		assertEquals(4, qv.validate().size());
 	}	
@@ -852,9 +860,11 @@ public class QueryValidatorTest {
 	@Test
 	public void testContradiction() throws Exception {
 		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
+		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
 		
-		qv = new QueryValidator(constraints, policy);
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
 		assertEquals(4, qv.validate().size());
 	}	
