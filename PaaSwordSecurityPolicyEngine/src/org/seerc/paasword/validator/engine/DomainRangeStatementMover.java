@@ -1,5 +1,11 @@
 package org.seerc.paasword.validator.engine;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.SequenceInputStream;
+import java.io.Writer;
+
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Property;
@@ -41,6 +47,17 @@ public class DomainRangeStatementMover {
 			// remove propertyStatements from dataSource
 			dataSource.getModel().remove(dataSource.getModel().listStatements(subjectOfProperty, property, (RDFNode)null));
 		}
+	}
+
+	public InputStream moveDomainRangeStatements(InputStream sis, OntModel constraintsModel) {
+		JenaDataSource source = new JenaDataSource(sis);
+		
+		this.moveDomainRangeStatements(source, constraintsModel);
+		
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		source.getModel().write(os, "TTL");
+		
+		return new ByteArrayInputStream(os.toByteArray());
 	}
 
 }

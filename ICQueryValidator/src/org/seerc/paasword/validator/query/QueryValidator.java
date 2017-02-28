@@ -58,21 +58,22 @@ public class QueryValidator {
 	 */
 	public void extractConstraints(InputStream constraints,
 			InputStream... ontologies) {
-		// Combine multiple ontologies in a single InputStream 
-		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(ontologies));
-		SequenceInputStream sis = new SequenceInputStream(enumOnto);
-
-		// Create the SubclassSubsumptionDataSource
-		jds = new SubclassSubsumptionDataSource(sis);
-		
 		// Read constraints ontology
 		OntModel constraintsModel;
 		constraintsModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
 		constraintsModel.read(constraints, null , "TTL");
 		constraintsModel.prepare();
 		
+		// Combine multiple ontologies in a single InputStream 
+		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(ontologies));
+		SequenceInputStream sis = new SequenceInputStream(enumOnto);
+
+		// move domain/range statements from ontologies to constraints
 		DomainRangeStatementMover drsm = new DomainRangeStatementMover();
-		drsm.moveDomainRangeStatements(jds, constraintsModel);
+		InputStream strippedIS = drsm.moveDomainRangeStatements(sis, constraintsModel);
+		
+		// Create the SubclassSubsumptionDataSource with the input stream that does not have domain/range statements
+		jds = new SubclassSubsumptionDataSource(strippedIS);
 		
 		// Convert OWL axiom constraints to SPARQL queries.
 		queryConstraints = ICAxiomToSPARQLTranslator.translateModelToSPARQL(constraintsModel);

@@ -846,12 +846,12 @@ public class QueryValidatorTest {
 		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
 		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
 		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
+		InputStream pwdTheoremProvingModel = new FileInputStream(new File("Ontologies/final/models/Theorem-Proving.ttl"));
 		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
 		
-		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
+		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, pwdTheoremProvingModel, policy);
 		
-		// TODO: This should be 4! We are missing subsumption between rules 1 and 2.
-		assertEquals(3, qv.validate().size());
+		assertEquals(4, qv.validate().size());
 	}	
 
 	// These two tests (above and below) are the same now.
@@ -866,7 +866,7 @@ public class QueryValidatorTest {
 		
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
-		assertEquals(3, qv.validate().size());
+		assertEquals(4, qv.validate().size());
 	}	
 
 	/*@Test

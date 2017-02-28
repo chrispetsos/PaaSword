@@ -90,8 +90,7 @@ public class PaaSwordValidatorTest {
 
 		pwdv = new PaaSwordValidator(payload);
 		
-		// TODO: We are missing a subsumption here, should be 4
-		assertEquals(3, pwdv.validate().size());
+		assertEquals(4, pwdv.validate().size());
 	}
 	
 	
