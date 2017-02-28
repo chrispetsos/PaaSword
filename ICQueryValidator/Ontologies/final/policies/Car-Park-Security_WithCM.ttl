@@ -1,0 +1,1247 @@
+@prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
+@prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
+@prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
+@prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
+@prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix usdl-core: <http://www.linked-usdl.org/ns/usdl-core#>.
+@prefix usdl-business-roles: <http://www.linked-usdl.org/ns/usdl-business-roles#>.
+@prefix usdl-sec: <http://www.linked-usdl.org/ns/usdl-sec#>.
+@prefix orgX: <http://www.paasword.eu/security-policy/orgX#>. 
+@prefix gr: <http://purl.org/goodrelations/v1#>. 
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+### This is the Car Park security use case we present in D2.2, with some extensions related
+### to refersTo, subsumptions and contradictions.
+
+### Instantiated cryptographic policy set ###################################
+ex1:BootstrappingCryptoPolicySet_1 a pbe:BootstrappingCryptoPolicySet.
+
+ex1:BootstrappingCryptoPolicy_1 a pbe:BootstrappingCryptoPolicy;
+	pbe:belongsToCryptoPolicySet ex1:BootstrappingCryptoPolicySet_1;
+	pbe:hasBootStrappingCryptoRule ex1:BootstrappingCryptoRule_1.
+
+ex1:BootstrappingCryptoRule_1 a pbe:BootstrappingCryptoRule;
+	pbe:hasControlledObject ex1:PaymentCreditCardNo;
+	pbe:hasCryptoElement ex1:AES256.
+
+ex1:PaymentCreditCardNo a pcm:Relational.
+
+ex1:AES256 a pdm:Symmetric.
+#############################################################################
+
+### Instantiated data fragmentation and distribution policy set #############
+ex1:BootstrappingDFDPolicySet_1 a pbdfd:BootstrappingDFDPolicySet.
+
+ex1:BootstrappingDFDPolicy_1 a pbdfd:BootstrappingDFDPolicy;
+	pbdfd:belongsToDFDPolicySet ex1:BootstrappingDFDPolicySet_1; 
+	pbdfd:hasBootstrappingDFDRule ex1:BootstrappingDFDRule_1.
+
+ex1:BootstrappingDFDRule_1 a pbdfd:BootstrappingDFDRule;
+	pbdfd:hasControlledObject ex1:PaymentsTable;
+	pbdfd:hasDFDElement ex1:VerticalFragmentation_1.
+
+ex1:PaymentsTable a pcm:Relational.
+
+ex1:VerticalFragmentation_1 a pdm:VerticalFragmentation.
+#############################################################################
+
+### Instantiated ABAC rule template ################################
+# The first two rules are subsumed.
+ex1:ABACRule_1 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr.
+
+ex1:PaymentsTable a pcm:Relational.
+
+pac:positive a pac:Authorisation.
+
+ex1:Read a ppm:DatastorePermission.
+
+ex1:ParkingEmployee a pcm:Person.
+
+ex1:ABACRule_2 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:positive;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr2.
+
+# This contradicts to rule 1
+ex1:ABACRule_3 a pac:ABACRule;
+	pac:hasControlledObject ex1:PaymentsTable;
+	pac:hasAuthorisation pac:negative;
+	pac:hasAction ex1:Read;
+	pac:hasActor ex1:ParkingEmployee;
+	pac:hasContextExpression ex1:expr.
+
+
+ex1:DepartmentAPaymentsTable a pcm:Relational.
+ex1:ParkingSectionAEmployee a pcm:Person.
+ex1:ParkingSectionAArea1Employee a pcm:Person.
+
+ex1:Write a ppm:DatastorePermission.
+#############################################################################
+
+### Context expression for  ex1:ABACRule_1  and  ex1:ABACRule_2 #############
+ex1:expr a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
+
+ex1:expr2 a pac:ANDContextExpression;
+	pac:hasParameter ex1:EmployeeWorkingHours3, ex1:Parking1 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:EmployeeWorkingHours a pcm:DateTimeInterval.
+ex1:EmployeeWorkingHours2 a pcm:DateTimeInterval.
+ex1:EmployeeWorkingHours3 a pcm:DateTimeInterval.
+
+# Custom alignment to otp namespace
+pac:isSubsumedBy owl:inverseOf otp:subsumes .
+
+ex1:EmployeeWorkingHours2 pac:isSubsumedBy ex1:EmployeeWorkingHours .
+ex1:EmployeeWorkingHours2 pac:subsumes ex1:EmployeeWorkingHours3 .
+ex1:PaymentsTable pac:subsumes ex1:DepartmentAPaymentsTable .
+ex1:ParkingEmployee pac:subsumes ex1:ParkingSectionAEmployee .
+ex1:ParkingSectionAEmployee pac:subsumes ex1:ParkingSectionAArea1Employee .
+
+ex1:expr1 a pac:ORContextExpression;
+	pac:hasParameter ex1:Parking1, ex1:Parking2 ;
+	pac:refersTo ex1:ParkingEmployee .
+
+ex1:Parking1 a pcm:Point.
+
+ex1:Parking2 a pcm:Point.
+
+### Instantiated ABAC policy ################################################
+ex1:ABACPolicySet_1 a pac:ABACPolicySet;
+	pac:hasPolicySetCombiningAlgorithm ex1:denyUnlessPermit.
+
+ex1:ABACPolicy_1 a pac:ABACPolicy;
+	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
+	pac:hasPolicyCombiningAlgorithm ex1:denyUnlessPermit;
+	pac:hasABACRule ex1:ABACRule_1, ex1:ABACRule_2, ex1:ABACRule_3 .
+
+ex1:denyUnlessPermit a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+#############################################################################
+
+
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix gr: <http://purl.org/goodrelations/v1#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <http://schema.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+#
+# PaaSword Context Model (version 2016-05-20)
+#
+
+pcm:DateTime
+  rdfs:comment "This class describes the specific chronological point expressed either as instant or interval that characterizes an access request." ;
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:SecurityContextElement, <http://www.w3.org/2006/time#TemporalEntity> .
+
+pcm:category
+  a rdf:Property ;
+  rdfs:domain pcm:Service, pcm:Subject ;
+  rdfs:range pcm:category .
+
+pcm:after
+  a rdf:Property ;
+  rdfs:domain pcm:DateTime ;
+  rdfs:range pcm:DateTime .
+
+pcm:hasTimezone
+  a rdf:Property ;
+  rdfs:domain pcm:DateTime ;
+  rdfs:range xsd:string .
+
+pcm:hasAddress
+  a rdf:Property ;
+  rdfs:range pcm:Address ;
+  rdfs:domain pcm:POI .
+
+pcm:hasArea
+  a rdf:Property ;
+  rdfs:domain pcm:AbstractLocation ;
+  rdfs:range pcm:Area .
+
+pcm:hasAreaCoordinates
+  a rdf:Property ;
+  rdfs:comment "This property associates an Area with specific coordinates (class)" ;
+  rdfs:domain pcm:Area ;
+  rdfs:range pcm:Coordinates .
+
+pcm:hasAuthenticationMethod
+  a rdf:Property ;
+  rdfs:range pcm:AuthenticationMethod ;
+  rdfs:domain pcm:Subject .
+
+pcm:hasAuthorizationMethod
+  a rdf:Property ;
+  rdfs:range pcm:AuthorizationMethod ;
+  rdfs:domain pcm:Subject .
+
+pcm:hasBeginningDay
+  a rdf:Property ;
+  rdfs:range gr:DayOfWeek ;
+  rdfs:domain pcm:DateTimeInterval .
+
+pcm:hasConnectionMetric
+  a rdf:Property ;
+  rdfs:comment "This class refers to different ways of transmitting an access request (e.g. 3G, Cable, Satelite)" ;
+  rdfs:range pcm:ConnectionMetric ;
+  rdfs:domain pcm:ConnectionType .
+
+pcm:hasEndDay
+  a rdf:Property ;
+  rdfs:range gr:DayOfWeek ;
+  rdfs:domain pcm:DateTimeInterval .
+
+pcm:hasIdentityType
+  a rdf:Property ;
+  rdfs:range pcm:IdentityType ;
+  rdfs:domain pcm:Subject .
+
+pcm:hasPointCoordinates
+  a rdf:Property ;
+  rdfs:range pcm:Coordinates ;
+  rdfs:domain pcm:Point .
+
+pcm:hasRole
+  a rdf:Property ;
+  rdfs:range <http://www.linked-usdl.org/ns/usdl-core#Role> ;
+  rdfs:domain pcm:Subject .
+
+pcm:isChildOf
+  a rdf:Property ;
+  rdfs:range pcm:HierarchicalDataStructure ;
+  rdfs:domain pcm:HierarchicalDataStructure .
+
+pcm:addressCountry
+  a rdf:Property ;
+  rdfs:domain pcm:Address .
+
+pcm:addressLocality
+  a rdf:Property ;
+  rdfs:domain pcm:Address .
+
+pcm:addressRegion
+  a rdf:Property ;
+  rdfs:domain pcm:Address .
+
+pcm:before
+  a rdf:Property ;
+  rdfs:domain pcm:DateTime ;
+  rdfs:range pcm:DateTime .
+
+pcm:description
+  a rdf:Property ;
+  rdfs:domain pcm:Subject .
+
+pcm:elevation
+  a rdf:Property ;
+  rdfs:domain pcm:Coordinates .
+
+pcm:hasBeginning
+  a rdf:Property ;
+  rdfs:domain pcm:DateTimeInterval ;
+  rdfs:range xsd:time .
+
+pcm:hasBrand
+  a rdf:Property ;
+  rdfs:domain pcm:Subject .
+
+pcm:hasBuildingNumber
+  a rdf:Property ;
+  rdfs:domain pcm:Address ;
+  rdfs:range xsd:string .
+
+pcm:hasCircularRadius
+  a rdf:Property ;
+  rdfs:comment "This property declares the diameter of a circular area with a center pointed by the hasAreaCoordinates property (e.g.diameter 1km)" ;
+  rdfs:domain pcm:Area ;
+  rdfs:range xsd:double .
+
+pcm:hasDUNS
+  a rdf:Property ;
+  rdfs:domain pcm:Subject .
+
+pcm:hasDay
+  a rdf:Property ;
+  rdfs:domain pcm:Instant ;
+  rdfs:range xsd:positiveInteger .
+
+pcm:hasDomain
+  a rdf:Property ;
+  rdfs:domain pcm:NetworkLocation ;
+  rdfs:range xsd:string .
+
+pcm:hasDownloadRate
+  a rdf:Property ;
+  rdfs:domain pcm:ConnectionMetric ;
+  rdfs:range xsd:nonNegativeInteger .
+
+pcm:hasEnd
+  a rdf:Property ;
+  rdfs:domain pcm:DateTimeInterval ;
+  rdfs:range xsd:time .
+
+pcm:hasEndpoint
+  a rdf:Property ;
+  rdfs:domain pcm:Service ;
+  rdfs:range xsd:anyURI .
+
+pcm:hasFileName
+  a rdf:Property ;
+  rdfs:domain pcm:File ;
+  rdfs:range xsd:string .
+
+pcm:hasFilePath
+  a rdf:Property ;
+  rdfs:domain pcm:File ;
+  rdfs:range xsd:string .
+
+pcm:hasFileType
+  a rdf:Property ;
+  rdfs:domain pcm:File ;
+  rdfs:range xsd:string .
+
+pcm:hasFloorNumber
+  a rdf:Property ;
+  rdfs:domain pcm:Address ;
+  rdfs:range xsd:nonNegativeInteger .
+
+pcm:hasHour
+  a rdf:Property ;
+  rdfs:domain pcm:Instant ;
+  rdfs:range xsd:nonNegativeInteger .
+
+pcm:hasIMEI
+  a rdf:Property ;
+  rdfs:domain pcm:Mobile ;
+  rdfs:range xsd:string .
+
+pcm:hasIMSI
+  a rdf:Property ;
+  rdfs:domain pcm:Mobile ;
+  rdfs:range xsd:string .
+
+pcm:hasIPAddress
+  a rdf:Property ;
+  rdfs:domain pcm:NetworkLocation ;
+  rdfs:range xsd:string .
+
+pcm:hasIPAddressRange
+  a rdf:Property ;
+  rdfs:domain pcm:NetworkLocation ;
+  rdfs:range xsd:string .
+
+pcm:hasPort
+  a rdf:Property ;
+  rdfs:domain pcm:NetworkLocation ;
+  rdfs:range xsd:positiveInteger .
+
+pcm:hasMetricUnit
+  a rdf:Property ;
+  rdfs:domain pcm:ConnectionMetric ;
+  rdfs:range xsd:string .
+
+pcm:hasMinute
+  a rdf:Property ;
+  rdfs:domain pcm:Instant ;
+  rdfs:range xsd:nonNegativeInteger .
+
+pcm:hasMobileOS
+  a rdf:Property ;
+  rdfs:domain pcm:Mobile ;
+  rdfs:range xsd:string .
+
+pcm:hasMonth
+  a rdf:Property ;
+  rdfs:domain pcm:Instant ;
+  rdfs:range xsd:positiveInteger .
+
+pcm:hasName
+  a rdf:Property ;
+  rdfs:domain pcm:AbstractLocation, pcm:Method, pcm:POI ;
+  rdfs:range xsd:string .
+
+pcm:hasNonRelationalType
+  a rdf:Property ;
+  rdfs:domain pcm:NonRelational ;
+  rdfs:range xsd:string .
+
+pcm:hasRectangularRangeHeight
+  a rdf:Property ;
+  rdfs:comment "This property describes the height of the Rectangular area with a center pointed by the hasAreaCoordinates property(e.g. 2Km)" ;
+  rdfs:domain pcm:Area ;
+  rdfs:range xsd:double .
+
+pcm:hasRectangularRangeWidth
+  a rdf:Property ;
+  rdfs:comment "This property describes the width of the Rectangular area with a center pointed by the hasAreaCoordinates property(e.g. 1km)" ;
+  rdfs:domain pcm:Area ;
+  rdfs:range xsd:double .
+
+pcm:hasRelationalType
+  a rdf:Property ;
+  rdfs:domain pcm:Relational ;
+  rdfs:range xsd:string .
+
+pcm:hasRoomNumber
+  a rdf:Property ;
+  rdfs:domain pcm:Address ;
+  rdfs:range xsd:string .
+
+pcm:hasSecond
+  a rdf:Property ;
+  rdfs:domain pcm:Instant ;
+  rdfs:range xsd:nonNegativeInteger .
+
+pcm:hasSecurityProtocolImplementation
+  a rdf:Property ;
+  rdfs:domain pcm:SecurityProtocol ;
+  rdfs:range xsd:string .
+
+pcm:hasStationaryOS
+  a rdf:Property ;
+  rdfs:domain pcm:Stationary ;
+  rdfs:range xsd:string .
+
+pcm:hasSubnet
+  a rdf:Property ;
+  rdfs:domain pcm:NetworkLocation ;
+  rdfs:range xsd:string .
+
+pcm:hasTarget
+  a rdf:Property ;
+  rdfs:domain pcm:Object ;
+  rdfs:range xsd:string .
+
+pcm:hasTelecommunicationsProvider
+  a rdf:Property ;
+  rdfs:domain pcm:ConnectionType ;
+  rdfs:range xsd:string .
+
+pcm:hasUploadRate
+  a rdf:Property ;
+  rdfs:domain pcm:ConnectionMetric ;
+  rdfs:range xsd:nonNegativeInteger .
+
+pcm:hasVolumeType
+  a rdf:Property ;
+  rdfs:domain pcm:Volume ;
+  rdfs:range xsd:string .
+
+pcm:hasYear
+  a rdf:Property ;
+  rdfs:domain pcm:Instant ;
+  rdfs:range xsd:positiveInteger .
+
+pcm:hasZone
+  a rdf:Property ;
+  rdfs:domain pcm:NetworkLocation ;
+  rdfs:range xsd:string .
+
+pcm:isVolumeEncrypted
+  a rdf:Property ;
+  rdfs:domain pcm:Volume ;
+  rdfs:range xsd:boolean .
+
+pcm:latitude
+  a rdf:Property ;
+  rdfs:domain pcm:Coordinates .
+
+pcm:legalName
+  a rdf:Property ;
+  rdfs:domain pcm:Subject .
+
+pcm:longitude
+  a rdf:Property ;
+  rdfs:domain pcm:Coordinates .
+
+pcm:name
+  a rdf:Property ;
+  rdfs:domain pcm:Subject .
+
+pcm:postalCode
+  a rdf:Property ;
+  rdfs:domain pcm:Address .
+
+pcm:refersToContinentalUnion
+  a rdf:Property ;
+  rdfs:domain pcm:Address ;
+  rdfs:range xsd:string .
+
+pcm:refersToEconomicUnion
+  a rdf:Property ;
+  rdfs:domain pcm:Address ;
+  rdfs:range xsd:string .
+
+pcm:streetAddress
+  a rdf:Property ;
+  rdfs:domain pcm:Address .
+
+pcm:supportsEncryptedStorageMobile
+  a rdf:Property ;
+  rdfs:domain pcm:Mobile ;
+  rdfs:range xsd:string .
+
+pcm:supportsEncryptedStorageStationary
+  a rdf:Property ;
+  rdfs:domain pcm:Stationary ;
+  rdfs:range xsd:string .
+
+pcm:volumeInputSpeed
+  a rdf:Property ;
+  rdfs:domain pcm:Volume ;
+  rdfs:range xsd:string .
+
+pcm:volumeOutputSpeed
+  a rdf:Property ;
+  rdfs:domain pcm:Volume ;
+  rdfs:range xsd:string .
+
+pcm:AbstractLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:PhysicalLocation ;
+  rdfs:comment "Conceptual characterization of a physical location (e.g. non-organization premises, building, room, section, department etc)" .
+
+pcm:Address
+  a rdfs:Class ;
+  rdfs:subClassOf schema:PostalAddress, pcm:PhysicalLocation ;
+  rdfs:comment "Physical address where data are stored or from which a particular entity is requesting to access sensitive data." .
+
+pcm:Area
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:PhysicalLocation ;
+  rdfs:comment "This class describes a geographical region from which a data access request can be originated from." .
+
+pcm:Auth
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:SecurityContextElement ;
+  rdfs:comment "Common parent class of all Authentication, Authorization and Identity context element classes" .
+
+pcm:AuthenticationMethod
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Auth ;
+  rdfs:comment "This class reveals the technological way used for validating the agent's identity during an access request." .
+
+pcm:AuthorizationMethod
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Auth ;
+  rdfs:comment "This class indicates the framework used for granting access rights to a subject." .
+
+pcm:ConnectionCiphersuite
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:ConnectionSecurity ;
+  rdfs:comment "This class refers to the mode or the ciphersuite used for establishing a secure connection." .
+
+pcm:ConnectionMetric
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Connectivity ;
+  rdfs:comment "This class provides quantitative characteristics of the connection type used for accessing sensitive data." .
+
+pcm:ConnectionSecurity
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Connectivity ;
+  rdfs:comment "This class provides details on the level of security in the established connection for accessing sensitive data." .
+
+pcm:ConnectionType
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Connectivity ;
+  rdfs:comment "This class refers to different ways of transmitting an access request (e.g. 3G, Cable, Satelite)." .
+
+pcm:Connectivity
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:SecurityContextElement ;
+  rdfs:comment "This class captures the inforation related to the connection used by the subject for accessing sensitive data." .
+
+pcm:Coordinates
+  a rdfs:Class ;
+  rdfs:comment "Refers to the positioning of an entity using a geographic coordinate system." .
+
+pcm:DAO
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Method ;
+  rdfs:comment "It refers to a Data Access Object." .
+
+pcm:DataArtefact
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Object ;
+  rdfs:comment "This class refers to any sensitive data entitites stored in schema-based or schema-less databases that should be protected from unauthorized access." .
+
+pcm:DateTimeInterval
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DateTime ;
+  rdfs:comment "A period described by a start instance and end instance or a duration." .
+
+pcm:DeviceType
+  a rdfs:Class ;
+  rdfs:subClassOf gr:ProductOrService, pcm:Connectivity ;
+  rdfs:comment "This class describes a product used when requesting access to sensitive data." .
+
+pcm:EphemeralId
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:IdentityType ;
+  rdfs:comment "This class refers to frequently changing  information that can be used for identifying an agent." .
+
+pcm:File
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DataArtefact ;
+  rdfs:comment "This class refers to any kind of sensitive information that is stored in a file based system." .
+
+pcm:Group
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Subject, foaf:Group .
+
+pcm:HierarchicalDataStructure
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:NonRelational .
+
+pcm:IdentityType
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Auth ;
+  rdfs:comment "This class refers to permanent/static and ephemeral information that can be used for identifying an agent." .
+
+pcm:InfrastructureArtefact
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Object, pcm:Product, pcm:ProductOrService .
+
+pcm:Instant
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DateTime, <http://www.w3.org/2006/time#Instant> ;
+  rdfs:comment "A precise point in time used to specify which date the access request takes place." .
+
+pcm:Location
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:SecurityContextElement ;
+  rdfs:comment "This class describes a physical and/or a network location where data are stored or from which a particular entity is requesting to access data." .
+
+pcm:Method
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:SoftwareArtefact .
+
+pcm:Mobile
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DeviceType ;
+  rdfs:comment "It refers to a portable product used when requesting access to sensitive data." .
+
+pcm:NetworkLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Location ;
+  rdfs:comment "An identifier for a node or network telecommunication interface from which a particular entity is requesting to access data." .
+
+pcm:NonRelational
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DataArtefact ;
+  rdfs:comment "This class refers to accessible data entities that exist in non-relational databases (i.e. schema-less)" .
+
+pcm:Notebook
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Mobile .
+
+pcm:Object
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:SecurityContextElement ;
+  rdfs:comment "This class refers to any kind of artefacts that shoud be protected based on their sensitivity levels. These artefacts may refer to (non)relational data or even software artefacts that manage sensitive data." .
+
+pcm:Organization
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Subject, foaf:Organization .
+
+pcm:POI
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:PhysicalLocation ;
+  rdfs:comment "Points of interest that might be meanigful for access control of sensitive data. " .
+
+pcm:PermanentId
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:IdentityType ;
+  rdfs:comment "This class refers to unfrequently changing  information that can be used for identifying an agent." .
+
+pcm:Person
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Subject, foaf:Person .
+
+pcm:PhysicalLocation
+  a rdfs:Class ;
+  rdfs:subClassOf gr:Location, schema:Place, pcm:Location ;
+  rdfs:comment "A physical location is a point or area of interest where data are stored or from which a particular entity is requesting to access data. Physical locations are characterized by an address and/or geographical position or area and/or abstract location and/or a Point of Interest." .
+
+pcm:Point
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:PhysicalLocation ;
+  rdfs:comment "A specific spot where data are stored or from which a particular entity is requesting to access data." .
+
+pcm:Product a rdfs:Class .
+pcm:ProductOrService a rdfs:Class .
+pcm:Relational
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DataArtefact ;
+  rdfs:comment "This class refers to accessible data entities that exist in relational databases, i.e. structured to recognize relations between stored items of information." .
+
+pcm:SecurityContextElement
+  a rdfs:Class ;
+  rdfs:comment "Parent class of all PaaSword Context Model context elements" .
+
+pcm:SecurityProtocol
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:ConnectionSecurity ;
+  rdfs:comment "This class reveals the security technology or protocol adopted for establishing an encrypted link between a server and a client." .
+
+pcm:Service
+  a rdfs:Class ;
+  rdfs:subClassOf schema:Service, pcm:SoftwareArtefact ;
+  rdfs:comment "It refers to a software endpoint that provides access and/or manages data." .
+
+pcm:Smartphone
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Mobile .
+
+pcm:SoftwareAgent
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Subject .
+
+pcm:SoftwareArtefact
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Object, pcm:Product, pcm:ProductOrService ;
+  rdfs:comment "This class denotes  any computerized medium that manages or gives access to sensitive data." .
+
+pcm:Stationary
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:DeviceType ;
+  rdfs:comment "It refers to an immobile product used when requesting access to sensitive data." .
+
+pcm:Subject
+  a rdfs:Class ;
+  rdfs:subClassOf gr:ProductOrService, schema:Product, pcm:SecurityContextElement, foaf:Agent ;
+  rdfs:comment "An instance of this class represents the legal agent seeking access to a particular offering. This can be a legal body, a person or a service. A business entity has at least a primary mailing address and contact details." .
+
+pcm:Tablet
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:Mobile .
+
+pcm:Volume
+  a rdfs:Class ;
+  rdfs:subClassOf pcm:InfrastructureArtefact .
+
+#Added on 2016-05-30
+pcm:ClassHandler
+  a rdfs:Class ;
+  rdfs:comment "An instance of this class represents a handler descriptor for any class referencing it through pcm:handler property. A handler is a piece of software used to capture semantic information related to a context model class." .
+
+pcm:handler
+  a rdf:Property ;
+  rdfs:comment "This property associates a SecurityContextElement or any of its sub-classes with a specific class handler" ;
+  rdfs:domain pcm:SecurityContextElement ;
+  rdfs:range pcm:ClassHandler .
+
+pcm:packageName
+  a rdf:Property ;
+  rdfs:comment "This ClassHandler property specifies the fully qualified name of the Java class implementing the class handler/adapter functionality (e.g. eu.paasword.handler.LocationHandler)" ;
+  rdfs:domain pcm:ClassHandler ;
+  rdfs:range xsd:string .
+  
+  
+
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#
+# PaaSword Context Pattern Model (version 2016-05-20)
+#
+
+pcpm:hasPattern
+  a rdf:Property ;
+  rdfs:range pcpm:ContextPattern ;
+  rdfs:domain pcpm:ContextPattern .
+
+pcpm:hasAccessedObject
+  a rdf:Property ;
+  rdfs:domain pcpm:AccessSequencePattern ;
+  rdfs:range pcm:Object .
+
+pcpm:hasConnectionSecurity
+  a rdf:Property ;
+  rdfs:range pcm:ConnectionSecurity ;
+  rdfs:domain pcpm:UsualConnectionSecurity .
+
+pcpm:hasConnectionType
+  a rdf:Property ;
+  rdfs:range pcm:ConnectionType ;
+  rdfs:domain pcpm:MostFrequentConnectionType, pcpm:UsualConnectionType .
+
+pcpm:hasDeviceType
+  a rdf:Property ;
+  rdfs:range pcm:DeviceType ;
+  rdfs:domain pcpm:MostFrequentDeviceType, pcpm:UsualDeviceType .
+
+pcpm:hasLocation
+  a rdf:Property ;
+  rdfs:range pcm:Location ;
+  rdfs:domain pcpm:LocationPattern .
+
+pcpm:hasPermission
+  a rdf:Property ;
+  rdfs:range ppm:Permission ;
+  rdfs:domain pcpm:PermissionPattern .
+
+pcpm:hasTimeWindow
+  a rdf:Property ;
+  rdfs:domain pcpm:ContextPattern ;
+  rdfs:range pcm:DateTime .
+
+pcpm:hasUAOThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsuallyAccessedObject ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUAThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualAccessLocation ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUCSThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualConnectionSecurity ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUCTThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualConnectionType ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUDTThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualDeviceType ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUGThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsuallyGrantedPermission ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUTIThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualDateTimeInterval ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:hasUTThreshold
+  a rdf:Property ;
+  rdfs:domain pcpm:UsualDateTimeInstance ;
+  rdfs:range xsd:positiveInteger .
+
+pcpm:refersToObject
+  a rdf:Property ;
+  rdfs:domain pcpm:ContextPattern ;
+  rdfs:range pcm:Object .
+
+pcpm:refersToPermission
+  a rdf:Property ;
+  rdfs:domain pcpm:ContextPattern ;
+  rdfs:range ppm:Permission .
+
+pcpm:refersToSubject
+  a rdf:Property ;
+  rdfs:domain pcpm:ContextPattern ;
+  rdfs:range pcm:Subject .
+
+pcpm:AccessSequencePattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to data access occurences that are recognized by any preceeding access actions of a specific subject." .
+
+pcpm:ConnectivityPattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the Connectivity context element." .
+
+pcpm:ContextPattern
+  a rdfs:Class ;
+  rdfs:comment "Context patterns are recurring motives of data access occurences that are recognized in repeating context elements instances." .
+
+pcpm:DateTimePattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the DateTime context element." .
+
+pcpm:LeastAccessedObject
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ObjectPattern .
+
+pcpm:LeastFrequentAccessLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:LocationPattern .
+
+pcpm:LeastFrequentDateTimeInstance
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:LeastFrequentDateTimeInterval
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:LocationPattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the Location context element." .
+
+pcpm:MostFrequentAccessLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:LocationPattern .
+
+pcpm:MostFrequentConnectionType
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:MostFrequentDateTimeInstance
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:MostFrequentDateTimeInterval
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:MostFrequentDeviceType
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:MostFrequentlyAccessedObject
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ObjectPattern .
+
+pcpm:MostFrequentlyDeniedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+
+pcpm:MostFrequentlyGrantedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+
+pcpm:ObjectPattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the Object context element." .
+
+pcpm:PermissionPattern
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ContextPattern ;
+  rdfs:comment "It refers to recurring motives of data access occurences that are recognized with respect to the Permission element." .
+
+pcpm:RecentAccessLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:LocationPattern .
+
+pcpm:RecentlyAccessedObject
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ObjectPattern .
+
+pcpm:RecentlyDeniedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+
+pcpm:RecentlyGrantedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+
+pcpm:UsualAccessLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:LocationPattern .
+
+pcpm:UsualConnectionSecurity
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:UsualConnectionType
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:UsualDateTimeInstance
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:UsualDateTimeInterval
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:DateTimePattern .
+
+pcpm:UsualDeviceType
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ConnectivityPattern .
+
+pcpm:UsuallyAccessedObject
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:ObjectPattern .
+
+pcpm:UsuallyGrantedPermission
+  a rdfs:Class ;
+  rdfs:subClassOf pcpm:PermissionPattern .
+  
+  
+  
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#
+# PaaSword Data Distribution and Encryption Model (version 2016-05-20)
+#
+
+pdm:hasAsymmetricKeySize
+  a rdf:Property ;
+  rdfs:domain pdm:Asymmetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:hasCurve
+  a rdf:Property ;
+  rdfs:domain pdm:Asymmetric ;
+  rdfs:range xsd:string .
+
+pdm:hasFragColumn
+  a rdf:Property ;
+  rdfs:domain pdm:MixedFragmentation, pdm:VerticalFragmentation ;
+  rdfs:range xsd:string .
+
+pdm:hasFragRow
+  a rdf:Property ;
+  rdfs:domain pdm:HorizontalFragmentation, pdm:MixedFragmentation ;
+  rdfs:range xsd:nonNegativeInteger .
+
+pdm:hasPrivacyConstraint
+  a rdf:Property ;
+  rdfs:domain pdm:RelationalDataFragmentation ;
+  rdfs:range xsd:string .
+
+pdm:hasSymmetricBlockSize
+  a rdf:Property ;
+  rdfs:domain pdm:Symmetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:hasSymmetricKeySize
+  a rdf:Property ;
+  rdfs:domain pdm:Symmetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:numberOfPhysicalLocations
+  a rdf:Property ;
+  rdfs:domain pdm:DistributionMetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:numberOfServers
+  a rdf:Property ;
+  rdfs:domain pdm:DistributionMetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:numberOfVMs
+  a rdf:Property ;
+  rdfs:domain pdm:DistributionMetric ;
+  rdfs:range xsd:positiveInteger .
+
+pdm:hasModeofOperation
+  a rdf:Property ;
+  rdfs:domain pdm:CryptographicType ;
+  rdfs:range xsd:string .
+
+pdm:Asymmetric
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:CryptographicType ;
+  rdfs:comment "Refers to the details of algorithm for cryptography chosen that uses the different cryptographic keys for  encryption (public key) of plaintext and decryption of ciphertext (private key)." .
+
+pdm:CryptographicType
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DDEElement ;
+  rdfs:comment "This class reveals details of the level of security required for specific sensitive data artefacts." .
+
+pdm:DDEElement
+  a rdfs:Class ;
+  rdfs:comment "Parent class of all PaaSword Data Distribution and Encryption Model elements" .
+
+pdm:DataDistribution
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DDEElement ;
+  rdfs:comment "This class captures aspects of the data distribution  required for enhancing the security of sensitive information." .
+
+pdm:DatabaseFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DDEElement ;
+  rdfs:comment "This class refers to the details concerning the way that the data should be fragmented in order to be distributed for security purposes." .
+
+pdm:DistributionMetric
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class quantifies the data distribution required for enhancing the security of sensitive information." .
+
+pdm:ExcludedLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class denotes the physical locations that should be avoided when distributing sensitive data." .
+
+pdm:ExcludedProvider
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class denotes certain untrusted IaaS providers that should be avoided when distributing sensitive data." .
+
+pdm:HorizontalFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:RelationalDataFragmentation ;
+  rdfs:comment "This class refers to the fragmentation of a relational database across its rows." .
+
+pdm:Hybrid
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:Asymmetric, pdm:Symmetric .
+
+pdm:MasterSlaveReplication
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:Replication ;
+  rdfs:comment "Master-slave replication refers into the details of making one node the authoritative copy that handles writes while slaves synchronizing with the master and handling reads." .
+
+pdm:MixedFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:RelationalDataFragmentation ;
+  rdfs:comment "This class refers to a two step  fragmentation process of a relational database that may use both horizontal and vertical fragmentation based on certain conditions." .
+
+pdm:NonRelationalDataFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DatabaseFragmentation ;
+  rdfs:comment "This Class refers to different types of possible fragmentation of a non- relational database." .
+
+pdm:PeerToPeerReplication
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:Replication ;
+  rdfs:comment "Peer-to-peer refers to the details of replication that allows writes to several nodes and synchronization between them." .
+
+pdm:PreferredLocation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class denotes the physical locations that should be considered when distributing sensitive data." .
+
+pdm:PreferredProvider
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DataDistribution ;
+  rdfs:comment "This class denotes certain trusted IaaS providers that should be considered when distributing sensitive data." .
+
+pdm:RelationalDataFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:DatabaseFragmentation ;
+  rdfs:comment "This Class refers to different types of possible fragmentation of a relational database." .
+
+pdm:Replication
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:NonRelationalDataFragmentation ;
+  rdfs:comment "Replication class refers to the details of copying data/aggregates across multiple servers, so each bit of data can be found in multiple places." .
+
+pdm:Sharding
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:NonRelationalDataFragmentation ;
+  rdfs:comment "Sharding class refers to the details of  different data distribution across multiple servers, so each server acts as the single source for a subset of data/aggregates." .
+
+pdm:Symmetric
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:CryptographicType ;
+  rdfs:comment "Refers to the details of algorithm for cryptography chosen that uses the same cryptographic keys for both encryption of plaintext and decryption of ciphertext." .
+
+pdm:VerticalFragmentation
+  a rdfs:Class ;
+  rdfs:subClassOf pdm:RelationalDataFragmentation ;
+  rdfs:comment "This class refers to the fragmentation of a relational database across its columns." .
+  
+  
+
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <http://schema.org/> .
+
+#
+# PaaSword Permissions Model (version 2016-05-20)
+#
+
+ppm:hasActionStatus
+  a rdf:Property ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range xsd:string .
+
+ppm:hasEndTime
+  a rdf:Property ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range xsd:dateTime .
+
+ppm:hasResult
+  a rdf:Property ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range xsd:string .
+
+ppm:hasStartTime
+  a rdf:Property ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range xsd:dateTime .
+
+ppm:hasTarget
+  a rdf:Property ;
+  rdfs:domain ppm:DDLPermission, ppm:DataPermission ;
+  rdfs:range pcm:Object .
+
+schema:Action a rdfs:Class .
+ppm:DDLPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:Permission ;
+  rdfs:comment "This class reveals the data definition language (DDL) related actions on specific objects." .
+
+ppm:DataPermission
+  a rdfs:Class ;
+  rdfs:subClassOf schema:Action, ppm:Permission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a data entity." .
+
+ppm:DatastoreDDLPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DDLPermission .
+
+ppm:DatastorePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a data entity in a datastore." .
+
+ppm:FilePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any action allowed by a direct agent upon a file." .
+
+ppm:FileSystemStructurePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DDLPermission .
+
+ppm:Permission
+  a rdfs:Class ;
+  rdfs:comment "This class refers to allowed actions of a subject upon an object." .
+
+ppm:VolumePermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission .
+
+ppm:WebEndpointPermission
+  a rdfs:Class ;
+  rdfs:subClassOf ppm:DataPermission ;
+  rdfs:comment "This is a class that describes any Web endpoint action allowed by a direct agent upon a data entity in a datastore." .
