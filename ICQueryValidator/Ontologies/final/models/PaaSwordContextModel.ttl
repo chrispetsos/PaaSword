@@ -120,7 +120,7 @@ pcm:elevation
 pcm:hasBeginning
   a rdf:Property ;
   rdfs:domain pcm:DateTimeInterval ;
-  rdfs:range xsd:dateTime .
+  rdfs:range xsd:time .
 
 pcm:hasBrand
   a rdf:Property ;
@@ -159,7 +159,7 @@ pcm:hasDownloadRate
 pcm:hasEnd
   a rdf:Property ;
   rdfs:domain pcm:DateTimeInterval ;
-  rdfs:range xsd:dateTime .
+  rdfs:range xsd:time .
 
 pcm:hasEndpoint
   a rdf:Property ;

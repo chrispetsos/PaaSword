@@ -2,8 +2,6 @@ package org.seerc.paasword.validator.engine;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntModelSpec;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.RDFList;
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -21,18 +19,14 @@ public class DomainRangeStatementMover {
 	}
 
 	private void movePropertyStatements(JenaDataSource dataSource, OntModel targetModel, String propertyUri) {
-		// create an OWL DL source model to work with
-		OntModel sourceModel =  ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
-		sourceModel.add(dataSource.getModel().listStatements());
-		
 		// find all subjects of property
-		Property property = sourceModel.createProperty(propertyUri);
-		ResIterator subjectsOfPropertyStatements = sourceModel.listSubjectsWithProperty(property);
+		Property property = dataSource.getModel().createProperty(propertyUri);
+		ResIterator subjectsOfPropertyStatements = dataSource.getModel().listSubjectsWithProperty(property);
 		while(subjectsOfPropertyStatements.hasNext())
 		{
 			Resource subjectOfProperty = subjectsOfPropertyStatements.next();
 			// find all property statements where subjectOfProperty is subject
-			StmtIterator propertyStatements = sourceModel.listStatements(subjectOfProperty, property, (RDFNode)null);
+			StmtIterator propertyStatements = dataSource.getModel().listStatements(subjectOfProperty, property, (RDFNode)null);
 			// The RDFList that will hold all objects of the statements
 			RDFList propertyList = targetModel.createList();
 			while(propertyStatements.hasNext())

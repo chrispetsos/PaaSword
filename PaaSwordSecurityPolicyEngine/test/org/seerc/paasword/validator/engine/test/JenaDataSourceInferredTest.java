@@ -126,8 +126,8 @@ public class JenaDataSourceInferredTest {
 	
 	@Test
 	public void testInferredSizes() {
-		performInferredTest(548, 3639, 
-				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
+		performInferredTest(817, 6445, 
+				"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
 				"Ontologies/policy-models/Security-Policy.ttl",
 				"Ontologies/subsumptive/ContextExpression1.ttl"
 				);
@@ -135,8 +135,8 @@ public class JenaDataSourceInferredTest {
 
 	@Test
 	public void testCitySubsumption() {
-		performInferredTest(547, 3652, 
-				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
+		performInferredTest(816, 6458, 
+				"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
 				"Ontologies/policy-models/Security-Policy.ttl",
 				"Ontologies/subsumptive/CitySubsumption.ttl"
 				);
@@ -145,7 +145,7 @@ public class JenaDataSourceInferredTest {
 	@Test
 	public void testComplexContextExpression() {
 		performInferredTest(-1, -1, 
-				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
+				"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
 				"Ontologies/policy-models/Security-Policy.ttl",
 				"Ontologies/subsumptive/ComplexContextExpression.ttl"
 				);
@@ -154,7 +154,7 @@ public class JenaDataSourceInferredTest {
 	@Test
 	public void testDateTimeSubsumption() {
 		performInferredTest(-1, -1, 
-				"Ontologies/context-aware-security-models/PaaSwordContextModel_v2.ttl", 
+				"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
 				"Ontologies/policy-models/Security-Policy.ttl",
 				"Ontologies/subsumptive/DateTimeSubsumption.ttl"
 				);

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.seerc.paasword.translator.QueryConstraint;
+import org.seerc.paasword.validator.engine.DomainRangeStatementMover;
 import org.seerc.paasword.validator.engine.JenaDataSource;
 import org.seerc.paasword.validator.engine.JenaDataSourceInferred;
 import org.seerc.paasword.validator.engine.SubclassSubsumptionDataSource;
@@ -66,9 +67,12 @@ public class QueryValidator {
 		
 		// Read constraints ontology
 		OntModel constraintsModel;
-		constraintsModel = ModelFactory.createOntologyModel(OntModelSpec.RDFS_MEM);
+		constraintsModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
 		constraintsModel.read(constraints, null , "TTL");
 		constraintsModel.prepare();
+		
+		DomainRangeStatementMover drsm = new DomainRangeStatementMover();
+		drsm.moveDomainRangeStatements(jds, constraintsModel);
 		
 		// Convert OWL axiom constraints to SPARQL queries.
 		queryConstraints = ICAxiomToSPARQLTranslator.translateModelToSPARQL(constraintsModel);
