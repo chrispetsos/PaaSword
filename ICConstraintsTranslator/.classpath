@@ -2,26 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-tdb-0.9.4.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-arq-2.9.4.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-core-2.7.4.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-iri-0.9.4.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jcl-over-slf4j-1.6.4.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
@@ -74,5 +54,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/owlapi-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/owlapi-apibinding"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/owlapi-parsers"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PaaSwordSecurityPolicyEngine"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
