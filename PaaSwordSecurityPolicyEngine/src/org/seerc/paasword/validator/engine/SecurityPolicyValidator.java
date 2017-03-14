@@ -428,7 +428,7 @@ public class SecurityPolicyValidator {
 	}
 
 	private boolean checkDateTimeIntervalSubsumption(RDFNode dateTime1, RDFNode dateTime2) {
-		//Statement hasBeginning1 = dateTime1.asResource().listProperties(new PropertyImpl("http://www.paasword-project.eu/ontologies/casm/2016/05/20#hasBeginning")).next();
+		//Statement hasBeginning1 = dateTime1.asResource().listProperties(new PropertyImpl("http://www.paasword-project.eu/ontologies/casm/2015/11/30#hasBeginning")).next();
 		/*StmtIterator si1 = dateTime1.asResource().listProperties();
 		while(si1.hasNext())
 		{

@@ -1,12 +1,12 @@
 @prefix test1: <http://www.paasword.eu/security-policy/test-cases/car-park-contradicting#>.
-@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2015/11/30#> .
 @prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
-@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2015/11/30#> .
 @prefix xsd:<http://www.w3.org/2001/XMLSchema#> .
 @prefix usdl-core: <http://www.linked-usdl.org/ns/usdl-core#> .
 @prefix schema:<http://schema.org/> .
 @prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
-@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2015/11/30#> .
 @prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
 
 ##################### CRYPTOGRAPHIC POLICY ################################
