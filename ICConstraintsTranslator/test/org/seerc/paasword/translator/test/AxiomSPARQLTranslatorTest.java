@@ -300,6 +300,20 @@ public class AxiomSPARQLTranslatorTest {
 	}
 
 	@Test
+	public void testDateTimeRangeDatatype() {
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/dateTimeRangeDatatypeConstraint.owl"));
+		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
+		assertEquals(1, queries.size());
+		assertEquals(	"SELECT DISTINCT  *\n" + 
+						"WHERE\n" + 
+						"  { ?x0 <http://www.seerc.org/test/pellet-icv#dob> ?d0\n" + 
+						"    FILTER ( ! ( datatype(?d0) = <http://www.w3.org/2001/XMLSchema#dateTime> ) )\n" + 
+						"  }\n" + 
+						""
+				, queries.get(0).getQuery());
+	}
+
+	@Test
 	public void testComplexLeftOfRestriction() {
 		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/complexLeftOfRestrictionConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
