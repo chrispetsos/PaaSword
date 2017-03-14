@@ -3,7 +3,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:<http://www.w3.org/2001/XMLSchema#> .
 @prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
-@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2015/11/30#> .
 
 # This is an instantiation ontology which abides to HigherLevelOntologyOWL.ttl.
 # It follows the OWL semantics (almost) and can be understood by an OWL reasoner.

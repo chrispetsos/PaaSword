@@ -15,11 +15,11 @@
 @prefix usdl-sec: <http://www.linked-usdl.org/ns/usdl-sec#>.
 @prefix orgX: <http://www.paasword.eu/security-policy/orgX#>. 
 @prefix gr: <http://purl.org/goodrelations/v1#>. 
-@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
-@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2015/11/30#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2015/11/30#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
-@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2015/11/30#> .
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2015/11/30#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 
 ### This is the Car Park security use case we present in D2.2, with some extensions related
