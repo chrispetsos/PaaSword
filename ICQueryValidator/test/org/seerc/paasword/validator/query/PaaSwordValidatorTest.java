@@ -106,4 +106,15 @@ public class PaaSwordValidatorTest {
 		assertEquals(8, pwdv.validate().size());
 	}
 
+	@Test
+	public void testPatiniErrors() throws Exception
+	{
+		InputStream contextModelWithPolicy = new FileInputStream(new File("Ontologies/patini/test-ALL.ttl"));
+		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
+
+		pwdv = new PaaSwordValidator(payload);
+		
+		assertEquals(27, pwdv.validate().size());
+	}
+
 }
