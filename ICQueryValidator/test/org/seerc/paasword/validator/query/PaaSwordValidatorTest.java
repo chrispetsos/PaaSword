@@ -124,6 +124,21 @@ public class PaaSwordValidatorTest {
 		assertEquals(19, validationErrors.size());
 	}
 
+	@Test
+	public void testPolicySubsumption() throws Exception
+	{
+		InputStream contextModelWithPolicy = new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl"));
+		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
+
+		pwdv = new PaaSwordValidator(payload);
+		
+		List<QueryValidatorErrors> validationErrors = pwdv.validate();
+
+		this.printValidationReport(validationErrors);
+		
+		assertEquals(1, validationErrors.size());
+	}
+
 	private void printValidationReport(List<QueryValidatorErrors> validationErrors)
 	{
 		Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
