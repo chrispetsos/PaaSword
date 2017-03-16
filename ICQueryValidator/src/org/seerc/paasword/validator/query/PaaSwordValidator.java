@@ -11,6 +11,7 @@ import java.util.Enumeration;
 
 public class PaaSwordValidator extends QueryValidator {
 	//static InputStream pwdcm = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/PaaSwordContextModel.ttl");
+	static InputStream pwdListModel = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/list.ttl");
 	static InputStream pwdPolicyModel = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/Security-Policy-Model.ttl");
 	static InputStream theoremProvingModel = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/Theorem-Proving.ttl");
 	static byte[] baModelOntologies;
@@ -21,7 +22,7 @@ public class PaaSwordValidator extends QueryValidator {
 	// cache the statically referenced ontologies into a byte array,
 	// so we can create input streams multiple times.
 	static{
-		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(new InputStream[]{pwdPolicyModel, theoremProvingModel}));
+		Enumeration<InputStream> enumOnto = Collections.enumeration(Arrays.asList(new InputStream[]{pwdListModel, pwdPolicyModel, theoremProvingModel}));
 		SequenceInputStream sis = new SequenceInputStream(enumOnto);
 		ByteArrayOutputStream osModelOntologies = new ByteArrayOutputStream();
 		byte[] buf = new byte[1024];
