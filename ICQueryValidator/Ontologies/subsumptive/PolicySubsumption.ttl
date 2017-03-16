@@ -129,106 +129,6 @@ xca:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgor
 xca:denyOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 xca:permitOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 
-# Let's try to build by hand the class of all access requests of all policies with
-# respect to every conclusion.
-#ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_1AccessRequestClassFor_positive .
-#ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_1AccessRequestClassFor_negative .
-
-# align to otp namespace 
-# pac:PolicyAccessRequestClass rdfs:subClassOf otp:TheoremProvingBaseClass .
-
-#ex1:ABACPolicy_1AccessRequestClassFor_positive a pac:PolicyAccessRequestClass;
-#	otp:TheoremProvingParameterProperty
-#		[a otp:ORTheoremProvingClass ;
-#			otp:TheoremProvingParameterProperty ex1:R1Antecedent ;
-#			otp:TheoremProvingParameterProperty ex1:R2Antecedent
-#		] .
-
-#pac:AccessRequestClassFor_negative a owl:Class .
-
-#ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:AccessRequestClassFor_negative ;
-#	owl:equivalentClass
-#	[
-#		owl:unionOf (
-#		    [
-#		    	owl:intersectionOf (
-#					ex1:R3Antecedent
-#		    		[
-#		    			owl:complementOf 
-#	    				[
-#	    					owl:unionOf (
-#								ex1:R1Antecedent		    					
-#								ex1:R2Antecedent		    					
-#	    					)
-#	    				]
-#		    		]
-#		    	)
-#		    ]
-#		)
-#	] .
-
-#ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:PolicyAccessRequestClass;
-#	otp:TheoremProvingParameterProperty
-#		[a otp:ORTheoremProvingClass ;
-#			otp:TheoremProvingParameterProperty ex1:R3Antecedent ;
-#			otp:TheoremProvingParameterProperty 
-#				[a otp:ANDTheoremProvingClass ;
-#					otp:TheoremProvingParameterProperty
-#						[a otp:NOTTheoremProvingClass ;
-#							otp:TheoremProvingParameterProperty
-#								[a otp:ORTheoremProvingClass ;
-#									otp:TheoremProvingParameterProperty ex1:R1Antecedent ;
-#									otp:TheoremProvingParameterProperty ex1:R2Antecedent
-#								]
-#						]
-#				]
-#		] .
-
-#ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_2AccessRequestClassFor_positive .
-#ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_2AccessRequestClassFor_negative .
-
-#ex1:ABACPolicy_2AccessRequestClassFor_positive a pac:PolicyAccessRequestClass;
-#	otp:TheoremProvingParameterProperty
-#		[a otp:ORTheoremProvingClass ;
-#			otp:TheoremProvingParameterProperty ex1:R5Antecedent ;
-#			otp:TheoremProvingParameterProperty 
-#				[a otp:ANDTheoremProvingClass ;
-#					otp:TheoremProvingParameterProperty
-#						[a otp:NOTTheoremProvingClass ;
-#							otp:TheoremProvingParameterProperty
-#								[a otp:ORTheoremProvingClass ;
-#									otp:TheoremProvingParameterProperty ex1:R4Antecedent
-#								]
-#						]
-#				]
-#		] .
-
-#ex1:ABACPolicy_2AccessRequestClassFor_negative a pac:AccessRequestClassFor_negative ;
-#	owl:equivalentClass
-#	[
-#		owl:unionOf (
-#		    [
-#		    	owl:intersectionOf (
-#					ex1:R5Antecedent
-#		    		[
-#		    			owl:complementOf 
-#	    				[
-#	    					owl:unionOf (
-#								ex1:R4Antecedent		    					
-#	    					)
-#	    				]
-#		    		]
-#		    	)
-#		    ]
-#		)
-#	] .
-		
-#ex1:ABACPolicy_2AccessRequestClassFor_negative a pac:PolicyAccessRequestClass;
-#	otp:TheoremProvingParameterProperty
-#		[a otp:ORTheoremProvingClass ;
-#			otp:TheoremProvingParameterProperty ex1:R4Antecedent
-#		] .
-
 # Fix-up for rule antecedent and conclusion needed for policy subsumption
 pac:RuleAntecedent a owl:Class .
 pac:RuleConclusion a owl:Class .
@@ -245,7 +145,7 @@ pac:RuleAntecedent rdfs:subClassOf otp:TheoremProvingBaseClass .
 pac:RuleAntecedent rdfs:subClassOf otp:ANDTheoremProvingClass .
 
 #################################################################
-#    Rule for copying Rule parameters to Antecedent and Conclusion
+#    Rule for copying Rule parameter to Antecedent and Conclusion
 #################################################################
 
 <urn:swrl#r> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
@@ -316,14 +216,7 @@ pac:RuleAntecedent rdfs:subClassOf otp:ANDTheoremProvingClass .
                                                                                                                                                <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r> ;
                                                                                                                                                <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#actor>
                                                                                                                                              ] ;
-                                                                                                                                   rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                                                                                                                              rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
-                                                                                                                                                          <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
-                                                                                                                                                          <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r> ;
-                                                                                                                                                          <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
-                                                                                                                                                        ] ;
-                                                                                                                                              rdf:rest rdf:nil
-                                                                                                                                            ]
+                                                                                                                                   rdf:rest rdf:nil
                                                                                                                                  ]
                                                                                                                       ]
                                                                                                            ]
@@ -357,21 +250,53 @@ pac:RuleAntecedent rdfs:subClassOf otp:ANDTheoremProvingClass .
                                                                                         <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ra> ;
                                                                                         <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#actor>
                                                                                       ] ;
-                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ra> ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
-                                                                                                 ] ;
-                                                                                       rdf:rest rdf:nil
-                                                                                     ]
+                                                                            rdf:rest rdf:nil
                                                                           ]
                                                                ]
                                                     ]
                                          ]
  ] .
 
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> pac:ABACRule ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> pac:RuleAntecedent ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ra>
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasAntecedent ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r> ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ra>
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ra> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
 ###  Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi
+
 
 # alignment to otp namespace for context expressions
 otp:TheoremProvingBaseClass a owl:Class .
