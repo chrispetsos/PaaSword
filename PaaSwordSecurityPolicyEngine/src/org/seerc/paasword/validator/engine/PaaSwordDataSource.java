@@ -19,7 +19,9 @@ public class PaaSwordDataSource extends JenaDataSourceInferred implements JenaMo
 		this.enhancers.add(new RuleAntecedentConclusionEnhnacer(this));
 		
 		// register the PolicyRulesOrderEnhancer enhancer
-		this.enhancers.add(new PolicyRulesOrderEnhancer(this));
+		// This is very naive. Replace it with SWRL rules that enforce ordering
+		// based on combining algorithm
+		//this.enhancers.add(new PolicyRulesOrderEnhancer(this));
 		
 		// register the SubclassSubsumptionsEngine enhancer
 		this.enhancers.add(new SubclassSubsumptionsEngine(this));
