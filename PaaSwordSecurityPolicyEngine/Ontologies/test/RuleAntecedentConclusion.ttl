@@ -103,14 +103,7 @@ pac:hasConclusion a owl:ObjectProperty ;
                                                                                                                                                <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r> ;
                                                                                                                                                <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#actor>
                                                                                                                                              ] ;
-                                                                                                                                   rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                                                                                                                              rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
-                                                                                                                                                          <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
-                                                                                                                                                          <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r> ;
-                                                                                                                                                          <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
-                                                                                                                                                        ] ;
-                                                                                                                                              rdf:rest rdf:nil
-                                                                                                                                            ]
+                                                                                                                                   rdf:rest rdf:nil
                                                                                                                                  ]
                                                                                                                       ]
                                                                                                            ]
@@ -144,17 +137,48 @@ pac:hasConclusion a owl:ObjectProperty ;
                                                                                         <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ra> ;
                                                                                         <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#actor>
                                                                                       ] ;
-                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
-                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ra> ;
-                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
-                                                                                                 ] ;
-                                                                                       rdf:rest rdf:nil
-                                                                                     ]
+                                                                            rdf:rest rdf:nil
                                                                           ]
                                                                ]
                                                     ]
+                                         ]
+ ] .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> pac:ABACRule ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> pac:RuleAntecedent ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ra>
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasAntecedent ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r> ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ra>
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#r> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
+                                                                                      ] ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> pac:hasContextExpression ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl#ra> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl#ce>
+                                                     ] ;
+                                           rdf:rest rdf:nil
                                          ]
  ] .
 
