@@ -93,7 +93,7 @@ public class PolicyAccessRequestsEnhancer implements JenaModelEnhancer {
 					{	// con(r′) ≠ x
 						// find priority of r2 in context of the policy
 						RDFNode r2Priority = this.findPriorityInContext(policy, r2);
-						if(Integer.valueOf(r2Priority.asLiteral().getValue().toString()) < Integer.valueOf(rPriority.asLiteral().getValue().toString()))
+						if(r2Priority != null && rPriority != null && Integer.valueOf(r2Priority.asLiteral().getValue().toString()) < Integer.valueOf(rPriority.asLiteral().getValue().toString()))
 						{	// r < r′
 							// get antecedent of r2 - pre(r′)
 							RDFNode preR2 = r2.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasAntecedent")).next();
