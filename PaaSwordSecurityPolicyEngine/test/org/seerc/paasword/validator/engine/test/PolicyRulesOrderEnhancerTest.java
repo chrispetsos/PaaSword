@@ -17,6 +17,7 @@ import org.seerc.paasword.validator.engine.PolicyRulesOrderEnhancer;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class PolicyRulesOrderEnhancerTest {
 
@@ -48,27 +49,34 @@ public class PolicyRulesOrderEnhancerTest {
 		
 		proe.enhanceModel();
 		
+		Individual p1 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_1").as(Individual.class);
+		Individual p2 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#ABACPolicy_2").as(Individual.class);
+		
 		Individual r1 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R1").as(Individual.class);
 		Individual r2 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R2").as(Individual.class);
 		Individual r3 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R3").as(Individual.class);
 		Individual r4 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R4").as(Individual.class);
 		Individual r5 = ((OntModel)jdsi.getModel()).getResource("http://www.paasword.eu/security-policy/use-cases/car-park#R5").as(Individual.class);
 		
-		assertTrue(this.hasNext(jdsi, r1, r2));
-		assertTrue(this.hasNext(jdsi, r2, r3));
-		assertFalse(this.hasNext(jdsi, r3, r4));
-		assertTrue(this.hasNext(jdsi, r4, r5));
+		assertTrue(this.hasPriorityInContext(jdsi, r1, 1, p1));
+		assertTrue(this.hasPriorityInContext(jdsi, r2, 1, p1));
+		assertTrue(this.hasPriorityInContext(jdsi, r3, 2, p1));
 		
-		assertFalse(this.hasNext(jdsi, r3));
-		assertFalse(this.hasNext(jdsi, r5));
-		
-		assertTrue(this.hasPrevious(jdsi, r2, r1));
-		assertTrue(this.hasPrevious(jdsi, r3, r2));
-		assertFalse(this.hasPrevious(jdsi, r4, r3));		
-		assertTrue(this.hasPrevious(jdsi, r5, r4));
+		assertTrue(this.hasPriorityInContext(jdsi, r4, 2, p2));
+		assertTrue(this.hasPriorityInContext(jdsi, r5, 2, p2));
+	}
 
-		assertFalse(this.hasPrevious(jdsi, r1));
-		assertFalse(this.hasPrevious(jdsi, r4));
+	private boolean hasPriorityInContext(JenaDataSourceInferred jdsi, Individual resource, int priority, Individual context) 
+	{
+		Individual priorityInContext = resource.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/list#hasPriorityInContext")).next().as(Individual.class);
+		RDFNode priorityValue = priorityInContext.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/list#hasPriority")).next();
+		Individual inContext = priorityInContext.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/list#inContext")).next().as(Individual.class);
+		if(priorityValue.asLiteral().getValue().equals(String.valueOf(priority)) && inContext.equals(context))
+		{
+			return true;
+		}
+		
+		return false;
 	}
 
 	private boolean hasNext(JenaDataSourceInferred jdsi, Individual r1, Individual r2)

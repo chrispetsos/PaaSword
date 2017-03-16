@@ -42,11 +42,19 @@ public class PolicyRulesOrderEnhancer implements JenaModelEnhancer {
 			List<RDFNode> policyCAList = policy.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasPolicyCombiningAlgorithm")).toList();
 			if(policyCAList.isEmpty())
 			{	// no combining algorithm, cannot do anything
-				return;
+				continue;
 			}
 			
-			// Policies must have exactly one CA
-			Individual policyCA = policyCAList.get(0).as(Individual.class);
+			// Policies must have exactly one CA and it must be an Individual
+			Individual policyCA = null;
+			try
+			{
+				policyCA = policyCAList.get(0).as(Individual.class);
+			}
+			catch(Exception e)
+			{
+				continue;
+			}
 			
 			// Get all Rules of Policy
 			NodeIterator policyRules = policy.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasABACRule"));
