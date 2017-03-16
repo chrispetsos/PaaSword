@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.util.Arrays;
@@ -134,7 +135,9 @@ public class PaaSwordValidatorTest {
 		
 		List<QueryValidatorErrors> validationErrors = pwdv.validate();
 
-		this.printValidationReport(validationErrors);
+		//this.printValidationReport(validationErrors);
+		
+		pwdv.jds.printModel(new FileOutputStream(new File("testPolicySubsumption.ttl")));
 		
 		assertEquals(1, validationErrors.size());
 	}
