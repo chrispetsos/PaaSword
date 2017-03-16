@@ -24,20 +24,6 @@
 @prefix list: <http://www.paasword.eu/security-policy/seerc/list#> .
 @prefix xca: <http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#> .
 
-# Ontology for list of elements in next/previous order
-list:hasNext a owl:ObjectProperty ;
-	owl:inverseOf list:hasPrevious ;
-	a owl:TransitiveProperty .
-
-list:hasPrevious a owl:ObjectProperty .
-
-list:PriorityInContext a owl:Class .
-
-list:hasPriority a owl:DatatypeProperty .
-list:inContext a owl:ObjectProperty .
-
-list:hasPriorityInContext a owl:ObjectProperty .
-
 # Policies and Policy Set with Rules
 
 # Policy Set 1 contains Policies 1 and 2 with first-applicable combining algorithm
