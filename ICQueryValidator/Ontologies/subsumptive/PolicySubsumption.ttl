@@ -22,6 +22,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
 @prefix list: <http://www.paasword.eu/security-policy/seerc/list#> .
+@prefix xca: <http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#> .
 
 # Ontology for list of elements in next/previous order
 list:hasNext a owl:ObjectProperty ;
@@ -34,18 +35,18 @@ list:hasPrevious a owl:ObjectProperty .
 
 # Policy Set 1 contains Policies 1 and 2 with first-applicable combining algorithm
 ex1:ABACPolicySet_1 a pac:ABACPolicySet;
-	pac:hasPolicySetCombiningAlgorithm ex1:firstApplicable.
+	pac:hasPolicySetCombiningAlgorithm xca:firstApplicable.
 
 # Policy 1 has rules 1, 2, 3 with permit-override combining algorithm
 ex1:ABACPolicy_1 a pac:ABACPolicy;
 	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
-	pac:hasPolicyCombiningAlgorithm ex1:permitOverride;
+	pac:hasPolicyCombiningAlgorithm xca:permitOverrides;
 	pac:hasABACRule ex1:R1, ex1:R2, ex1:R3 .
 
 # Policy 2 has rule 4 with permit-override combining algorithm
 ex1:ABACPolicy_2 a pac:ABACPolicy;
 	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
-	pac:hasPolicyCombiningAlgorithm ex1:permitOverride;
+	pac:hasPolicyCombiningAlgorithm xca:permitOverrides;
 	pac:hasABACRule ex1:R4, ex1:R5 .
 
 # Allow Manager to write Report
@@ -117,13 +118,14 @@ ex1:Parking2 a pcm:Point.
 ex1:Read a ppm:DatastorePermission.
 ex1:Write a ppm:DatastorePermission.
 
-ex1:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
-ex1:permitOverride a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+xca:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+xca:denyOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+xca:permitOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 
 # Let's try to build by hand the class of all access requests of all policies with
 # respect to every conclusion.
-ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_1AccessRequestClassFor_positive .
-ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_1AccessRequestClassFor_negative .
+#ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_1AccessRequestClassFor_positive .
+#ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_1AccessRequestClassFor_negative .
 
 # align to otp namespace 
 # pac:PolicyAccessRequestClass rdfs:subClassOf otp:TheoremProvingBaseClass .
@@ -135,28 +137,28 @@ ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_1AccessReq
 #			otp:TheoremProvingParameterProperty ex1:R2Antecedent
 #		] .
 
-pac:AccessRequestClassFor_negative a owl:Class .
+#pac:AccessRequestClassFor_negative a owl:Class .
 
-ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:AccessRequestClassFor_negative ;
-	owl:equivalentClass
-	[
-		owl:unionOf (
-		    [
-		    	owl:intersectionOf (
-					ex1:R3Antecedent
-		    		[
-		    			owl:complementOf 
-	    				[
-	    					owl:unionOf (
-								ex1:R1Antecedent		    					
-								ex1:R2Antecedent		    					
-	    					)
-	    				]
-		    		]
-		    	)
-		    ]
-		)
-	] .
+#ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:AccessRequestClassFor_negative ;
+#	owl:equivalentClass
+#	[
+#		owl:unionOf (
+#		    [
+#		    	owl:intersectionOf (
+#					ex1:R3Antecedent
+#		    		[
+#		    			owl:complementOf 
+#	    				[
+#	    					owl:unionOf (
+#								ex1:R1Antecedent		    					
+#								ex1:R2Antecedent		    					
+#	    					)
+#	    				]
+#		    		]
+#		    	)
+#		    ]
+#		)
+#	] .
 
 #ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:PolicyAccessRequestClass;
 #	otp:TheoremProvingParameterProperty
@@ -175,8 +177,8 @@ ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:AccessRequestClassFor_negat
 #				]
 #		] .
 
-ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_2AccessRequestClassFor_positive .
-ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_2AccessRequestClassFor_negative .
+#ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_2AccessRequestClassFor_positive .
+#ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_2AccessRequestClassFor_negative .
 
 #ex1:ABACPolicy_2AccessRequestClassFor_positive a pac:PolicyAccessRequestClass;
 #	otp:TheoremProvingParameterProperty
@@ -194,25 +196,25 @@ ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_2AccessReq
 #				]
 #		] .
 
-ex1:ABACPolicy_2AccessRequestClassFor_negative a pac:AccessRequestClassFor_negative ;
-	owl:equivalentClass
-	[
-		owl:unionOf (
-		    [
-		    	owl:intersectionOf (
-					ex1:R5Antecedent
-		    		[
-		    			owl:complementOf 
-	    				[
-	    					owl:unionOf (
-								ex1:R4Antecedent		    					
-	    					)
-	    				]
-		    		]
-		    	)
-		    ]
-		)
-	] .
+#ex1:ABACPolicy_2AccessRequestClassFor_negative a pac:AccessRequestClassFor_negative ;
+#	owl:equivalentClass
+#	[
+#		owl:unionOf (
+#		    [
+#		    	owl:intersectionOf (
+#					ex1:R5Antecedent
+#		    		[
+#		    			owl:complementOf 
+#	    				[
+#	    					owl:unionOf (
+#								ex1:R4Antecedent		    					
+#	    					)
+#	    				]
+#		    		]
+#		    	)
+#		    ]
+#		)
+#	] .
 		
 #ex1:ABACPolicy_2AccessRequestClassFor_negative a pac:PolicyAccessRequestClass;
 #	otp:TheoremProvingParameterProperty
