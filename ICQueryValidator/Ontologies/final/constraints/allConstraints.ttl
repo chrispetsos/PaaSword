@@ -4,11 +4,11 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
 @prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
-@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
-@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
-@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2015/11/30#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2015/11/30#> .
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2015/11/30#> .
 @prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
-@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2015/11/30#> .
 @prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
 @prefix gr: <http://purl.org/goodrelations/v1#>. 
 
@@ -321,7 +321,7 @@ pac:ContextExpression rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:refersTo ;
                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
+                owl:onClass [owl:unionOf (pcm:Subject pcm:Object pcm:Request)]
               ] .
 []  rdf:type       owl:Axiom ;
     owl:annotatedSource    pac:ContextExpression ;
@@ -329,7 +329,7 @@ pac:ContextExpression rdfs:subClassOf
     owl:annotatedTarget    [ a owl:Restriction ;
                 owl:onProperty pac:refersTo ;
                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
+                owl:onClass [owl:unionOf (pcm:Subject pcm:Object pcm:Request)]
               ] ;
     rdfs:comment "Context expressions must referTo at most one Subject or Object."^^xsd:string ;
     rdfs:label "error"^^xsd:string .
@@ -345,7 +345,7 @@ pac:ContextExpression rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:refersTo ;
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
+                owl:onClass [owl:unionOf (pcm:Subject pcm:Object pcm:Request)]
               ] .
 []  rdf:type       owl:Axiom ;
     owl:annotatedSource    	[ owl:intersectionOf (pac:ContextExpression
@@ -358,7 +358,7 @@ pac:ContextExpression rdfs:subClassOf
     owl:annotatedTarget    [ a owl:Restriction ;
                 owl:onProperty pac:refersTo ;
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                owl:onClass [owl:unionOf (pcm:Subject pcm:Object)]
+                owl:onClass [owl:unionOf (pcm:Subject pcm:Object pcm:Request)]
               ] ;
     rdfs:comment "Context expressions with Location or Connectivity parameters must referTo exactly one Subject or Object."^^xsd:string ;
     rdfs:label "error"^^xsd:string .

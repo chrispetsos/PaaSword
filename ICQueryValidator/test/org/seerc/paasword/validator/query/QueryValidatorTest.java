@@ -44,7 +44,7 @@ public class QueryValidatorTest {
 	@Test
 	public void testValidate() {
 		List<QueryValidatorErrors> validationResult = qv.validate();
-		assertEquals(2, validationResult.size());
+		assertEquals(1, validationResult.size());
 	}
 
 	// TODO: We do not support yet subclass constraints.

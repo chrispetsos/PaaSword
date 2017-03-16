@@ -1,10 +1,10 @@
 @prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
 @prefix pbe: <http://www.paasword.eu/security-policy/seerc/pbe#>.
-@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
-@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2015/11/30#> .
+@prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2015/11/30#> .
 @prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
 @prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
-@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2015/11/30#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
 

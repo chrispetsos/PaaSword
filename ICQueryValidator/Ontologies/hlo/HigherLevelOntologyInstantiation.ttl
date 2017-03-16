@@ -2,7 +2,7 @@
 @prefix xsd:<http://www.w3.org/2001/XMLSchema#> .
 @prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
 @prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
-@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2015/11/30#> .
 
 # This is an instantiation ontology which abides to HigherLevelOntology.ttl.
 # Does not follow the owl semantics, but declares all data needed as input

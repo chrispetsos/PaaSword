@@ -4,9 +4,9 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
 @prefix pwd: <http://www.paasword.eu/security-policy/seerc/pwd#>.
-@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
-@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
-@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2016/05/20#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2015/11/30#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2015/11/30#> .
+@prefix pcpm: <http://www.paasword-project.eu/ontologies/cpsm/2015/11/30#> .
 
 ### We can now add additional constraints
 pac:ABACRule rdfs:subClassOf

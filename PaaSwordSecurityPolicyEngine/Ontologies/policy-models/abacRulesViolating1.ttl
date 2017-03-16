@@ -1,8 +1,8 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex1: <http://www.paasword.eu/security-policy/use-cases/car-park#>.
 @prefix pac: <http://www.paasword.eu/security-policy/seerc/pac#>.
-@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2016/05/20#> .
-@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2016/05/20#> .
+@prefix ppm: <http://www.paasword-project.eu/ontologies/psm/2015/11/30#> .
+@prefix pcm: <http://www.paasword-project.eu/ontologies/casm/2015/11/30#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix gr: <http://purl.org/goodrelations/v1#> .
 @prefix schema: <http://schema.org/> .

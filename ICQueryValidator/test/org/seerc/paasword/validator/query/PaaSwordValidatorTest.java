@@ -16,6 +16,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class PaaSwordValidatorTest {
 
 	PaaSwordValidator pwdv;
@@ -103,7 +106,28 @@ public class PaaSwordValidatorTest {
 
 		pwdv = new PaaSwordValidator(payload);
 		
-		assertEquals(8, pwdv.validate().size());
+		assertEquals(2, pwdv.validate().size());
+	}
+
+	@Test
+	public void testPatiniErrors() throws Exception
+	{
+		InputStream contextModelWithPolicy = new FileInputStream(new File("Ontologies/patini/test-ALL.ttl"));
+		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
+
+		pwdv = new PaaSwordValidator(payload);
+		
+		List<QueryValidatorErrors> validationErrors = pwdv.validate();
+
+		this.printValidationReport(validationErrors);
+		
+		assertEquals(19, validationErrors.size());
+	}
+
+	private void printValidationReport(List<QueryValidatorErrors> validationErrors)
+	{
+		Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+		System.out.println(gson.toJson(validationErrors));
 	}
 
 }

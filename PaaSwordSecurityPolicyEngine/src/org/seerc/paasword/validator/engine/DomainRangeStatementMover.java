@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.io.Writer;
+import java.util.List;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -32,18 +33,24 @@ public class DomainRangeStatementMover {
 		{
 			Resource subjectOfProperty = subjectsOfPropertyStatements.next();
 			// find all property statements where subjectOfProperty is subject
-			StmtIterator propertyStatements = dataSource.getModel().listStatements(subjectOfProperty, property, (RDFNode)null);
-			// The RDFList that will hold all objects of the statements
-			RDFList propertyList = targetModel.createList();
-			while(propertyStatements.hasNext())
-			{
-				Statement propertyStatement = propertyStatements.next();
-				propertyList = propertyList.with(propertyStatement.getObject());
+			List<Statement> propertyStatements = dataSource.getModel().listStatements(subjectOfProperty, property, (RDFNode)null).toList();
+			if(propertyStatements.size() == 1)
+			{	// only one property, do not create list
+				targetModel.add(subjectOfProperty, property, propertyStatements.get(0).getObject());
 			}
-			// create the union class that will hold all statements
-			OntClass unionClass = targetModel.createUnionClass(null, propertyList);
-			// add the property statement with the union class in targetModel
-			targetModel.add(subjectOfProperty, property, unionClass);
+			else
+			{	// more than one properties, create list
+				// The RDFList that will hold all objects of the statements
+				RDFList propertyList = targetModel.createList();
+				for(Statement propertyStatement:propertyStatements)
+				{
+					propertyList = propertyList.with(propertyStatement.getObject());
+				}
+				// create the union class that will hold all statements
+				OntClass unionClass = targetModel.createUnionClass(null, propertyList);
+				// add the property statement with the union class in targetModel
+				targetModel.add(subjectOfProperty, property, unionClass);
+			}
 			// remove propertyStatements from dataSource
 			dataSource.getModel().remove(dataSource.getModel().listStatements(subjectOfProperty, property, (RDFNode)null));
 		}

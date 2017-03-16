@@ -75,16 +75,16 @@ public class DomainRangeStatementMoverTest {
 		assertTrue(domainA.as(OntClass.class).hasEquivalentClass(targetModel.createUnionClass("", classList)));
 
 		// Same for domain of pcm:isLocatedIn
-		RDFNode domainB = targetModel.listStatements(targetModel.createResource("http://www.paasword-project.eu/ontologies/casm/2016/05/20#isLocatedIn"), targetModel.createProperty("http://www.w3.org/2000/01/rdf-schema#domain"), (RDFNode)null).next().getObject();
-		assertTrue(domainB.as(OntClass.class).hasEquivalentClass(targetModel.createClass("http://www.paasword-project.eu/ontologies/casm/2016/05/20#Area")));
+		RDFNode domainB = targetModel.listStatements(targetModel.createResource("http://www.paasword-project.eu/ontologies/casm/2015/11/30#isLocatedIn"), targetModel.createProperty("http://www.w3.org/2000/01/rdf-schema#domain"), (RDFNode)null).next().getObject();
+		assertTrue(domainB.as(OntClass.class).hasEquivalentClass(targetModel.createClass("http://www.paasword-project.eu/ontologies/casm/2015/11/30#Area")));
 
 		// Same for range of ex1:aProperty
 		RDFNode rangeA = targetModel.listStatements(targetModel.createResource("http://www.paasword.eu/security-policy/use-cases/car-park#aProperty"), targetModel.createProperty("http://www.w3.org/2000/01/rdf-schema#range"), (RDFNode)null).next().getObject();
 		assertTrue(rangeA.as(OntClass.class).hasEquivalentClass(targetModel.createClass("http://www.paasword.eu/security-policy/use-cases/car-park#ClassC")));
 
 		// And range of pcm:isLocatedIn
-		RDFNode rangeB = targetModel.listStatements(targetModel.createResource("http://www.paasword-project.eu/ontologies/casm/2016/05/20#isLocatedIn"), targetModel.createProperty("http://www.w3.org/2000/01/rdf-schema#range"), (RDFNode)null).next().getObject();
-		assertTrue(rangeB.as(OntClass.class).hasEquivalentClass(targetModel.createClass("http://www.paasword-project.eu/ontologies/casm/2016/05/20#Area")));
+		RDFNode rangeB = targetModel.listStatements(targetModel.createResource("http://www.paasword-project.eu/ontologies/casm/2015/11/30#isLocatedIn"), targetModel.createProperty("http://www.w3.org/2000/01/rdf-schema#range"), (RDFNode)null).next().getObject();
+		assertTrue(rangeB.as(OntClass.class).hasEquivalentClass(targetModel.createClass("http://www.paasword-project.eu/ontologies/casm/2015/11/30#Area")));
 	}
 
 	private List<Statement> getStatementsWithProperty(OntModel model, String property)
