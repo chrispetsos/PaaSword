@@ -1,7 +1,5 @@
 package org.seerc.paasword.validator.engine;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.hp.hpl.jena.ontology.Individual;
