@@ -25,8 +25,10 @@ public class RuleAntecedentConclusionEnhnacer implements JenaModelEnhancer {
 		for(Individual abacRule:abacRuleIndividuals)
 		{
 			// create antecedent
+			((OntModel)this.jdsi.getModel()).createClass(abacRule.toString() + "Antecedent");
 			this.jdsi.getModel().add(abacRule, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasAntecedent"), ((OntModel)this.jdsi.getModel()).createIndividual(abacRule.toString() + "Antecedent", this.jdsi.getModel().createResource("http://www.paasword.eu/security-policy/seerc/pac#RuleAntecedent")));
 			// create conclusion
+			((OntModel)this.jdsi.getModel()).createClass(abacRule.toString() + "Conclusion");
 			this.jdsi.getModel().add(abacRule, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasConclusion"), ((OntModel)this.jdsi.getModel()).createIndividual(abacRule.toString() + "Conclusion", this.jdsi.getModel().createResource("http://www.paasword.eu/security-policy/seerc/pac#RuleConclusion")));
 		}
 	}
