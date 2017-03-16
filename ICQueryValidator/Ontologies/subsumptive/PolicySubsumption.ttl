@@ -135,7 +135,9 @@ ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_1AccessReq
 #			otp:TheoremProvingParameterProperty ex1:R2Antecedent
 #		] .
 
-ex1:ABACPolicy_1AccessRequestClassFor_negative a owl:Class ;
+pac:AccessRequestClassFor_negative a owl:Class .
+
+ex1:ABACPolicy_1AccessRequestClassFor_negative a pac:AccessRequestClassFor_negative ;
 	owl:equivalentClass
 	[
 		owl:unionOf (
@@ -192,7 +194,7 @@ ex1:ABACPolicy_2 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_2AccessReq
 #				]
 #		] .
 
-ex1:ABACPolicy_2AccessRequestClassFor_negative a owl:Class ;
+ex1:ABACPolicy_2AccessRequestClassFor_negative a pac:AccessRequestClassFor_negative ;
 	owl:equivalentClass
 	[
 		owl:unionOf (
