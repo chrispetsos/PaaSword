@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
@@ -19,6 +20,15 @@ public class PolicyRulesOrderEnhancer implements JenaModelEnhancer {
 		this.jdsi = jdsi;
 	}
 
+/*	
+	list:PriorityInContext a owl:Class .
+
+	list:hasPriority a owl:DatatypeProperty .
+	list:inContext a owl:ObjectProperty .
+
+	list:hasPriorityInContext a owl:ObjectProperty .
+	
+*/	
 	@Override
 	public void enhanceModel() {
 		// Get all Policies
@@ -26,40 +36,70 @@ public class PolicyRulesOrderEnhancer implements JenaModelEnhancer {
 		
 		while(abacPolicies.hasNext())
 		{
-			// Get all Rules of Policies
-			List<RDFNode> policyRules = abacPolicies.next().listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasABACRule")).toList();
+			Individual policy = abacPolicies.next();
 			
-			/*
-			 * OK, Jena seems to return the elements from within the RDF serialization
-			 * in the reverse order that they are added inside the RDF document.
-			 * So, theoretically, reversing the returned list will put the elements
-			 * in the order that they are actually added inside the RDF document. 
-			 * 
-			 * TODO: Is this always the case???
-			 * 
-			 * No! Changing the declared order inside the RDF document does NOT change
-			 * the order that Jena fetches them. Tracing a bit inside this, it seems that
-			 * a Graph data structure is used for the elements, so we cannot be sure
-			 * about the order these are returned in any case.
-			 * 
-			 * Instead of reversing the list, I ended up sorting it lexicographically
-			 * based on the rules' URIs. Very naive !!!!
-			 */
-			Collections.sort(policyRules, new Comparator<RDFNode>() {
-
-				@Override
-				public int compare(RDFNode arg0, RDFNode arg1) {
-					return arg0.toString().compareTo(arg1.toString());
-				}
-			});
+			// get combining algorithm of policy
+			List<RDFNode> policyCAList = policy.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasPolicyCombiningAlgorithm")).toList();
+			if(policyCAList.isEmpty())
+			{	// no combining algorithm, cannot do anything
+				return;
+			}
 			
-			// Add hasNext relations between Rules
-			// iterate until the previous to last
-			for(int i=0;i<policyRules.size()-1;i++)
+			// Policies must have exactly one CA
+			Individual policyCA = policyCAList.get(0).as(Individual.class);
+			
+			// Get all Rules of Policy
+			NodeIterator policyRules = policy.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasABACRule"));
+			while(policyRules.hasNext())
 			{
-				this.jdsi.getModel().add(policyRules.get(i).asResource(), this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/list#hasNext"), policyRules.get(i+1));				
+				Individual policyRule = policyRules.next().as(Individual.class);
+				// get authorisation of rule
+				List<RDFNode> ruleAuthorisationList = policyRule.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasAuthorisation")).toList();
+				if(ruleAuthorisationList.isEmpty())
+				{	// no authorisation in rule
+					continue;
+				}
+				
+				// should have exactly one authorisation
+				Individual ruleAuthorisation = ruleAuthorisationList.get(0).as(Individual.class);
+				
+				if(ruleAuthorisation.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#positive")))
+				{	// positive authorisation
+					if(policyCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitOverrides")))
+					{	// permit overrides
+						this.createPriorityInContext(policyRule, 1, policy);						
+					}
+					else if(policyCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#denyOverrides")))
+					{	// deny overrides
+						this.createPriorityInContext(policyRule, 2, policy);												
+					}
+				}
+				else if(ruleAuthorisation.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#negative")))
+				{	// negative authorisation
+					if(policyCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitOverrides")))
+					{	// permit overrides
+						this.createPriorityInContext(policyRule, 2, policy);						
+					}
+					else if(policyCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#denyOverrides")))
+					{	// deny overrides
+						this.createPriorityInContext(policyRule, 1, policy);												
+					}
+				}
 			}
 		}
+	}
+
+	private void createPriorityInContext(Individual policyRule, int priority, Individual context)
+	{
+		// create the PriorityInContext individual
+		Individual priorityInContextIndividual = ((OntModel)jdsi.getModel()).createIndividual("http://www.paasword.eu/security-policy/seerc/list#PriorityFor_" + policyRule.getLocalName() + "_InContext_" + context.getLocalName(), ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/list#PriorityInContext"));
+		// set its priority 
+		this.jdsi.getModel().add(priorityInContextIndividual, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/list#hasPriority"), String.valueOf(priority));
+		// set its context 
+		this.jdsi.getModel().add(priorityInContextIndividual, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/list#inContext"), context);
+		
+		// add the PriorityInContext to the rule
+		this.jdsi.getModel().add(policyRule, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/list#hasPriorityInContext"), priorityInContextIndividual);
 	}
 
 }
