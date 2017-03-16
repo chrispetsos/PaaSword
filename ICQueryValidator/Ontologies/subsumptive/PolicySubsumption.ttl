@@ -99,14 +99,6 @@ ex1:R5 a pac:ABACRule;
 	pac:hasActor ex1:Developer;
 	pac:hasContextExpression ex1:expr .
 
-ex1:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
-ex1:permitOverride a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
-
-# Let's try to build by hand the class of all access requests of all policies with
-# respect to every conclusion.
-ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_1AccessRequestClassFor_positive .
-ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_1AccessRequestClassFor_negative .
-
 ex1:expr a pac:ANDContextExpression;
 	pac:hasParameter ex1:EmployeeWorkingHours, ex1:expr1 .
 
@@ -125,6 +117,13 @@ ex1:Parking2 a pcm:Point.
 ex1:Read a ppm:DatastorePermission.
 ex1:Write a ppm:DatastorePermission.
 
+ex1:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+ex1:permitOverride a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+
+# Let's try to build by hand the class of all access requests of all policies with
+# respect to every conclusion.
+ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_positive ex1:ABACPolicy_1AccessRequestClassFor_positive .
+ex1:ABACPolicy_1 pac:hasAccessRequestClassFor_negative ex1:ABACPolicy_1AccessRequestClassFor_negative .
 
 # align to otp namespace 
 # pac:PolicyAccessRequestClass rdfs:subClassOf otp:TheoremProvingBaseClass .
