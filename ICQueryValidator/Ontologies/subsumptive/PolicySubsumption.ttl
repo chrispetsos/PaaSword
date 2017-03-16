@@ -111,10 +111,6 @@ ex1:Parking2 a pcm:Point.
 ex1:Read a ppm:DatastorePermission.
 ex1:Write a ppm:DatastorePermission.
 
-xca:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
-xca:denyOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
-xca:permitOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
-
 
 
 

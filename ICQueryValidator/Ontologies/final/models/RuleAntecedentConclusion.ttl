@@ -22,7 +22,6 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix otp: <http://www.paasword.eu/security-policy/seerc/otp#>.
 @prefix list: <http://www.paasword.eu/security-policy/seerc/list#> .
-@prefix xca: <http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#> .
 
 # Fix-up for rule antecedent and conclusion needed for policy subsumption
 pac:RuleAntecedent a owl:Class .
