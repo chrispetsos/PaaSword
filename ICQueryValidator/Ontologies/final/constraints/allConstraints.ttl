@@ -379,4 +379,21 @@ pac:AccessRequestClassFor_negative rdfs:subClassOf
                owl:onClass pac:AccessRequestClassFor_negative 
              ] ;
     rdfs:comment "Subsuming policies for deny consequent."^^xsd:string ;
-    rdfs:label "error"^^xsd:string .    
+    rdfs:label "error"^^xsd:string .
+
+pac:AccessRequestClassFor_positive rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty rdfs:subClassOf ;
+                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:AccessRequestClassFor_positive 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:AccessRequestClassFor_positive ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty rdfs:subClassOf ;
+               owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:AccessRequestClassFor_positive 
+             ] ;
+    rdfs:comment "Subsuming policies for permit consequent."^^xsd:string ;
+    rdfs:label "error"^^xsd:string .
