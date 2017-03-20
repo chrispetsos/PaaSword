@@ -331,7 +331,7 @@ pac:ContextExpression rdfs:subClassOf
                 owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:Subject pcm:Object pcm:Request)]
               ] ;
-    rdfs:comment "Context expressions must referTo at most one Subject or Object."^^xsd:string ;
+    rdfs:comment "Context expressions must referTo at most one Subject, Object or Request."^^xsd:string ;
     rdfs:label "error"^^xsd:string .
 
 # More specifically, when the context expression hasParameter Location or
@@ -360,7 +360,7 @@ pac:ContextExpression rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass [owl:unionOf (pcm:Subject pcm:Object pcm:Request)]
               ] ;
-    rdfs:comment "Context expressions with Location or Connectivity parameters must referTo exactly one Subject or Object."^^xsd:string ;
+    rdfs:comment "Context expressions with Location or Connectivity parameters must referTo exactly one Subject, Object or Request."^^xsd:string ;
     rdfs:label "error"^^xsd:string .
 
 # ABAC policies should not have other policies as subclasses for a specific consequent (weak subsumption)

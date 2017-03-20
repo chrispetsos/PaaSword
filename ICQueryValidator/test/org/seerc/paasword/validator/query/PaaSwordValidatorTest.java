@@ -126,6 +126,22 @@ public class PaaSwordValidatorTest {
 	}
 
 	@Test
+	public void testPatini2Errors() throws Exception
+	{
+		InputStream contextModelWithPolicy = new FileInputStream(new File("Ontologies/patini/test2-ALL-corrected.ttl"));
+		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
+
+		pwdv = new PaaSwordValidator(payload);
+		
+		List<QueryValidatorErrors> validationErrors = pwdv.validate();
+
+		this.printValidationReport(validationErrors);
+		//pwdv.jds.printModel(System.out);
+		
+		assertEquals(12, validationErrors.size());
+	}
+
+	@Test
 	public void testPolicySubsumption() throws Exception
 	{
 		InputStream contextModelWithPolicy = new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl"));
