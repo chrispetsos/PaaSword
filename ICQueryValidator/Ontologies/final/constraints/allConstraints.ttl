@@ -449,7 +449,7 @@ pac:ABACPolicy rdfs:subClassOf
                owl:onClass pac:ABACPolicy 
              ] ;
     rdfs:comment "Subsuming polcies."^^xsd:string ;
-    rdfs:label "warning"^^xsd:string .
+    rdfs:label "error"^^xsd:string .
 
 # ABAC policies should be equivalent at most to themselves (full equivalence)
 pac:ABACPolicy rdfs:subClassOf
@@ -467,4 +467,4 @@ pac:ABACPolicy rdfs:subClassOf
                 owl:onClass pac:ABACPolicy
               ] ;
     rdfs:comment "Equivalent policies."^^xsd:string ;
-    rdfs:label "warning"^^xsd:string .
+    rdfs:label "error"^^xsd:string .
