@@ -42,6 +42,12 @@ ex1:ABACPolicy_2 a pac:ABACPolicy;
 	pac:hasPolicyCombiningAlgorithm xca:permitOverrides;
 	pac:hasABACRule ex1:R4, ex1:R5 .
 
+# Policy 3 is equivalent to 2
+ex1:ABACPolicy_3 a pac:ABACPolicy;
+	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
+	pac:hasPolicyCombiningAlgorithm xca:permitOverrides;
+	pac:hasABACRule ex1:R4, ex1:R5 .
+
 # Allow Manager to write Report
 ex1:R1 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;

@@ -310,6 +310,13 @@ pac:hasContextExpression rdfs:subPropertyOf otp:TheoremProvingParameterProperty 
 pac:ABACRule rdfs:subClassOf otp:ANDTheoremProvingClass .
 #############################################################################
 
+### Alignment to otp namespace for policies ####################################
+pac:ABACPolicy rdfs:subClassOf otp:TheoremProvingBaseClass .
+xca:hasAccessRequestClassFor_positive rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+xca:hasAccessRequestClassFor_negative rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:ABACPolicy rdfs:subClassOf otp:ANDTheoremProvingClass .
+#############################################################################
+
 ### The contradicts property ################################################
 pac:contradicts a owl:ObjectProperty, owl:TransitiveProperty .
 #############################################################################
