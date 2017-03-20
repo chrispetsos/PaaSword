@@ -363,7 +363,7 @@ pac:ContextExpression rdfs:subClassOf
     rdfs:comment "Context expressions with Location or Connectivity parameters must referTo exactly one Subject or Object."^^xsd:string ;
     rdfs:label "error"^^xsd:string .
 
-# ABAC policies should not have other policies as subclasses for a specific consequent
+# ABAC policies should not have other policies as subclasses for a specific consequent (weak subsumption)
 pac:AccessRequestClassFor_negative rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty rdfs:subClassOf ;
@@ -395,5 +395,76 @@ pac:AccessRequestClassFor_positive rdfs:subClassOf
                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                owl:onClass pac:AccessRequestClassFor_positive 
              ] ;
-    rdfs:comment "Subsuming policies for permit consequent."^^xsd:string ;
+    rdfs:comment "Equivalent policies for permit consequent."^^xsd:string ;
+    rdfs:label "warning"^^xsd:string .
+    
+# ABAC policies should should be equivalent at most to themselves for a specific consequent (weak equivalence)
+pac:AccessRequestClassFor_negative rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty owl:equivalentClass ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:AccessRequestClassFor_negative 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:AccessRequestClassFor_negative ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty owl:equivalentClass ;
+               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:AccessRequestClassFor_negative 
+             ] ;
+    rdfs:comment "Equivalent policies for deny consequent."^^xsd:string ;
+    rdfs:label "warning"^^xsd:string .
+
+pac:AccessRequestClassFor_positive rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty owl:equivalentClass ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:AccessRequestClassFor_positive 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:AccessRequestClassFor_positive ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty owl:equivalentClass ;
+               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:AccessRequestClassFor_positive 
+             ] ;
+    rdfs:comment "Equivalent policies for permit consequent."^^xsd:string ;
+    rdfs:label "warning"^^xsd:string .
+    
+# ABAC policies should not have other policies as subclasses (full subsumption)
+pac:ABACPolicy rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty rdfs:subClassOf ;
+                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:ABACPolicy 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:ABACPolicy ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty rdfs:subClassOf ;
+               owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:ABACPolicy 
+             ] ;
+    rdfs:comment "Subsuming polcies."^^xsd:string ;
+    rdfs:label "warning"^^xsd:string .
+
+# ABAC policies should be equivalent at most to themselves (full equivalence)
+pac:ABACPolicy rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty owl:equivalentClass ;
+                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:ABACPolicy
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:ABACPolicy ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+                owl:onProperty owl:equivalentClass ;
+                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:ABACPolicy
+              ] ;
+    rdfs:comment "Equivalent policies."^^xsd:string ;
     rdfs:label "warning"^^xsd:string .
