@@ -379,7 +379,7 @@ pac:AccessRequestClassFor_negative rdfs:subClassOf
                owl:onClass pac:AccessRequestClassFor_negative 
              ] ;
     rdfs:comment "Subsuming policies for deny consequent."^^xsd:string ;
-    rdfs:label "error"^^xsd:string .
+    rdfs:label "warning"^^xsd:string .
 
 pac:AccessRequestClassFor_positive rdfs:subClassOf
               [ a owl:Restriction ;
@@ -396,4 +396,4 @@ pac:AccessRequestClassFor_positive rdfs:subClassOf
                owl:onClass pac:AccessRequestClassFor_positive 
              ] ;
     rdfs:comment "Subsuming policies for permit consequent."^^xsd:string ;
-    rdfs:label "error"^^xsd:string .
+    rdfs:label "warning"^^xsd:string .
