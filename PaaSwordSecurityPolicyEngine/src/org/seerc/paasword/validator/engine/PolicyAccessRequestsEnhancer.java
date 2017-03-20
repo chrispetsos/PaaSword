@@ -35,8 +35,11 @@ public class PolicyAccessRequestsEnhancer implements JenaModelEnhancer {
 			
 			OntClass policyAccessRequestsPositive = this.createAccessRequestsClassForConsequent(policy, ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#positive"));
 			((OntModel)jdsi.getModel()).createIndividual(policyAccessRequestsPositive.getURI(), ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#AccessRequestClassFor_positive"));
+			((OntModel)jdsi.getModel()).add(policy, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#hasAccessRequestClassFor_positive"), policyAccessRequestsPositive);
+			
 			OntClass policyAccessRequestsNegative = this.createAccessRequestsClassForConsequent(policy, ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#negative"));
 			((OntModel)jdsi.getModel()).createIndividual(policyAccessRequestsNegative.getURI(), ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#AccessRequestClassFor_negative"));
+			((OntModel)jdsi.getModel()).add(policy, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#hasAccessRequestClassFor_negative"), policyAccessRequestsNegative);
 			
 			
 			// Get all Rules of Policy
