@@ -258,6 +258,8 @@ pac:negative a pac:Authorisation.
 xca:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 xca:denyOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 xca:permitOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+xca:denyUnlessPermit a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+xca:permitUnlessDeny a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 #############################################################################
 
 ### Context expression template #############################################
