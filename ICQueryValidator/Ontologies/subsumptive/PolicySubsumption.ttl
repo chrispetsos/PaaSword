@@ -55,7 +55,7 @@ ex1:ABACPolicy_4 a pac:ABACPolicy;
 	pac:hasABACRule ex1:R4 .
 
 # Policy 5 has rules 4 and 6 which are subsumed
-ex1:ABACPolicy_2 a pac:ABACPolicy;
+ex1:ABACPolicy_5 a pac:ABACPolicy;
 	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
 	pac:hasPolicyCombiningAlgorithm xca:permitOverrides;
 	pac:hasABACRule ex1:R4, ex1:R6 .
