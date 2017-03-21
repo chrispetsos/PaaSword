@@ -27,6 +27,9 @@ public class PaaSwordDataSource extends JenaDataSourceInferred implements JenaMo
 		// register the SubclassSubsumptionsEngine enhancer
 		this.enhancers.add(new SubclassSubsumptionsEngine(this));
 
+		// register the PropertySubsumptionsEnhancer enhancer
+		this.enhancers.add(new PropertySubsumptionsEnhancer(this));
+
 		// enhance model
 		this.enhanceModel();
 	}
