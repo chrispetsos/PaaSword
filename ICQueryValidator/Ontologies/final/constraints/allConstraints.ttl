@@ -448,7 +448,7 @@ pac:ABACPolicy rdfs:subClassOf
                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                owl:onClass pac:ABACPolicy 
              ] ;
-    rdfs:comment "Subsuming polcies."^^xsd:string ;
+    rdfs:comment "Subsuming policies."^^xsd:string ;
     rdfs:label "error"^^xsd:string .
 
 # ABAC policies should be equivalent at most to themselves (full equivalence)
