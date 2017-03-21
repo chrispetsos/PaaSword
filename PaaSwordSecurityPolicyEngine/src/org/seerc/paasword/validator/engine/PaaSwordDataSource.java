@@ -23,12 +23,15 @@ public class PaaSwordDataSource extends JenaDataSourceInferred implements JenaMo
 		
 		// register the PolicyAccessRequestsEnhancer enhancer
 		this.enhancers.add(new PolicyAccessRequestsEnhancer(this));
-		
+
+		// register the PropertySubsumptionsEnhancer enhancer for "pac:AccessRequestClassFor_positive", "pac:AccessRequestClassFor_negative"
+		this.enhancers.add(new PropertySubsumptionsEnhancer(this, "pac:AccessRequestClassFor_positive", "pac:AccessRequestClassFor_negative"));
+
 		// register the SubclassSubsumptionsEngine enhancer
 		this.enhancers.add(new SubclassSubsumptionsEngine(this));
 
-		// register the PropertySubsumptionsEnhancer enhancer
-		this.enhancers.add(new PropertySubsumptionsEnhancer(this));
+		// register the PropertySubsumptionsEnhancer enhancer for "pac:RuleAntecedent"
+		this.enhancers.add(new PropertySubsumptionsEnhancer(this, "pac:RuleAntecedent"));
 
 		// enhance model
 		this.enhanceModel();

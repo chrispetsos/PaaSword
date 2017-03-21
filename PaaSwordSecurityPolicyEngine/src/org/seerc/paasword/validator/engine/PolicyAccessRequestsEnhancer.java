@@ -29,9 +29,6 @@ public class PolicyAccessRequestsEnhancer implements JenaModelEnhancer {
 		// Get all Policies
 		ExtendedIterator<Individual> abacPolicies = ((OntModel)jdsi.getModel()).listIndividuals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#ABACPolicy"));
 		
-		List<OntClass> positiveAccessRequests = new ArrayList<OntClass>();
-		List<OntClass> negativeAccessRequests = new ArrayList<OntClass>();
-		
 		while(abacPolicies.hasNext())
 		{
 			Individual policy = abacPolicies.next();
@@ -39,33 +36,10 @@ public class PolicyAccessRequestsEnhancer implements JenaModelEnhancer {
 			OntClass policyAccessRequestsPositive = this.createAccessRequestsClassForConsequent(policy, ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#positive"));
 			((OntModel)jdsi.getModel()).createIndividual(policyAccessRequestsPositive.getURI(), ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#AccessRequestClassFor_positive"));
 			((OntModel)jdsi.getModel()).add(policy, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#hasAccessRequestClassFor_positive"), policyAccessRequestsPositive);
-			positiveAccessRequests.add(policyAccessRequestsPositive);
 			
 			OntClass policyAccessRequestsNegative = this.createAccessRequestsClassForConsequent(policy, ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#negative"));
 			((OntModel)jdsi.getModel()).createIndividual(policyAccessRequestsNegative.getURI(), ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#AccessRequestClassFor_negative"));
 			((OntModel)jdsi.getModel()).add(policy, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#hasAccessRequestClassFor_negative"), policyAccessRequestsNegative);
-			negativeAccessRequests.add(policyAccessRequestsNegative);
-		}
-		
-		// generate subsumption statements for access request classes which are found to be
-		// subclasses or equivalent
-		this.generateSubsumesStatements(positiveAccessRequests);
-		this.generateSubsumesStatements(negativeAccessRequests);
-	}
-
-	private void generateSubsumesStatements(List<OntClass> accessRequests) 
-	{
-		for(int i=0;i<accessRequests.size();i++)
-		{
-			OntClass request1 = accessRequests.get(i);
-			for(int j=0;j<accessRequests.size();j++)
-			{
-				OntClass request2 = accessRequests.get(j);
-				if(!request1.equals(request2) && (request1.hasSubClass(request2) || request1.hasEquivalentClass(request2)))
-				{
-					((OntModel)jdsi.getModel()).add(request2, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#subsumes"), request1);
-				}
-			}
 		}
 	}
 

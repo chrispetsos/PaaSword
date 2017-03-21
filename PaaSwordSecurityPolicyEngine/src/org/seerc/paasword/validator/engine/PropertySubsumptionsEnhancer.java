@@ -11,10 +11,13 @@ public class PropertySubsumptionsEnhancer implements JenaModelEnhancer {
 
 	// The data source
 	protected JenaDataSourceInferred jdsi;
+	
+	String[] urisToEnhance;
 
-	public PropertySubsumptionsEnhancer(JenaDataSourceInferred jdsi)
+	public PropertySubsumptionsEnhancer(JenaDataSourceInferred jdsi, String... urisToEnhance)
 	{
 		this.jdsi = jdsi;
+		this.urisToEnhance = urisToEnhance;
 	}
 
 	/*
@@ -26,7 +29,7 @@ public class PropertySubsumptionsEnhancer implements JenaModelEnhancer {
 	 */
 	public void enhanceModel()
 	{
-		this.generatePropertySubsumptionStatements("pac:RuleAntecedent");
+		this.generatePropertySubsumptionStatements(urisToEnhance);
 	}
 	
 	/*
@@ -52,9 +55,9 @@ public class PropertySubsumptionsEnhancer implements JenaModelEnhancer {
 					//((OntModel)this.jdsi.getModel()).add(i2, ResourceFactory.createProperty(jdsi.createResourceFromUri("rdf:type").getURI()), jdsi.createResourceFromUri("owl:Class"));
 					
 					// if i1 is subclass of i2, add otp:subsumes connection
-					if(i1.canAs(OntClass.class) && i2.canAs(OntClass.class) && i1.asClass().hasSuperClass(i2))
+					if(/*!i1.equals(i2) && */i1.canAs(OntClass.class) && i2.canAs(OntClass.class) && (i1.asClass().hasSubClass(i2) || i1.asClass().hasEquivalentClass(i2)))
 					{
-						((OntModel)this.jdsi.getModel()).add(i1, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), i2);
+						((OntModel)this.jdsi.getModel()).add(i2, ResourceFactory.createProperty(jdsi.createResourceFromUri("otp:subsumes").getURI()), i1);
 					}
 				}
 			}
