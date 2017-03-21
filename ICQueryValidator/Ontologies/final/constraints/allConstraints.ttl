@@ -210,6 +210,25 @@ pac:ABACRule rdfs:subClassOf
     rdfs:comment "Contradicting rules."^^xsd:string ;
     rdfs:label "warning"^^xsd:string .
 
+# ABAC rules should subsumesInContext at most to themselves 
+pac:ABACRule rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty pac:subsumesInContext ;
+                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:ABACRule 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:ABACRule ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+                owl:onProperty pac:subsumesInContext ;
+                owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:ABACRule 
+              ] ;
+    rdfs:comment "Rules are subsuming in the context of their policy."^^xsd:string ;
+    rdfs:label "error"^^xsd:string .
+
+
 # NOT Context expressions should have exactly one parameter
 pac:NOTContextExpression rdfs:subClassOf
               [ a owl:Restriction ;
