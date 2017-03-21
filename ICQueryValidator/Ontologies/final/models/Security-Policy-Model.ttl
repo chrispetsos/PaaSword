@@ -262,6 +262,23 @@ xca:denyUnlessPermit a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgo
 xca:permitUnlessDeny a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 #############################################################################
 
+### Special rules for permitUnlessDeny and denyUnlessPermit #################
+xca:specialRuleForPermitUnlessDeny a pwd:Rule ;
+	rdfs:subClassOf otp:TheoremProvingBaseClass, otp:ORTheoremProvingClass ;
+	otp:TheoremProvingParameterProperty owl:Thing ;
+	pac:hasAuthorisation pac:positive ;
+	pac:hasAntecedent xca:AllSubsumingRuleAntecedent .
+	
+xca:specialRuleForDenyUnlessPermit a pwd:Rule ;
+	rdfs:subClassOf otp:TheoremProvingBaseClass, otp:ORTheoremProvingClass ;
+	otp:TheoremProvingParameterProperty owl:Thing ;
+	pac:hasAuthorisation pac:negative ;
+	pac:hasAntecedent xca:AllSubsumingRuleAntecedent .
+	
+xca:AllSubsumingRuleAntecedent a pac:RuleAntecedent .
+
+#############################################################################
+
 ### Context expression template #############################################
 pac:ContextExpression a rdfs:Class.
 

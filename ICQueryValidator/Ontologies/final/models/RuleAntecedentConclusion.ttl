@@ -27,10 +27,10 @@
 pac:RuleAntecedent a owl:Class .
 pac:RuleConclusion a owl:Class .
 pac:hasAntecedent a owl:ObjectProperty ;
-	rdfs:domain pac:ABACRule ;
+	rdfs:domain pwd:Rule ;
 	rdfs:range pac:RuleAntecedent .
 pac:hasConclusion a owl:ObjectProperty ;
-	rdfs:domain pac:ABACRule ;
+	rdfs:domain pwd:Rule ;
 	rdfs:range pac:RuleConclusion .
 
 # alignment to otp namespace for rule antecedents
