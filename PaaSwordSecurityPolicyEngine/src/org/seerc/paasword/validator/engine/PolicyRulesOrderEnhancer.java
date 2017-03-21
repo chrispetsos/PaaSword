@@ -92,6 +92,27 @@ public class PolicyRulesOrderEnhancer implements JenaModelEnhancer {
 					}
 				}
 			}
+			
+			// if the combining algorithm is permitUnlessDeny or denyUnlessPermit,
+			// add a special rule at its end which subsumes everything above
+			if(policyCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitUnlessDeny")))
+			{
+				// get special rule
+				Individual specialRuleForPermitUnlessDeny = ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#specialRuleForPermitUnlessDeny").as(Individual.class);
+				// add it to policy
+				((OntModel)jdsi.getModel()).add(policy, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pwd#hasRule"), specialRuleForPermitUnlessDeny);
+				// add it with last priority in policy
+				this.createPriorityInContext(specialRuleForPermitUnlessDeny, 1000, policy);												
+			}
+			else if(policyCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#denyUnlessPermit")))
+			{
+				// get special rule
+				Individual specialRuleForDenyUnlessPermit = ((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#specialRuleForDenyUnlessPermit").as(Individual.class);
+				// add it to policy
+				((OntModel)jdsi.getModel()).add(policy, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pwd#hasRule"), specialRuleForDenyUnlessPermit);
+				// add it with last priority in policy
+				this.createPriorityInContext(specialRuleForDenyUnlessPermit, 1000, policy);												
+			}
 		}
 	}
 

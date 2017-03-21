@@ -73,7 +73,7 @@ public class PolicyAccessRequestsEnhancer implements JenaModelEnhancer {
 	private OntClass createAccessRequestsClassForConsequent(Individual policy, Resource consequent)
 	{
 		// Get all Rules of Policy
-		List<RDFNode> policyRules = policy.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasABACRule")).toList();
+		List<RDFNode> policyRules = policy.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pwd#hasRule")).toList();
 		List<RDFNode> preRIntersectionComplementUnionPreR2List = new ArrayList<RDFNode>();
 		for(RDFNode policyRuleNode:policyRules)
 		{
