@@ -248,6 +248,7 @@ public class QueryValidatorTest {
 	public void testCardinality() {
 		// Employees must not work on more than 3 projects.
 		assertValid(
+				":works_on a owl:ObjectProperty .\n" + 
 				":Employee rdfs:subClassOf\n" + 
 				"              [ a owl:Restriction ;\n" + 
 				"                owl:onProperty :works_on;\n" + 
@@ -259,6 +260,7 @@ public class QueryValidatorTest {
 				);
 		
 		assertValid(
+				":works_on a owl:ObjectProperty .\n" + 
 				":Employee rdfs:subClassOf\n" + 
 				"              [ a owl:Restriction ;\n" + 
 				"                owl:onProperty :works_on;\n" + 
@@ -273,6 +275,7 @@ public class QueryValidatorTest {
 				);
 		
 		assertNotValid(
+				":works_on a owl:ObjectProperty .\n" + 
 				":Employee rdfs:subClassOf\n" + 
 				"              [ a owl:Restriction ;\n" + 
 				"                owl:onProperty :works_on;\n" + 
@@ -341,6 +344,7 @@ public class QueryValidatorTest {
 		
 		// Managers must manage exactly 1 department.
 		assertNotValid(
+				":manages a owl:ObjectProperty .\n" + 
 				":Manager rdfs:subClassOf\n" + 
 				"              [ a owl:Restriction ;\n" + 
 				"                owl:onProperty :manages ;\n" + 
@@ -352,6 +356,7 @@ public class QueryValidatorTest {
 				);
 		
 		assertNotValid(
+				":manages a owl:ObjectProperty .\n" + 
 				":Manager rdfs:subClassOf\n" + 
 				"              [ a owl:Restriction ;\n" + 
 				"                owl:onProperty :manages ;\n" + 
@@ -364,6 +369,7 @@ public class QueryValidatorTest {
 				);
 		
 		assertValid(
+				":manages a owl:ObjectProperty .\n" + 
 				":Manager rdfs:subClassOf\n" + 
 				"              [ a owl:Restriction ;\n" + 
 				"                owl:onProperty :manages ;\n" + 
@@ -378,6 +384,7 @@ public class QueryValidatorTest {
 				);
 		
 		assertNotValid(
+				":manages a owl:ObjectProperty .\n" + 
 				":Manager rdfs:subClassOf\n" + 
 				"              [ a owl:Restriction ;\n" + 
 				"                owl:onProperty :manages ;\n" + 

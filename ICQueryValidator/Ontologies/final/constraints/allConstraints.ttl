@@ -13,6 +13,7 @@
 @prefix gr: <http://purl.org/goodrelations/v1#>. 
 
 # Policies are comprised of one or more rules
+pwd:hasRule a owl:ObjectProperty .
 pwd:Policy rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pwd:hasRule ;
@@ -31,6 +32,7 @@ pwd:Policy rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # Policies belong to exactly one PolicySet
+pwd:belongsToPolicySet a owl:ObjectProperty .
 pwd:Policy rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pwd:belongsToPolicySet ;
@@ -49,6 +51,7 @@ pwd:Policy rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # ABAC Policies have exactly one Policy Combining Algorithm
+pac:hasPolicyCombiningAlgorithm a owl:ObjectProperty .
 pac:ABACPolicy rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:hasPolicyCombiningAlgorithm ;
@@ -67,6 +70,7 @@ pac:ABACPolicy rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # ABAC Policies Sets have exactly one Policy Set Combining Algorithm
+pac:hasPolicySetCombiningAlgorithm a owl:ObjectProperty .
 pac:ABACPolicySet rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:hasPolicySetCombiningAlgorithm ;
@@ -85,6 +89,7 @@ pac:ABACPolicySet rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # ABAC rules should have exactly one Controlled Object
+pac:hasControlledObject a owl:ObjectProperty .
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:hasControlledObject ;
@@ -103,6 +108,7 @@ pac:ABACRule rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # ABAC rules should have exactly one Authorisation
+pac:hasAuthorisation a owl:ObjectProperty .
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:hasAuthorisation ;
@@ -121,6 +127,7 @@ pac:ABACRule rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # ABAC rules should have exactly one Action
+pac:hasAction a owl:ObjectProperty .
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:hasAction ;
@@ -139,6 +146,7 @@ pac:ABACRule rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # ABAC rules should have exactly one Actor
+pac:hasActor a owl:ObjectProperty .
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:hasActor ;
@@ -157,6 +165,7 @@ pac:ABACRule rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # ABAC rules should not have other rules as subclasses 
+rdfs:subClassOf a owl:ObjectProperty .
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty rdfs:subClassOf ;
@@ -175,6 +184,7 @@ pac:ABACRule rdfs:subClassOf
     rdfs:label "warning"^^xsd:string .
 
 # ABAC rules should be equivalent at most to themselves 
+owl:equivalentClass a owl:ObjectProperty .
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty owl:equivalentClass ;
@@ -193,6 +203,7 @@ pac:ABACRule rdfs:subClassOf
     rdfs:label "warning"^^xsd:string .
 
 # ABAC rules should not contradict any other rule 
+pac:contradicts a owl:ObjectProperty .
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:contradicts ;
@@ -211,6 +222,7 @@ pac:ABACRule rdfs:subClassOf
     rdfs:label "warning"^^xsd:string .
 
 # ABAC rules should subsumesInContext at most to themselves 
+pac:subsumesInContext a owl:ObjectProperty .
 pac:ABACRule rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:subsumesInContext ;
@@ -230,6 +242,7 @@ pac:ABACRule rdfs:subClassOf
 
 
 # NOT Context expressions should have exactly one parameter
+pac:hasParameter a owl:ObjectProperty .
 pac:NOTContextExpression rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:hasParameter ;
@@ -336,6 +349,7 @@ pac:XORContextExpression rdfs:subClassOf
     rdfs:label "error"^^xsd:string .
 
 # Context expression should also referTo at most one Subject or Object
+pac:refersTo a owl:ObjectProperty .
 pac:ContextExpression rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty pac:refersTo ;
