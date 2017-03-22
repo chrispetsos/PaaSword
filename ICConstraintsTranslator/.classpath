@@ -10,18 +10,70 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/owlapi-apibinding"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/owlapi-parsers"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/PaaSwordSecurityPolicyEngine"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-tdb-0.9.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-arq-2.9.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-core-2.7.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-iri-0.9.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jcl-over-slf4j-1.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/httpcore-4.1.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/httpclient-4.1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/commons-codec-1.5.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/xml-apis-1.4.01.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/xercesImpl-2.10.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/log4j-1.2.16.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/slf4j-log4j12-1.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/slf4j-api-1.6.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-tdb-0.9.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-arq-2.9.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-core-2.7.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jena-iri-0.9.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/jcl-over-slf4j-1.6.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/httpcore-4.1.3.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/httpclient-4.1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/commons-codec-1.5.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/xml-apis-1.4.01.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/xercesImpl-2.10.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/log4j-1.2.16.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/slf4j-log4j12-1.6.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/home/bob/Downloads/apache-jena-2.7.4/lib/slf4j-api-1.6.4.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

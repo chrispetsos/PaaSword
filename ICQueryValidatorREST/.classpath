@@ -9,8 +9,8 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="src" path="/ICQueryValidator"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/PaaSwordSecurityPolicyEngine"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ICConstraintsTranslator"/>
+	<classpathentry exported="true" kind="src" path="/ICQueryValidator"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/PaaSwordSecurityPolicyEngine"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ICConstraintsTranslator"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
