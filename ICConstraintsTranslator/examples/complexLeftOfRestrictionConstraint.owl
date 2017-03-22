@@ -3,6 +3,9 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
+:hasParameter a owl:ObjectProperty .
+:refersTo a owl:ObjectProperty .
+
 [ owl:intersectionOf (:ContextExpression
                        [ a owl:Restriction ;
                          owl:onProperty :hasParameter ;
