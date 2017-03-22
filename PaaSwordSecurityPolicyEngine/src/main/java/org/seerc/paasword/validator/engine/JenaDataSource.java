@@ -81,14 +81,10 @@ public class JenaDataSource {
 	{
 		OntModel model = null;
 		
-		try {
-			InputStream is = new FileInputStream(new File(filePath));
-			model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
-			model.read(is, null, "TTL");
-			this.populatePrefixMappings(model);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		InputStream is = getClass().getResourceAsStream(filePath);
+		model = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
+		model.read(is, null, "TTL");
+		this.populatePrefixMappings(model);
 		
 		setModel(model);
 	}

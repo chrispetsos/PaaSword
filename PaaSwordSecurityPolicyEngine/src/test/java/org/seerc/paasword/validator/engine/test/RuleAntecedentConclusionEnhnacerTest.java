@@ -40,7 +40,7 @@ public class RuleAntecedentConclusionEnhnacerTest {
 
 	@Test
 	public void testEnhanceModel() throws Exception {
-		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/test/RuleAntecedentConclusion.ttl")));
+		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(getClass().getResourceAsStream("/Ontologies/test/RuleAntecedentConclusion.ttl"));
 		
 		assertNotNull(jdsi);
 

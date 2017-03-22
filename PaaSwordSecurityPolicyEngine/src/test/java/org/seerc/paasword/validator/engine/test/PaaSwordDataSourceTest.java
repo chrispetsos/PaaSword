@@ -41,7 +41,7 @@ public class PaaSwordDataSourceTest {
 
 	@Test
 	public void testEnhanceModel() throws Exception {
-		PaaSwordDataSource pds = new PaaSwordDataSource(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
+		PaaSwordDataSource pds = new PaaSwordDataSource(getClass().getResourceAsStream("/Ontologies/subsumptive/PolicySubsumption.ttl"));
 		
 		// assert that we have 13 RuleAntecedents and 13 RuleConclusions
 		assertEquals(13, ((OntModel)pds.getModel()).listIndividuals(((OntModel)pds.getModel()).createClass("http://www.paasword.eu/security-policy/seerc/pac#RuleAntecedent")).toList().size());
@@ -50,7 +50,7 @@ public class PaaSwordDataSourceTest {
 
 	@Test
 	public void testRuleAntecedentSubsumption() throws Exception {
-		PaaSwordDataSource pds = new PaaSwordDataSource(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
+		PaaSwordDataSource pds = new PaaSwordDataSource(getClass().getResourceAsStream("/Ontologies/subsumptive/PolicySubsumption.ttl"));
 		
 		assertAntecedentEquivalentClasses(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_1", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2");
 		assertAntecedentEquivalentClasses(pds, "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_2", "http://www.paasword.eu/security-policy/use-cases/car-park#ABACRule_3");
@@ -85,7 +85,7 @@ public class PaaSwordDataSourceTest {
 	
 	@Test
 	public void testPolicySubsumption() throws FileNotFoundException {
-		PaaSwordDataSource pds = new PaaSwordDataSource(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
+		PaaSwordDataSource pds = new PaaSwordDataSource(getClass().getResourceAsStream("/Ontologies/subsumptive/PolicySubsumption.ttl"));
 
 		pds.printModel(new FileOutputStream(new File("testPolicySubsumption.ttl")));
 		

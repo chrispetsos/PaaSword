@@ -47,7 +47,7 @@ public class DomainRangeStatementMoverTest {
 
 	@Test
 	public void testMoveDomainRangeStatements() throws Exception {
-		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/test/DomainRangeMoveTest.ttl")));
+		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(getClass().getResourceAsStream("/Ontologies/test/DomainRangeMoveTest.ttl"));
 		
 		// we have 4 domain and 4 range statements added by the reasoner for top and bottom object properties
 		

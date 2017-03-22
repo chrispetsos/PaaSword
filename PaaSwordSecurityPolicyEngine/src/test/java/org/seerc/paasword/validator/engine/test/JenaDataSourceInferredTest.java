@@ -44,13 +44,9 @@ public class JenaDataSourceInferredTest {
 
 	private InputStream createStream(String... paths) {
 		List<InputStream> enumOnto = new ArrayList<InputStream>();
-		try {
-			for(String path:paths)
-			{
-				enumOnto.add(new FileInputStream(new File(path)));
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		for(String path:paths)
+		{
+			enumOnto.add(getClass().getResourceAsStream(path));
 		}
 		SequenceInputStream sis = new SequenceInputStream(Collections.enumeration(enumOnto));
 		
@@ -63,8 +59,8 @@ public class JenaDataSourceInferredTest {
 
 	@Test
 	public void testSimpleInferences() throws FileNotFoundException {
-		JenaDataSource simpleSource = new JenaDataSource(new FileInputStream(new File("Ontologies/subsumptive/SimpleForInferences.ttl")));
-		JenaDataSourceInferred inferredSource = new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/subsumptive/SimpleForInferences.ttl")));
+		JenaDataSource simpleSource = new JenaDataSource(createStream(("/Ontologies/subsumptive/SimpleForInferences.ttl")));
+		JenaDataSourceInferred inferredSource = new JenaDataSourceInferred(createStream(("/Ontologies/subsumptive/SimpleForInferences.ttl")));
 		assertNotEquals(simpleSource.getModelSize(), inferredSource.getModelSize());
 	}
 	
@@ -72,7 +68,7 @@ public class JenaDataSourceInferredTest {
 	public void testSubclassSubsumption() throws FileNotFoundException {
 		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(
 				createStream(
-								"Ontologies/subsumptive/SubclassSubsumption.ttl")
+								"/Ontologies/subsumptive/SubclassSubsumption.ttl")
 				);
 		
 		assertNotNull(jdsi);
@@ -127,36 +123,36 @@ public class JenaDataSourceInferredTest {
 	@Test
 	public void testInferredSizes() {
 		performInferredTest(817, 6445, 
-				"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
-				"Ontologies/policy-models/Security-Policy.ttl",
-				"Ontologies/subsumptive/ContextExpression1.ttl"
+				"/Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
+				"/Ontologies/policy-models/Security-Policy.ttl",
+				"/Ontologies/subsumptive/ContextExpression1.ttl"
 				);
 	}
 
 	@Test
 	public void testCitySubsumption() {
 		performInferredTest(816, 6458, 
-				"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
-				"Ontologies/policy-models/Security-Policy.ttl",
-				"Ontologies/subsumptive/CitySubsumption.ttl"
+				"/Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
+				"/Ontologies/policy-models/Security-Policy.ttl",
+				"/Ontologies/subsumptive/CitySubsumption.ttl"
 				);
 	}
 
 	@Test
 	public void testComplexContextExpression() {
 		performInferredTest(-1, -1, 
-				"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
-				"Ontologies/policy-models/Security-Policy.ttl",
-				"Ontologies/subsumptive/ComplexContextExpression.ttl"
+				"/Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
+				"/Ontologies/policy-models/Security-Policy.ttl",
+				"/Ontologies/subsumptive/ComplexContextExpression.ttl"
 				);
 	}
 
 	@Test
 	public void testDateTimeSubsumption() {
 		performInferredTest(-1, -1, 
-				"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
-				"Ontologies/policy-models/Security-Policy.ttl",
-				"Ontologies/subsumptive/DateTimeSubsumption.ttl"
+				"/Ontologies/context-aware-security-models/PaaSwordContextModel.ttl", 
+				"/Ontologies/policy-models/Security-Policy.ttl",
+				"/Ontologies/subsumptive/DateTimeSubsumption.ttl"
 				);
 	}
 

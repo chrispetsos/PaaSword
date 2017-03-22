@@ -46,10 +46,10 @@ public class SubclassSubsumptionsEngineTest {
 	public void testEnhanceModel() throws FileNotFoundException {
 		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(
 				createStream(
-								"Ontologies/subsumptive/SubclassSubsumptionWithoutInferences.ttl",
-								"Ontologies/context-aware-security-models/PaaSwordContextModel.ttl",
-								"Ontologies/policy-models/Security-Policy-Model.ttl",
-								"Ontologies/policy-models/Theorem-Proving.ttl"
+								"/Ontologies/subsumptive/SubclassSubsumptionWithoutInferences.ttl",
+								"/Ontologies/context-aware-security-models/PaaSwordContextModel.ttl",
+								"/Ontologies/policy-models/Security-Policy-Model.ttl",
+								"/Ontologies/policy-models/Theorem-Proving.ttl"
 						)
 				);
 		
@@ -138,13 +138,9 @@ public class SubclassSubsumptionsEngineTest {
 	
 	private InputStream createStream(String... paths) {
 		List<InputStream> enumOnto = new ArrayList<InputStream>();
-		try {
-			for(String path:paths)
-			{
-				enumOnto.add(new FileInputStream(new File(path)));
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		for(String path:paths)
+		{
+			enumOnto.add(getClass().getResourceAsStream(path));
 		}
 		SequenceInputStream sis = new SequenceInputStream(Collections.enumeration(enumOnto));
 		

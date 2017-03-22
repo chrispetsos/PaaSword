@@ -31,7 +31,7 @@ public class SecurityPolicyValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		scv = new SecurityPolicyValidator("Ontologies/test/ContradictingRulesExample.ttl");		
+		scv = new SecurityPolicyValidator("/Ontologies/test/ContradictingRulesExample.ttl");		
 	}
 
 	@After

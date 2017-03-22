@@ -39,7 +39,7 @@ public class PolicyRulesOrderEnhancerTest {
 
 	@Test
 	public void testEnhanceModel() throws Exception {
-		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl")));
+		JenaDataSourceInferred jdsi = new JenaDataSourceInferred(getClass().getResourceAsStream("/Ontologies/subsumptive/PolicySubsumption.ttl"));
 		
 		assertNotNull(jdsi);
 
