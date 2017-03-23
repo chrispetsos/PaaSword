@@ -8,9 +8,6 @@
         <dependent-module archiveName="ICQueryValidator.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ICQueryValidator/ICQueryValidator">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="ICConstraintsTranslator.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ICConstraintsTranslator/ICConstraintsTranslator">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="owlapi-apibinding.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/owlapi-apibinding/owlapi-apibinding">
             <dependency-type>uses</dependency-type>
         </dependent-module>
