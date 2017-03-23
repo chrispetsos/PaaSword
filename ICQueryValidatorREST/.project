@@ -4,12 +4,9 @@
 	<comment></comment>
 	<projects>
 		<project>SwaggerWebFragment</project>
-		<project>owlapi-apibinding</project>
-		<project>owlapi-parsers</project>
-		<project>owlapi-api</project>
-		<project>owlapi-impl</project>
-		<project>owl2sparql-core</project>
 		<project>PaaSwordSecurityPolicyEngine</project>
+		<project>ICQueryValidator</project>
+		<project>ICConstraintsTranslator</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
