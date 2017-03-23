@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.junit.After;
@@ -37,7 +38,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testDomain() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/domainConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/domainConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -51,7 +52,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testRange() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/rangeConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/rangeConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -65,7 +66,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testSomeValuesFromRestriction() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/someValuesFromConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/someValuesFromConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -81,7 +82,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testSomeValuesFromDatatypeRestriction() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/someValuesFromDatatypeConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/someValuesFromDatatypeConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -97,7 +98,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testComplexRestriction() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/complexRestrictionConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/complexRestrictionConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -123,7 +124,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testMinCardinality() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/minCardinalityConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/minCardinalityConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -146,7 +147,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testMinDatatypeCardinality() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/minCardinalityDatatypeConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/minCardinalityDatatypeConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -169,7 +170,7 @@ public class AxiomSPARQLTranslatorTest {
 	
 	@Test
 	public void testMaxCardinality() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/maxCardinalityConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/maxCardinalityConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -196,7 +197,7 @@ public class AxiomSPARQLTranslatorTest {
 	
 	@Test
 	public void testMaxDatatypeCardinality() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/maxCardinalityDatatypeConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/maxCardinalityDatatypeConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -223,7 +224,7 @@ public class AxiomSPARQLTranslatorTest {
 	
 	@Test
 	public void testExactCardinality() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/exactCardinalityConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/exactCardinalityConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -247,7 +248,7 @@ public class AxiomSPARQLTranslatorTest {
 	
 	@Test
 	public void testExactDatatypeCardinality() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/exactCardinalityDatatypeConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/exactCardinalityDatatypeConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -287,7 +288,7 @@ public class AxiomSPARQLTranslatorTest {
 	
 	@Test
 	public void testRangeDatatype() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/rangeDatatypeConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/rangeDatatypeConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -301,7 +302,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testDateTimeRangeDatatype() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/dateTimeRangeDatatypeConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/dateTimeRangeDatatypeConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -315,7 +316,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testComplexLeftOfRestriction() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/complexLeftOfRestrictionConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/complexLeftOfRestrictionConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -349,7 +350,7 @@ public class AxiomSPARQLTranslatorTest {
 
 	@Test
 	public void testHasValueWithOneOf() {
-		ast  = new AxiomSPARQLTranslator(createFileInputStream("examples/hasValueWithOneOfConstraint.owl"));
+		ast  = new AxiomSPARQLTranslator(createFileInputStream("/examples/hasValueWithOneOfConstraint.owl"));
 		List<QueryConstraint> queries = ast.convertToSPARQLDCQnot();
 		assertEquals(1, queries.size());
 		assertEquals(	"SELECT DISTINCT  *\n" + 
@@ -363,14 +364,8 @@ public class AxiomSPARQLTranslatorTest {
 				, queries.get(0).getQuery());
 	}
 
-	public FileInputStream createFileInputStream(String filePath) {
-		try {
-			return new FileInputStream(new File(filePath));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+	public InputStream createFileInputStream(String filePath) {
+		return getClass().getResourceAsStream(filePath);
 	}
 
 }
