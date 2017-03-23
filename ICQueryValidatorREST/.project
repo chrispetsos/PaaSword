@@ -4,7 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>SwaggerWebFragment</project>
-		<project>ICQueryValidator</project>
 		<project>owlapi-apibinding</project>
 		<project>owlapi-parsers</project>
 		<project>owlapi-api</project>
