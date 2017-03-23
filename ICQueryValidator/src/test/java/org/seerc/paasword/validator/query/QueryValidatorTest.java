@@ -28,11 +28,11 @@ public class QueryValidatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/constraints.owl"));
+		InputStream constraints = getClass().getResourceAsStream("/Ontologies/constraints/constraints.owl");
 
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
-		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
-		InputStream pwdSecurityPolicy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Violating.ttl"));
+		InputStream pwdcm = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
+		InputStream pwdPolicyModel = getClass().getResourceAsStream("/Ontologies/final/models/Security-Policy-Model.ttl");
+		InputStream pwdSecurityPolicy = getClass().getResourceAsStream("/Ontologies/policy-models/Car-Park-Security-Violating.ttl");
 		
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, pwdSecurityPolicy);
 	}
@@ -802,10 +802,10 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesViolating1() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/constraints/rulesConstraints1.ttl"));
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
-		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
-		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/abacRulesViolating1.ttl"));
+		InputStream constraints = getClass().getResourceAsStream("/Ontologies/constraints/rulesConstraints1.ttl");
+		InputStream pwdcm = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
+		InputStream pwdPolicyModel = getClass().getResourceAsStream("/Ontologies/final/models/Security-Policy-Model.ttl");
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/policy-models/abacRulesViolating1.ttl");
 		
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 
@@ -814,10 +814,10 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesFull() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
-		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
-		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Full.ttl"));
+		InputStream constraints = getClass().getResourceAsStream("/Ontologies/final/constraints/allConstraints.ttl");
+		InputStream pwdcm = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
+		InputStream pwdPolicyModel = getClass().getResourceAsStream("/Ontologies/final/models/Security-Policy-Model.ttl");
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Full.ttl");
 
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
@@ -826,10 +826,10 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesSimple() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
-		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
-		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple.ttl"));
+		InputStream constraints = getClass().getResourceAsStream("/Ontologies/final/constraints/allConstraints.ttl");
+		InputStream pwdcm = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
+		InputStream pwdPolicyModel = getClass().getResourceAsStream("/Ontologies/final/models/Security-Policy-Model.ttl");
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple.ttl");
 		
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
@@ -838,10 +838,10 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testAbacRulesSimpleFailing() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
-		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
-		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl"));
+		InputStream constraints = getClass().getResourceAsStream("/Ontologies/final/constraints/allConstraints.ttl");
+		InputStream pwdcm = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
+		InputStream pwdPolicyModel = getClass().getResourceAsStream("/Ontologies/final/models/Security-Policy-Model.ttl");
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl");
 		
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
@@ -850,11 +850,11 @@ public class QueryValidatorTest {
 
 	@Test
 	public void testSubclassSubsumption() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
-		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
-		InputStream pwdTheoremProvingModel = new FileInputStream(new File("Ontologies/final/models/Theorem-Proving.ttl"));
-		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		InputStream constraints = getClass().getResourceAsStream("/Ontologies/final/constraints/allConstraints.ttl");
+		InputStream pwdcm = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
+		InputStream pwdPolicyModel = getClass().getResourceAsStream("/Ontologies/final/models/Security-Policy-Model.ttl");
+		InputStream pwdTheoremProvingModel = getClass().getResourceAsStream("/Ontologies/final/models/Theorem-Proving.ttl");
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/subsumptive/SubclassSubsumption.ttl");
 		
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, pwdTheoremProvingModel, policy);
 		
@@ -866,10 +866,10 @@ public class QueryValidatorTest {
 	
 	@Test
 	public void testContradiction() throws Exception {
-		InputStream constraints = new FileInputStream(new File("Ontologies/final/constraints/allConstraints.ttl"));
-		InputStream pwdcm = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
-		InputStream pwdPolicyModel = new FileInputStream(new File("Ontologies/final/models/Security-Policy-Model.ttl"));
-		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		InputStream constraints = getClass().getResourceAsStream("/Ontologies/final/constraints/allConstraints.ttl");
+		InputStream pwdcm = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
+		InputStream pwdPolicyModel = getClass().getResourceAsStream("/Ontologies/final/models/Security-Policy-Model.ttl");
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/subsumptive/SubclassSubsumption.ttl");
 		
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
@@ -878,7 +878,7 @@ public class QueryValidatorTest {
 
 	/*@Test
 	public void testPrintSubclassSubsumption() throws Exception {
-		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/subsumptive/SubclassSubsumption.ttl");
 		
 		SubclassSubsumptionDataSource tpds = new SubclassSubsumptionDataSource(policy);
 		tpds.printModel(System.out);

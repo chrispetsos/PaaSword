@@ -11,13 +11,13 @@ import java.util.Enumeration;
 
 public class PaaSwordValidator extends QueryValidator {
 	//static InputStream pwdcm = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/PaaSwordContextModel.ttl");
-	static InputStream pwdListModel = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/list.ttl");
-	static InputStream pwdRuleAntecedentConclusionModel = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/RuleAntecedentConclusion.ttl");
-	static InputStream pwdPolicyModel = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/Security-Policy-Model.ttl");
-	static InputStream theoremProvingModel = Thread.currentThread().getContextClassLoader().getResourceAsStream("models/Theorem-Proving.ttl");
+	static InputStream pwdListModel = PaaSwordValidator.class.getResourceAsStream("/Ontologies/final/models/list.ttl");
+	static InputStream pwdRuleAntecedentConclusionModel = PaaSwordValidator.class.getResourceAsStream("/Ontologies/final/models/RuleAntecedentConclusion.ttl");
+	static InputStream pwdPolicyModel = PaaSwordValidator.class.getResourceAsStream("/Ontologies/final/models/Security-Policy-Model.ttl");
+	static InputStream theoremProvingModel = PaaSwordValidator.class.getResourceAsStream("/Ontologies/final/models/Theorem-Proving.ttl");
 	static byte[] baModelOntologies;
 
-	static InputStream constraints = Thread.currentThread().getContextClassLoader().getResourceAsStream("constraints/allConstraints.ttl");
+	static InputStream constraints = PaaSwordValidator.class.getResourceAsStream("/Ontologies/final/constraints/allConstraints.ttl");
 	static byte[] baConstraintsOntologies;
 
 	// cache the statically referenced ontologies into a byte array,

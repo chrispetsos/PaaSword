@@ -42,8 +42,8 @@ public class PaaSwordValidatorTest {
 
 	@Test
 	public void testValidate() throws Exception {
-		InputStream policy = new FileInputStream(new File("Ontologies/final/policies/Car-Park-Security.ttl"));
-		InputStream contextModel = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/final/policies/Car-Park-Security.ttl");
+		InputStream contextModel = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModel, policy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -55,8 +55,8 @@ public class PaaSwordValidatorTest {
 
 	@Test
 	public void testAbacRulesFull() throws Exception {
-		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Full.ttl"));
-		InputStream contextModel = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Full.ttl");
+		InputStream contextModel = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModel, policy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -66,8 +66,8 @@ public class PaaSwordValidatorTest {
 
 	@Test
 	public void testAbacRulesSimple() throws Exception {
-		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple.ttl"));
-		InputStream contextModel = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple.ttl");
+		InputStream contextModel = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModel, policy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -77,8 +77,8 @@ public class PaaSwordValidatorTest {
 
 	@Test
 	public void testAbacRulesSimpleFailing() throws Exception {
-		InputStream policy = new FileInputStream(new File("Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl"));
-		InputStream contextModel = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/policy-models/Car-Park-Security-Extracted-Constraints-Simple-Failing.ttl");
+		InputStream contextModel = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModel, policy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -88,8 +88,8 @@ public class PaaSwordValidatorTest {
 
 	@Test
 	public void testSubclassSubsumptionContradiction() throws Exception {
-		InputStream policy = new FileInputStream(new File("Ontologies/subsumptive/SubclassSubsumption.ttl"));
-		InputStream contextModel = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/subsumptive/SubclassSubsumption.ttl");
+		InputStream contextModel = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModel, policy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -101,8 +101,8 @@ public class PaaSwordValidatorTest {
 	@Test
 	public void testOldContradictingRulesExample() throws Exception
 	{
-		InputStream policy = new FileInputStream(new File("Ontologies/test/ContradictingRulesExample.ttl"));
-		InputStream contextModel = new FileInputStream(new File("Ontologies/final/models/PaaSwordContextModel.ttl"));
+		InputStream policy = getClass().getResourceAsStream("/Ontologies/test/ContradictingRulesExample.ttl");
+		InputStream contextModel = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModel, policy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -113,7 +113,7 @@ public class PaaSwordValidatorTest {
 	@Test
 	public void testPatiniErrors() throws Exception
 	{
-		InputStream contextModelWithPolicy = new FileInputStream(new File("Ontologies/patini/test-ALL.ttl"));
+		InputStream contextModelWithPolicy = getClass().getResourceAsStream("/Ontologies/patini/test-ALL.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -128,7 +128,7 @@ public class PaaSwordValidatorTest {
 	@Test
 	public void testPatini2Errors() throws Exception
 	{
-		InputStream contextModelWithPolicy = new FileInputStream(new File("Ontologies/patini/test2-ALL-corrected.ttl"));
+		InputStream contextModelWithPolicy = getClass().getResourceAsStream("/Ontologies/patini/test2-ALL-corrected.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -144,7 +144,7 @@ public class PaaSwordValidatorTest {
 	@Test
 	public void testPolicySubsumption() throws Exception
 	{
-		InputStream contextModelWithPolicy = new FileInputStream(new File("Ontologies/subsumptive/PolicySubsumption.ttl"));
+		InputStream contextModelWithPolicy = getClass().getResourceAsStream("/Ontologies/subsumptive/PolicySubsumption.ttl");
 		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
 
 		pwdv = new PaaSwordValidator(payload);
@@ -153,7 +153,7 @@ public class PaaSwordValidatorTest {
 
 		this.printValidationReport(validationErrors);
 		
-		//pwdv.jds.printModel(new FileOutputStream(new File("testPolicySubsumption.ttl")));
+		//pwdv.jds.printModel(new FileOutputStream(new File("testPolicySubsumption.ttl"));
 		
 		assertEquals(8, validationErrors.size());
 	}
