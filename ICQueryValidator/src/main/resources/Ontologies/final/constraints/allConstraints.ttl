@@ -47,7 +47,7 @@ pwd:Policy rdfs:subClassOf
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 owl:onClass pwd:PolicySet
               ] ;
-    rdfs:comment "Policies must must belong to exactly one policy set."^^xsd:string ;
+    rdfs:comment "Policies must belong to exactly one policy set."^^xsd:string ;
     rdfs:label "error"^^xsd:string .
 
 # ABAC Policies have exactly one Policy Combining Algorithm
