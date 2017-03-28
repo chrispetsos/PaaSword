@@ -396,7 +396,7 @@ pac:ContextExpression rdfs:subClassOf
     rdfs:comment "Context expressions with Location or Connectivity parameters must referTo exactly one Subject, Object or Request."^^xsd:string ;
     rdfs:label "error"^^xsd:string .
 
-# ABAC policies/policy sets should not have other policies as subclasses for a specific consequent (weak subsumption)
+# ABAC policies should not have other policies as subclasses for a specific consequent (weak subsumption)
 pac:AccessRequestClassFor_negative rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty rdfs:subClassOf ;
@@ -411,7 +411,7 @@ pac:AccessRequestClassFor_negative rdfs:subClassOf
                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                owl:onClass pac:AccessRequestClassFor_negative 
              ] ;
-    rdfs:comment "Subsuming policies/policy sets for deny consequent."^^xsd:string ;
+    rdfs:comment "Subsuming policies for deny consequent."^^xsd:string ;
     rdfs:label "warning"^^xsd:string .
 
 pac:AccessRequestClassFor_positive rdfs:subClassOf
@@ -428,10 +428,45 @@ pac:AccessRequestClassFor_positive rdfs:subClassOf
                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
                owl:onClass pac:AccessRequestClassFor_positive 
              ] ;
-    rdfs:comment "Subsuming policies/policy sets for permit consequent."^^xsd:string ;
+    rdfs:comment "Subsuming policies for permit consequent."^^xsd:string ;
     rdfs:label "warning"^^xsd:string .
-    
-# ABAC policies/policy sets should should be equivalent at most to themselves for a specific consequent (weak equivalence)
+
+# ABAC policy sets should not have other policies as subclasses for a specific consequent (weak subsumption)
+pac:PolicySetAccessRequestClassFor_negative rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty rdfs:subClassOf ;
+                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:PolicySetAccessRequestClassFor_negative 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:PolicySetAccessRequestClassFor_negative ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty rdfs:subClassOf ;
+               owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:PolicySetAccessRequestClassFor_negative 
+             ] ;
+    rdfs:comment "Subsuming policy sets for deny consequent."^^xsd:string ;
+    rdfs:label "warning"^^xsd:string .
+
+pac:PolicySetAccessRequestClassFor_positive rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty rdfs:subClassOf ;
+                owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:PolicySetAccessRequestClassFor_positive 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:PolicySetAccessRequestClassFor_positive ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty rdfs:subClassOf ;
+               owl:qualifiedCardinality "0"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:PolicySetAccessRequestClassFor_positive 
+             ] ;
+    rdfs:comment "Subsuming policy sets for permit consequent."^^xsd:string ;
+    rdfs:label "warning"^^xsd:string .
+
+# ABAC policies should should be equivalent at most to themselves for a specific consequent (weak equivalence)
 pac:AccessRequestClassFor_negative rdfs:subClassOf
               [ a owl:Restriction ;
                 owl:onProperty owl:equivalentClass ;
@@ -446,7 +481,7 @@ pac:AccessRequestClassFor_negative rdfs:subClassOf
                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                owl:onClass pac:AccessRequestClassFor_negative 
              ] ;
-    rdfs:comment "Equivalent policies/policy sets for deny consequent."^^xsd:string ;
+    rdfs:comment "Equivalent policies for deny consequent."^^xsd:string ;
     rdfs:label "warning"^^xsd:string .
 
 pac:AccessRequestClassFor_positive rdfs:subClassOf
@@ -463,7 +498,42 @@ pac:AccessRequestClassFor_positive rdfs:subClassOf
                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                owl:onClass pac:AccessRequestClassFor_positive 
              ] ;
-    rdfs:comment "Equivalent policies/policy sets for permit consequent."^^xsd:string ;
+    rdfs:comment "Equivalent policies for permit consequent."^^xsd:string ;
+    rdfs:label "warning"^^xsd:string .
+
+# ABAC policy sets should should be equivalent at most to themselves for a specific consequent (weak equivalence)
+pac:PolicySetAccessRequestClassFor_negative rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty owl:equivalentClass ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:PolicySetAccessRequestClassFor_negative 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:PolicySetAccessRequestClassFor_negative ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty owl:equivalentClass ;
+               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:PolicySetAccessRequestClassFor_negative 
+             ] ;
+    rdfs:comment "Equivalent policy sets for deny consequent."^^xsd:string ;
+    rdfs:label "warning"^^xsd:string .
+
+pac:PolicySetAccessRequestClassFor_positive rdfs:subClassOf
+              [ a owl:Restriction ;
+                owl:onProperty owl:equivalentClass ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onClass pac:PolicySetAccessRequestClassFor_positive 
+              ] .
+[]  rdf:type       owl:Axiom ;
+    owl:annotatedSource    pac:PolicySetAccessRequestClassFor_positive ;
+    owl:annotatedProperty  rdfs:subClassOf ;
+    owl:annotatedTarget    [ a owl:Restriction ;
+               owl:onProperty owl:equivalentClass ;
+               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+               owl:onClass pac:PolicySetAccessRequestClassFor_positive 
+             ] ;
+    rdfs:comment "Equivalent policy sets for permit consequent."^^xsd:string ;
     rdfs:label "warning"^^xsd:string .
     
 # ABAC policies should not have other policies as subclasses (full subsumption)

@@ -339,6 +339,8 @@ pac:ABACPolicy rdfs:subClassOf otp:ANDTheoremProvingClass .
 
 ### Alignment to otp namespace for policy sets ####################################
 pac:ABACPolicySet rdfs:subClassOf otp:TheoremProvingBaseClass .
+xca:hasPolicySetAccessRequestClassFor_positive rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+xca:hasPolicySetAccessRequestClassFor_negative rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
 pac:ABACPolicySet rdfs:subClassOf otp:ANDTheoremProvingClass .
 #############################################################################
 

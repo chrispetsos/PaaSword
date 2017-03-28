@@ -83,7 +83,7 @@ public class PaaSwordValidatorTest {
 
 		pwdv = new PaaSwordValidator(payload);
 		
-		assertEquals(9, pwdv.validate().size());
+		assertEquals(11, pwdv.validate().size());
 	}	
 
 	@Test
@@ -172,7 +172,7 @@ public class PaaSwordValidatorTest {
 		
 		//pwdv.jds.printModel(new FileOutputStream(new File("testPolicySetSubsumption.ttl")));
 		
-		assertEquals(10, validationErrors.size());
+		assertEquals(11, validationErrors.size());
 	}
 
 	private void printValidationReport(List<QueryValidatorErrors> validationErrors)

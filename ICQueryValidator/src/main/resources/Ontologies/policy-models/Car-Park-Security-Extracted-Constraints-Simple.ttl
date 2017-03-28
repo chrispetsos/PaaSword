@@ -26,7 +26,7 @@ ex1:MyPolicy a pac:ABACPolicy;
 	pac:hasPolicyCombiningAlgorithm ex1:MyCombiningAlgorithm.
 
 ex1:MyPolicySet a pac:ABACPolicySet;
-	pac:hasPolicySetCombiningAlgorithm ex1:MyCombiningAlgorithm.
+	pac:hasPolicySetCombiningAlgorithm <http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitOverrides>.
 
 ex1:Rule1 a pac:ABACRule;
 	pac:hasAction ex1:Read;
