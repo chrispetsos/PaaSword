@@ -337,6 +337,11 @@ xca:hasAccessRequestClassFor_negative rdfs:subPropertyOf otp:TheoremProvingParam
 pac:ABACPolicy rdfs:subClassOf otp:ANDTheoremProvingClass .
 #############################################################################
 
+### Alignment to otp namespace for policy sets ####################################
+pac:ABACPolicySet rdfs:subClassOf otp:TheoremProvingBaseClass .
+pac:ABACPolicySet rdfs:subClassOf otp:ANDTheoremProvingClass .
+#############################################################################
+
 ### The contradicts property ################################################
 pac:contradicts a owl:ObjectProperty, owl:TransitiveProperty .
 #############################################################################

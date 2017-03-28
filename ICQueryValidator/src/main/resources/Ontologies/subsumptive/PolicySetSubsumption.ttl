@@ -34,6 +34,14 @@ ex1:ABACPolicySet_1 a pac:ABACPolicySet;
 ex1:ABACPolicySet_2 a pac:ABACPolicySet;
 	pac:hasPolicySetCombiningAlgorithm xca:permitOverrides.
 
+# Policy Set 3 has only policy 6
+ex1:ABACPolicySet_3 a pac:ABACPolicySet;
+	pac:hasPolicySetCombiningAlgorithm xca:permitOverrides.
+
+# Policy Set 4 has only policy 7
+ex1:ABACPolicySet_4 a pac:ABACPolicySet;
+	pac:hasPolicySetCombiningAlgorithm xca:permitOverrides.
+
 # Policy 1 has rules 1, 2, 3 with permit-override combining algorithm
 ex1:ABACPolicy_1 a pac:ABACPolicy;
 	pac:belongsToABACPolicySet ex1:ABACPolicySet_1;
@@ -61,6 +69,19 @@ ex1:ABACPolicy_4 a pac:ABACPolicy;
 # Policy 5 has rules 4 and 6 which are subsumed
 ex1:ABACPolicy_5 a pac:ABACPolicy;
 	pac:belongsToABACPolicySet ex1:ABACPolicySet_2;
+	pac:hasPolicyCombiningAlgorithm xca:permitOverrides;
+	pac:hasABACRule ex1:R4, ex1:R6 .
+
+# policies 6 and 7 have the same rule set and they belong to 
+# policy sets 3 and 4 respectively. So, policy sets 3 and 4
+# should be equivalent.
+ex1:ABACPolicy_6 a pac:ABACPolicy;
+	pac:belongsToABACPolicySet ex1:ABACPolicySet_3;
+	pac:hasPolicyCombiningAlgorithm xca:permitOverrides;
+	pac:hasABACRule ex1:R4, ex1:R6 .
+
+ex1:ABACPolicy_7 a pac:ABACPolicy;
+	pac:belongsToABACPolicySet ex1:ABACPolicySet_4;
 	pac:hasPolicyCombiningAlgorithm xca:permitOverrides;
 	pac:hasABACRule ex1:R4, ex1:R6 .
 
@@ -116,7 +137,7 @@ ex1:R5 a pac:ABACRule;
 	pac:hasActor ex1:Developer;
 	pac:hasContextExpression ex1:expr .
 
-# Deny Anyone to read Report
+# Deny Accountant to read Report
 ex1:R6 a pac:ABACRule;
 	pac:hasControlledObject ex1:Report;
 	pac:hasAuthorisation pac:negative;
