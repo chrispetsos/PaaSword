@@ -277,7 +277,20 @@ xca:specialRuleForDenyUnlessPermit a pwd:Rule ;
 	pac:hasAntecedent xca:AllSubsumingRuleAntecedent .
 	
 xca:AllSubsumingRuleAntecedent a pac:RuleAntecedent .
+#############################################################################
 
+### Special policies for permitUnlessDeny and denyUnlessPermit #################
+xca:specialPolicyForPermitUnlessDeny a pwd:Policy;
+	pwd:belongsToPolicySet [a pwd:PolicySet];
+	pwd:hasRule xca:specialRuleForPermitUnlessDeny;
+	xca:hasAccessRequestClassFor_positive owl:Thing ;
+	xca:hasAccessRequestClassFor_negative owl:Nothing .
+
+xca:specialPolicyForDenyUnlessPermit a pwd:Policy ;
+	pwd:belongsToPolicySet [a pwd:PolicySet];
+	pwd:hasRule xca:specialRuleForDenyUnlessPermit;
+	xca:hasAccessRequestClassFor_positive owl:Nothing ;
+	xca:hasAccessRequestClassFor_negative owl:Thing .
 #############################################################################
 
 ### Context expression template #############################################
