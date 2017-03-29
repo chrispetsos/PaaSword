@@ -257,6 +257,7 @@ pac:negative a pac:Authorisation.
 
 ### Combining algorithms' instances #########################################
 xca:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+xca:onlyOneApplicable a pac:PolicySetCombiningAlgorithms.
 xca:denyOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 xca:permitOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 xca:denyUnlessPermit a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
