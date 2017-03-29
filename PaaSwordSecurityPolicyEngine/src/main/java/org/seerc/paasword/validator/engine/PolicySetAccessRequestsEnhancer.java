@@ -12,7 +12,9 @@ import com.hp.hpl.jena.ontology.UnionClass;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.rdf.model.impl.StatementImpl;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class PolicySetAccessRequestsEnhancer implements JenaModelEnhancer {
@@ -65,17 +67,35 @@ public class PolicySetAccessRequestsEnhancer implements JenaModelEnhancer {
 		}
 		
 		// find policies that belong to this policy set
-		StmtIterator abacPolicies = ((OntModel)jdsi.getModel()).listStatements(null, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#belongsToABACPolicySet"), policySet);
+		List<Statement> abacPolicies = ((OntModel)jdsi.getModel()).listStatements(null, ((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#belongsToABACPolicySet"), policySet).toList();
 		return this.createAccessRequestsClassFor(policySet, policySetCA, abacPolicies, consequent);
 	}
 
-	private OntClass createAccessRequestsClassFor(Individual policySet, Individual policySetCA, StmtIterator abacPolicies, Resource consequent)
+	private OntClass createAccessRequestsClassFor(Individual policySet, Individual policySetCA, List<Statement> abacPolicies, Resource consequent)
 	{
-		if(policySetCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitOverrides")))
+		// if policySetCA is permitUnlessDeny or denyUnlessPermit, add special policies in abacPolicies to be used later
+		if(policySetCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#denyUnlessPermit")))
+		{
+			abacPolicies.add(new StatementImpl(
+					((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#specialPolicyForDenyUnlessPermit"), 
+					((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#belongsToABACPolicySet"), 
+					policySet));
+		}
+		else if(policySetCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitUnlessDeny")))
+		{
+			abacPolicies.add(new StatementImpl(
+					((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#specialPolicyForPermitUnlessDeny"), 
+					((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/pac#belongsToABACPolicySet"), 
+					policySet));
+		}
+		
+		if(		policySetCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitOverrides")) ||
+				policySetCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#denyUnlessPermit")))
 		{
 			return this.createAccessRequestsClassForPermitOverrides(policySet, abacPolicies, consequent);
 		}
-		else if(policySetCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#denyOverrides")))
+		else if(policySetCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#denyOverries")) ||
+				policySetCA.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitUnlessDeny")))
 		{
 			return this.createAccessRequestsClassForDenyOverrides(policySet, abacPolicies, consequent);
 		}
@@ -83,7 +103,7 @@ public class PolicySetAccessRequestsEnhancer implements JenaModelEnhancer {
 		return ((OntModel)jdsi.getModel()).createClass(policySet.toString() + "UnsupportedCombiningAlgorithmError");
 	}
 
-	private OntClass createAccessRequestsClassForPermitOverrides(Individual policySet, StmtIterator abacPolicies, Resource consequent)
+	private OntClass createAccessRequestsClassForPermitOverrides(Individual policySet, List<Statement> abacPolicies, Resource consequent)
 	{
 		if(consequent.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#positive")))
 		{	// positive consequent - R PS PO ,Permit ≡ ⨆ i≤n R i,Permit
@@ -107,7 +127,7 @@ public class PolicySetAccessRequestsEnhancer implements JenaModelEnhancer {
 		}
 	}
 
-	private OntClass createAccessRequestsClassForDenyOverrides(Individual policySet, StmtIterator abacPolicies, Resource consequent)
+	private OntClass createAccessRequestsClassForDenyOverrides(Individual policySet, List<Statement> abacPolicies, Resource consequent)
 	{
 		if(consequent.equals(((OntModel)jdsi.getModel()).createResource("http://www.paasword.eu/security-policy/seerc/pac#negative")))
 		{	// negative consequent - R PS DO ,Deny ≡ ⨆ i≤n R i,Deny
@@ -131,24 +151,24 @@ public class PolicySetAccessRequestsEnhancer implements JenaModelEnhancer {
 		}
 	}
 
-	private OntClass createUnionOfPermitPolicyAccessRequests(Individual policySet, StmtIterator abacPolicies)
+	private OntClass createUnionOfPermitPolicyAccessRequests(Individual policySet, List<Statement> abacPolicies)
 	{
 		List<RDFNode> policyAccessRequestsForPositiveList = new ArrayList<RDFNode>();
-		while(abacPolicies.hasNext())
+		for(Statement s:abacPolicies)
 		{
-			Individual abacPolicy = abacPolicies.next().getSubject().as(Individual.class);
+			Individual abacPolicy = s.getSubject().as(Individual.class);
 			OntClass policyAccessRequestsForPositive = abacPolicy.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#hasAccessRequestClassFor_positive")).toList().get(0).as(OntClass.class);
 			policyAccessRequestsForPositiveList.add(policyAccessRequestsForPositive);
 		}
 		return ((OntModel)jdsi.getModel()).createUnionClass(null, ((OntModel)this.jdsi.getModel()).createList(policyAccessRequestsForPositiveList.iterator()));
 	}
 
-	private OntClass createUnionOfDenyPolicyAccessRequests(Individual policySet, StmtIterator abacPolicies)
+	private OntClass createUnionOfDenyPolicyAccessRequests(Individual policySet, List<Statement> abacPolicies)
 	{
 		List<RDFNode> policyAccessRequestsForNegativeList = new ArrayList<RDFNode>();
-		while(abacPolicies.hasNext())
+		for(Statement s:abacPolicies)
 		{
-			Individual abacPolicy = abacPolicies.next().getSubject().as(Individual.class);
+			Individual abacPolicy = s.getSubject().as(Individual.class);
 			OntClass policyAccessRequestsForNegative = abacPolicy.listPropertyValues(((OntModel)jdsi.getModel()).createProperty("http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#hasAccessRequestClassFor_negative")).toList().get(0).as(OntClass.class);
 			policyAccessRequestsForNegativeList.add(policyAccessRequestsForNegative);
 		}
