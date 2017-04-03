@@ -175,6 +175,23 @@ public class PaaSwordValidatorTest {
 		assertEquals(13, validationErrors.size());
 	}
 
+	@Test
+	public void testContradictingRules() throws Exception
+	{
+		InputStream contextModelWithPolicy = getClass().getResourceAsStream("/Ontologies/test/ContradictingRulesExample.ttl");
+		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
+
+		pwdv = new PaaSwordValidator(payload);
+		
+		List<QueryValidatorErrors> validationErrors = pwdv.validate();
+
+		this.printValidationReport(validationErrors);
+		
+		pwdv.jds.printModel(System.out);
+		
+		assertEquals(13, validationErrors.size());
+	}
+
 	private void printValidationReport(List<QueryValidatorErrors> validationErrors)
 	{
 		Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();

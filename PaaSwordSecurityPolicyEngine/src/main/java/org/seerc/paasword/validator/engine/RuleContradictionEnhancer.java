@@ -29,15 +29,11 @@ public class RuleContradictionEnhancer implements JenaModelEnhancer {
 			for(int j=i+1;j<abacRuleIndividuals.size();j++)
 			{
 				Individual secondRule = abacRuleIndividuals.get(j);
-				this.rulesContradict(abacRule, secondRule);
+				if(this.rulesContradict(abacRule, secondRule))
+				{	// add the contradicts property
+					((OntModel)jdsi.getModel()).createStatement(abacRule, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#contradicts"), secondRule);
+				}
 			}
-			
-			/*// create antecedent
-			((OntModel)this.jdsi.getModel()).createClass(abacRule.toString() + "Antecedent");
-			this.jdsi.getModel().add(abacRule, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasAntecedent"), ((OntModel)this.jdsi.getModel()).createIndividual(abacRule.toString() + "Antecedent", this.jdsi.getModel().createResource("http://www.paasword.eu/security-policy/seerc/pac#RuleAntecedent")));
-			// create conclusion
-			((OntModel)this.jdsi.getModel()).createClass(abacRule.toString() + "Conclusion");
-			this.jdsi.getModel().add(abacRule, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#hasConclusion"), ((OntModel)this.jdsi.getModel()).createIndividual(abacRule.toString() + "Conclusion", this.jdsi.getModel().createResource("http://www.paasword.eu/security-policy/seerc/pac#RuleConclusion")));*/
 		}
 	}
 
