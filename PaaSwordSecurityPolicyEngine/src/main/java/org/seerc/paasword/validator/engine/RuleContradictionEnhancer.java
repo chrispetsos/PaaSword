@@ -31,7 +31,7 @@ public class RuleContradictionEnhancer implements JenaModelEnhancer {
 				Individual secondRule = abacRuleIndividuals.get(j);
 				if(this.rulesContradict(abacRule, secondRule))
 				{	// add the contradicts property
-					((OntModel)jdsi.getModel()).createStatement(abacRule, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#contradicts"), secondRule);
+					((OntModel)jdsi.getModel()).add(abacRule, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/pac#contradicts"), secondRule);
 				}
 			}
 		}
