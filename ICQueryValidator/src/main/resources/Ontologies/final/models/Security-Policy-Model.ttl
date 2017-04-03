@@ -370,6 +370,10 @@ pac:subsumesInContext a owl:ObjectProperty .
 #    SWRL Rule for subsumesInContext
 #############################################################################
 
+<urn:swrl#r1> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl#r2> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
 <urn:swrl#pic1> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
 
 <urn:swrl#pic2> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
