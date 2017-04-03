@@ -1,4 +1,0 @@
-# This constraint says that class <classWithCardinality> contains at most 
-# <atMostValue> number of instances.
-
-<classWithCardinality> owl:maxQualifiedCardinality "<atMostValue>"^^xsd:nonNegativeInteger .

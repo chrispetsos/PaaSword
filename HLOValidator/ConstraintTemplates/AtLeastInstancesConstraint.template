@@ -1,4 +1,0 @@
-# This constraint says that class <classWithCardinality> contains at least 
-# <atLeastValue> number of instances.
-
-<classWithCardinality> owl:minQualifiedCardinality "<atLeastValue>"^^xsd:nonNegativeInteger .
