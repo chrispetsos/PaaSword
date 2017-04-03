@@ -39,6 +39,9 @@ public class PaaSwordDataSource extends JenaDataSourceInferred implements JenaMo
 		// register the RuleContradictionEnhancer
 		this.enhancers.add(new RuleContradictionEnhancer(this));
 
+		// register the RuleSubsumesInContextEnhancer
+		this.enhancers.add(new RuleSubsumesInContextEnhancer(this));
+
 		// enhance model
 		this.enhanceModel();
 	}
