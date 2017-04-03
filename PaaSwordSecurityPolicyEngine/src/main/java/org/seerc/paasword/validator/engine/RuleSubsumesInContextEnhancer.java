@@ -44,17 +44,17 @@ public class RuleSubsumesInContextEnhancer implements JenaModelEnhancer {
 	{
 		// First get their prioritiesInContext(s)
 		StmtIterator rule1PICs = ((OntModel)jdsi.getModel()).listStatements(rule1, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/list#hasPriorityInContext"), (RDFNode)null);
-		StmtIterator rule2PICs = ((OntModel)jdsi.getModel()).listStatements(rule2, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/list#hasPriorityInContext"), (RDFNode)null);
 
 		// iterate over them
 		while(rule1PICs.hasNext())
 		{
 			Individual rule1PIC = rule1PICs.next().getObject().as(Individual.class);
+			StmtIterator rule2PICs = ((OntModel)jdsi.getModel()).listStatements(rule2, this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/list#hasPriorityInContext"), (RDFNode)null);
 			while(rule2PICs.hasNext())
 			{
 				Individual rule2PIC = rule2PICs.next().getObject().as(Individual.class);
 				// if they have the same context
-				if(this.entitiesHaveEqualParameter(rule1PIC, rule2PIC, "http://www.paasword.eu/security-policy/seerc/list#InContext"))
+				if(this.entitiesHaveEqualParameter(rule1PIC, rule2PIC, "http://www.paasword.eu/security-policy/seerc/list#inContext"))
 				{
 					// if rule2's priority is >= rule1's priority
 					int rule2Priority = rule2PIC.getPropertyValue(this.jdsi.getModel().createProperty("http://www.paasword.eu/security-policy/seerc/list#hasPriority")).asLiteral().getInt();
@@ -78,16 +78,16 @@ public class RuleSubsumesInContextEnhancer implements JenaModelEnhancer {
 		return false;
 	}
 
-	private boolean entitiesHaveEqualParameter(Individual rule1, Individual rule2, String parameter) {
-		RDFNode rule1Parameter = rule1.getPropertyValue(this.jdsi.getModel().createProperty(parameter));
-		RDFNode rule2Parameter = rule2.getPropertyValue(this.jdsi.getModel().createProperty(parameter));
+	private boolean entitiesHaveEqualParameter(Individual entity1, Individual entity2, String parameter) {
+		RDFNode entity1Parameter = entity1.getPropertyValue(this.jdsi.getModel().createProperty(parameter));
+		RDFNode entity2Parameter = entity2.getPropertyValue(this.jdsi.getModel().createProperty(parameter));
 
-		if(rule1Parameter == null && rule2Parameter == null)
+		if(entity1Parameter == null && entity2Parameter == null)
 		{
 			return true;
 		}
 		
-		if(rule1Parameter != null && rule1Parameter.equals(rule2Parameter))
+		if(entity1Parameter != null && entity1Parameter.equals(entity2Parameter))
 		{
 			return true;
 		}
