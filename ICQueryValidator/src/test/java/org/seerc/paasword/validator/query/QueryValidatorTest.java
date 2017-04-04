@@ -845,7 +845,7 @@ public class QueryValidatorTest {
 		
 		qv = new QueryValidator(constraints, pwdcm, pwdPolicyModel, policy);
 		
-		assertEquals(9, qv.validate().size());
+		assertEquals(12, qv.validate().size());
 	}	
 
 	@Test

@@ -257,6 +257,7 @@ pac:negative a pac:Authorisation.
 
 ### Combining algorithms' instances #########################################
 xca:firstApplicable a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
+xca:onlyOneApplicable a pac:PolicySetCombiningAlgorithms.
 xca:denyOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 xca:permitOverrides a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
 xca:denyUnlessPermit a pac:PolicyCombiningAlgorithms, pac:PolicySetCombiningAlgorithms.
@@ -277,7 +278,20 @@ xca:specialRuleForDenyUnlessPermit a pwd:Rule ;
 	pac:hasAntecedent xca:AllSubsumingRuleAntecedent .
 	
 xca:AllSubsumingRuleAntecedent a pac:RuleAntecedent .
+#############################################################################
 
+### Special policies for permitUnlessDeny and denyUnlessPermit #################
+xca:specialPolicyForPermitUnlessDeny a pwd:Policy;
+	pwd:belongsToPolicySet [a pwd:PolicySet];
+	pwd:hasRule xca:specialRuleForPermitUnlessDeny;
+	xca:hasAccessRequestClassFor_positive owl:Thing ;
+	xca:hasAccessRequestClassFor_negative owl:Nothing .
+
+xca:specialPolicyForDenyUnlessPermit a pwd:Policy ;
+	pwd:belongsToPolicySet [a pwd:PolicySet];
+	pwd:hasRule xca:specialRuleForDenyUnlessPermit;
+	xca:hasAccessRequestClassFor_positive owl:Nothing ;
+	xca:hasAccessRequestClassFor_negative owl:Thing .
 #############################################################################
 
 ### Context expression template #############################################
@@ -335,6 +349,13 @@ pac:ABACPolicy rdfs:subClassOf otp:TheoremProvingBaseClass .
 xca:hasAccessRequestClassFor_positive rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
 xca:hasAccessRequestClassFor_negative rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
 pac:ABACPolicy rdfs:subClassOf otp:ANDTheoremProvingClass .
+#############################################################################
+
+### Alignment to otp namespace for policy sets ####################################
+pac:ABACPolicySet rdfs:subClassOf otp:TheoremProvingBaseClass .
+xca:hasPolicySetAccessRequestClassFor_positive rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+xca:hasPolicySetAccessRequestClassFor_negative rdfs:subPropertyOf otp:TheoremProvingParameterProperty .
+pac:ABACPolicySet rdfs:subClassOf otp:ANDTheoremProvingClass .
 #############################################################################
 
 ### The contradicts property ################################################

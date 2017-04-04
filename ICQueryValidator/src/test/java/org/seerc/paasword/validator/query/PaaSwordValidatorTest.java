@@ -83,7 +83,7 @@ public class PaaSwordValidatorTest {
 
 		pwdv = new PaaSwordValidator(payload);
 		
-		assertEquals(9, pwdv.validate().size());
+		assertEquals(12, pwdv.validate().size());
 	}	
 
 	@Test
@@ -156,6 +156,23 @@ public class PaaSwordValidatorTest {
 		//pwdv.jds.printModel(new FileOutputStream(new File("testPolicySubsumption.ttl"));
 		
 		assertEquals(8, validationErrors.size());
+	}
+
+	@Test
+	public void testPolicySetSubsumption() throws Exception
+	{
+		InputStream contextModelWithPolicy = getClass().getResourceAsStream("/Ontologies/subsumptive/PolicySetSubsumption.ttl");
+		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
+
+		pwdv = new PaaSwordValidator(payload);
+		
+		List<QueryValidatorErrors> validationErrors = pwdv.validate();
+
+		this.printValidationReport(validationErrors);
+		
+		//pwdv.jds.printModel(new FileOutputStream(new File("testPolicySetSubsumption.ttl")));
+		
+		assertEquals(13, validationErrors.size());
 	}
 
 	private void printValidationReport(List<QueryValidatorErrors> validationErrors)

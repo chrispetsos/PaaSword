@@ -26,10 +26,10 @@ ex1:MyPolicy a pac:ABACPolicy;
 	pac:hasPolicyCombiningAlgorithm ex1:MyCombiningAlgorith. # Violation: ABAC Policies have exactly one Policy Combining Algorithm. Typo, ex1:MyCombiningAlgorith is not a pac:PolicyCombiningAlgorithms.
 
 ex1:MyPolicySet a pac:ABACPolicySet;
-	pac:hasPolicySetCombiningAlgorithm ex1:MyCombiningAlgorithm.
+	pac:hasPolicySetCombiningAlgorithm <http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitOverrides>.
 
 ex1:MyPolicySet2 a pac:ABACPolicySet;
-	pac:hasPolicySetCombiningAlgorithm ex1:MyCombiningAlgorithm.
+	pac:hasPolicySetCombiningAlgorithm <http://www.paasword.eu/security-policy/seerc/combiningAlgorithms#permitOverrides>.
 
 ex1:Rule1 a pac:ABACRule;
 	pac:hasAction ex1:Read;

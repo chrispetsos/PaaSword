@@ -44,7 +44,7 @@ public class AxiomSPARQLTranslatorTest {
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
 						"  { ?x0 <http://www.seerc.org/test/pellet-icv#is_responsible_for> ?x1\n" + 
-						"    FILTER NOT EXISTS {?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project_Leader>}\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project_Leader> }\n" + 
 						"  }\n" + 
 						""
 				, queries.get(0).getQuery());
@@ -58,7 +58,7 @@ public class AxiomSPARQLTranslatorTest {
 		assertEquals(	"SELECT DISTINCT  *\n" + 
 						"WHERE\n" + 
 						"  { ?x1 <http://www.seerc.org/test/pellet-icv#is_responsible_for> ?x0\n" + 
-						"    FILTER NOT EXISTS {?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project>}\n" + 
+						"    FILTER NOT EXISTS {?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project> }\n" + 
 						"  }\n" + 
 						""
 				, queries.get(0).getQuery());
@@ -105,7 +105,7 @@ public class AxiomSPARQLTranslatorTest {
 						"WHERE\n" + 
 						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Employee>\n" + 
 						"    FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#works_on> ?x1\n" + 
-						"        { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project>}\n" + 
+						"        { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Project> }\n" + 
 						"      UNION\n" + 
 						"        { ?x1 <http://www.seerc.org/test/pellet-icv#manages> ?s0 .\n" + 
 						"          ?s0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Department>\n" + 
@@ -323,24 +323,24 @@ public class AxiomSPARQLTranslatorTest {
 						"WHERE\n" + 
 						"  { ?x0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#ContextExpression> .\n" + 
 						"    ?x0 <http://www.seerc.org/test/pellet-icv#hasParameter> ?s0\n" + 
-						"      { ?s0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Connectivity>}\n" + 
+						"      { ?s0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Connectivity> }\n" + 
 						"    UNION\n" + 
-						"      { ?s0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Location>}\n" + 
+						"      { ?s0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Location> }\n" + 
 						"      { ?x0 <http://www.seerc.org/test/pellet-icv#refersTo> ?x1\n" + 
-						"          { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object>}\n" + 
+						"          { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object> }\n" + 
 						"        UNION\n" + 
-						"          { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject>}\n" + 
+						"          { ?x1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject> }\n" + 
 						"        ?x0 <http://www.seerc.org/test/pellet-icv#refersTo> ?x2\n" + 
-						"          { ?x2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object>}\n" + 
+						"          { ?x2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object> }\n" + 
 						"        UNION\n" + 
-						"          { ?x2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject>}\n" + 
+						"          { ?x2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject> }\n" + 
 						"        FILTER ( ?x1 != ?x2 )\n" + 
 						"      }\n" + 
 						"    UNION\n" + 
 						"      { FILTER NOT EXISTS {?x0 <http://www.seerc.org/test/pellet-icv#refersTo> ?x3\n" + 
-						"            { ?x3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object>}\n" + 
+						"            { ?x3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Object> }\n" + 
 						"          UNION\n" + 
-						"            { ?x3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject>}\n" + 
+						"            { ?x3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.seerc.org/test/pellet-icv#Subject> }\n" + 
 						"        }\n" + 
 						"      }\n" + 
 						"  }\n" + 
