@@ -97,19 +97,6 @@ public class PaaSwordValidatorTest {
 		assertEquals(4, pwdv.validate().size());
 	}
 	
-	
-	@Test
-	public void testOldContradictingRulesExample() throws Exception
-	{
-		InputStream policy = getClass().getResourceAsStream("/Ontologies/test/ContradictingRulesExample.ttl");
-		InputStream contextModel = getClass().getResourceAsStream("/Ontologies/final/models/PaaSwordContextModel.ttl");
-		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModel, policy)));
-
-		pwdv = new PaaSwordValidator(payload);
-		
-		assertEquals(2, pwdv.validate().size());
-	}
-
 	@Test
 	public void testPatiniErrors() throws Exception
 	{
@@ -173,6 +160,23 @@ public class PaaSwordValidatorTest {
 		//pwdv.jds.printModel(new FileOutputStream(new File("testPolicySetSubsumption.ttl")));
 		
 		assertEquals(13, validationErrors.size());
+	}
+
+	@Test
+	public void testContradictingRules() throws Exception
+	{
+		InputStream contextModelWithPolicy = getClass().getResourceAsStream("/Ontologies/test/ContradictingRulesExample.ttl");
+		InputStream payload = new SequenceInputStream(Collections.enumeration(Arrays.asList(contextModelWithPolicy)));
+
+		pwdv = new PaaSwordValidator(payload);
+		
+		List<QueryValidatorErrors> validationErrors = pwdv.validate();
+
+		this.printValidationReport(validationErrors);
+		
+		//pwdv.jds.printModel(System.out);
+		
+		assertEquals(8, validationErrors.size());
 	}
 
 	private void printValidationReport(List<QueryValidatorErrors> validationErrors)

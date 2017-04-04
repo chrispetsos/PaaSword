@@ -9,112 +9,9 @@
 @prefix pdm: <http://www.paasword-project.eu/ontologies/dsm/2015/11/30#> .
 @prefix pbdfd: <http://www.paasword.eu/security-policy/seerc/pbdfd#>.
 
-##################### CRYPTOGRAPHIC POLICY ################################
-test1:BootstrappingCryptoPolicySet_1 a pbe:BootstrappingCryptoPolicySet.
-
-test1:BootstrappingCryptoPolicy_1 a pbe:BootstrappingCryptoPolicy;
-	pbe:belongsToCryptoPolicySet test1:BootstrappingCryptoPolicySet_1;
-	pbe:hasBootStrappingCryptoRule test1:BootstrappingCryptoRule_1, test1:BootstrappingCryptoRule_2.
-
-##################### CRYPTOGRAPHIC RULES ################################
-test1:BootstrappingCryptoRule_1 a pbe:BootstrappingCryptoRule;
-	pbe:hasControlledObject test1:PaymentCreditCardNo;
-	pbe:hasCryptoElement test1:AES256.		#AES256 encryption
-
-test1:PaymentCreditCardNo a pcm:Relational.
-
-test1:AES256 a pdm:Symmetric.
-
-test1:BootstrappingCryptoRule_2 a pbe:BootstrappingCryptoRule;
-	pbe:hasControlledObject test1:PaymentCreditCardNo;
-	pbe:hasCryptoElement test1:AES128.		#AES128 encryption -> contradiction
-
-test1:AES128 a pdm:Symmetric.
-
-test1:BootstrappingCryptoRule_3 a pbe:BootstrappingCryptoRule;
-	pbe:hasControlledObject test1:PaymentCreditCardNo;
-	pbe:hasCryptoElement test1:AES256.		#same encryption as in rule 1 -> subsumption
-											#different encryption from rule 2 -> contradiction
-
-### DFD POLICY #############
-test1:BootstrappingDFDPolicySet_1 a pbdfd:BootstrappingDFDPolicySet.
-
-test1:BootstrappingDFDPolicy_1 a pbdfd:BootstrappingDFDPolicy;
-	pbdfd:belongsToDFDPolicySet test1:BootstrappingDFDPolicySet_1; 
-	pbdfd:hasBootstrappingDFDRule test1:BootstrappingDFDRule_1, test1:BootstrappingDFDRule_2.
-
-##################### DATA FRAGMENTATION AND DISTRIBUTION RULES ################################
-test1:BootstrappingDFDRule_1 a pbdfd:BootstrappingDFDRule;
-	pbdfd:hasControlledObject test1:PaymentsTable;
-	pbdfd:hasDFDElement test1:VerticalFragmentation_1.		# vertical fragmentation 1
-
-test1:VerticalFragmentation_1 a pdm:VerticalFragmentation ;
-	pdm:hasPrivacyConstraint "{ AppDB.PaymentsTable.Surname, AppDB.PaymentsTable.CreditCardNo }".
-
-test1:BootstrappingDFDRule_2 a pbdfd:BootstrappingDFDRule;
-	pbdfd:hasControlledObject test1:PaymentsTable;
-	pbdfd:hasDFDElement test1:VerticalFragmentation_2.		# vertical fragmentation 2 , but with same constraint -> no contradiction, but subsumption
-
-test1:VerticalFragmentation_2 a pdm:VerticalFragmentation ;
-	pdm:hasPrivacyConstraint "{ AppDB.PaymentsTable.Surname, AppDB.PaymentsTable.CreditCardNo }".
-
-### ABAC POLICY ################################################
-test1:ABACPolicySet_1 a pac:ABACPolicySet.
-
-test1:ABACPolicy_1 a pac:ABACPolicy;
-	pac:belongsToABACPolicySet test1:ABACPolicySet_1;
-	pac:hasPolicyCombiningAlgorithm test1:denyUnlessPermit;
-	pac:hasABACRule test1:ABACRule_1, test1:ABACRule_2, test1:ABACRule_3.
-
-test1:denyUnlessPermit a pac:PolicyCombiningAlgorithms.
-
-##################### ABAC RULES ################################
-# Subject
-test1:ParkingEmployee a pcm:Person ;
-	pcm:hasRole test1:ParkingEmployeeRole .
-
-test1:ParkingEmployeeRole a usdl-core:Role .
-
-# Action
-test1:Write a ppm:DatastorePermission.
-
-# Resource
-test1:PaymentsTable a pcm:Relational;
-	pcm:hasRelationalType "TABLE"^^xsd:string;
-	pcm:hasTarget "AppDB.PaymentsTable"^^xsd:string .
-
-### Context expression (Working hours AND Location) #############
-test1:expr a pac:ANDContextExpression;
-	pac:hasParameter test1:EmployeeWorkingHours, test1:expr1 .
-
-test1:EmployeeWorkingHours a pcm:DateTimeInterval;
-	pcm:hasBeginning "09:00:00"^^xsd:time ;
-	pcm:hasEnd "17:00:00"^^xsd:time ;
-	pcm:hasTimezone "+02:00"^^xsd:string .
-
-test1:expr1 a pac:ORContextExpression;
-	pac:hasParameter test1:Parking1, test1:Parking2.
-
-test1:Parking1 a pcm:Point ;
-	pcm:hasPointCoordinates
-		[a pcm:Coordinates ;
-			schema:latitude "45.64560228"^^xsd:double ;
-			schema:longitude "25.58984041"^^xsd:double
-		] .
-
-test1:Parking2 a pcm:Point ;
-	pcm:hasPointCoordinates
-		[a pcm:Coordinates ;
-			schema:latitude "45.63862940"^^xsd:double ;
-			schema:longitude "25.58817744"^^xsd:double
-		] .
-#############################################################################
-
 ### Instantiated contradicting ABAC rules ################################
 test1:ABACRule_1 a pac:ABACRule;
-	pac:hasControlledObject [a pcm:Relational;
-							pcm:hasRelationalType "TABLE"^^xsd:string;
-							pcm:hasTarget "AppDB.PaymentsTable"^^xsd:string];
+	pac:hasControlledObject test1:PaymentsTable;
 	pac:hasAuthorisation pac:positive;			# positive authorisation
 	pac:hasAction test1:Write;
 	pac:hasActor test1:ParkingEmployee;
@@ -125,43 +22,5 @@ test1:ABACRule_2 a pac:ABACRule;
 	pac:hasAuthorisation pac:negative;			# negative authorisation -> contradiction
 	pac:hasAction test1:Write;
 	pac:hasActor test1:ParkingEmployee;
-	pac:hasContextExpression	[a pac:ANDContextExpression;
-									pac:hasParameter 		[	a pcm:DateTimeInterval;
-																pcm:hasBeginning "09:00:00"^^xsd:time ;
-																pcm:hasEnd "17:00:00"^^xsd:time ;
-																pcm:hasTimezone "+02:00"^^xsd:string], 
-															[	a pac:ORContextExpression;
-																		pac:hasParameter [a pcm:Point ;
-																							pcm:hasPointCoordinates
-																								[a pcm:Coordinates ;
-																									schema:latitude "45.64560228"^^xsd:double ;
-																									schema:longitude "25.58984041"^^xsd:double
-																								]], 
-																						test1:Parking2
-															]
-								]
-.
+	pac:hasContextExpression test1:expr.
 
-test1:ABACRule_3 a pac:ABACRule;
-	pac:hasControlledObject test1:PaymentsTable;
-	pac:hasAuthorisation pac:positive;			# positive authorisation -> subsumption with 1, no contradiction with 2 because other time
-	pac:hasAction test1:Write;
-	pac:hasActor test1:ParkingEmployee;
-	pac:hasContextExpression	[a pac:ANDContextExpression;
-									pac:hasParameter 		[	a pcm:DateTimeInterval;
-																pcm:hasBeginning "08:00:00"^^xsd:time ;		# time range includes time range of 1 which is equal
-																pcm:hasEnd "18:00:00"^^xsd:time ;
-																pcm:hasTimezone "+02:00"^^xsd:string], 
-															[	a pac:ORContextExpression;
-																		pac:hasParameter [a pcm:Point ;
-																							pcm:hasPointCoordinates
-																								[a pcm:Coordinates ;
-																									schema:latitude "45.64560228"^^xsd:double ;
-																									schema:longitude "25.58984041"^^xsd:double
-																								]], 
-																						test1:Parking2
-															]
-								]
-.
-
-#############################################################################
