@@ -4,6 +4,12 @@
 	<groupId>org.seerc.paasword</groupId>
 	<artifactId>ICConstraintsTranslator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<repositories>
+		<repository>
+			<id>my-local-repo</id>
+			<url>file://${basedir}/local-repo</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<!-- Uses the patched version for https://github.com/AKSW/OWL2SPARQL/issues/1 -->
 		<dependency>
@@ -42,30 +48,6 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin>
-			<!-- Install the owl2sparql jar in local repo -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<version>2.5.2</version>
-				<executions>
-					<execution>
-						<id>install-external</id>
-						<phase>clean</phase>
-						<configuration>
-							<file>${basedir}/src/main/resources/owl2sparql-core-0.1-SNAPSHOT.jar</file>
-							<repositoryLayout>default</repositoryLayout>
-							<groupId>org.aksw.owl2sparql</groupId>
-							<artifactId>owl2sparql-core</artifactId>
-							<version>0.1-SNAPSHOT</version>
-							<packaging>jar</packaging>
-							<generatePom>true</generatePom>
-						</configuration>
-						<goals>
-							<goal>install-file</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
