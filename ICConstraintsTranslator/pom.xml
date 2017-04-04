@@ -43,6 +43,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<!-- Install the owl2sparql jar in local repo -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
