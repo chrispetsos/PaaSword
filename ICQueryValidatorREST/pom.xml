@@ -9,11 +9,11 @@
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
 			<artifactId>security-policy-engine</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
-			<artifactId>ICConstraintsTranslator</artifactId>
+			<artifactId>ic-constraints-translator</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
