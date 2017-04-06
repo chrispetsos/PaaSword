@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.seerc.paasword</groupId>
 	<artifactId>ic-query-validator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The Integrity Constraints Query Validator component created by SEERC in the course of PaaSword project.</description>
