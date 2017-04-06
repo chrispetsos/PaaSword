@@ -8,7 +8,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
-			<artifactId>PaaSwordSecurityPolicyEngine</artifactId>
+			<artifactId>security-policy-engine</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
