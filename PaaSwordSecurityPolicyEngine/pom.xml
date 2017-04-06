@@ -29,7 +29,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/chrispetsos/PaaSword.git</connection>
 		<developerConnection>scm:git:ssh://github.com/chrispetsos/PaaSword.git</developerConnection>
-		<url>https://github.com/chrispetsos/PaaSword</url>
+		<url>https://github.com/chrispetsos/PaaSword/tree/master/PaaSwordSecurityPolicyEngine</url>
 	</scm>
 
 	<dependencies>
