@@ -14,7 +14,7 @@
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
 			<artifactId>ic-constraints-translator</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.1-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.jena</groupId>
