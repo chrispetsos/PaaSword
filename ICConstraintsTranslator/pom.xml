@@ -4,12 +4,6 @@
 	<groupId>org.seerc.paasword</groupId>
 	<artifactId>ic-constraints-translator</artifactId>
 	<version>1.0.1-SNAPSHOT</version>
-	<repositories>
-		<repository>
-			<id>my-local-repo</id>
-			<url>file://${basedir}/local-repo</url>
-		</repository>
-	</repositories>
 	
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The Integrity Constraints Translator component created by SEERC in the course of PaaSword project.</description>
@@ -40,9 +34,9 @@
 	<dependencies>
 		<!-- Uses the patched version for https://github.com/AKSW/OWL2SPARQL/issues/1 -->
 		<dependency>
-			<groupId>org.aksw.owl2sparql</groupId>
+			<groupId>org.seerc.paasword</groupId>
 			<artifactId>owl2sparql-core</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.owlapi</groupId>
