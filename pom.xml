@@ -4,7 +4,7 @@
 
 	<groupId>org.seerc.paasword</groupId>
 	<artifactId>ic-query-validator-parent</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<description>The parent project of PaaSword Security Policy Validator.</description>
 

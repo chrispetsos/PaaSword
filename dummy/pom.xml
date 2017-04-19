@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.seerc.paasword</groupId>
 		<artifactId>ic-query-validator-parent</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>dummy</artifactId>
 	<description>A dummy module for nexus-staging-maven-plugin to work correctly according to bug https://issues.sonatype.org/browse/NEXUS-9138.</description>
