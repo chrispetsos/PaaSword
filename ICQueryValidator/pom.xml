@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.seerc.paasword</groupId>
 		<artifactId>ic-query-validator-parent</artifactId>
-		<version>1.0.2-SNAPSHOT</version>
+		<version>1.0.2</version>
 	</parent>
 
 	<artifactId>ic-query-validator</artifactId>
@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
 			<artifactId>ic-constraints-translator</artifactId>
-			<version>1.0.2-SNAPSHOT</version>
+			<version>1.0.2</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.jena</groupId>
@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
 			<artifactId>security-policy-engine</artifactId>
-			<version>1.0.2-SNAPSHOT</version>
+			<version>1.0.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
