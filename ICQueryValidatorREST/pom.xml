@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.seerc.paasword</groupId>
 		<artifactId>ic-query-validator-parent</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ICQueryValidatorREST</artifactId>
@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
 			<artifactId>ic-query-validator</artifactId>
-			<version>1.0.2</version>
+			<version>1.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
@@ -44,21 +44,6 @@
 	</dependencies>
 	<build>
 		<plugins>
-			<!-- tell nexus-staging-maven-plugin not to deploy WAR file -->
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>default-deploy</id>
-						<phase>none</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- tell maven-deploy-plugin not to deploy WAR file -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
