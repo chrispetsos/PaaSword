@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.seerc.paasword</groupId>
 	<artifactId>ic-query-validator</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The Integrity Constraints Query Validator component created by SEERC in the course of PaaSword project.</description>
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
 			<artifactId>ic-constraints-translator</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.jena</groupId>
@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.seerc.paasword</groupId>
 			<artifactId>security-policy-engine</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
