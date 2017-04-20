@@ -36,8 +36,8 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/chrispetsos/PaaSword.git</connection>
-		<developerConnection>scm:git:https://github.com/chrispetsos/PaaSword.git</developerConnection>
+		<connection>scm:git:git://github.com/chrispetsos/PaaSword.git</connection>
+		<developerConnection>scm:git:ssh://github.com/chrispetsos/PaaSword.git</developerConnection>
 		<url>https://github.com/chrispetsos/PaaSword</url>
 	</scm>
 
