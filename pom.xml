@@ -8,10 +8,10 @@
 	<description>The parent project of PaaSword Security Policy Validator.</description>
 
 	<modules>
-		<module>ICConstraintsTranslator</module>
-		<module>ICQueryValidator</module>
-		<module>ICQueryValidatorREST</module>
-		<module>PaaSwordSecurityPolicyEngine</module>
+		<module>ic-constraints-translator</module>
+		<module>ic-query-validator</module>
+		<module>ic-query-validator-rest</module>
+		<module>security-policy-engine</module>
 		<!-- <module>dummy</module> -->
 	</modules>
 
