@@ -75,6 +75,7 @@
 					<useReleaseProfile>false</useReleaseProfile>
 					<releaseProfiles>release</releaseProfiles>
 					<goals>deploy</goals>
+					<checkModificationExclude>pom.xml</checkModificationExclude>
 				</configuration>
 			</plugin>
 			<plugin>
