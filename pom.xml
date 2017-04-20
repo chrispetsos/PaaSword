@@ -12,7 +12,6 @@
 		<module>ic-query-validator</module>
 		<module>ic-query-validator-rest</module>
 		<module>security-policy-engine</module>
-		<!-- <module>dummy</module> -->
 	</modules>
 
 	<name>${project.groupId}:${project.artifactId}</name>
