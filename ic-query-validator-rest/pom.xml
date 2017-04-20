@@ -7,7 +7,7 @@
 		<version>1.0.4-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>ICQueryValidatorREST</artifactId>
+	<artifactId>ic-query-validator-rest</artifactId>
 	<description>The REST API of the Integrity Constraints Query Validator component created by SEERC in the course of PaaSword project.</description>
 	<packaging>war</packaging>
 
