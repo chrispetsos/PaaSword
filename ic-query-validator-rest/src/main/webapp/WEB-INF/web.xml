@@ -41,7 +41,7 @@
     </init-param>
     <init-param>
       <param-name>version</param-name>
-      <param-value>1.0.0</param-value>
+      <param-value>${project.version}</param-value>
     </init-param>
   </servlet>
 </web-app>
