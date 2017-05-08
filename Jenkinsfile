@@ -10,7 +10,7 @@ node {
     }
 
     stage('Build') {
-    	sh 'mvn clean package -DskipTests=true'
+    	sh 'mvn package -DskipTests=true'
         paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
     }
 
