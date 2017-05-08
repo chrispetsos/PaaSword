@@ -1,0 +1,2 @@
+# Ignore generated .war file
+./ic-query-validator-rest/target/ic-query-validator-rest-*.war
