@@ -11,7 +11,7 @@ node {
 
     stage('Build') {
     	sh 'mvn package -DskipTests=true'
-        paaswordSpvBaseImage = docker.build("chrispetsos/paasword-spv-base", "-f ./BuildPaaSwordSPVBase.docker .")
+        paaswordSpvBaseImage = docker.build("chrispetsos/paasword-spv-base:1.0.0", "-f ./BuildPaaSwordSPVBase.docker .")
     }
 
     stage('Deploy') {
