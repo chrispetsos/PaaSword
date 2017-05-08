@@ -5,17 +5,13 @@ node {
         checkout scm
     }
 
-    stage('Build') {
-    	sh 'mvn clean package'
-        paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
+    stage('Test') {
+    	sh 'mvn clean test'
     }
 
-    stage('Test') {
-        // TODO: Run tests on image
-
-        paaswordSpvImage.inside {
-            sh 'echo "TODO: Run tests on image"'
-        }
+    stage('Build') {
+    	sh 'mvn clean package -DskipTests=true'
+        paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
     }
 
     stage('Deploy') {
