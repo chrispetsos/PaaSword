@@ -6,6 +6,7 @@ node {
     }
 
     stage('Build') {
+    	sh 'mvn clean package'
         paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
     }
 
