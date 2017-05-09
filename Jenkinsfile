@@ -1,5 +1,5 @@
 node {
-    def paaswordSpvBaseImage
+    def paaswordSpvImage
 
     stage('Clone') {
         checkout scm
@@ -11,12 +11,12 @@ node {
 
     stage('Build') {
     	sh 'mvn package -DskipTests=true'
-        paaswordSpvBaseImage = docker.build("chrispetsos/paasword-spv-base:1.0.0", "-f ./BuildPaaSwordSPVBase.docker .")
+        paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
     }
 
     stage('Deploy') {
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            paaswordSpvBaseImage.push("1.0.0")
+            paaswordSpvImage.push("latest")
         }
     }
 }
