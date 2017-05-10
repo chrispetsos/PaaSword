@@ -20,10 +20,10 @@ node {
     }
 
     stage('Build') {
-		// Build Maven artifacts
+		// Package Maven artifacts
     	sh 'mvn package -DskipTests=true'
 		// Build Docker image
-		// TODO: Automate adding jenkins user to the docker group
+		// TODO: Automate adding jenkins user to the docker group. This is needed for the build to succeed.
         paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
     }
 
