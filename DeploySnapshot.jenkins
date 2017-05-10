@@ -6,42 +6,50 @@ Also pushes "latest" Docker image to Docker Hub.
 */
 
 node {
-
-	// notify that the job has started
-	notifyBuild('STARTED')
+	try {
+		// notify that the job has started
+		notifyBuild('STARTED')
+		
+		// Define the Docker image variable
+	    def paaswordSpvImage
 	
-	// Define the Docker image variable
-    def paaswordSpvImage
-
-	// Clone/fetch git repository designated in the pipeline job
-    stage('Clone') {
-        checkout scm
-    }
-
-	// Perform Maven tests 
-    stage('Test') {
-    	sh 'mvn clean test'
-    }
-
-    stage('Build') {
-		// Package Maven artifacts
-    	sh 'mvn package -DskipTests=true'
-		// Build Docker image
-		// TODO: Automate adding jenkins user to the docker group. This is needed for the build to succeed.
-        paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
-    }
-
-    stage('Deploy') {
-		// Deploy Maven artifacts to snapshots repository
-		// TODO: Avoid having OSSRH credentials in settings.xml file located in the 
-		// jenkins/.m2 folder.
-    	sh 'mvn deploy -DskipTests=true'
-    	// Deploy "latest" Docker image to Docker Hub using the docker-hub-credentials created
-    	// with the Credentials Plugin 
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            paaswordSpvImage.push("latest")
-        }
-    }
+		// Clone/fetch git repository designated in the pipeline job
+	    stage('Clone') {
+	        checkout scm
+	    }
+	
+		// Perform Maven tests 
+	    stage('Test') {
+	    	sh 'mvn clean test'
+	    }
+	
+	    stage('Build') {
+			// Package Maven artifacts
+	    	sh 'mvn package -DskipTests=true'
+			// Build Docker image
+			// TODO: Automate adding jenkins user to the docker group. This is needed for the build to succeed.
+	        paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
+	    }
+	
+	    stage('Deploy') {
+			// Deploy Maven artifacts to snapshots repository
+			// TODO: Avoid having OSSRH credentials in settings.xml file located in the 
+			// jenkins/.m2 folder.
+	    	sh 'mvn deploy -DskipTests=true'
+	    	// Deploy "latest" Docker image to Docker Hub using the docker-hub-credentials created
+	    	// with the Credentials Plugin 
+	        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+	            paaswordSpvImage.push("latest")
+	        }
+	    }
+	} catch (e) {
+		// If there was an exception thrown, the build failed
+		currentBuild.result = "FAILED"
+		throw e
+	} finally {
+		// Success or failure, always send notifications
+		notifyBuild(currentBuild.result)
+	}
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
