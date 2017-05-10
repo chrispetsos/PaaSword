@@ -72,6 +72,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   emailext (
       subject: subject,
       body: details,
-      to: "${DEFAULT_RECIPIENTS}"
+      // Jenkins version prior to 2.50 does not honour DEFAULT_RECIPIENTS  
+      to: "chrispetsos@gmail.com"
     )
 }
