@@ -3,6 +3,8 @@ Jenkins pipeline that deploys snapshot Maven artifacts to
 	https://oss.sonatype.org/content/repositories/snapshots/
 
 Also pushes "latest" Docker image to Docker Hub.
+
+This is triggered by a WebHook on GitHub.
 */
 
 node {
@@ -11,37 +13,37 @@ node {
 		notifyBuild('STARTED')
 		
 		// Define the Docker image variable
-	    def paaswordSpvImage
+		def paaswordSpvImage
 	
 		// Clone/fetch git repository designated in the pipeline job
-	    stage('Clone') {
-	        checkout scm
-	    }
+		stage('Clone') {
+			checkout scm
+		}
 	
 		// Perform Maven tests 
-	    stage('Test') {
-	    	sh 'mvn clean test'
-	    }
+		stage('Test') {
+			sh 'mvn clean test'
+		}
 	
-	    stage('Build') {
+		stage('Build') {
 			// Package Maven artifacts
-	    	sh 'mvn package -DskipTests=true'
+			sh 'mvn package -DskipTests=true'
 			// Build Docker image
 			// TODO: Automate adding jenkins user to the docker group. This is needed for the build to succeed.
-	        paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
-	    }
+			paaswordSpvImage = docker.build("chrispetsos/paasword-spv")
+		}
 	
-	    stage('Deploy') {
+		stage('Deploy') {
 			// Deploy Maven artifacts to snapshots repository
 			// TODO: Avoid having OSSRH credentials in settings.xml file located in the 
 			// jenkins/.m2 folder.
-	    	sh 'mvn deploy -DskipTests=true'
-	    	// Deploy "latest" Docker image to Docker Hub using the docker-hub-credentials created
-	    	// with the Credentials Plugin 
-	        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-	            paaswordSpvImage.push("latest")
-	        }
-	    }
+			sh 'mvn deploy -DskipTests=true'
+			// Deploy "latest" Docker image to Docker Hub using the docker-hub-credentials created
+			// with the Credentials Plugin 
+			docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+				paaswordSpvImage.push("latest")
+			}
+		}
 	} catch (e) {
 		// If there was an exception thrown, the build failed
 		currentBuild.result = "FAILED"
@@ -53,34 +55,34 @@ node {
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
-  // build status of null means successful
-  buildStatus = buildStatus ?: 'SUCCESS'
+	// build status of null means successful
+	buildStatus = buildStatus ?: 'SUCCESS'
 
-  // Default values
-  def colorName = 'RED'
-  def colorCode = '#FF0000'
-  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  def summary = "${subject} (${env.BUILD_URL})"
-  def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-    <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+	// Default values
+	def colorName = 'RED'
+	def colorCode = '#FF0000'
+	def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+	def summary = "${subject} (${env.BUILD_URL})"
+	def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+	<p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>"""
 
-  // Override default values based on build status
-  if (buildStatus == 'STARTED') {
-    color = 'YELLOW'
-    colorCode = '#FFFF00'
-  } else if (buildStatus == 'SUCCESS') {
-    color = 'GREEN'
-    colorCode = '#00FF00'
-  } else {
-    color = 'RED'
-    colorCode = '#FF0000'
-  }
+	// Override default values based on build status
+	if (buildStatus == 'STARTED') {
+	color = 'YELLOW'
+	colorCode = '#FFFF00'
+	} else if (buildStatus == 'SUCCESS') {
+	color = 'GREEN'
+	colorCode = '#00FF00'
+	} else {
+	color = 'RED'
+	colorCode = '#FF0000'
+	}
 
-  // Send e-mail notification to Default Recipients 
-  emailext (
-      subject: subject,
-      body: details,
-      // Jenkins version prior to 2.50 does not honour DEFAULT_RECIPIENTS  
-      to: "chrispetsos@gmail.com"
-    )
+	// Send e-mail notification to Default Recipients 
+	emailext (
+		subject: subject,
+		body: details,
+		// Jenkins version prior to 2.50 does not honour DEFAULT_RECIPIENTS	
+		to: "chrispetsos@gmail.com"
+	)
 }
