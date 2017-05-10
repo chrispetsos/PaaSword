@@ -17,7 +17,7 @@ node {
 	
 		// Clone/fetch git repository designated in the pipeline job
 		stage('Clone') {
-			checkout sc
+			checkout scm
 		}
 	
 		// Perform Maven tests 
