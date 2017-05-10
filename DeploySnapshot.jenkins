@@ -71,6 +71,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   // Send e-mail notification to Default Recipients 
   emailext (
       subject: subject,
-      body: details
+      body: details,
+      to: "${DEFAULT_RECIPIENTS}"
     )
 }
